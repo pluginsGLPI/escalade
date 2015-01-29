@@ -56,7 +56,7 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo "</td>";
       echo "<td id='show_history_td2' $style>";
       Dropdown::showYesNo("show_history", $this->fields["show_history"], -1, array(
-         //'width' => '25%',
+         'width' => '100%',
       ));
       echo "</td>";
       echo "</tr>";
@@ -71,7 +71,7 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo "<td>" . __("Remove technician(s) on escalation", "escalade") .  "</td>";
       echo "<td>";
       Dropdown::showYesNo("remove_tech", $this->fields["remove_tech"], -1, array(
-         //'width' => '25%',
+         'width' => '100%',
       ));
       echo "</td>";
       echo "</tr>";
@@ -87,7 +87,7 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo "</td>";
       echo "<td id='show_solve_return_group_td2' $style>";
       Dropdown::showYesNo("solve_return_group", $this->fields["solve_return_group"], -1, array(
-         //'width' => '25%',
+         'width' => '100%',
       ));
       echo "</td>";
       echo "</tr>";
@@ -98,7 +98,7 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("reassign_tech_from_cat", $this->fields["reassign_tech_from_cat"], -1, array(
-         //'width' => '25%',
+         'width' => '25%',
       ));
       echo "</td>";
       echo "<td>";
@@ -106,7 +106,7 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("reassign_group_from_cat", $this->fields["reassign_group_from_cat"], -1, array(
-         //'width' => '25%',
+         'width' => '100%',
       ));
       echo "</td>";
       echo "</tr>";
@@ -115,7 +115,7 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo "<td>" . __("Clone tickets", "escalade") . "</td>";
       echo "<td>";
       Dropdown::showYesNo("cloneandlink_ticket", $this->fields["cloneandlink_ticket"], -1, array(
-         //'width' => '25%',
+         'width' => '25%',
       ));
       echo "</td>";
       echo "<td>";
@@ -123,7 +123,7 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("close_linkedtickets", $this->fields["close_linkedtickets"], -1, array(
-         //'width' => '25%',
+         'width' => '100%',
       ));
       echo "</td>";
       echo "</tr>";
@@ -139,13 +139,15 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo "<td>";
       echo "<table>";
       echo "<tr><td>";
-      Dropdown::showFromArray('use_assign_user_group', $yesnoall,
-                              array('value' => $this->fields['use_assign_user_group']));
+      Dropdown::showFromArray('use_assign_user_group', $yesnoall, array(
+         'value' => $this->fields['use_assign_user_group'],
+         'width' => '100%',
+      ));
       echo "</td>";
       echo "<td><label for=''>".__("a time of creation", "escalade")."&nbsp;</label>";
       Dropdown::showYesNo("use_assign_user_group_creation", 
                           $this->fields["use_assign_user_group_creation"], -1, array(
-         //'width' => '25%',
+         //'width' => '100%',
       ));
       echo "</td>";
       echo "<td><label for=''>".__("a time of modification", "escalade")."&nbsp;</label>";
@@ -178,7 +180,9 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo __("Display delete button of assigned users", "escalade");
       echo "</td>";
       echo "<td>";
-      Dropdown::showYesNo("remove_delete_user_btn", $this->fields["remove_delete_user_btn"]);
+      Dropdown::showYesNo("remove_delete_user_btn", $this->fields["remove_delete_user_btn"], -1, array(
+         'width' => '100%',
+      ));
       echo "</td>";
       echo "</tr>";
 
@@ -196,7 +200,9 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo __("Enable filtering on the groups assignment", "escalade");
       echo "</td>";
       echo "<td>";
-      Dropdown::showYesNo("use_filter_assign_group", $this->fields["use_filter_assign_group"]);
+      Dropdown::showYesNo("use_filter_assign_group", $this->fields["use_filter_assign_group"], -1, array(
+         'width' => '100%',
+      ));
       echo "</td>";
       echo "</tr>";
 
