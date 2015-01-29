@@ -4,22 +4,22 @@ include ("../../../inc/includes.php");
 //change mimetype
 header("Content-type: application/javascript");
 
-$locale_actor = __('Actor');
-
-$remove_delete_group_btn = "true";
-if (isset($_SESSION['plugins']['escalade']['config']['remove_delete_group_btn'])
-   && $_SESSION['plugins']['escalade']['config']['remove_delete_group_btn']) {
-   $remove_delete_group_btn = "false";
-}
-
-$remove_delete_user_btn = "true";
-if (isset($_SESSION['plugins']['escalade']['config']['remove_delete_user_btn'])
-   && $_SESSION['plugins']['escalade']['config']['remove_delete_user_btn']) {
-   $remove_delete_user_btn = "false";
-}
-
 //not executed in self-service interface & right verification
 if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
+   
+   $locale_actor = __('Actor');
+   
+   $remove_delete_group_btn = "true";
+   if (isset($_SESSION['plugins']['escalade']['config']['remove_delete_group_btn'])
+         && $_SESSION['plugins']['escalade']['config']['remove_delete_group_btn']) {
+            $remove_delete_group_btn = "false";
+         }
+   
+   $remove_delete_user_btn = "true";
+   if (isset($_SESSION['plugins']['escalade']['config']['remove_delete_user_btn'])
+         && $_SESSION['plugins']['escalade']['config']['remove_delete_user_btn']) {
+            $remove_delete_user_btn = "false";
+   }
 
 	$JS = <<<JAVASCRIPT
    Ext.onReady(function() {
