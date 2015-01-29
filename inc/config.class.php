@@ -17,27 +17,21 @@ class PluginEscaladeConfig extends CommonDBTM {
    function showForm($ID, $options = array()) {
       global $CFG_GLPI;
       
-      if (! $this->canView()) return false;
+      if (! $this->canView()) {
+         return false;
+      }
+      
 
-      $yesnoall = array(
-         0 => __("No"),
-         1 => __('First'),
-         2 => __('Last')
-      );
-
-      $this->check($ID,'r');
+      $this->getFromDB($ID);
+      
+      //$this->check($ID, 'r');
+      
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
+      echo "<td>" . __("Remove old assign group on new group assign", "escalade") . "</td>";
       echo "<td>";
-      echo __("Remove old assign group on new group assign", "escalade");
-      echo "</td>";
-      echo "<td>";
-      Dropdown::showYesNo(
-         "remove_group", 
-         $this->fields["remove_group"], 
-         -1, 
-         array(
+      Dropdown::showYesNo("remove_group", $this->fields["remove_group"], -1, array(
             'on_change' => 'hide_show_history(this.value)'
       ));
       echo "<script type='text/javascript'>
@@ -115,10 +109,14 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
+      $yesnoall = array(
+            0 => __("No"),
+            1 => __('First'),
+            2 => __('Last'),
+      );
+      
       echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo __("Use the technician's group", "escalade");
-      echo "</td>";
+      echo "<td>" . __("Use the technician's group", "escalade") . "</td>";
       echo "<td>";
       echo "<table>";
       echo "<tr><td>";
@@ -180,7 +178,7 @@ class PluginEscaladeConfig extends CommonDBTM {
    }
 
    static function loadInSession() {
-      $config = new self;
+      $config = new self();
       $config->getFromDB(1);
       unset($config->fields['id']);
       $_SESSION['plugins']['escalade']['config'] = $config->fields;
