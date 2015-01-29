@@ -1,7 +1,9 @@
 <?php
 include ("../../../inc/includes.php");
 
-if (!isset($_GET["id"])) $_GET["id"] = 0;
+if (! isset($_GET["id"])) {
+   $_GET["id"] = 0;
+}
 
 $plugin = new Plugin();
 if (! $plugin->isInstalled('escalade') || ! $plugin->isActivated('escalade')) {
@@ -17,13 +19,13 @@ if (isset($_POST["add"])) {
    $newID=$config->add($_POST);
    Html::back();
    
-} else if (isset($_POST["update"])) {
+} elseif (isset($_POST["update"])) {
 
    Session::checkRight("config","w");
    $config->update($_POST);
    Html::back();
 
-} else if (isset($_POST["delete"])) {
+} elseif (isset($_POST["delete"])) {
 
    Session::checkRight("config","w");
    $config->delete($_POST,1);
@@ -32,7 +34,7 @@ if (isset($_POST["add"])) {
 } else {
 
    Html::header(__("Escalation", "escalade"), '',"plugins", "escalade", "config");
-   $config->showForm(1); 
+   $config->showForm(1);
    Html::footer();
 
 }

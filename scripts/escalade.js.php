@@ -10,8 +10,8 @@ $locale_yourticketstoclose = __('Your tickets to close');
 
 //not executed in self-service interface & right verification
 if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
-   if ($_SESSION['glpiactiveprofile']['create_ticket'] 
-      || $_SESSION['glpiactiveprofile']['update_ticket'] 
+   if (Session::haveRight("ticket", CREATE) 
+      || Session::haveRight("ticket", UPDATE) 
    ) {
 
    $JS = <<<JAVASCRIPT

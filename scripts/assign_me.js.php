@@ -10,8 +10,8 @@ $locale_assignto = __("Assigned to");
 //not executed in self-service interface & right verification
 if (isset($_SESSION['glpiactiveprofile'])
    && $_SESSION['glpiactiveprofile']['interface'] == "central"
-   && $_SESSION['glpiactiveprofile']['create_ticket'] 
-   && $_SESSION['glpiactiveprofile']['update_ticket'] 
+   && Session::haveRight("ticket", CREATE)
+   && Session::haveRight("ticket", UPDATE)
    ) {
 
    $JS = <<<JAVASCRIPT

@@ -168,17 +168,13 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo __("Display delete button of assigned groups", "escalade");
-      echo "</td>";
+      echo "<td>" . __("Display delete button of assigned groups", "escalade") . "</td>";
       echo "<td>";
       Dropdown::showYesNo("remove_delete_group_btn", $this->fields["remove_delete_group_btn"], -1, array(
          'width' => '25%',
       ));
       echo "</td>";
-      echo "<td>";
-      echo __("Display delete button of assigned users", "escalade");
-      echo "</td>";
+      echo "<td>" . __("Display delete button of assigned users", "escalade") . "</td>";
       echo "<td>";
       Dropdown::showYesNo("remove_delete_user_btn", $this->fields["remove_delete_user_btn"], -1, array(
          'width' => '100%',
@@ -187,18 +183,14 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo __("Rapid ticket assignment button", "escalade");
-      echo "</td>";
+      echo "<td>" . __("Rapid ticket assignment button", "escalade") . "</td>";
       echo "<td>";
       Dropdown::showYesNo("assign_me_ticket", $this->fields["assign_me_ticket"], -1, array(
          'width' => '25%',
       ));
       echo "</td>";
 
-      echo "<td>";
-      echo __("Enable filtering on the groups assignment", "escalade");
-      echo "</td>";
+      echo "<td>" . __("Enable filtering on the groups assignment", "escalade") . "</td>";
       echo "<td>";
       Dropdown::showYesNo("use_filter_assign_group", $this->fields["use_filter_assign_group"], -1, array(
          'width' => '100%',
@@ -217,6 +209,7 @@ class PluginEscaladeConfig extends CommonDBTM {
       $_SESSION['plugins']['escalade']['config'] = $config->fields;
    }
 
+   //TODO : CSS (or use standart dropdown)
    static function dropdownGenericStatus($itemtype, $name, $value = CommonITILObject::INCOMING) {
       $item = new $itemtype();
       $tab = $item->getAllStatusArray(false);

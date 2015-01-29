@@ -73,6 +73,7 @@ function plugin_init_escalade() {
 
       // == Interface links ==
       if (Session::haveRight('config', 'w')) {
+         //TODO : Es ce que cette partie peut être porté en 0.85 ?
          $config_page = 'front/config.form.php';
 
          $PLUGIN_HOOKS['config_page']     ['escalade']            = $config_page;

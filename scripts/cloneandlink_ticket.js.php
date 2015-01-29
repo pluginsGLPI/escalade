@@ -10,8 +10,8 @@ $locale_pleasewait    =  __("Please wait...");
 
 //not executed in self-service interface & right verification
 if ($_SESSION['glpiactiveprofile']['interface'] == "central"
-   && $_SESSION['glpiactiveprofile']['create_ticket'] 
-   && $_SESSION['glpiactiveprofile']['update_ticket'] 
+   && Session::haveRight("ticket", CREATE) 
+   && Session::haveRight("ticket", UPDATE) 
    ) {
 
    $JS = <<<JAVASCRIPT

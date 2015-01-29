@@ -4,7 +4,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginEscaladeHistory extends CommonDBTM {
-   const history_limit = 4;
+   const HISTORY_LIMIT = 4;
 
    static function getFirstLineForTicket($tickets_id) {
       $found = self::getFullHistory($tickets_id);
@@ -31,8 +31,6 @@ class PluginEscaladeHistory extends CommonDBTM {
 
 
    static function getHistory($tickets_id, $full_history = false) {
-      
-      $plugin_dir = ($full_history) ? ".." : "../plugins/escalade";
 
       $filter_groups_id = array();
       if ($_SESSION['plugins']['escalade']['config']['use_filter_assign_group']) {
@@ -42,6 +40,8 @@ class PluginEscaladeHistory extends CommonDBTM {
       } else {
          $use_filter_assign_group = false;
       }
+      
+      $plugin_dir = ($full_history) ? ".." : "../plugins/escalade";
 
       //get all line for this ticket
       $group = new Group();
@@ -68,16 +68,18 @@ class PluginEscaladeHistory extends CommonDBTM {
       $i = 0;
       foreach ($found as $key => $hline) {
          echo "<div class='escalade_history'>";
-         if (!$use_filter_assign_group || isset($filter_groups_id[$hline['groups_id']])) {
+         
+         if (! $use_filter_assign_group || isset($filter_groups_id[$hline['groups_id']])) {
 	         //up link and image
 	         echo "<a href='$plugin_dir/front/climb_group.php?tickets_id="
 	            .$tickets_id."&groups_id=".$hline['groups_id'];
 	         if ($full_history) {
 	            echo "&full_history=true";
 	         }
-	         echo "' title='".__("Reassign the ticket to group", "escalade")."' class='up_a'>";
-	         echo "</a>";
-	      } else echo "&nbsp;&nbsp;&nbsp;";
+	         echo "' title='".__("Reassign the ticket to group", "escalade")."' class='up_a'></a>";
+	      } else {
+	         echo "&nbsp;&nbsp;&nbsp;";
+	      }
          
 
          //group link
@@ -89,11 +91,11 @@ class PluginEscaladeHistory extends CommonDBTM {
          echo "</div>";
 
          $i++;
-         if ($i == self::history_limit && !$full_history) break;
+         if ($i == self::HISTORY_LIMIT && !$full_history) break;
       }
 
       //In case there are more than 10 group changes, a popup can display historical
-      if ($nb_histories-1 > self::history_limit && !$full_history) {
+      if ($nb_histories-1 > self::HISTORY_LIMIT && ! $full_history) {
          echo "<a href='#' onclick='var w=window.open(\""
             .$plugin_dir."/front/popup_histories.php?tickets_id=".$tickets_id
             ."\" ,\"\", \"height=500, width=250, top=100, left=100, scrollbars=yes\" ); "
@@ -129,10 +131,10 @@ class PluginEscaladeHistory extends CommonDBTM {
    static function showCentralSpecificList($type) {
       global $CFG_GLPI, $DB;
 
-      if (!Session::haveRight("show_all_ticket","1")
-          && !Session::haveRight("show_assign_ticket","1")
-          && !Session::haveRight("create_ticket","1")
-          && !Session::haveRight("validate_ticket","1")) {
+      if (! Session::haveRight("show_all_ticket", "1")
+          && ! Session::haveRight("show_assign_ticket", "1")
+          && ! Session::haveRight("create_ticket", "1")
+          && ! Session::haveRight("validate_ticket", "1")) {
          return false;
       }
 
@@ -227,7 +229,6 @@ class PluginEscaladeHistory extends CommonDBTM {
          echo "<a href=\"".$CFG_GLPI["root_doc"]."/front/ticket.php?".
                          Toolbox::append_params($options,'&amp;')."\">".
                          Html::makeTitle($title, $number, $numrows)."</a>";
-         echo "</a>";
          echo "</th></tr>";
 
          if ($number) {
