@@ -1,0 +1,31 @@
+.escalade {
+   margin-left:10px;
+}
+
+.escalade .up {
+   margin-left:6px;
+}
+
+.escalade .climb {
+   margin-left:2px;
+}
+
+a.escalade_active, .escalade_active a {
+   color:red !important;
+}
+
+a.escalade_history, .escalade_history a {
+   color:grey !important;
+}
+
+.escalade a.up_a {
+   display: inline-block;
+   width: 10px;
+   height: 10px;
+   background: url('pics/up.png') bottom;
+   margin-bottom:-2px;
+}
+
+.escalade .escalade_history a.up_a:hover {
+   background: url('pics/up_active.png') bottom;
+}
