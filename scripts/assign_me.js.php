@@ -4,36 +4,42 @@ include ("../../../inc/includes.php");
 //change mimetype
 header("Content-type: application/javascript");
 
-$locale_assignme = __("Assign me this ticket", "escalade");
-$locale_assignto = __("Assigned to");
-
 //not executed in self-service interface & right verification
 if (isset($_SESSION['glpiactiveprofile'])
    && $_SESSION['glpiactiveprofile']['interface'] == "central"
    && Session::haveRight("ticket", CREATE)
    && Session::haveRight("ticket", UPDATE)
    ) {
+   
+   $locale_assignme = __("Assign me this ticket", "escalade");
+   $locale_assignto = __("Assigned to");
 
    $JS = <<<JAVASCRIPT
-   Ext.onReady(function() {
+   function getUrlParameter(sParam) {
+       var sPageURL = window.location.search.substring(1);
+       var sURLVariables = sPageURL.split('&');
+       for (var i = 0; i < sURLVariables.length; i++) {
+           var sParameterName = sURLVariables[i].split('=');
+           if (sParameterName[0] == sParam) {
+               return sParameterName[1];
+           }
+       }
+   }
+   
+   $(document).ready(function() {
 
       // only in ticket form
       if (location.pathname.indexOf('ticket.form.php') > 0) {
 
-         // separating the GET parameters from the current URL
-         var getParams = document.URL.split("?");
-         // transforming the GET parameters into a dictionnary
-         var url_params = Ext.urlDecode(getParams[getParams.length - 1]);
-         // get tickets_id
-         var tickets_id = url_params['id'];
+         var tickets_id = getUrlParameter('id');
 
          //only in edit form
-         if(tickets_id == undefined) return;
+         if (tickets_id == undefined) return;
 
          var assign_me_html = "&nbsp;<img src='../plugins/escalade/pics/assign_me.png' "+
          "alt='$locale_assignme' width='20'"+
          "title='$locale_assignme' class='pointer' id='assign_me_ticket'>";
-         Ext.select('th:contains($locale_assignto) > img').insertHtml('afterEnd', assign_me_html);
+         Ext.select("th:contains('$locale_assignto') > img").insertHtml('afterEnd', assign_me_html);
 
          //onclick event on new buttons
          Ext.get('assign_me_ticket').on('click', function() {

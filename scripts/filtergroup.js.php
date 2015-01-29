@@ -5,18 +5,24 @@ include ("../../../inc/includes.php");
 header("Content-type: application/javascript");
 
 $JS = <<<JAVASCRIPT
-Ext.onReady(function() {
+function getUrlParameter(sParam) {
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++) {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam) {
+            return sParameterName[1];
+        }
+    }
+}
+
+$(document).ready(function() {
    // only in ticket form
    if (location.pathname.indexOf('ticket.form.php') > 0) {
 
-      // separating the GET parameters from the current URL
-      var getParams = document.URL.split("?");
-      // transforming the GET parameters into a dictionnary
-      var url_params = Ext.urlDecode(getParams[getParams.length - 1]);
-      // get tickets_id
-      var tickets_id = url_params['id'];
+      var tickets_id = getUrlParameter('id');
 
-      if(tickets_id == undefined) {
+      if (tickets_id == undefined) {
          // -----------------------
          // ---- Create Ticket ---- 
          // -----------------------
@@ -31,12 +37,12 @@ Ext.onReady(function() {
                var options = response.responseText;
 
                setTimeout(function() {  
-	               var assign_select_dom_id = Ext.select("select[name=_groups_id_assign]")
-	                     .elements[0].attributes.getNamedItem('id').nodeValue;
+                  //Tested with name=type : --Emmanuel
+	               var assign_select_dom_id = $("select[name=_groups_id_assign]")[0].attributes.getNamedItem('id').value; 
 
-	               //replace groups select by ajax response
+	               //replace groups select by AJAX response
 	               var el = document.getElementById(assign_select_dom_id);
-	               el.outerHTML = el.outerHTML.replace(el.innerHTML + '',options + '');
+	               el.outerHTML = el.outerHTML.replace(el.innerHTML + '', options + '');
 	            }, 200);
             },
             failure: function(response, opts) {
@@ -46,15 +52,12 @@ Ext.onReady(function() {
 
       } else {
          // -----------------------
-         // ---- Update Ticket ---- 
+         // ---- Update Ticket ----
          // -----------------------
 
-         //remove # in ticket_id
-         tickets_id = parseInt(tickets_id);
-
          //get id of itilactor select
-         var actor_select_dom_id = Ext.select("select[name*=_itil_assign\[_type]")
-            .elements[0].attributes.getNamedItem('id').nodeValue;
+         //selector not tested  --Emmanuel
+         var actor_select_dom_id = $("select[name*=_itil_assign\[_type]")[0].attributes.getNamedItem('id').value;
 
 
          Ext.Ajax.on('requestcomplete', function(conn, response, option) {
@@ -66,7 +69,7 @@ Ext.onReady(function() {
                )) {
 
 	 				//delay the execution (ajax requestcomplete event fired before dom loading)
-               setTimeout( function () {
+               setTimeout( function() {
 
                	Ext.Ajax.request({
 		               url: '{$CFG_GLPI['root_doc']}/plugins/escalade/ajax/group_values.php',
@@ -76,15 +79,14 @@ Ext.onReady(function() {
 		               success: function(response, opts) {
 		                  var options = response.responseText;
 
-		                  var assign_select_dom_id = Ext.select("select[name*=_itil_assign\[groups_id]")
-		                     .elements[0].attributes.getNamedItem('id').nodeValue;
+		                  var assign_select_dom_id = $("select[name*=_itil_assign\[groups_id]")[0].attributes.getNamedItem('id').value;
 
 		                  var nb_id = assign_select_dom_id.replace("dropdown__itil_assign[groups_id]", "");
 
 		                  //remove search input (only in glpi ajax mode)
 		                  if (Ext.get("search_"+nb_id) != null) {
-		                  	Ext.get("search_"+nb_id).remove();		
-		                  }	                  
+		                  	Ext.get("search_"+nb_id).remove();
+		                  }
 
 		                  //replace groups select by ajax response
                			var el = document.getElementById(assign_select_dom_id);

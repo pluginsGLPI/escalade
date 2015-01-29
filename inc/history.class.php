@@ -131,10 +131,11 @@ class PluginEscaladeHistory extends CommonDBTM {
    static function showCentralSpecificList($type) {
       global $CFG_GLPI, $DB;
 
-      if (! Session::haveRight("show_all_ticket", "1")
-          && ! Session::haveRight("show_assign_ticket", "1")
-          && ! Session::haveRight("create_ticket", "1")
-          && ! Session::haveRight("validate_ticket", "1")) {
+      //TODO : Revoir
+      if (! Session::haveRight("ticket", VALIDATE) //constante ?
+          && ! Session::haveRight("show_assign_ticket", READ)
+          && ! Session::haveRight("create_ticket", CREATE)
+          && ! Session::haveRight("validate_ticket", CREATEREQUEST & CREATEINCIDENT)) {
          return false;
       }
 
