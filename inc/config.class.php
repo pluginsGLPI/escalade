@@ -24,7 +24,10 @@ class PluginEscaladeConfig extends CommonDBTM {
 
       $this->getFromDB($ID);
       
+      //TODO : A adapter ?
       //$this->check($ID, 'r');
+      //=>
+         //$this->can($ID,$right,$input);
       
       $this->showFormHeader($options);
 
@@ -32,7 +35,8 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo "<td>" . __("Remove old assign group on new group assign", "escalade") . "</td>";
       echo "<td>";
       Dropdown::showYesNo("remove_group", $this->fields["remove_group"], -1, array(
-            'on_change' => 'hide_show_history(this.value)'
+            'on_change' => 'hide_show_history(this.value)',
+            'width' => '25%', //specific width needed (default 80%)
       ));
       echo "<script type='text/javascript'>
          function hide_show_history(val) {
@@ -45,8 +49,7 @@ class PluginEscaladeConfig extends CommonDBTM {
       </script>";
       echo "</td>";
       
-      $style = "";
-      if ($this->fields["remove_group"] == false) $style = "style='display: none !important;'";
+      $style = ($this->fields["remove_group"]) ? "" : "style='display: none !important;'";
       
       echo "<td id='show_history_td1' $style>";
       echo __("show group assign history visually", "escalade");
