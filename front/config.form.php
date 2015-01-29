@@ -3,15 +3,13 @@ include ("../../../inc/includes.php");
 
 if (!isset($_GET["id"])) $_GET["id"] = 0;
 
-
 $plugin = new Plugin();
-if (!$plugin->isInstalled('escalade') || !$plugin->isActivated('escalade')) {
+if (! $plugin->isInstalled('escalade') || ! $plugin->isActivated('escalade')) {
    echo "Plugin not installed or activated";
    return;
 }
-     
 
-$config= new PluginEscaladeConfig();
+$config = new PluginEscaladeConfig();
 
 if (isset($_POST["add"])) {
 
@@ -33,7 +31,7 @@ if (isset($_POST["add"])) {
    
 } else {
 
-   Html::header(__("Escalation", "escalade"),'',"plugins","escalade","config");
+   Html::header(__("Escalation", "escalade"), '',"plugins", "escalade", "config");
    $config->showForm(1); 
    Html::footer();
 

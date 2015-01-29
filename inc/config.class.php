@@ -1,6 +1,7 @@
 <?php
 
 class PluginEscaladeConfig extends CommonDBTM {
+   
    static function canCreate() {
       return true;
    }
@@ -16,14 +17,13 @@ class PluginEscaladeConfig extends CommonDBTM {
    function showForm($ID, $options = array()) {
       global $CFG_GLPI;
       
-      if (!$this->canView()) return false;
+      if (! $this->canView()) return false;
 
       $yesnoall = array(
          0 => __("No"),
          1 => __('First'),
          2 => __('Last')
       );
-
 
       $this->check($ID,'r');
       $this->showFormHeader($options);
@@ -43,21 +43,21 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo "<script type='text/javascript'>
          function hide_show_history(val) {
             if (val == 0) {
-               document.getElementById('show_history_td1').style.display = 'none';
-               document.getElementById('show_history_td2').style.display = 'none';
-               document.getElementById('show_solve_return_group_td1').style.display = 'none';
-               document.getElementById('show_solve_return_group_td2').style.display = 'none';
+               display = 'none';
             } else {
-               document.getElementById('show_history_td1').style.display = '';
-               document.getElementById('show_history_td2').style.display = '';
-               document.getElementById('show_solve_return_group_td1').style.display = '';
-               document.getElementById('show_solve_return_group_td2').style.display = '';
+               display = '';
             }
+            document.getElementById('show_history_td1').style.display = display;
+            document.getElementById('show_history_td2').style.display = display;
+            document.getElementById('show_solve_return_group_td1').style.display = display;
+            document.getElementById('show_solve_return_group_td2').style.display = display;
          }
       </script>";
       echo "</td>";
+      
       $style = "";
       if ($this->fields["remove_group"] == false) $style = "style='display: none !important;'";
+      
       echo "<td id='show_history_td1' $style>";
       echo __("show group assign history visually", "escalade");
       echo "</td>";
@@ -66,27 +66,19 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
-
       echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo __("Escalation history in tasks", "escalade");
-      echo "</td>";
+      echo "<td>" . __("Escalation history in tasks", "escalade") . "</td>";
       echo "<td>";
       Dropdown::showYesNo("task_history", $this->fields["task_history"]);
       echo "</td>";
-      echo "<td>";
-      echo __("Remove technician(s) on escalation", "escalade");
-      echo "</td>";
+      echo "<td>" . __("Remove technician(s) on escalation", "escalade") .  "</td>";
       echo "<td>";
       Dropdown::showYesNo("remove_tech", $this->fields["remove_tech"]);
       echo "</td>";
       echo "</tr>";
 
-
       echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo __("Ticket status after an escalation", "escalade");
-      echo "</td>";
+      echo "<td>" . __("Ticket status after an escalation", "escalade") . "</td>";
       echo "<td>";
       self::dropdownGenericStatus(
          "Ticket", "ticket_last_status", $this->fields["ticket_last_status"]);
@@ -98,7 +90,6 @@ class PluginEscaladeConfig extends CommonDBTM {
       Dropdown::showYesNo("solve_return_group", $this->fields["solve_return_group"]);
       echo "</td>";
       echo "</tr>";
-
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>";
@@ -116,9 +107,7 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>";
-      echo __("Clone tickets", "escalade");
-      echo "</td>";
+      echo "<td>" . __("Clone tickets", "escalade") . "</td>";
       echo "<td>";
       Dropdown::showYesNo("cloneandlink_ticket", $this->fields["cloneandlink_ticket"]);
       echo "</td>";
@@ -200,7 +189,6 @@ class PluginEscaladeConfig extends CommonDBTM {
       unset($config->fields['id']);
       $_SESSION['plugins']['escalade']['config'] = $config->fields;
    }
-
 
    static function dropdownGenericStatus($itemtype, $name, $value = CommonITILObject::INCOMING) {
       $item = new $itemtype();

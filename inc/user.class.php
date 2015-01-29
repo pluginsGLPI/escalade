@@ -34,7 +34,7 @@
 
 class PluginEscaladeUser {
 
-   static private function getUserGroup ($entity, $userid, $filter='', $first=true) {
+   static private function getUserGroup($entity, $userid, $filter='', $first=true) {
       global $DB;
 
       $query = "SELECT glpi_groups.id
@@ -59,12 +59,12 @@ class PluginEscaladeUser {
       return ($first ? 0 : array_pop($rep));
    }
 
-   static function getRequesterGroup ($entity, $userid, $first=true) {
+   static function getRequesterGroup($entity, $userid, $first=true) {
 
       return self::getUserGroup($entity, $userid, '`is_requester`', $first);
    }
 
-   static function getTechnicianGroup ($entity, $userid, $first=true) {
+   static function getTechnicianGroup($entity, $userid, $first=true) {
 
       return self::getUserGroup($entity, $userid, '`is_assign`', $first);
    }

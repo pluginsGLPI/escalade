@@ -4,7 +4,7 @@
 function plugin_init_escalade() {
    global $PLUGIN_HOOKS;
 
-   $PLUGIN_HOOKS['csrf_compliant']['escalade']= true;
+   $PLUGIN_HOOKS['csrf_compliant']['escalade'] = true;
 
    $plugin = new Plugin();
    if (isset($_SESSION['glpiID']) 
@@ -20,8 +20,8 @@ function plugin_init_escalade() {
                || strpos($_SERVER['REQUEST_URI'], "central.php") !== false) {
 
                //history and climb feature
-               if ($_SESSION['plugins']['escalade']['config']['show_history'] == true
-                  && $_SESSION['plugins']['escalade']['config']['remove_group'] == true) {
+               if ($_SESSION['plugins']['escalade']['config']['show_history'] 
+                  && $_SESSION['plugins']['escalade']['config']['remove_group'] ) {
                   $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'scripts/escalade.js.php';
                }
             }
@@ -31,17 +31,17 @@ function plugin_init_escalade() {
                $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'scripts/remove_btn.js.php';
 
                //clone ticket feature
-               if ($_SESSION['plugins']['escalade']['config']['cloneandlink_ticket'] == true) {
+               if ($_SESSION['plugins']['escalade']['config']['cloneandlink_ticket']) {
                   $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'scripts/cloneandlink_ticket.js.php';
                }
 
                //assign me feature
-               if ($_SESSION['plugins']['escalade']['config']['assign_me_ticket'] == true) {
+               if ($_SESSION['plugins']['escalade']['config']['assign_me_ticket']) {
                   $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'scripts/assign_me.js.php';
                }
                
                //filter group feature
-               if ($_SESSION['plugins']['escalade']['config']['use_filter_assign_group'] == true) {
+               if ($_SESSION['plugins']['escalade']['config']['use_filter_assign_group']) {
                   $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'scripts/filtergroup.js.php';
                }
 
@@ -94,7 +94,7 @@ function plugin_version_escalade() {
                               <a href='http://www.lefigaro.fr/'>LE FIGARO</a>",
          'homepage'       => "https://forge.indepnet.net/projects/escalade",
          'license'        => 'GPLv2+',
-         'minGlpiVersion' => "0.84"
+         'minGlpiVersion' => "0.84",
    );
 }
 

@@ -8,13 +8,13 @@ $locale_actor = __('Actor');
 
 $remove_delete_group_btn = "true";
 if (isset($_SESSION['plugins']['escalade']['config']['remove_delete_group_btn'])
-   && $_SESSION['plugins']['escalade']['config']['remove_delete_group_btn'] == true) {
+   && $_SESSION['plugins']['escalade']['config']['remove_delete_group_btn']) {
    $remove_delete_group_btn = "false";
 }
 
 $remove_delete_user_btn = "true";
 if (isset($_SESSION['plugins']['escalade']['config']['remove_delete_user_btn'])
-   && $_SESSION['plugins']['escalade']['config']['remove_delete_user_btn'] == true) {
+   && $_SESSION['plugins']['escalade']['config']['remove_delete_user_btn']) {
    $remove_delete_user_btn = "false";
 }
 

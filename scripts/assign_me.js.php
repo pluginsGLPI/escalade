@@ -10,8 +10,8 @@ $locale_assignto = __("Assigned to");
 //not executed in self-service interface & right verification
 if (isset($_SESSION['glpiactiveprofile'])
    && $_SESSION['glpiactiveprofile']['interface'] == "central"
-   && $_SESSION['glpiactiveprofile']['create_ticket'] == true
-   && $_SESSION['glpiactiveprofile']['update_ticket'] == true
+   && $_SESSION['glpiactiveprofile']['create_ticket'] 
+   && $_SESSION['glpiactiveprofile']['update_ticket'] 
    ) {
 
    $JS = <<<JAVASCRIPT
@@ -20,7 +20,7 @@ if (isset($_SESSION['glpiactiveprofile'])
       // only in ticket form
       if (location.pathname.indexOf('ticket.form.php') > 0) {
 
-                  // separating the GET parameters from the current URL
+         // separating the GET parameters from the current URL
          var getParams = document.URL.split("?");
          // transforming the GET parameters into a dictionnary
          var url_params = Ext.urlDecode(getParams[getParams.length - 1]);

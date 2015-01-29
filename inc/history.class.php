@@ -8,33 +8,35 @@ class PluginEscaladeHistory extends CommonDBTM {
 
    static function getFirstLineForTicket($tickets_id) {
       $found = self::getFullHistory($tickets_id);
-      if (count($found) == 0) return false;
-      else {
+      if (count($found) == 0) {
+         return false;
+      } else {
          return array_pop($found);
       }
    }
 
    static function getlastLineForTicket($tickets_id) {
       $found = self::getFullHistory($tickets_id);
-      if (count($found) == 0) return false;
-      else {
+      if (count($found) == 0) {
+         return false;
+      } else {
          return array_shift($found);
       }
    }
 
    static function getFullHistory($tickets_id) {
-      $history = new self;
+      $history = new self();
       return $history->find("tickets_id = $tickets_id", "date_mod DESC");
    }
 
 
    static function getHistory($tickets_id, $full_history = false) {
-      if ($full_history) $plugin_dir = "..";
-      else $plugin_dir = "../plugins/escalade";
+      
+      $plugin_dir = ($full_history) ? ".." : "../plugins/escalade";
 
       $filter_groups_id = array();
-      if ($_SESSION['plugins']['escalade']['config']['use_filter_assign_group'] == true) {
-      	$groups_groups = new PluginEscaladeGroup_Group;
+      if ($_SESSION['plugins']['escalade']['config']['use_filter_assign_group']) {
+      	$groups_groups = new PluginEscaladeGroup_Group();
  			$filter_groups_id = $groups_groups->getGroups($tickets_id);
          $use_filter_assign_group = true;
       } else {
@@ -42,8 +44,9 @@ class PluginEscaladeHistory extends CommonDBTM {
       }
 
       //get all line for this ticket
-      $group = new Group;
-      $history = new self;
+      $group = new Group();
+      
+      $history = new self();
       $found = $history->find("tickets_id = $tickets_id", "date_mod DESC");
       $nb_histories = count($found);
 
@@ -102,11 +105,12 @@ class PluginEscaladeHistory extends CommonDBTM {
    }
 
    static function showGroupLink($group, $full_history = false) {
-      $link_item = $group->getFormURL();
 
-      if (!$group->can($group->fields['id'],'r')) {
+      if (!$group->can($group->fields['id'], 'r')) {
          return $group->getNameID(true);
       }
+      
+      $link_item = $group->getFormURL();
 
       $link  = $link_item;
       $link .= (strpos($link,'?') ? '&amp;':'?').'id=' . $group->fields['id'];
@@ -114,7 +118,7 @@ class PluginEscaladeHistory extends CommonDBTM {
 
       echo "<a href='$link'";
       if ($full_history) echo " onclick='self.opener.location.href=\"$link\"; self.close();'";
-      echo ">".$group->getNameID(true)."</a>";
+      echo ">" . $group->getNameID(true) . "</a>";
    }
 
    static function showCentralList() {
@@ -134,7 +138,7 @@ class PluginEscaladeHistory extends CommonDBTM {
 
       $groups        = implode("','",$_SESSION['glpigroups']);
       $numrows = 0;
-      $is_deleted      = " `glpi_tickets`.`is_deleted` = 0 ";
+      $is_deleted    = " `glpi_tickets`.`is_deleted` = 0 ";
       
 
       if ($type == "notold") {
@@ -164,9 +168,9 @@ class PluginEscaladeHistory extends CommonDBTM {
 
 
       $query = "SELECT DISTINCT `glpi_tickets`.`id`
-      FROM `glpi_tickets`
-      LEFT JOIN `glpi_tickets_users`
-         ON (`glpi_tickets`.`id` = `glpi_tickets_users`.`tickets_id`)";
+               FROM `glpi_tickets`
+               LEFT JOIN `glpi_tickets_users`
+                  ON (`glpi_tickets`.`id` = `glpi_tickets_users`.`tickets_id`)";
 
       $query .= $query_join;
       
@@ -196,7 +200,7 @@ class PluginEscaladeHistory extends CommonDBTM {
             if ($type == "notold") {
                $options['searchtype'][$num] = 'notequals';
                $options['contains'][$num]   = $gID;
-               $options['link'][$num]       = ($num==0?'AND':'OR');
+               $options['link'][$num]       = ($num==0)?'AND':'OR';
                $num++;
 
                $options['field'][$num]      = 1881; //see hook.php, function ..._getAddSearchOptions
@@ -206,7 +210,7 @@ class PluginEscaladeHistory extends CommonDBTM {
             if ($type == "notold") {
                $options['link'][$num]       = 'AND';
             } else {
-               $options['link'][$num]       = ($num==0?'AND':'OR');
+               $options['link'][$num]       = ($num==0) ?'AND':'OR';
             }
             $num++;
             $options['field'][$num]      = 12; // status
@@ -227,7 +231,8 @@ class PluginEscaladeHistory extends CommonDBTM {
          echo "</th></tr>";
 
          if ($number) {
-            echo "<tr><th></th>";
+            echo "<tr>";
+            echo "<th></th>";
             echo "<th>".__('Requester')."</th>";
             echo "<th>".__('Associated element')."</th>";
             echo "<th>".__('Description')."</th></tr>";

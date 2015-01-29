@@ -8,7 +8,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       if ($item->getType()=='Group') {
-            return __("Escalation", "escalade");
+         return __("Escalation", "escalade");
       }
       return '';
    }
@@ -26,7 +26,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
    function manageGroup($groups_id) {
       global $CFG_GLPI;
 
-      $group = new Group;
+      $group = new Group();
 
       if (Session::haveRight('group', 'w')) {
          echo "<form method='post' name='' id='manageGroup' action=\"".$CFG_GLPI['root_doc'] .
@@ -113,7 +113,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
       }
 
       //remove already assigned groups
-      if (!empty($ticket_groups)) {
+      if (! empty($ticket_groups)) {
          $groups = array_diff_assoc($groups, $ticket_groups);
       }
 

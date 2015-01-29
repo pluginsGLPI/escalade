@@ -12,7 +12,7 @@ class PluginEscaladeTicket {
     */
    static function item_update(CommonDBTM $item) {
 
-      if ($_SESSION['plugins']['escalade']['config']['remove_group'] == true) {
+      if ($_SESSION['plugins']['escalade']['config']['remove_group']) {
 
          //solve ticket
          if (isset($item->input['status']) && $item->input['status'] == CommonITILObject::SOLVED) {
@@ -52,8 +52,8 @@ class PluginEscaladeTicket {
     * @param CommonDBTM $item the ticket object
     */
    static function AssignFirstGroupOnSolve(CommonDBTM $item) {
-      if ($_SESSION['plugins']['escalade']['config']['remove_group'] == true
-         && $_SESSION['plugins']['escalade']['config']['solve_return_group'] == true) {
+      if ($_SESSION['plugins']['escalade']['config']['remove_group'] 
+         && $_SESSION['plugins']['escalade']['config']['solve_return_group']) {
 
          $tickets_id = $item->fields['id'];
 
@@ -84,7 +84,7 @@ class PluginEscaladeTicket {
          }    
 
          //add a task to inform the escalation
-         if ($_SESSION['plugins']['escalade']['config']['task_history'] == true) {
+         if ($_SESSION['plugins']['escalade']['config']['task_history']) {
             $group = new Group;
             $group->getFromDB($first_history['groups_id']);
             $task = new TicketTask;
@@ -110,8 +110,8 @@ class PluginEscaladeTicket {
          return;
       }
 
-      if ($_SESSION['plugins']['escalade']['config']['remove_group'] == true
-         && $_SESSION['plugins']['escalade']['config']['solve_return_group'] == true) {
+      if ($_SESSION['plugins']['escalade']['config']['remove_group'] 
+         && $_SESSION['plugins']['escalade']['config']['solve_return_group']) {
 
          $tickets_id = $item->fields['id'];
 
@@ -134,7 +134,7 @@ class PluginEscaladeTicket {
          $_SESSION['plugin_escalade']['solution'] = true;
 
          //add the first history group
-         $group_ticket = new Group_Ticket;
+         $group_ticket = new Group_Ticket();
          $group_ticket->add(array(
             'tickets_id' => $tickets_id,
             'groups_id'  => $rejected_history['groups_id'],
@@ -142,8 +142,8 @@ class PluginEscaladeTicket {
          ));  
 
          //add a task to inform the escalation
-         if ($_SESSION['plugins']['escalade']['config']['task_history'] == true) {
-            $group = new Group;
+         if ($_SESSION['plugins']['escalade']['config']['task_history']) {
+            $group = new Group();
             $group->getFromDB($rejected_history['groups_id']);
             $task = new TicketTask;
             $task->add(array(
@@ -180,15 +180,15 @@ class PluginEscaladeTicket {
       }
 
       //if group sent is not an assign group, return
-      if($item->input['type'] != CommonITILActor::ASSIGN) return;
+      if ($item->input['type'] != CommonITILActor::ASSIGN) return;
 
       $tickets_id = $item->input['tickets_id'];
       $groups_id  = $item->input['groups_id'];
 
       //if group already assigned, return
-      $group_ticket = new Group_Ticket;
+      $group_ticket = new Group_Ticket();
       $condition = "tickets_id = $tickets_id AND groups_id = $groups_id AND type = 2";
-      if($group_ticket->find($condition)) {
+      if ($group_ticket->find($condition)) {
          unset($_SESSION['plugin_escalade']['keep_users']);
          return;
       }
@@ -196,7 +196,7 @@ class PluginEscaladeTicket {
       $item->fields['status'] = CommonITILObject::ASSIGNED;
 
       //add line in history table
-      $history = new PluginEscaladeHistory;
+      $history = new PluginEscaladeHistory();
       $history->add(array(
          'tickets_id' => $tickets_id,
          'groups_id'  => $groups_id
@@ -216,15 +216,16 @@ class PluginEscaladeTicket {
          unset($_SESSION['plugin_escalade']['solution']);
          return $item;
       }
-      if ($_SESSION['plugins']['escalade']['config']['task_history'] == true) {
-         $group = new Group;
+      if ($_SESSION['plugins']['escalade']['config']['task_history']) {
+         $group = new Group();
          $group->getFromDB($groups_id);
-         $task = new TicketTask;
+         
+         $task = new TicketTask();
          $task->add(array(
             'tickets_id' => $tickets_id,
             'is_private' => true,
             'state'      => 0, //information
-            'content'    => __("escalated to the group", "escalade")." ".$group->getName()
+            'content'    => __("escalated to the group", "escalade") . " " . $group->getName()
          ));
       }
 
@@ -237,7 +238,7 @@ class PluginEscaladeTicket {
       }
 
       if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] != -1) {
-         $ticket = new Ticket;
+         $ticket = new Ticket();
          $ticket->update(array(
             'id'     => $tickets_id,
             'status' => $_SESSION['plugins']['escalade']['config']['ticket_last_status']
@@ -326,10 +327,10 @@ class PluginEscaladeTicket {
       //don't add group if already exist for this ticket
       $group_ticket = new Group_Ticket;
       $condition = "tickets_id = $tickets_id AND groups_id = $groups_id AND type = 2";
-      if(!$group_ticket->find($condition)) {
+      if (! $group_ticket->find($condition)) {
 
          // add group to ticket
-         $ticket = new Ticket;
+         $ticket = new Ticket();
          $ticket->update(array(
             'id' => $tickets_id,
             '_itil_assign' => array(
@@ -339,7 +340,7 @@ class PluginEscaladeTicket {
          ));
       }
       
-      if (!$full_history) Html::back();
+      if (! $full_history) Html::back();
       else {
          //reload parent window and close popup
          echo "<script type='text/javascript'>
@@ -367,7 +368,7 @@ class PluginEscaladeTicket {
          }
       }
 
-      $group_ticket = new Group_Ticket;
+      $group_ticket = new Group_Ticket();
       $found = $group_ticket->find("tickets_id = $tickets_id AND type = 2 $where_keep");
       foreach ($found as $id => $gt) {
          $group_ticket->delete($gt);
@@ -397,7 +398,7 @@ class PluginEscaladeTicket {
          }
       }
 
-      $ticket_user = new Ticket_User;
+      $ticket_user = new Ticket_User();
       $found = $ticket_user->find("tickets_id = $tickets_id AND type = 2 $where_keep");
       foreach ($found as $id => $tu) {
 
@@ -429,12 +430,11 @@ class PluginEscaladeTicket {
     * @return nothing
     */
    static function item_add_user(Ticket_User $item) {
-      $users_id =  $item->input['users_id'];
+      $users_id   = $item->input['users_id'];
       $tickets_id = $item->input['tickets_id'];
-      $ticket = new Ticket;
+      $ticket = new Ticket();
       $ticket->getFromDB($tickets_id);
       $groups_id = array();
-
 
       self::removeAssignUsers($tickets_id,$users_id);
 
@@ -457,13 +457,13 @@ class PluginEscaladeTicket {
                                                       false);
       }
 
-      if (!empty($groups_id)) {
-         $group_ticket = new Group_Ticket;
+      if (! empty($groups_id)) {
+         $group_ticket = new Group_Ticket();
 
          //The ticket cannot have this group already assigned
          $found = $group_ticket->find("tickets_id = $tickets_id AND groups_id = $groups_id
                                        AND type = ".CommonITILActor::ASSIGN);
-         if (!empty($found)) return;
+         if (! empty($found)) return;
 
          //prevent user removal
          $_SESSION['plugin_escalade']['keep_users'][$item->fields['users_id']] 
@@ -477,9 +477,9 @@ class PluginEscaladeTicket {
          ));
 
 
-      }else{
+      } else {
 
-         if ($_SESSION['plugins']['escalade']['config']['remove_tech'] == true) {
+         if ($_SESSION['plugins']['escalade']['config']['remove_tech']) {
             self::removeAssignGroups($tickets_id);
          }
 
@@ -499,7 +499,7 @@ class PluginEscaladeTicket {
     * @return nothing
     */
    static function linkedTickets(CommonDBTM $ticket, $status = CommonITILObject::SOLVED) {
-      if ($_SESSION['plugins']['escalade']['config']['close_linkedtickets'] == true) {
+      if ($_SESSION['plugins']['escalade']['config']['close_linkedtickets']) {
          $input = array(
             'status' => $status
          );
@@ -527,20 +527,19 @@ class PluginEscaladeTicket {
       global $DB;
 
       //get auto-assign mode (config in entity)
-      $auto_assign_mode = Entity::getUsedConfig(
-         'auto_assign_mode', $_SESSION['glpiactive_entity']);
+      $auto_assign_mode = Entity::getUsedConfig('auto_assign_mode', $_SESSION['glpiactive_entity']);
       if ($auto_assign_mode == Entity::CONFIG_NEVER) return true;
 
       //get category
-      $category = new ITILCategory;
+      $category = new ITILCategory();
       $category->getFromDB($item->input['itilcategories_id']);
 
 
       //category group
       if (!empty($category->fields['groups_id']) 
-         && $_SESSION['plugins']['escalade']['config']['reassign_group_from_cat'] == true) {
+         && $_SESSION['plugins']['escalade']['config']['reassign_group_from_cat']) {
          
-         $group_ticket = new Group_Ticket;
+         $group_ticket = new Group_Ticket();
 
          //check if group is not already present
          $group_found = $group_ticket->find("tickets_id = '".$item->fields['id'].
@@ -559,9 +558,9 @@ class PluginEscaladeTicket {
 
       //category user
       if (!empty($category->fields['users_id']) 
-         && $_SESSION['plugins']['escalade']['config']['reassign_tech_from_cat'] == true) {
+         && $_SESSION['plugins']['escalade']['config']['reassign_tech_from_cat']) {
 
-         $ticket_user = new Ticket_User;
+         $ticket_user = new Ticket_User();
 
          //check if user is not already present
          $user_found = $ticket_user->find("tickets_id = '".$item->fields['id'].
@@ -588,7 +587,7 @@ class PluginEscaladeTicket {
       global $DB;
 
       //get old ticket
-      $ticket = new Ticket;
+      $ticket = new Ticket();
       if (!$ticket->getFromDB($tickets_id)) {
          echo "{success:false, message:\"".__("Error : get old ticket", "escalade")."\"}";
          exit;
@@ -597,7 +596,7 @@ class PluginEscaladeTicket {
 
       //set fields 
       $fields = $ticket->fields;
-      $fields = array_map(array('Toolbox','addslashes_deep'), $fields);
+      $fields = array_map(array('Toolbox', 'addslashes_deep'), $fields);
       $fields['id']                  = 0;
       $fields['_users_id_requester'] = 0;
       $fields['status']              = CommonITILObject::INCOMING;
@@ -625,8 +624,8 @@ class PluginEscaladeTicket {
       }
 
       //add a followup to indicate duplication
-      $followup = new TicketFollowup;
-      if (!$followup->add(array(
+      $followup = new TicketFollowup();
+      if (! $followup->add(array(
          'tickets_id'      => $newID,
          'users_id'        => Session::getLoginUserID(),
          'content'         => __("This ticket has been from the ticket num", "escalade")." ".
@@ -656,7 +655,7 @@ class PluginEscaladeTicket {
       if (!$res = $DB->query($query_groups)) {
          echo "{success:false, message:\"".__("Error : adding actors (group)", "escalade")."\"}";
          exit;
-      }            
+      }
 
       //add documents
       $query_docs = "INSERT INTO glpi_documents_items 
@@ -685,15 +684,14 @@ class PluginEscaladeTicket {
 
 
    static function assign_me($tickets_id) {
-      global $CFG_GLPI;
 
-      $tu = new Ticket_User;
+      $tu = new Ticket_User();
       $found = $tu->find("`tickets_id` = '$tickets_id' 
                            AND `users_id` = '".$_SESSION['glpiID']."'
                            AND `type` = '".CommonITILActor::ASSIGN."'");
 
       if (empty($found)) {
-         $ticket = new Ticket;
+         $ticket = new Ticket();
          $ticket->update(array('id' => $tickets_id, 
                                '_itil_assign' => array('users_id' => $_SESSION['glpiID'], 
                                                        '_type'    => 'user', )));
