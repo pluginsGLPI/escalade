@@ -45,8 +45,8 @@ $(document).ready(function() {
          // -----------------------
 
          //get id of itilactor select
-         //selector not tested  --Emmanuel
-         var actor_select_dom_id = $("select[name*=_itil_assign\[_type]")[0].attributes.getNamedItem('id').value;
+         //selector tested  --Emmanuel
+         var actor_select_dom_id = $("select[name*='_itil_assign[_type]']")[0].attributes.getNamedItem('id').value;
 
 
          Ext.Ajax.on('requestcomplete', function(conn, response, option) {
@@ -68,7 +68,7 @@ $(document).ready(function() {
 		               success: function(response, opts) {
 		                  var options = response.responseText;
 
-		                  var assign_select_dom_id = $("select[name*=_itil_assign\[groups_id]")[0].attributes.getNamedItem('id').value;
+		                  var assign_select_dom_id = $("select[name*='_itil_assign[groups_id]']")[0].attributes.getNamedItem('id').value;
 
 		                  var nb_id = assign_select_dom_id.replace("dropdown__itil_assign[groups_id]", "");
 
