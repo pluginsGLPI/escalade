@@ -55,18 +55,24 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo __("show group assign history visually", "escalade");
       echo "</td>";
       echo "<td id='show_history_td2' $style>";
-      Dropdown::showYesNo("show_history", $this->fields["show_history"]);
+      Dropdown::showYesNo("show_history", $this->fields["show_history"], -1, array(
+         //'width' => '25%',
+      ));
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>" . __("Escalation history in tasks", "escalade") . "</td>";
       echo "<td>";
-      Dropdown::showYesNo("task_history", $this->fields["task_history"]);
+      Dropdown::showYesNo("task_history", $this->fields["task_history"], -1, array(
+         'width' => '25%',
+      ));
       echo "</td>";
       echo "<td>" . __("Remove technician(s) on escalation", "escalade") .  "</td>";
       echo "<td>";
-      Dropdown::showYesNo("remove_tech", $this->fields["remove_tech"]);
+      Dropdown::showYesNo("remove_tech", $this->fields["remove_tech"], -1, array(
+         //'width' => '25%',
+      ));
       echo "</td>";
       echo "</tr>";
 
@@ -80,7 +86,9 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo __("Assign ticket to intial group on solve ticket", "escalade");
       echo "</td>";
       echo "<td id='show_solve_return_group_td2' $style>";
-      Dropdown::showYesNo("solve_return_group", $this->fields["solve_return_group"]);
+      Dropdown::showYesNo("solve_return_group", $this->fields["solve_return_group"], -1, array(
+         //'width' => '25%',
+      ));
       echo "</td>";
       echo "</tr>";
 
@@ -89,26 +97,34 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo __("Assign the technical manager on ticket category change", "escalade");
       echo "</td>";
       echo "<td>";
-      Dropdown::showYesNo("reassign_tech_from_cat", $this->fields["reassign_tech_from_cat"]);
+      Dropdown::showYesNo("reassign_tech_from_cat", $this->fields["reassign_tech_from_cat"], -1, array(
+         //'width' => '25%',
+      ));
       echo "</td>";
       echo "<td>";
       echo __("Assign the technical groupe on ticket category change", "escalade");
       echo "</td>";
       echo "<td>";
-      Dropdown::showYesNo("reassign_group_from_cat", $this->fields["reassign_group_from_cat"]);
+      Dropdown::showYesNo("reassign_group_from_cat", $this->fields["reassign_group_from_cat"], -1, array(
+         //'width' => '25%',
+      ));
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>" . __("Clone tickets", "escalade") . "</td>";
       echo "<td>";
-      Dropdown::showYesNo("cloneandlink_ticket", $this->fields["cloneandlink_ticket"]);
+      Dropdown::showYesNo("cloneandlink_ticket", $this->fields["cloneandlink_ticket"], -1, array(
+         //'width' => '25%',
+      ));
       echo "</td>";
       echo "<td>";
       echo __("Close cloned tickets at the same time", "escalade");
       echo "</td>";
       echo "<td>";
-      Dropdown::showYesNo("close_linkedtickets", $this->fields["close_linkedtickets"]);
+      Dropdown::showYesNo("close_linkedtickets", $this->fields["close_linkedtickets"], -1, array(
+         //'width' => '25%',
+      ));
       echo "</td>";
       echo "</tr>";
 
@@ -128,11 +144,15 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo "</td>";
       echo "<td><label for=''>".__("a time of creation", "escalade")."&nbsp;</label>";
       Dropdown::showYesNo("use_assign_user_group_creation", 
-                          $this->fields["use_assign_user_group_creation"]);
+                          $this->fields["use_assign_user_group_creation"], -1, array(
+         //'width' => '25%',
+      ));
       echo "</td>";
       echo "<td><label for=''>".__("a time of modification", "escalade")."&nbsp;</label>";
       Dropdown::showYesNo("use_assign_user_group_modification", 
-                          $this->fields["use_assign_user_group_modification"]);
+                          $this->fields["use_assign_user_group_modification"], -1, array(
+         //'width' => '25%',
+      ));
       echo "</td>";
       echo "</tr></table>";
       $plugin = new Plugin();
@@ -150,7 +170,9 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo __("Display delete button of assigned groups", "escalade");
       echo "</td>";
       echo "<td>";
-      Dropdown::showYesNo("remove_delete_group_btn", $this->fields["remove_delete_group_btn"]);
+      Dropdown::showYesNo("remove_delete_group_btn", $this->fields["remove_delete_group_btn"], -1, array(
+         'width' => '25%',
+      ));
       echo "</td>";
       echo "<td>";
       echo __("Display delete button of assigned users", "escalade");
@@ -165,7 +187,9 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo __("Rapid ticket assignment button", "escalade");
       echo "</td>";
       echo "<td>";
-      Dropdown::showYesNo("assign_me_ticket", $this->fields["assign_me_ticket"]);
+      Dropdown::showYesNo("assign_me_ticket", $this->fields["assign_me_ticket"], -1, array(
+         'width' => '25%',
+      ));
       echo "</td>";
 
       echo "<td>";
