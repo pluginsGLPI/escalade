@@ -101,8 +101,8 @@ function plugin_version_escalade() {
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_escalade_check_prerequisites() {
 
-   if (version_compare(GLPI_VERSION,'0.84','lt') || version_compare(GLPI_VERSION,'0.85','ge')) {
-      echo "This plugin requires GLPI >= 0.84 and GLPI < 0.85";
+   if (version_compare(GLPI_VERSION,'0.85','lt') || version_compare(GLPI_VERSION,'0.86','ge')) {
+      echo "This plugin requires GLPI >= 0.85 and GLPI < 0.86";
    } else {
       return true;
    }
