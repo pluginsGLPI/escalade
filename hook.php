@@ -1,20 +1,17 @@
 <?php
-
 function plugin_escalade_install() {
    global $DB;
 
-
    //get version
-   $plugin = new Plugin;
+   $plugin = new Plugin();
    $found = $plugin->find("name = 'escalade'");
    $plugin_escalade = array_shift($found);
    
-
    //init migration
    $migration = new Migration( $plugin_escalade['version']);
 
    // == Tables creation (initial installation) ==
-   if (!TableExists('glpi_plugin_escalade_histories')) {
+   if (! TableExists('glpi_plugin_escalade_histories')) {
       $query = "CREATE TABLE `glpi_plugin_escalade_histories` (
          `id`              INT(11) NOT NULL AUTO_INCREMENT,
          `tickets_id`      INT(11) NOT NULL,
@@ -27,7 +24,7 @@ function plugin_escalade_install() {
       $DB->query($query);
    } 
 
-   if (!TableExists('glpi_plugin_escalade_configs')) {
+   if (! TableExists('glpi_plugin_escalade_configs')) {
       $query = "CREATE TABLE `glpi_plugin_escalade_configs` (
          `id`                                      INT(11) NOT NULL AUTO_INCREMENT,
          `remove_group`                            INT(11) NOT NULL,
@@ -56,45 +53,45 @@ function plugin_escalade_install() {
    }
 
    // == Update to 1.2 ==
-   if (!FieldExists('glpi_plugin_escalade_configs', 'cloneandlink_ticket')) {
+   if (! FieldExists('glpi_plugin_escalade_configs', 'cloneandlink_ticket')) {
       $migration->addField('glpi_plugin_escalade_configs', 'cloneandlink_ticket', 
                            'INT(11) NOT NULL',
                            array('after' => 'reassign_tech_from_cat'));
       $migration->migrationOneTable('glpi_plugin_escalade_configs');
    }
-   if (!FieldExists('glpi_plugin_escalade_configs', 'close_linkedtickets')) {
+   if (! FieldExists('glpi_plugin_escalade_configs', 'close_linkedtickets')) {
       $migration->addField('glpi_plugin_escalade_configs', 'close_linkedtickets', 
                            'INT(11) NOT NULL',
                            array('after' => 'cloneandlink_ticket'));
       $migration->migrationOneTable('glpi_plugin_escalade_configs');
    }
 
-   if (!FieldExists('glpi_plugin_escalade_configs', 'use_assign_user_group')) {
+   if (! FieldExists('glpi_plugin_escalade_configs', 'use_assign_user_group')) {
       $migration->addField('glpi_plugin_escalade_configs', 'use_assign_user_group', 
                            'INT(11) NOT NULL',
                            array('after' => 'close_linkedtickets'));
       $migration->migrationOneTable('glpi_plugin_escalade_configs');
    }
-   if (!FieldExists('glpi_plugin_escalade_configs', 'use_assign_user_group_creation')) {
+   if (! FieldExists('glpi_plugin_escalade_configs', 'use_assign_user_group_creation')) {
       $migration->addField('glpi_plugin_escalade_configs', 'use_assign_user_group_creation', 
                            'INT(11) NOT NULL',
                            array('after' => 'use_assign_user_group'));
       $migration->migrationOneTable('glpi_plugin_escalade_configs');
    }
-   if (!FieldExists('glpi_plugin_escalade_configs', 'use_assign_user_group_modification')) {
+   if (! FieldExists('glpi_plugin_escalade_configs', 'use_assign_user_group_modification')) {
       $migration->addField('glpi_plugin_escalade_configs', 'use_assign_user_group_modification', 
                            'INT(11) NOT NULL',
                            array('after' => 'use_assign_user_group_creation'));
       $migration->migrationOneTable('glpi_plugin_escalade_configs');
    }
-   if (!FieldExists('glpi_plugin_escalade_configs', 'remove_delete_group_btn')) {
+   if (! FieldExists('glpi_plugin_escalade_configs', 'remove_delete_group_btn')) {
       $migration->addField('glpi_plugin_escalade_configs', 'remove_delete_group_btn', 
                            'INT(11) NOT NULL',
                            array('after' => 'remove_group'));
       $migration->migrationOneTable('glpi_plugin_escalade_configs');
    }
-   if (!isIndex("glpi_plugin_escalade_histories", 'tickets_id') 
-      || !isIndex("glpi_plugin_escalade_histories", 'groups_id')) {
+   if (! isIndex("glpi_plugin_escalade_histories", 'tickets_id') 
+      || ! isIndex("glpi_plugin_escalade_histories", 'groups_id')) {
       $migration->addKey("glpi_plugin_escalade_histories", 'tickets_id', 'tickets_id');
       $migration->addKey("glpi_plugin_escalade_histories", 'groups_id', 'groups_id');
       $migration->migrationOneTable('glpi_plugin_escalade_histories');
@@ -102,19 +99,19 @@ function plugin_escalade_install() {
 
 
    // == Update to 1.3 ==
-   if (!FieldExists('glpi_plugin_escalade_configs', 'remove_delete_user_btn')) {
+   if (! FieldExists('glpi_plugin_escalade_configs', 'remove_delete_user_btn')) {
       $migration->addField('glpi_plugin_escalade_configs', 'remove_delete_user_btn', 
                            'INT(11) NOT NULL DEFAULT 1',
                            array('after' => 'remove_delete_group_btn'));
       $migration->migrationOneTable('glpi_plugin_escalade_configs');
    }
-   if (!FieldExists('glpi_plugin_escalade_configs', 'use_filter_assign_group')) {
+   if (! FieldExists('glpi_plugin_escalade_configs', 'use_filter_assign_group')) {
       $migration->addField('glpi_plugin_escalade_configs', 'use_filter_assign_group', 
                            'INT(11) NOT NULL',
                            array('after' => 'use_assign_user_group_modification'));
       $migration->migrationOneTable('glpi_plugin_escalade_configs');
    }
-   if (!TableExists('glpi_plugin_escalade_groups_groups')) {
+   if (! TableExists('glpi_plugin_escalade_groups_groups')) {
       $query = "CREATE TABLE `glpi_plugin_escalade_groups_groups` (
          `id`                                      INT(11) NOT NULL AUTO_INCREMENT,
          `groups_id_source` int(11) NOT NULL DEFAULT '0',
@@ -167,20 +164,19 @@ function plugin_escalade_uninstall() {
    global $DB;
 
    //Delete plugin's table
-   $tables = array (
+   $tables = array(
       'glpi_plugin_escalade_histories',
       'glpi_plugin_escalade_configs',
       'glpi_plugin_escalade_groups_groups'
    );
-   foreach ($tables as $table)
+   foreach ($tables as $table) {
       $DB->query("DROP TABLE IF EXISTS `$table`");
-
+   }
    return true;
 }
 
 
 function plugin_escalade_item_update($item) {
-   global $DB;
 
    if ($item instanceof Ticket) return PluginEscaladeTicket::item_update($item);  
    return true;
@@ -188,7 +184,6 @@ function plugin_escalade_item_update($item) {
 
 function plugin_escalade_item_add_user($item) {
    global $DB;
-
 
    if ($item instanceof Ticket_User) {
       //prevent escalade hook to trigger on ticket creation
