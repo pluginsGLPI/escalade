@@ -22,17 +22,21 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
    }
 
 	$JS = <<<JAVASCRIPT
-   Ext.onReady(function() {
+	function removeOnButtons(str) {
+   	$("table:contains('$locale_actor') tr:last-child td:last-child a[onclick*="+str+"]").remove();
+	}
+	
+   $(document).ready(function() {
       // only in ticket form
       if (location.pathname.indexOf('ticket.form.php') > 0) {
          //remove "delete" group buttons
          if ({$remove_delete_group_btn}) {
-            Ext.select("table:contains($locale_actor) tr:last-child td:last-child a[onclick*=delete_group]").remove();
+            removeOnButtons("delete_group");
          }
 
          //remove "delete" user buttons
          if ({$remove_delete_user_btn}) {
-            Ext.select("table:contains($locale_actor) tr:last-child td:last-child a[onclick*=delete_user]").remove();
+            removeOnButtons("delete_user");
          }
 
       }
