@@ -28,9 +28,9 @@ $(document).ready(function() {
          // -----------------------
 
         //perform an ajax request to get the new options for the group list
-         Ext.Ajax.request({
+         $.ajax({
             url: '{$CFG_GLPI['root_doc']}/plugins/escalade/ajax/group_values.php',
-            params: {
+            data: {
                'ticket_id': 0
             },
             success: function(response, opts) {
@@ -45,7 +45,7 @@ $(document).ready(function() {
 	               el.outerHTML = el.outerHTML.replace(el.innerHTML + '', options + '');
 	            }, 200);
             },
-            failure: function(response, opts) {
+            fail: function(response, opts) {
                console.log('server-side failure with status code ' + response.status);
             }
          });
@@ -71,9 +71,9 @@ $(document).ready(function() {
 	 				//delay the execution (ajax requestcomplete event fired before dom loading)
                setTimeout( function() {
 
-               	Ext.Ajax.request({
+               	$.ajax({
 		               url: '{$CFG_GLPI['root_doc']}/plugins/escalade/ajax/group_values.php',
-		               params: {
+		               data: {
 		                  'ticket_id': tickets_id
 		               },
 		               success: function(response, opts) {

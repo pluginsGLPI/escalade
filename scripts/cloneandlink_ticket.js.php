@@ -40,10 +40,13 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
          var duplicate_html = "&nbsp;<img src='../plugins/escalade/pics/cloneandlink_ticket.png' "+
          "alt='$locale_cloneandlink ' "+
          "title='$locale_cloneandlink ' class='pointer' id='cloneandlink_ticket'>";
-         Ext.select("th:contains('$locale_linkedtickets') > img").insertHtml('afterEnd', duplicate_html);
+         //Ext.select("th:contains('$locale_linkedtickets') > img").insertHtml('afterEnd', duplicate_html);
+         console.log("afterEnd -> append()");
+         $("th:contains('$locale_linkedtickets') > img").append(duplicate_html);
 
          //onclick event on new buttons
-         Ext.get('cloneandlink_ticket').on('click', function() {
+         var el = $('cloneandlink_ticket');
+         el.on('click', function() {
 
             // show a wait message during all Ajax requests
             Ext.Ajax.on('beforerequest', function() { 
@@ -54,12 +57,13 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
             Ext.Ajax.on('requestexception', Ext.getBody().unmask, Ext.getBody());
 
             //call PluginVillejuifTicket::duplicate (AJAX)
-            Ext.Ajax.request({
+            $.ajax({
                url:'../plugins/escalade/ajax/cloneandlink_ticket.php',
-               params: { 'tickets_id': tickets_id },
+               data: { 'tickets_id': tickets_id },
                success: function(response, opts) {
-                //var res = Ext.decode(response.responseText);
-                  var res = JSON.parse(response.responseText)
+                  var res = JSON.parse(response.responseText);
+                  //var res = Ext.decode(response.responseText);
+                  
                   if (res.success == false) {
                      //console.log(res);
                      return false;

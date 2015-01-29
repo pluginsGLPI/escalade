@@ -47,12 +47,14 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
 
 
       //add new histories in assign actor
-      Ext.Ajax.request({
+      $.ajax({
+         type: "POST", //optionnel ?
          url: '../plugins/escalade/ajax/history.php',
-         params: {
+         data: {
             'tickets_id': tickets_id
          },
-         success: function(response, opts) {
+         success: function(response, opts) { //function(code_html, statut){ // code_html contient le HTML renvoyé
+            console.log("success"); //DEBUG
             var history = response.responseText;
 
             var g_assign_bloc = $(
@@ -61,10 +63,15 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
             );
             var assign_bloc = $("table:contains($locale_actor) tr:last-child td:last-child");
 
-            if (g_assign_bloc.elements.length == 0) {
-               assign_bloc.insertHtml("beforeEnd", history);
+            //TODO : A revoir (?)
+            if (g_assign_bloc.length == 0) {
+               console.log("jQuery : A tester");
+               assign_bloc.append(history);
+               //assign_bloc.insertHtml("beforeEnd", history);
             } else {
-               g_assign_bloc.insertHtml("afterEnd", history);
+               //g_assign_bloc.insertHtml("afterEnd", history);
+               console.log("jQuery : insertAfter");
+               $(history).insertAfter(g_assign_bloc);
             }
             
          }
@@ -108,7 +115,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
                         //prepare a span element to load new elements
                         el.insertHtml('afterBegin', "<span id='escalade_block"+suffix+"'>test</span>");
 
-                        //load html in this span (with execution on javascript)
+                        //load HTML in this Span (with execution on Javascript)
                         Ext.get("escalade_block"+suffix).load({
                            url:'../plugins/escalade/ajax/central.php',
                            scripts:true

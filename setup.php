@@ -21,7 +21,7 @@ function plugin_init_escalade() {
 
                //history and climb feature
                if ($_SESSION['plugins']['escalade']['config']['show_history'] 
-                  && $_SESSION['plugins']['escalade']['config']['remove_group'] ) {
+                  && $_SESSION['plugins']['escalade']['config']['remove_group']) {
                   $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'scripts/escalade.js.php';
                }
             }
