@@ -15,17 +15,6 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
    $locale_yourticketstoclose = __('Your tickets to close');
 
    $JS = <<<JAVASCRIPT
-   function getUrlParameter(sParam) {
-       var sPageURL = window.location.search.substring(1);
-       var sURLVariables = sPageURL.split('&');
-       for (var i = 0; i < sURLVariables.length; i++) {
-           var sParameterName = sURLVariables[i].split('=');
-           if (sParameterName[0] == sParam) {
-               return sParameterName[1];
-           }
-       }
-   }
-   
    //get central list for plugin and insert in group tab
    function getSelectorCentralList() {
       var selector = "div[id^=Central][id$=2] .tab_cadre_central > tbody > tr > td:nth(2)";
@@ -116,10 +105,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
                         el.insertHtml('afterBegin', "<span id='escalade_block"+suffix+"'>test</span>");
 
                         //load HTML in this Span (with execution on Javascript)
-                        Ext.get("escalade_block"+suffix).load({
-                           url:'../plugins/escalade/ajax/central.php',
-                           scripts:true
-                        });
+                        $("#escalade_block"+suffix).load('../plugins/escalade/ajax/central.php');
                      }
                   });
                }, 300);

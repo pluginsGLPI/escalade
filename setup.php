@@ -15,6 +15,8 @@ function plugin_init_escalade() {
 
          // == Load js scripts ==
          if (isset($_SESSION['plugins']['escalade']['config'])) {
+            
+            $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'scripts/function.js';
 
             if (strpos($_SERVER['REQUEST_URI'], "ticket.form.php") !== false
                || strpos($_SERVER['REQUEST_URI'], "central.php") !== false) {

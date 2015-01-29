@@ -15,17 +15,6 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
    $locale_pleasewait    = __("Please wait...");
 
    $JS = <<<JAVASCRIPT
-   function getUrlParameter(sParam) {
-       var sPageURL = window.location.search.substring(1);
-       var sURLVariables = sPageURL.split('&');
-       for (var i=0; i < sURLVariables.length; i++) {
-           var sParameterName = sURLVariables[i].split('=');
-           if (sParameterName[0] == sParam) {
-               return sParameterName[1];
-           }
-       }
-   }
-   
    $(document).ready(function() {
 
       // only in ticket form
@@ -38,7 +27,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
 
          // == TICKET DUPLICATE ==
          var duplicate_html = "&nbsp;<img src='../plugins/escalade/pics/cloneandlink_ticket.png' "+
-         "alt='$locale_cloneandlink ' "+
+         "alt='$locale_cloneandlink ' " + 
          "title='$locale_cloneandlink ' class='pointer' id='cloneandlink_ticket'>";
          //Ext.select("th:contains('$locale_linkedtickets') > img").insertHtml('afterEnd', duplicate_html);
          console.log("afterEnd -> append()");

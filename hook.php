@@ -8,7 +8,7 @@ function plugin_escalade_install() {
    $plugin_escalade = array_shift($found);
    
    //init migration
-   $migration = new Migration( $plugin_escalade['version']);
+   $migration = new Migration($plugin_escalade['version']);
 
    // == Tables creation (initial installation) ==
    if (! TableExists('glpi_plugin_escalade_histories')) {
@@ -124,7 +124,7 @@ function plugin_escalade_install() {
    // Update for 0.84 status
    if (TableExists('glpi_plugin_escalade_configs')) {
       foreach ($DB->request("glpi_plugin_escalade_configs") as $data) {
-         switch ($data['ticket_last_status']){
+         switch ($data['ticket_last_status']) {
             case 'solved':
                $status = Ticket::SOLVED;
                break;

@@ -5,17 +5,6 @@ include ("../../../inc/includes.php");
 header("Content-type: application/javascript");
 
 $JS = <<<JAVASCRIPT
-function getUrlParameter(sParam) {
-    var sPageURL = window.location.search.substring(1);
-    var sURLVariables = sPageURL.split('&');
-    for (var i = 0; i < sURLVariables.length; i++) {
-        var sParameterName = sURLVariables[i].split('=');
-        if (sParameterName[0] == sParam) {
-            return sParameterName[1];
-        }
-    }
-}
-
 $(document).ready(function() {
    // only in ticket form
    if (location.pathname.indexOf('ticket.form.php') > 0) {
@@ -83,9 +72,9 @@ $(document).ready(function() {
 
 		                  var nb_id = assign_select_dom_id.replace("dropdown__itil_assign[groups_id]", "");
 
-		                  //remove search input (only in glpi ajax mode)
-		                  if (Ext.get("search_"+nb_id) != null) {
-		                  	Ext.get("search_"+nb_id).remove();
+		                  //remove search input (only in GLPI AJAX mode)
+		                  if ($("#search_"+nb_id).length != 0) {
+		                  	$("#search_"+nb_id).remove();
 		                  }
 
 		                  //replace groups select by ajax response
@@ -94,7 +83,7 @@ $(document).ready(function() {
 		               }
 		            });
 
-               }, 300);  
+               }, 300);
 				}
 
          }, this);
