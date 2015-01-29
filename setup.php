@@ -34,11 +34,6 @@ function plugin_init_escalade() {
                if ($_SESSION['plugins']['escalade']['config']['cloneandlink_ticket']) {
                   $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'scripts/cloneandlink_ticket.js.php';
                }
-
-               //assign me feature
-               if ($_SESSION['plugins']['escalade']['config']['assign_me_ticket']) {
-                  $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'scripts/assign_me.js.php';
-               }
                
                //filter group feature
                if ($_SESSION['plugins']['escalade']['config']['use_filter_assign_group']) {

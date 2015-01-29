@@ -183,12 +183,8 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>" . __("Rapid ticket assignment button", "escalade") . "</td>";
-      echo "<td>";
-      Dropdown::showYesNo("assign_me_ticket", $this->fields["assign_me_ticket"], -1, array(
-         'width' => '25%',
-      ));
-      echo "</td>";
+      echo "<td></td>";
+      echo "<td></td>";
 
       echo "<td>" . __("Enable filtering on the groups assignment", "escalade") . "</td>";
       echo "<td>";

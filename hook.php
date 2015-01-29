@@ -44,7 +44,6 @@ function plugin_escalade_install() {
          `use_assign_user_group`                   INT(11) NOT NULL,
          `use_assign_user_group_creation`          INT(11) NOT NULL,
          `use_assign_user_group_modification`      INT(11) NOT NULL,
-         `assign_me_ticket`                        INT(11) NOT NULL,
          `use_filter_assign_group`                 INT(11) NOT NULL,
          `ticket_last_status`                      INT(11) NOT NULL,
          PRIMARY KEY (`id`)
@@ -92,12 +91,6 @@ function plugin_escalade_install() {
       $migration->addField('glpi_plugin_escalade_configs', 'remove_delete_group_btn', 
                            'INT(11) NOT NULL',
                            array('after' => 'remove_group'));
-      $migration->migrationOneTable('glpi_plugin_escalade_configs');
-   }
-   if (!FieldExists('glpi_plugin_escalade_configs', 'assign_me_ticket')) {
-      $migration->addField('glpi_plugin_escalade_configs', 'assign_me_ticket', 
-                           'INT(11) NOT NULL',
-                           array('after' => 'use_assign_user_group_modification'));
       $migration->migrationOneTable('glpi_plugin_escalade_configs');
    }
    if (!isIndex("glpi_plugin_escalade_histories", 'tickets_id') 
