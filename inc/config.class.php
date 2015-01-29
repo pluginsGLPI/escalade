@@ -42,11 +42,7 @@ class PluginEscaladeConfig extends CommonDBTM {
       ));
       echo "<script type='text/javascript'>
          function hide_show_history(val) {
-            if (val == 0) {
-               display = 'none';
-            } else {
-               display = '';
-            }
+            var display = (val == 0) ? 'none' : '';
             document.getElementById('show_history_td1').style.display = display;
             document.getElementById('show_history_td2').style.display = display;
             document.getElementById('show_solve_return_group_td1').style.display = display;
