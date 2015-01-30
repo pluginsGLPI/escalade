@@ -85,11 +85,13 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
+      $rand = mt_rand();
       echo "<tr class='tab_bg_1'>";
-      echo "<td><label for=''>" . __("Ticket status after an escalation", "escalade") . "</label></td>";
+      echo "<td><label for='dropdown_ticket_last_status$rand'>";
+      echo __("Ticket status after an escalation", "escalade") . "</label></td>";
       echo "<td>";
       self::dropdownGenericStatus(
-         "Ticket", "ticket_last_status", $this->fields["ticket_last_status"]);
+         "Ticket", "ticket_last_status", $rand, $this->fields["ticket_last_status"]);
       echo "</td>";
       
       $rand = mt_rand();
@@ -247,8 +249,7 @@ class PluginEscaladeConfig extends CommonDBTM {
       $_SESSION['plugins']['escalade']['config'] = $config->fields;
    }
 
-   //TODO : CSS (or use standart dropdown) (and for web accessibility)
-   static function dropdownGenericStatus($itemtype, $name, $value = CommonITILObject::INCOMING) {
+   static function dropdownGenericStatus($itemtype, $name, $rand, $value = CommonITILObject::INCOMING) {
       $item = new $itemtype();
       
       $tab[] = __("Don't change", "escalade");
@@ -256,8 +257,6 @@ class PluginEscaladeConfig extends CommonDBTM {
       foreach ($item->getAllStatusArray(false) as $status) {
          $tab[] = $status;
       }
-      
-      $rand = mt_rand();
 
       Dropdown::showFromArray($name, $tab, array(
          'value' => $value,
