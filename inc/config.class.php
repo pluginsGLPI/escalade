@@ -239,6 +239,7 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo "</tr>";
 
       $options['candel'] = false;
+      $options['withtemplate'] = 1;
       $this->showFormButtons($options);
    }
 
