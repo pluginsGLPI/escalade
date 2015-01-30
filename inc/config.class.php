@@ -250,15 +250,20 @@ class PluginEscaladeConfig extends CommonDBTM {
    //TODO : CSS (or use standart dropdown) (and for web accessibility)
    static function dropdownGenericStatus($itemtype, $name, $value = CommonITILObject::INCOMING) {
       $item = new $itemtype();
-      $tab = $item->getAllStatusArray(false);
-
-      echo "<select name='$name'>";
-      echo "<option value='-1' ".($value == -1 ? " selected " : "").">".
-         __("Don't change", "escalade")."</option>";
-      foreach ($tab as $key => $val) {
-         echo "<option value='$key' ".($value==$key?" selected ":"").">$val</option>";
+      
+      $tab[] = __("Don't change", "escalade");
+      
+      foreach ($item->getAllStatusArray(false) as $status) {
+         $tab[] = $status;
       }
-      echo "</select>";
+      
+      $rand = mt_rand();
+
+      Dropdown::showFromArray($name, $tab, array(
+         'value' => $value,
+         'width' => '50%',
+         'rand' => $rand,
+      ));
    }
 
 }
