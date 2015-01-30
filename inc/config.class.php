@@ -31,12 +31,14 @@ class PluginEscaladeConfig extends CommonDBTM {
       
       $this->showFormHeader($options);
 
+      $rand = mt_rand();
       echo "<tr class='tab_bg_1'>";
-      echo "<td>" . __("Remove old assign group on new group assign", "escalade") . "</td>";
+      echo "<td><label for='dropdown_remove_group$rand'>" . __("Remove old assign group on new group assign", "escalade") . "</label></td>";
       echo "<td>";
       Dropdown::showYesNo("remove_group", $this->fields["remove_group"], -1, array(
             'on_change' => 'hide_show_history(this.value)',
             'width' => '25%', //specific width needed (default 80%)
+            'rand' => $rand,
       ));
       echo "<script type='text/javascript'>
          function hide_show_history(val) {
@@ -51,79 +53,99 @@ class PluginEscaladeConfig extends CommonDBTM {
       
       $style = ($this->fields["remove_group"]) ? "" : "style='display: none !important;'";
       
-      echo "<td id='show_history_td1' $style>";
+      $rand = mt_rand();
+      echo "<td id='show_history_td1' $style><label for='dropdown_show_history$rand'>";
       echo __("show group assign history visually", "escalade");
-      echo "</td>";
+      echo "</label></td>";
       echo "<td id='show_history_td2' $style>";
       Dropdown::showYesNo("show_history", $this->fields["show_history"], -1, array(
          'width' => '100%',
+         'rand' => $rand,
       ));
       echo "</td>";
       echo "</tr>";
 
+      $rand = mt_rand();
       echo "<tr class='tab_bg_1'>";
-      echo "<td>" . __("Escalation history in tasks", "escalade") . "</td>";
+      echo "<td><label for='dropdown_task_history$rand'>" . __("Escalation history in tasks", "escalade") . "</label></td>";
       echo "<td>";
       Dropdown::showYesNo("task_history", $this->fields["task_history"], -1, array(
          'width' => '25%',
+         'rand' => $rand,
       ));
       echo "</td>";
-      echo "<td>" . __("Remove technician(s) on escalation", "escalade") .  "</td>";
+      
+      $rand = mt_rand();
+      echo "<td><label for='dropdown_remove_tech$rand'>" . __("Remove technician(s) on escalation", "escalade") .  "</label></td>";
       echo "<td>";
       Dropdown::showYesNo("remove_tech", $this->fields["remove_tech"], -1, array(
          'width' => '100%',
+         'rand' => $rand,
       ));
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>" . __("Ticket status after an escalation", "escalade") . "</td>";
+      echo "<td><label for=''>" . __("Ticket status after an escalation", "escalade") . "</label></td>";
       echo "<td>";
       self::dropdownGenericStatus(
          "Ticket", "ticket_last_status", $this->fields["ticket_last_status"]);
       echo "</td>";
-      echo "<td id='show_solve_return_group_td1' $style>";
+      
+      $rand = mt_rand();
+      echo "<td id='show_solve_return_group_td1' $style><label for='dropdown_solve_return_group$rand'>";
       echo __("Assign ticket to intial group on solve ticket", "escalade");
       echo "</td>";
       echo "<td id='show_solve_return_group_td2' $style>";
       Dropdown::showYesNo("solve_return_group", $this->fields["solve_return_group"], -1, array(
          'width' => '100%',
+         'rand' => $rand,
       ));
       echo "</td>";
       echo "</tr>";
 
+      $rand = mt_rand();
       echo "<tr class='tab_bg_1'>";
-      echo "<td>";
+      echo "<td><label for='dropdown_reassign_tech_from_cat$rand'>";
       echo __("Assign the technical manager on ticket category change", "escalade");
-      echo "</td>";
+      echo "</label></td>";
       echo "<td>";
       Dropdown::showYesNo("reassign_tech_from_cat", $this->fields["reassign_tech_from_cat"], -1, array(
          'width' => '25%',
+         'rand' => $rand,
       ));
       echo "</td>";
-      echo "<td>";
+      
+      $rand = mt_rand();
+      echo "<td><label for='dropdown_reassign_group_from_cat$rand'>";
       echo __("Assign the technical groupe on ticket category change", "escalade");
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("reassign_group_from_cat", $this->fields["reassign_group_from_cat"], -1, array(
          'width' => '100%',
+         'rand' => $rand,
       ));
       echo "</td>";
       echo "</tr>";
 
+      $rand = mt_rand();
       echo "<tr class='tab_bg_1'>";
-      echo "<td>" . __("Clone tickets", "escalade") . "</td>";
+      echo "<td><label for='dropdown_cloneandlink_ticket$rand'>" . __("Clone tickets", "escalade") . "</label></td>";
       echo "<td>";
       Dropdown::showYesNo("cloneandlink_ticket", $this->fields["cloneandlink_ticket"], -1, array(
          'width' => '25%',
+         'rand' => $rand,
       ));
       echo "</td>";
-      echo "<td>";
+      
+      $rand = mt_rand();
+      echo "<td><label for='dropdown_close_linkedtickets$rand'>";
       echo __("Close cloned tickets at the same time", "escalade");
-      echo "</td>";
+      echo "</label></td>";
       echo "<td>";
       Dropdown::showYesNo("close_linkedtickets", $this->fields["close_linkedtickets"], -1, array(
          'width' => '100%',
+         'rand' => $rand,
       ));
       echo "</td>";
       echo "</tr>";
@@ -134,26 +156,36 @@ class PluginEscaladeConfig extends CommonDBTM {
             2 => __('Last'),
       );
       
+      $rand = mt_rand();
       echo "<tr class='tab_bg_1'>";
-      echo "<td>" . __("Use the technician's group", "escalade") . "</td>";
+      echo "<td><label for='dropdown_use_assign_user_group$rand'>" . __("Use the technician's group", "escalade") . "</label></td>";
       echo "<td>";
       echo "<table>";
       echo "<tr><td>";
       Dropdown::showFromArray('use_assign_user_group', $yesnoall, array(
          'value' => $this->fields['use_assign_user_group'],
          'width' => '100%',
+         'rand' => $rand,
       ));
       echo "</td>";
-      echo "<td><label for=''>".__("a time of creation", "escalade")."&nbsp;</label>";
+      
+      $rand = mt_rand();
+      echo "<td><label for='dropdown_use_assign_user_group_creation$rand'>";
+      echo __("a time of creation", "escalade")."&nbsp;</label>";
       Dropdown::showYesNo("use_assign_user_group_creation", 
                           $this->fields["use_assign_user_group_creation"], -1, array(
          //'width' => '100%',
+         'rand' => $rand,
       ));
       echo "</td>";
-      echo "<td><label for=''>".__("a time of modification", "escalade")."&nbsp;</label>";
+      
+      $rand = mt_rand();
+      echo "<td><label for='dropdown_use_assign_user_group_modification$rand'>";
+      echo __("a time of modification", "escalade")."&nbsp;</label>";
       Dropdown::showYesNo("use_assign_user_group_modification", 
                           $this->fields["use_assign_user_group_modification"], -1, array(
          //'width' => '25%',
+         'rand' => $rand,
       ));
       echo "</td>";
       echo "</tr></table>";
@@ -167,17 +199,24 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
+      $rand = mt_rand();
       echo "<tr class='tab_bg_1'>";
-      echo "<td>" . __("Display delete button of assigned groups", "escalade") . "</td>";
+      echo "<td><label for='dropdown_remove_delete_group_btn$rand'>";
+      echo __("Display delete button of assigned groups", "escalade") . "</td>";
       echo "<td>";
       Dropdown::showYesNo("remove_delete_group_btn", $this->fields["remove_delete_group_btn"], -1, array(
          'width' => '25%',
+         'rand' => $rand,
       ));
       echo "</td>";
-      echo "<td>" . __("Display delete button of assigned users", "escalade") . "</td>";
+      
+      $rand = mt_rand();
+      echo "<td><label for='dropdown_remove_delete_user_btn$rand'>";
+      echo __("Display delete button of assigned users", "escalade") . "</td>";
       echo "<td>";
       Dropdown::showYesNo("remove_delete_user_btn", $this->fields["remove_delete_user_btn"], -1, array(
          'width' => '100%',
+         'rand' => $rand,
       ));
       echo "</td>";
       echo "</tr>";
@@ -186,10 +225,13 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo "<td></td>";
       echo "<td></td>";
 
-      echo "<td>" . __("Enable filtering on the groups assignment", "escalade") . "</td>";
+      $rand = mt_rand();
+      echo "<td><label for='dropdown_use_filter_assign_group$rand'>";
+      echo __("Enable filtering on the groups assignment", "escalade") . "</td>";
       echo "<td>";
       Dropdown::showYesNo("use_filter_assign_group", $this->fields["use_filter_assign_group"], -1, array(
          'width' => '100%',
+         'rand' => $rand,
       ));
       echo "</td>";
       echo "</tr>";
@@ -205,7 +247,7 @@ class PluginEscaladeConfig extends CommonDBTM {
       $_SESSION['plugins']['escalade']['config'] = $config->fields;
    }
 
-   //TODO : CSS (or use standart dropdown)
+   //TODO : CSS (or use standart dropdown) (and for web accessibility)
    static function dropdownGenericStatus($itemtype, $name, $value = CommonITILObject::INCOMING) {
       $item = new $itemtype();
       $tab = $item->getAllStatusArray(false);
