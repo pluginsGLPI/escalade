@@ -18,6 +18,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
 
    $JS = <<<JAVASCRIPT
    function addCloneLink() {
+      if ($("#cloneandlink_ticket").length > 0) { return; }
       //delay the execution (ajax requestcomplete event fired before dom loading)
       setTimeout( function () {
          var duplicate_html = "&nbsp;<img src='../plugins/escalade/pics/cloneandlink_ticket.png' "+
@@ -49,9 +50,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
                url:'../plugins/escalade/ajax/cloneandlink_ticket.php',
                data: { 'tickets_id': tickets_id },
                success: function(response, opts) {
-                  console.log(response, opts);
                   var res = JSON.parse(response);
-                  console.log(res);
                   
                   if (res.success == false) {
                      //console.log(res);
@@ -59,7 +58,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
                   }
                   var url_newticket = 'ticket.form.php?id='+res.newID;
 
-                  //open popup on new ticket created
+                  //change to on new ticket created
                   window.location.href = url_newticket;
                }
             });
