@@ -15,19 +15,19 @@ $config = new PluginEscaladeConfig();
 
 if (isset($_POST["add"])) {
 
-   Session::checkRight("config","w");
+   //Session::checkRight("config", "w");
    $newID=$config->add($_POST);
    Html::back();
    
 } elseif (isset($_POST["update"])) {
 
-   Session::checkRight("config","w");
+   //Session::checkRight("config", "w");
    $config->update($_POST);
    Html::back();
 
 } elseif (isset($_POST["delete"])) {
 
-   Session::checkRight("config","w");
+   //Session::checkRight("config", "w");
    $config->delete($_POST,1);
    Html::redirect("./config.form.php");
    

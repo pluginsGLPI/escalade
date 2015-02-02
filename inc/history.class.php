@@ -132,12 +132,13 @@ class PluginEscaladeHistory extends CommonDBTM {
       global $CFG_GLPI, $DB;
 
       //TODO : Revoir
+      /*
       if (! Session::haveRight("ticket", VALIDATE) //constante ?
           && ! Session::haveRight("show_assign_ticket", READ)
           && ! Session::haveRight("create_ticket", CREATE)
           && ! Session::haveRight("validate_ticket", CREATEREQUEST & CREATEINCIDENT)) {
          return false;
-      }
+      }*/
 
       $groups        = implode("','",$_SESSION['glpigroups']);
       $numrows = 0;

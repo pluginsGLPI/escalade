@@ -30,7 +30,8 @@ function plugin_init_escalade() {
 
             if (strpos($_SERVER['REQUEST_URI'], "ticket.form.php") !== false) {
                //remove btn feature
-               $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'scripts/remove_btn.js.php';
+               //TODO : Décommenter la ligne suivante
+               //$PLUGIN_HOOKS['add_javascript']['escalade'][] = 'scripts/remove_btn.js.php';
 
                //clone ticket feature
                if ($_SESSION['plugins']['escalade']['config']['cloneandlink_ticket']) {
@@ -49,7 +50,6 @@ function plugin_init_escalade() {
       }
 
       $PLUGIN_HOOKS['add_css']            ['escalade'][]          = 'style.css';
-
 
       // == Ticket modifications
       $PLUGIN_HOOKS['item_update']        ['escalade']            = array(

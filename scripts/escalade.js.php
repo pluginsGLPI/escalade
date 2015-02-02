@@ -50,7 +50,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
             );
             var assign_bloc = $("table:contains('$locale_actor') tr:last-child td:last-child");
 
-            //TODO : A revoir (?)
+            //TODO : A revoir (?) (pour afterEnd, prendre exemple sur le script cloneandlink
             if (g_assign_bloc.length == 0) {
                console.log("jQuery : A tester");
                assign_bloc.append(history);
