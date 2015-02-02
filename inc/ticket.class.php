@@ -508,7 +508,7 @@ class PluginEscaladeTicket {
          if (count($tickets)) {
             foreach ($tickets as $data) {
                $input['id'] = $data['tickets_id'];
-               if ($ticket->can($input['id'],'w')
+               if ($ticket->can($input['id'], UPDATE)
                    && $data['link'] == Ticket_Ticket::DUPLICATE_WITH) {
                   $ticket->update($input);
                }
