@@ -49,7 +49,9 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
                url:'../plugins/escalade/ajax/cloneandlink_ticket.php',
                data: { 'tickets_id': tickets_id },
                success: function(response, opts) {
-                  var res = JSON.parse(response.responseText); //Ext.decode(response.responseText);
+                  console.log(response, opts);
+                  var res = JSON.parse(response);
+                  console.log(res);
                   
                   if (res.success == false) {
                      //console.log(res);
@@ -65,6 +67,12 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
    }
    
    $(document).ajaxStop(function( event,request, settings ) {
+      
+      var tickets_id = getUrlParameter('id');
+
+      //only in edit form
+      if (tickets_id == undefined) return;
+      
       addCloneLink();
    });
    
