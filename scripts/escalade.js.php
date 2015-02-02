@@ -18,7 +18,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
    //get central list for plugin and insert in group tab
    function getSelectorCentralList() {
       var selector = "div[id^=Central][id$=2] .tab_cadre_central > tbody > tr > td:nth(2)";
-      selector += ", div.alltab:contains(groupe) + .tab_cadre_central > tbody > tr > td:nth(2)";
+      selector += ", div.alltab:contains('groupe') + .tab_cadre_central > tbody > tr > td:nth(2)";
       return selector;
    }
    
@@ -47,10 +47,10 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
             var history = response.responseText;
 
             var g_assign_bloc = $(
-               // "table:contains($locale_actor) tr:last-child td:last-child a[href*=group.form.php]"
+               // "table:contains('$locale_actor') tr:last-child td:last-child a[href*=group.form.php]"
                ".escalade_active:last-child"
             );
-            var assign_bloc = $("table:contains($locale_actor) tr:last-child td:last-child");
+            var assign_bloc = $("table:contains('$locale_actor') tr:last-child td:last-child");
 
             //TODO : A revoir (?)
             if (g_assign_bloc.length == 0) {
