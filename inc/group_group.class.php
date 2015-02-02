@@ -28,7 +28,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
 
       $group = new Group();
 
-      if (Session::haveRight('group', 'w')) {
+      if (Session::haveRight('group', UPDATE)) {
          echo "<form method='post' name='' id='manageGroup' action=\"".$CFG_GLPI['root_doc'] .
             "/plugins/escalade/front/group_group.form.php\">";
       }
@@ -40,7 +40,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
       echo "</tr>";
 
       $gg_found = $this->find("groups_id_source='$groups_id'");
-      if (Session::haveRight('group', 'w')) {
+      if (Session::haveRight('group', UPDATE)) {
          $groups_id_used = array();
          foreach ($gg_found as $gg) {
             $groups_id_used[] = $gg['groups_id_destination'];
@@ -62,7 +62,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
          $group->getFromDB($gg['groups_id_destination']);
          echo "<tr class='tab_bg_1'>";
          echo "<td width='30'>";
-         if (Session::haveRight('group', 'w')) {
+         if (Session::haveRight('group', UPDATE)) {
             echo "<input type='checkbox' name='delgroup[]' value='$gg_id' />";
          }
          echo "</td>";
@@ -73,7 +73,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
       }
       
       echo "</table>";
-      if (Session::haveRight('group', 'w')) {
+      if (Session::haveRight('group', UPDATE)) {
          Html::openArrowMassives("manageGroup", true);
          Html::closeArrowMassives(array('deleteitem' => _sx('button','Delete permanently')));
       }

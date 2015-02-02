@@ -108,7 +108,7 @@ class PluginEscaladeHistory extends CommonDBTM {
 
    static function showGroupLink($group, $full_history = false) {
 
-      if (!$group->can($group->fields['id'], 'r')) {
+      if (!$group->can($group->fields['id'], READ)) {
          return $group->getNameID(true);
       }
       

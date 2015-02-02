@@ -23,11 +23,7 @@ class PluginEscaladeConfig extends CommonDBTM {
       
 
       $this->getFromDB($ID);
-      
-      //TODO : A adapter ?
-      //$this->check($ID, 'r');
-      //=>
-         //$this->can($ID,$right,$input);
+      $this->check($ID, READ);
       
       $this->showFormHeader($options);
 
