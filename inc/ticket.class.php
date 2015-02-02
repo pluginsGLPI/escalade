@@ -658,8 +658,8 @@ class PluginEscaladeTicket {
       }
 
       //add documents
-      $query_docs = "INSERT INTO glpi_documents_items 
-      SELECT '' AS id, documents_id, $newID as items_id, 'Ticket', entities_id, is_recursive
+      $query_docs = "INSERT INTO glpi_documents_items (documents_id, items_id, itemtype, entities_id, is_recursive, date_mod) 
+      SELECT documents_id, $newID, 'Ticket', entities_id, is_recursive, date_mod
       FROM glpi_documents_items
       WHERE items_id = $tickets_id AND itemtype = 'Ticket'";
       if (! $res = $DB->query($query_docs)) {
