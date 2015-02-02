@@ -11,8 +11,6 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
    ) {
    
    $locale_actor = __('Actor');
-   $locale_pending = __('Tickets on pending status');
-   $locale_yourticketstoclose = __('Your tickets to close');
 
    $JS = <<<JAVASCRIPT
    //get central list for plugin and insert in group tab
