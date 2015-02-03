@@ -107,9 +107,11 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
       }
 
       //get all group which we can climb
-      $group_group = $this->find("groups_id_source IN (".implode(", ", $groups).")");
-      foreach ($group_group as $current_group) {
-         $groups[$current_group['groups_id_destination']] = $current_group['groups_id_destination'];
+      if (count($groups) > 0) {
+         $group_group = $this->find("groups_id_source IN (".implode(", ", $groups).")");
+         foreach ($group_group as $current_group) {
+            $groups[$current_group['groups_id_destination']] = $current_group['groups_id_destination'];
+         }
       }
 
       //remove already assigned groups
