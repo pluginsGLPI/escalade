@@ -16,7 +16,7 @@ var tickets_id = getUrlParameter('id');
 
 function redefineDropdown(id, url, tickets_id) {
 
- $('#' + id).select2({
+$('#' + id).select2({
    width: '80%',
    minimumInputLength: 0,
    quietMillis: 100,
@@ -27,21 +27,21 @@ function redefineDropdown(id, url, tickets_id) {
       dataType: 'json',
       data: function (term, page) {
          return {
-   ticket_id: tickets_id,
-   itemtype: "Group",
-   display_emptychoice: 1,
-   displaywith: [],
-   emptylabel: "-----",
-   condition: "8791f22d6279ae77180198b33b4cc0f0e3b49513",
-   used: [],
-   toadd: [],
-   entity_restrict: 0,
-   limit: "50",
-   permit_select_parent: 0,
-   specific_tags: [],
-   searchText: term,
-                  page_limit: 100, // page size
-                  page: page, // page number
+            ticket_id: tickets_id,
+            itemtype: "Group",
+            display_emptychoice: 1,
+            displaywith: [],
+            emptylabel: "-----",
+            condition: "8791f22d6279ae77180198b33b4cc0f0e3b49513",
+            used: [],
+            toadd: [],
+            entity_restrict: 0,
+            limit: "50",
+            permit_select_parent: 0,
+            specific_tags: [],
+            searchText: term,
+            page_limit: 100, // page size
+            page: page, // page number
                };
             },
             results: function (data, page) {
