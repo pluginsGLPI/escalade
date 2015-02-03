@@ -14,25 +14,6 @@ if (location.pathname.indexOf('ticket.form.php') == 0) {
 var url = '{$CFG_GLPI['root_doc']}/plugins/escalade/ajax/group_values.php';
 var tickets_id = getUrlParameter('id');
 
-function getValueOfSelectName(str) {
-   console.log("getValueOfSelectName("+str+")"); //DEBUG
-   console.log("select[name*='" + str + "']");
-   if ($("select[name*='" + str + "']").length > 0) {
-      return $("select[name*='" + str + "']")[0].attributes.getNamedItem('id').value;
-   } else {
-      console.log("Non trouvé");
-      return false;
-   }
-}
-
-//replace groups select by ajax response
-function remplaceGroupSelectByAjaxResponse(id, options) {
-   //var el = $("#" + id);
-   
-   var el = document.getElementById(id);
-   el.outerHTML = el.outerHTML.replace(el.innerHTML + '',options + '');
-}
-
 function redefineDropdown(id, url, tickets_id) {
 
  $('#' + id).select2({
@@ -132,39 +113,23 @@ $(document).ready(function() {
       // -----------------------
       // ---- Update Ticket ----
       // -----------------------
-
-      Ext.Ajax.on('requestcomplete', function(conn, response, option) {
-      	//trigger the filter only on actor(group) selected
-         if (option.url.indexOf('dropdownItilActors.php') > 0 
-         	&& option.params.indexOf("group") > 0
-               && option.params.indexOf("assign") > 0
-            ) {
-
- 				//delay the execution (ajax requestcomplete event fired before dom loading)
-            setTimeout(function() {
-
-            	$.ajax({
-	               url: url,
-	               data: {'ticket_id': tickets_id},
-	               success: function(response, opts) {
-
-	                  var assign_select_dom_id = getValueOfSelectName("_itil_assign[groups_id]");
-
-	                  var nb_id = assign_select_dom_id.replace("dropdown__itil_assign[groups_id]", "");
-
-	                  //remove search input (only in GLPI AJAX mode)
-	                  $("#search_"+nb_id).remove();
-
-	                  remplaceGroupSelectByAjaxResponse(assign_select_dom_id, response.responseText);
-	               }
-	            });
-
-            }, 300);
-			}
-
-      }, this);
-
       
+      $(document).ajaxSend(function( event, jqxhr, settings ) {
+         if (settings.url.indexOf("dropdownItilActors.php") > 0 
+            && settings.data.indexOf("group") > 0
+               && settings.data.indexOf("assign") > 0
+            ) {
+            //delay the execution (ajax requestcomplete event fired before dom loading)
+            setTimeout(function() {
+               if ($("*[name='_itil_assign[groups_id]']").length) {
+                  var assign_select_dom_id = $("*[name='_itil_assign[groups_id]']")[0].id;
+                  redefineDropdown(assign_select_dom_id, url, tickets_id);
+               }
+            }, 300);
+            
+         }
+      });
+
    }
 });
 JAVASCRIPT;
