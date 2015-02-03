@@ -50,29 +50,26 @@ function plugin_init_escalade() {
 
       $PLUGIN_HOOKS['add_css']            ['escalade'][]          = 'style.css';
 
-
       // == Ticket modifications
       $PLUGIN_HOOKS['item_update']        ['escalade']            = array(
-         'Ticket'       => 'plugin_escalade_item_update'
+         'Ticket'       => 'plugin_escalade_item_update',
       );
       $PLUGIN_HOOKS['item_add']           ['escalade']            = array(
          'Group_Ticket' => 'plugin_escalade_item_add_group_ticket',
          'Ticket_User'  => 'plugin_escalade_item_add_user',
-         'Ticket'       => 'plugin_escalade_item_add_ticket'
+         'Ticket'       => 'plugin_escalade_item_add_ticket',
       );
       $PLUGIN_HOOKS['pre_item_add']       ['escalade']            = array(
          'Group_Ticket' => 'plugin_escalade_pre_item_add_group_ticket',
-         'Ticket'       => 'plugin_escalade_pre_item_add_ticket'
+         'Ticket'       => 'plugin_escalade_pre_item_add_ticket',
       );
       $PLUGIN_HOOKS['post_prepareadd']['escalade'] = array(
-         'Ticket'    => 'plugin_escalade_post_prepareadd_ticket'
+         'Ticket'    => 'plugin_escalade_post_prepareadd_ticket',
       );
 
       // == Interface links ==
       if (Session::haveRight('config', UPDATE)) {
-         $config_page = 'front/config.form.php';
-
-         $PLUGIN_HOOKS['config_page']     ['escalade']            = $config_page;
+         $PLUGIN_HOOKS['config_page']     ['escalade']            = 'front/config.form.php';
       }
 
 

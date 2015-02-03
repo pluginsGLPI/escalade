@@ -508,7 +508,7 @@ class PluginEscaladeTicket {
          if (count($tickets)) {
             foreach ($tickets as $data) {
                $input['id'] = $data['tickets_id'];
-               if ($ticket->can($input['id'],'w')
+               if ($ticket->can($input['id'], UPDATE)
                    && $data['link'] == Ticket_Ticket::DUPLICATE_WITH) {
                   $ticket->update($input);
                }
@@ -589,7 +589,7 @@ class PluginEscaladeTicket {
       //get old ticket
       $ticket = new Ticket();
       if (!$ticket->getFromDB($tickets_id)) {
-         echo "{success:false, message:\"".__("Error : get old ticket", "escalade")."\"}";
+         echo "{\"success\":false, \"message\":\"".__("Error : get old ticket", "escalade")."\"}";
          exit;
       }
 
@@ -606,8 +606,8 @@ class PluginEscaladeTicket {
       exit;*/
 
       //create new ticket (duplicate from previous)
-      if (!$newID = $ticket->add($fields)) {
-         echo "{success:false, message:\"".__("Error : adding new ticket", "escalade")."\"}";
+      if (! $newID = $ticket->add($fields)) {
+         echo "{\"success\":false, \"message\":\"".__("Error : adding new ticket", "escalade")."\"}";
          exit;
       }
 
@@ -618,7 +618,7 @@ class PluginEscaladeTicket {
          'tickets_id_2' => $newID,
          'link'         => 2 // duplicated
       ))) {
-         echo "{success:false, message:\"".
+         echo "{\"success\":false, \"message\":\"".
                __("Error : adding link between the two tickets", "escalade")."\"}";
          exit;
       }
@@ -633,7 +633,7 @@ class PluginEscaladeTicket {
          'is_private'      => true,
          'requesttypes_id' => 6 //other
       ))) {
-         echo "{success:false, message:\"".__("Error : adding followups", "escalade")."\"}";
+         echo "{\"success\":false, \"message\":\"".__("Error : adding followups", "escalade")."\"}";
          exit;
       }
 
@@ -644,7 +644,7 @@ class PluginEscaladeTicket {
       FROM glpi_tickets_users
       WHERE tickets_id = $tickets_id AND type != 2";
       if (!$res = $DB->query($query_users)) {
-         echo "{success:false, message:\"".__("Error : adding actors (user)", "escalade")."\"}";
+         echo "{\"success\":false, \"message\":\"".__("Error : adding actors (user)", "escalade")."\"}";
          exit;
       }
       //groups
@@ -653,17 +653,17 @@ class PluginEscaladeTicket {
       FROM glpi_groups_tickets
       WHERE tickets_id = $tickets_id AND type != 2";
       if (!$res = $DB->query($query_groups)) {
-         echo "{success:false, message:\"".__("Error : adding actors (group)", "escalade")."\"}";
+         echo "{\"success\":false, \"message\":\"".__("Error : adding actors (group)", "escalade")."\"}";
          exit;
       }
 
       //add documents
-      $query_docs = "INSERT INTO glpi_documents_items 
-      SELECT '' AS id, documents_id, $newID as items_id, 'Ticket', entities_id, is_recursive
+      $query_docs = "INSERT INTO glpi_documents_items (documents_id, items_id, itemtype, entities_id, is_recursive, date_mod) 
+      SELECT documents_id, $newID, 'Ticket', entities_id, is_recursive, date_mod
       FROM glpi_documents_items
       WHERE items_id = $tickets_id AND itemtype = 'Ticket'";
-      if (!$res = $DB->query($query_docs)) {
-         echo "{success:false, message:\"".__("Error : adding documents", "escalade")."\"}";
+      if (! $res = $DB->query($query_docs)) {
+         echo "{\"success\":false, \"message\":\"".__("Error : adding documents", "escalade")."\"}";
          exit;
       }
 
@@ -678,7 +678,7 @@ class PluginEscaladeTicket {
                                        " ".$tickets_id);
       
       //all ok
-      echo "{success:true, newID:$newID}";
+      echo "{\"success\":true, \"newID\":$newID}";
 
    }
 

@@ -12,46 +12,45 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
    
    $locale_cloneandlink  = __("Clone and link", "escalade");
    $locale_linkedtickets = _n('Linked ticket', 'Linked tickets', 2);
-   $locale_pleasewait    = __("Please wait...");
+   
+   //TODO : Add this to plugins /locales/
+   $locale_pleasewait    = __("Please wait..."); //Not defined.
 
    $JS = <<<JAVASCRIPT
-   $(document).ready(function() {
-
-      // only in ticket form
-      if (location.pathname.indexOf('ticket.form.php') > 0) {
-
-         var tickets_id = getUrlParameter('id');
-
-         //only in edit form
-         if (tickets_id == undefined) return;
-
-         // == TICKET DUPLICATE ==
+   function addCloneLink() {
+      if ($("#cloneandlink_ticket").length > 0) { return; }
+      //delay the execution (ajax requestcomplete event fired before dom loading)
+      setTimeout( function () {
          var duplicate_html = "&nbsp;<img src='../plugins/escalade/pics/cloneandlink_ticket.png' "+
-         "alt='$locale_cloneandlink ' " + 
-         "title='$locale_cloneandlink ' class='pointer' id='cloneandlink_ticket'>";
-         //Ext.select("th:contains('$locale_linkedtickets') > img").insertHtml('afterEnd', duplicate_html);
-         console.log("afterEnd -> append()");
-         $("th:contains('$locale_linkedtickets') > img").append(duplicate_html);
-
+            "alt='$locale_cloneandlink' " + 
+            "title='$locale_cloneandlink' class='pointer' id='cloneandlink_ticket'>";
+         $("th:contains('$locale_linkedtickets')>img").after(duplicate_html);
+         addOnclick();
+      }, 100);
+   }
+   
+   function addOnclick() {
          //onclick event on new buttons
-         var el = $('cloneandlink_ticket');
-         el.on('click', function() {
-
+         $('#cloneandlink_ticket').on('click', function() { //Possibilité d'utiliser .live(
+     
+            var tickets_id = getUrlParameter('id');
+            
             // show a wait message during all Ajax requests
-            Ext.Ajax.on('beforerequest', function() { 
+            /*
+            Ext.Ajax.on('beforerequest', function() {
                Ext.getBody().mask('$locale_pleasewait', 'loading')
                Ext.getBody().showSpinner;
             }, Ext.getBody());
             Ext.Ajax.on('requestcomplete', Ext.getBody().unmask, Ext.getBody());
             Ext.Ajax.on('requestexception', Ext.getBody().unmask, Ext.getBody());
+            */
 
             //call PluginVillejuifTicket::duplicate (AJAX)
             $.ajax({
                url:'../plugins/escalade/ajax/cloneandlink_ticket.php',
                data: { 'tickets_id': tickets_id },
                success: function(response, opts) {
-                  var res = JSON.parse(response.responseText);
-                  //var res = Ext.decode(response.responseText);
+                  var res = JSON.parse(response);
                   
                   if (res.success == false) {
                      //console.log(res);
@@ -59,11 +58,38 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
                   }
                   var url_newticket = 'ticket.form.php?id='+res.newID;
 
-                  //open popup on new ticket created
+                  //change to on new ticket created
                   window.location.href = url_newticket;
                }
             });
-         })
+         });
+   }
+   
+   $(document).ajaxStop(function( event,request, settings ) {
+      
+      var tickets_id = getUrlParameter('id');
+
+      //only in edit form
+      if (tickets_id == undefined) return;
+      
+      addCloneLink();
+   });
+   
+   $(document).ready(function() {
+   
+      // only in ticket form
+      if (location.pathname.indexOf('ticket.form.php') > 0) {
+
+         var tickets_id = getUrlParameter('id');
+
+         //only in edit form
+         if (tickets_id == undefined) return;
+         
+
+         // == TICKET DUPLICATE ==
+         
+         //TODO : Add test if no exist
+         //addCloneLink();
       }
    });
 JAVASCRIPT;

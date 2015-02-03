@@ -108,7 +108,7 @@ class PluginEscaladeHistory extends CommonDBTM {
 
    static function showGroupLink($group, $full_history = false) {
 
-      if (!$group->can($group->fields['id'], 'r')) {
+      if (!$group->can($group->fields['id'], READ)) {
          return $group->getNameID(true);
       }
       
@@ -132,12 +132,13 @@ class PluginEscaladeHistory extends CommonDBTM {
       global $CFG_GLPI, $DB;
 
       //TODO : Revoir
+      /*
       if (! Session::haveRight("ticket", VALIDATE) //constante ?
           && ! Session::haveRight("show_assign_ticket", READ)
           && ! Session::haveRight("create_ticket", CREATE)
           && ! Session::haveRight("validate_ticket", CREATEREQUEST & CREATEINCIDENT)) {
          return false;
-      }
+      }*/
 
       $groups        = implode("','",$_SESSION['glpigroups']);
       $numrows = 0;
