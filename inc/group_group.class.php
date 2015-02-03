@@ -5,6 +5,11 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginEscaladeGroup_Group extends CommonDBRelation {
+   
+   // use when you a PluginEscaladeGroup_Group is add
+   function getSearchOptions() {
+      return array();
+   }
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       if ($item->getType()=='Group') {
