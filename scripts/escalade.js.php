@@ -35,7 +35,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
 
       //add new histories in assign actor
       $.ajax({
-         type: "POST", //optionnel ?
+         type: "POST",
          url: '../plugins/escalade/ajax/history.php',
          data: {
             'tickets_id': tickets_id
