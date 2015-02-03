@@ -13,52 +13,30 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
    $locale_actor = __('Actor');
 
    $JS = <<<JAVASCRIPT
-   //get central list for plugin and insert in group tab
+   // get central list for plugin and insert in group tab
    function getSelectorCentralList() {
       var selector = "div[id^=Central][id$=2] .tab_cadre_central > tbody > tr > td:nth(2)";
       selector += ", div.alltab:contains('groupe') + .tab_cadre_central > tbody > tr > td:nth(2)";
       return selector;
    }
    
-   function doInTicketForm() {
-      
-      var tickets_id = getUrlParameter('id');
-
-      //only in edit form
-      if (tickets_id == undefined) return;
-
-      // == TICKET ESCALATION ==
+   function ticketEscalation() {
+      var url = '../plugins/escalade/ajax/history.php';
       
       //set active group in red
-      $("table:contains('$locale_actor') tr:last-child td:last-child a[href*=group]").addClass('escalade_active');
-
+      $("table:contains('$locale_actor') td:last-child a[href*=group]").addClass('escalade_active');
 
       //add new histories in assign actor
       $.ajax({
          type: "POST",
-         url: '../plugins/escalade/ajax/history.php',
-         data: {
-            'tickets_id': tickets_id
-         },
-         success: function(response, opts) { //function(code_html, statut){ // code_html contient le HTML renvoyé
-            console.log("success"); //DEBUG
-            var history = response.responseText;
-
-            var g_assign_bloc = $(
-               // "table:contains('$locale_actor') tr:last-child td:last-child a[href*=group.form.php]"
-               ".escalade_active:last-child"
-            );
-            var assign_bloc = $("table:contains('$locale_actor') tr:last-child td:last-child");
-
-            //TODO : A revoir (?) (pour afterEnd, prendre exemple sur le script cloneandlink
-            if (g_assign_bloc.length == 0) {
-               console.log("jQuery : A tester");
-               assign_bloc.append(history);
-               //assign_bloc.insertHtml("beforeEnd", history);
+         url: url,
+         data: {'tickets_id': tickets_id},
+         success: function(response, opts) {
+            if ($(".escalade_active:last").length > 0) {
+               $(".escalade_active:last").after(response);
             } else {
-               //g_assign_bloc.insertHtml("afterEnd", history);
-               console.log("jQuery : insertAfter");
-               $(history).insertAfter(g_assign_bloc);
+               //OLD : assign_bloc.insertHtml("beforeEnd", response.responseText);
+               $("table:contains('$locale_actor') td:last-child").append(response);
             }
             
          }
@@ -69,7 +47,15 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
 
       // only in ticket form
       if (location.pathname.indexOf('ticket.form.php') > 0) {
-         doInTicketForm();
+      
+         var tickets_id = getUrlParameter('id');
+         
+         //only in edit form
+         if (tickets_id == undefined) return;
+         
+         setTimeout(function() {
+            ticketEscalation();
+         }, 300);
       }
 
       // only on central page
