@@ -45,9 +45,9 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
                option.url.indexOf("Central$2") > 0 //TODO : option.params
                || option.url.indexOf("-1") > 0 //option.params
             )*/) {
-            console.log(option.url);
             //delay the execution (ajax requestcomplete event fired before dom loading)
             setTimeout(function () {
+               console.log("in setTimeout");
                var test_span = "<span id='escalade_block"+suffix+"'></span>";
                
                var suffix = "";
@@ -59,10 +59,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
                // get central list for plugin and insert in group tab
                $(selector).each(function(){
                   console.log("in each");
-                  //console.log(element);
-                  //console.log($( this ).text());
                   
-                  console.log(this.innerHTML);
                   if (this.innerHTML.indexOf('escalade_block') < 0) {
                      
                      if (option.url.indexOf("-1") > 0) { //option.params
@@ -70,20 +67,23 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
                      }
                      
                      //prepare a span element to load new elements
-                     //el.insertHtml('afterBegin', test_span);
                      $(this).after(test_span);
                      
                      //ajax request
                      selectorbis = "#escalade_block"+suffix;
+                     selectorbis = document;
                      $(selectorbis).load('../plugins/escalade/ajax/central.php');
-                     $(document).load('../plugins/escalade/ajax/central.php'); //script yes
-                     console.log("after request ajax");
                   }
                });
             }, 300);
          }
       });
-   };
+   }
+   
+   // only on central page
+   if (location.pathname.indexOf('central.php') > 0) {
+      doOnCentralPage();
+   }
    
    $(document).ready(function() {
 
@@ -98,12 +98,6 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
          setTimeout(function() {
             ticketEscalation();
          }, 300);
-      }
-
-      // only on central page
-      if (location.pathname.indexOf('central.php') > 0) {
-         console.log("doOnCentralPage function");
-         doOnCentralPage();
       }
 
 
