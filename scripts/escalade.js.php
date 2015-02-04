@@ -38,8 +38,11 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
    }
    
    function doOnCentralPage() {
+      //intercept ajax load of group tab
       $(document).ajaxSend(function(event, jqxhr, option) {
-         //intercept ajax load of group tab
+         
+         if (option.url == "../plugins/escalade/ajax/central.php") return;
+
          if (option.url.indexOf('common.tabs.php') > 0 
             /* && (
                option.url.indexOf("Central$2") > 0 //TODO : option.params
@@ -48,7 +51,6 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
             //delay the execution (ajax requestcomplete event fired before dom loading)
             setTimeout(function () {
                console.log("in setTimeout");
-               var test_span = "<span id='escalade_block"+suffix+"'></span>";
                
                var suffix = "";
                var selector = "#ui-tabs-2 .tab_cadre_central tr td:nth-child(2)" +
@@ -61,17 +63,18 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
                   console.log("in each");
                   
                   if (this.innerHTML.indexOf('escalade_block') < 0) {
+                     console.log("in if");
                      
                      if (option.url.indexOf("-1") > 0) { //option.params
                         suffix = "_all";
                      }
                      
                      //prepare a span element to load new elements
-                     $(this).after(test_span);
+                     $(this).after("<span id='escalade_block"+suffix+"'>test</span>");
                      
                      //ajax request
                      selectorbis = "#escalade_block"+suffix;
-                     selectorbis = document;
+                     //selectorbis = document;
                      $(selectorbis).load('../plugins/escalade/ajax/central.php');
                   }
                });
