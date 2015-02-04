@@ -39,7 +39,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
    
    function doOnCentralPage() {
       //intercept ajax load of group tab
-      $(document).ajaxSend(function(event, jqxhr, option) {
+      $(document).ajaxComplete(function(event, jqxhr, option) {
          
          if (option.url == "../plugins/escalade/ajax/central.php") return;
 
@@ -48,6 +48,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
                option.url.indexOf("Central$2") > 0 //TODO : option.params
                || option.url.indexOf("-1") > 0 //option.params
             )*/) {
+            //$( document ).ajaxStop(function() {
             //delay the execution (ajax requestcomplete event fired before dom loading)
             setTimeout(function () {
                console.log("in setTimeout");
@@ -74,11 +75,12 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
                      
                      //ajax request
                      selectorbis = "#escalade_block"+suffix;
-                     //selectorbis = document;
                      $(selectorbis).load('../plugins/escalade/ajax/central.php');
                   }
                });
             }, 300);
+            //return false;
+            //});
          }
       });
    }
