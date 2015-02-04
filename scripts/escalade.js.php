@@ -48,23 +48,17 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
                option.url.indexOf("Central$2") > 0 //TODO : option.params
                || option.url.indexOf("-1") > 0 //option.params
             )*/) {
-            //$( document ).ajaxStop(function() {
             //delay the execution (ajax requestcomplete event fired before dom loading)
             setTimeout(function () {
-               console.log("in setTimeout");
                
                var suffix = "";
                var selector = "#ui-tabs-2 .tab_cadre_central tr td:nth-child(2)" +
                   ", .alltab:contains('$locale_group_view') + .tab_cadre_central > tbody > tr > td:nth-child(2)";
                
-               console.log($(selector)); //arf !
-               console.log(selector);
                // get central list for plugin and insert in group tab
                $(selector).each(function(){
-                  console.log("in each");
                   
                   if (this.innerHTML.indexOf('escalade_block') < 0) {
-                     console.log("in if");
                      
                      if (option.url.indexOf("-1") > 0) { //option.params
                         suffix = "_all";
@@ -79,8 +73,6 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
                   }
                });
             }, 300);
-            //return false;
-            //});
          }
       });
    }
@@ -104,7 +96,6 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
             ticketEscalation();
          }, 300);
       }
-
 
    });
 JAVASCRIPT;
