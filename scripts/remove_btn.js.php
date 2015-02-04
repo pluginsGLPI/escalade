@@ -23,12 +23,12 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
 
 	$JS = <<<JAVASCRIPT
 	function removeOnButtons(str) {
-   	$("table:contains('$locale_actor') tr:last-child td:last-child a[onclick*="+str+"]").remove();
+   	$("table:contains('$locale_actor') td:last-child a[onclick*="+str+"]").remove();
 	}
 	
-   $(document).ready(function() {
-      // only in ticket form
-      if (location.pathname.indexOf('ticket.form.php') > 0) {
+	// only in ticket form
+   if (location.pathname.indexOf('ticket.form.php') > 0) {
+      $(document).ready(function() {
          //delay the execution (ajax requestcomplete event fired before dom loading)
          setTimeout( function () {
             //remove "delete" group buttons
@@ -42,8 +42,8 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
             }
          }, 300);
 
-      }
-   });
+      });
+   }
 JAVASCRIPT;
    echo $JS;
 }

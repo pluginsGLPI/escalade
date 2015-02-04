@@ -29,7 +29,8 @@ class PluginEscaladeConfig extends CommonDBTM {
 
       $rand = mt_rand();
       echo "<tr class='tab_bg_1'>";
-      echo "<td><label for='dropdown_remove_group$rand'>" . __("Remove old assign group on new group assign", "escalade") . "</label></td>";
+      echo "<td><label for='dropdown_remove_group$rand'>";
+      echo __("Remove old assign group on new group assign", "escalade") . "</label></td>";
       echo "<td>";
       Dropdown::showYesNo("remove_group", $this->fields["remove_group"], -1, array(
             'on_change' => 'hide_show_history(this.value)',
