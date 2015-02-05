@@ -61,19 +61,19 @@ $('#' + id).select2({
                } else {
                   $.ajax(url, {
                   data: {
-   ticket_id: tickets_id,
-   itemtype: "Group",
-   display_emptychoice: true,
-   displaywith: [],
-   emptylabel: "-----",
-   condition: "8791f22d6279ae77180198b33b4cc0f0e3b49513",
-   used: [],
-   toadd: [],
-   entity_restrict: 0,
-   limit: "50",
-   permit_select_parent: false,
-   specific_tags: [],
-            _one_id: id},
+                     ticket_id: tickets_id,
+                     itemtype: "Group",
+                     display_emptychoice: true,
+                     displaywith: [],
+                     emptylabel: "-----",
+                     condition: "8791f22d6279ae77180198b33b4cc0f0e3b49513",
+                     used: [],
+                     toadd: [],
+                     entity_restrict: 0,
+                     limit: "50",
+                     permit_select_parent: false,
+                     specific_tags: [],
+                     _one_id: id},
                dataType: 'json',
                }).done(function(data) { callback(data); });
             }
