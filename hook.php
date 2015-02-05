@@ -216,7 +216,7 @@ function plugin_escalade_item_add_ticket($item) {
 
 function plugin_escalade_pre_item_add_group_ticket($item) {
    if ($item instanceof Group_Ticket
-      && $item->fields['type'] == CommonITILActor::ASSIGN) {
+      && $item->input['type'] == CommonITILActor::ASSIGN) {
       return PluginEscaladeTicket::addHistoryOnAddGroup($item);   
    }
    return $item;
