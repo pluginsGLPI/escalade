@@ -163,14 +163,14 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo "<tr><td>";
       Dropdown::showFromArray('use_assign_user_group', $yesnoall, array(
          'value' => $this->fields['use_assign_user_group'],
-         'width' => '100%',
+         'width' => '74px',
          'rand' => $rand,
       ));
       echo "</td>";
       
       $rand = mt_rand();
       echo "<td><label for='dropdown_use_assign_user_group_creation$rand'>";
-      echo __("a time of creation", "escalade")."&nbsp;</label>";
+      echo __("a time of creation", "escalade")."</label>";
       Dropdown::showYesNo("use_assign_user_group_creation", 
                           $this->fields["use_assign_user_group_creation"], -1, array(
          //'width' => '100%',
@@ -179,8 +179,8 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo "</td>";
       
       $rand = mt_rand();
-      echo "<td><label for='dropdown_use_assign_user_group_modification$rand'>";
-      echo __("a time of modification", "escalade")."&nbsp;</label>";
+      echo "<td style='padding:0px'><label for='dropdown_use_assign_user_group_modification$rand'>";
+      echo __("a time of modification", "escalade")."</label>";
       Dropdown::showYesNo("use_assign_user_group_modification", 
                           $this->fields["use_assign_user_group_modification"], -1, array(
          //'width' => '25%',
