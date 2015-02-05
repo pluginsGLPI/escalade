@@ -22,7 +22,6 @@ if (count($groups_id_filtred) > 0) {
 } else {
    $condition = "1=0";
 }
-Toolbox::logDebug($condition);
 
 $rand = mt_rand();
 $_SESSION['glpicondition'][$rand] = $condition;
