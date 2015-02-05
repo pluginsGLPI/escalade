@@ -14,6 +14,9 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
    $locale_group_view = __('Group View');
 
    $JS = <<<JAVASCRIPT
+
+   tickets_id = null;
+   
    function ticketEscalation() {
       var url = '../plugins/escalade/ajax/history.php';
       
@@ -87,7 +90,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
       // only in ticket form
       if (location.pathname.indexOf('ticket.form.php') > 0) {
       
-         var tickets_id = getUrlParameter('id');
+         tickets_id = getUrlParameter('id');
          
          //only in edit form
          if (tickets_id == undefined) return;
