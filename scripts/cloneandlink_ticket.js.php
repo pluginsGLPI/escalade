@@ -64,33 +64,15 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
          });
    }
    
-   $(document).ajaxStop(function( event,request, settings ) {
-      
-      var tickets_id = getUrlParameter('id');
-
-      //only in edit form
-      if (tickets_id == undefined) return;
-      
-      addCloneLink();
-   });
-   
-   $('#tabspanel + div.ui-tabs').on("tabsload", function( event, ui ) {
-   
-      // only in ticket form
-      if (location.pathname.indexOf('ticket.form.php') > 0) {
-
-         var tickets_id = getUrlParameter('id');
-
+   // only in ticket form
+   if (location.pathname.indexOf('ticket.form.php') > 0) {
+      $(document).on("tabsload", function( event, ui ) {
          //only in edit form
-         if (tickets_id == undefined) return;
-         
-
-         // == TICKET DUPLICATE ==
-         
-         //TODO : Add test if no exist
-         //addCloneLink();
-      }
-   });
+         if (getUrlParameter('id') != undefined) {
+            addCloneLink();
+         }
+      });
+   }
 JAVASCRIPT;
    echo $JS;
 }
