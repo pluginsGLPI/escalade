@@ -74,7 +74,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
       addCloneLink();
    });
    
-   $(document).ready(function() {
+   $('#tabspanel + div.ui-tabs').on("tabsload", function( event, ui ) {
    
       // only in ticket form
       if (location.pathname.indexOf('ticket.form.php') > 0) {
