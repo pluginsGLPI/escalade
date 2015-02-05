@@ -17,9 +17,9 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
 
    $JS = <<<JAVASCRIPT
    function addCloneLink() {
-      if ($("#cloneandlink_ticket").length > 0) { return; }
       //delay the execution (ajax requestcomplete event fired before dom loading)
       setTimeout( function () {
+         if ($("#cloneandlink_ticket").length > 0) { return; }
          var duplicate_html = "&nbsp;<img src='../plugins/escalade/pics/cloneandlink_ticket.png' "+
             "alt='$locale_cloneandlink' " + 
             "title='$locale_cloneandlink' class='pointer' id='cloneandlink_ticket'>";
