@@ -17,7 +17,7 @@ if (count($groups_id_filtred) > 0) {
       $myarray[] = $groups_id;
    }
    $newarray = implode(", ", $myarray);
-   $condition = "IN ($newarray)";
+   $condition = " id IN ($newarray)";
    
 } else {
    $condition = "1=1";
