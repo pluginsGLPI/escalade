@@ -42,13 +42,11 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
    
    // only on central page
    if (location.pathname.indexOf('central.php') > 0) {
-      //intercept ajax load of group tab
-      $("*").on("tabsload", function() {
+      $(document).on("tabsload", function() {
 
          var suffix = "";
          var selector = "#ui-tabs-2 .tab_cadre_central .top:last" +
             ", .alltab:contains('$locale_group_view') + .tab_cadre_central .top:last";
-         console.log(selector);
          
          // get central list for plugin and insert in group tab
          $(selector).each(function(){
