@@ -32,7 +32,7 @@ $('#' + id).select2({
             display_emptychoice: 1,
             displaywith: [],
             emptylabel: "-----",
-            condition: "8791f22d6279ae77180198b33b4cc0f0e3b49513",
+            condition: "",
             used: [],
             toadd: [],
             entity_restrict: 0,
@@ -101,13 +101,15 @@ $(document).ready(function() {
 
    if (tickets_id == undefined) {
       // -----------------------
-      // ---- Create Ticket ---- 
+      // ---- Create Ticket ----
       // -----------------------
 
-      setTimeout(function() {
-         var assign_select_dom_id = $("*[name='_groups_id_assign']")[0].id;
-         redefineDropdown(assign_select_dom_id, url, 0);
-      }, 300);
+      $('#tabspanel + div.ui-tabs').on("tabsload", function( event, ui ) {
+         setTimeout(function() {
+            var assign_select_dom_id = $("*[name='_groups_id_assign']")[0].id;
+            redefineDropdown(assign_select_dom_id, url, 0);
+         }, 300);
+      });
 
    } else {
       // -----------------------
