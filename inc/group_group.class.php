@@ -39,9 +39,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
       }
       echo "<table width='950' class='tab_cadre_fixe'>";
       echo "<tr>";
-      echo "<th colspan='2'>";
-      echo "Escalade";
-      echo "</th>";
+      echo "<th colspan='2'>Escalade</th>";
       echo "</tr>";
 
       $gg_found = $this->find("groups_id_source='$groups_id'");

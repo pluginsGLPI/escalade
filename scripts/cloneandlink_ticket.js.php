@@ -13,8 +13,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
    $locale_cloneandlink  = __("Clone and link", "escalade");
    $locale_linkedtickets = _n('Linked ticket', 'Linked tickets', 2);
    
-   //TODO : Add this to plugins /locales/
-   $locale_pleasewait    = __("Please wait..."); //Not defined.
+   $locale_pleasewait    = __("Please wait..."); //Not used
 
    $JS = <<<JAVASCRIPT
    function addCloneLink() {
