@@ -616,7 +616,7 @@ class PluginEscaladeTicket {
       if (!$ticket_ticket->add(array(
          'tickets_id_1' => $tickets_id,
          'tickets_id_2' => $newID,
-         'link'         => 2 // duplicated
+         'link'         => Ticket_Ticket::LINK_TO
       ))) {
          echo "{\"success\":false, \"message\":\"".
                __("Error : adding link between the two tickets", "escalade")."\"}";
