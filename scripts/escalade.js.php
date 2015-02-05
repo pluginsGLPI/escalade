@@ -55,8 +55,9 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
             setTimeout(function () {
                
                var suffix = "";
-               var selector = "#ui-tabs-2 .tab_cadre_central tr td:nth-child(2)" +
-                  ", .alltab:contains('$locale_group_view') + .tab_cadre_central > tbody > tr > td:nth-child(2)";
+               var selector = "#ui-tabs-2 .tab_cadre_central .top:last" +
+                  ", .alltab:contains('$locale_group_view') + .tab_cadre_central .top:last";
+               //console.log(selector);
                
                // get central list for plugin and insert in group tab
                $(selector).each(function(){
@@ -68,10 +69,11 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
                      }
                      
                      //prepare a span element to load new elements
-                     $(this).after("<span id='escalade_block"+suffix+"'>test</span>");
+                     $(this).before("<span id='escalade_block"+suffix+"'>test</span>");
                      
                      //ajax request
                      selectorbis = "#escalade_block"+suffix;
+                     //console.log(selectorbis);
                      $(selectorbis).load('../plugins/escalade/ajax/central.php');
                   }
                });
