@@ -28,9 +28,8 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
 	
 	// only in ticket form
    if (location.pathname.indexOf('ticket.form.php') > 0) {
-      $(document).ready(function() {
-         //delay the execution (ajax requestcomplete event fired before dom loading)
-         setTimeout(function () {
+      $("#tabspanel + div.ui-tabs").ready(function() {
+         $('#tabspanel + div.ui-tabs').on("tabsload", function( event, ui ) {
             //remove "delete" group buttons
             if ({$remove_delete_group_btn}) {
                removeOnButtons("group_ticket");
@@ -40,7 +39,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
             if ({$remove_delete_user_btn}) {
                removeOnButtons("ticket_user");
             }
-         }, 300);
+         });
 
       });
    }
