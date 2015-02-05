@@ -222,9 +222,7 @@ class PluginEscaladeHistory extends CommonDBTM {
             $num++;
          }
 
-         echo "<table><tr><td class='top' width='450px'>";
-
-         echo "<table class='tab_cadrehov' id='pluginEscaladeCentralList' style='width:420px'>";
+         echo "<table class='tab_cadrehov' id='pluginEscaladeCentralList'>";
          echo "<tr><th colspan='5'>";
          echo "<a href=\"".$CFG_GLPI["root_doc"]."/front/ticket.php?".
                          Toolbox::append_params($options,'&amp;')."\">".
@@ -243,8 +241,7 @@ class PluginEscaladeHistory extends CommonDBTM {
             }
          }
          echo "</table>";
-
-         echo "</td></tr></table>";
+         echo "<br />";
       }
 
    }
