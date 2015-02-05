@@ -250,10 +250,12 @@ class PluginEscaladeConfig extends CommonDBTM {
    static function dropdownGenericStatus($itemtype, $name, $rand, $value = CommonITILObject::INCOMING) {
       $item = new $itemtype();
       
-      $tab[] = __("Don't change", "escalade");
+      $tab[-1] = __("Don't change", "escalade");
       
+      $i = 1;
       foreach ($item->getAllStatusArray(false) as $status) {
-         $tab[] = $status;
+         $tab[$i] = $status;
+         $i++;
       }
 
       Dropdown::showFromArray($name, $tab, array(
