@@ -156,6 +156,14 @@ function plugin_escalade_install() {
       $query = "ALTER TABLE `glpi_plugin_escalade_configs` MODIFY `ticket_last_status` INT(11);";
       $DB->query($query);
    }
+
+   // update to 0.85-1.0
+   if (FieldExists("glpi_plugin_escalade_configs", "assign_me_ticket")) {
+
+      // assign me ticket feature native in glpi 0.85
+      $migration->dropField("glpi_plugin_escalade_configs", "assign_me_ticket");
+      $migration->migrationOneTable('glpi_plugin_escalade_configs');
+   }
    
    return true;
 }
