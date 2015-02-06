@@ -80,12 +80,12 @@ function plugin_init_escalade() {
 function plugin_version_escalade() {
    return array(
          'name'           => __("Escalation", "escalade"),
-         'version'        => "2.0.3",
+         'version'        => "0.85-1.0",
          'author'         => "<a href='http://www.teclib.com'>Teclib'</a> &
                               <a href='http://www.lefigaro.fr/'>LE FIGARO</a>",
          'homepage'       => "https://forge.indepnet.net/projects/escalade",
          'license'        => 'GPLv2+',
-         'minGlpiVersion' => "0.84",
+         'minGlpiVersion' => "0.85",
    );
 }
 
