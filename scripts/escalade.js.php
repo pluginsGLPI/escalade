@@ -87,7 +87,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
       doOnCentralPage();
    }
    
-   $('#tabspanel + div.ui-tabs').on("tabsload", function( event, ui ) {
+   $(document).ready(function() {
 
       // only in ticket form
       if (location.pathname.indexOf('ticket.form.php') > 0) {
