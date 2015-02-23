@@ -40,32 +40,45 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
       });
    }
    
-   // only on central page
-   if (location.pathname.indexOf('central.php') > 0) {
-      $(document).on("tabsload", function() {
-
-         var suffix = "";
-         var selector = "#ui-tabs-2 .tab_cadre_central .top:last" +
-            ", .alltab:contains('$locale_group_view') + .tab_cadre_central .top:last";
+   function doOnCentralPage() {
+      //intercept ajax load of group tab
+      $(document).ajaxComplete(function(event, jqxhr, option) {
          
-         // get central list for plugin and insert in group tab
-         $(selector).each(function(){
-            
-            if (this.innerHTML.indexOf('escalade_block') < 0) {
+         if (option.url == "../plugins/escalade/ajax/central.php") return;
+
+         if (option.url.indexOf('common.tabs.php') > 0 
+            /* && (
+               option.url.indexOf("Central$2") > 0 //TODO : option.params
+               || option.url.indexOf("-1") > 0 //option.params
+            )*/) {
+            //delay the execution (ajax requestcomplete event fired before dom loading)
+            setTimeout(function () {
                
-               //if (option.url.indexOf("-1") > 0) { //option.params
-               //   suffix = "_all";
-               //}
+               var suffix = "";
+               var selector = "#ui-tabs-2 .tab_cadre_central .top:last" +
+                  ", .alltab:contains('$locale_group_view') + .tab_cadre_central .top:last";
+               //console.log(selector);
                
-               //prepare a span element to load new elements
-               $(this).prepend("<span id='escalade_block"+suffix+"'>test</span>");
-               
-               //ajax request
-               selectorbis = "#escalade_block"+suffix;
-               //console.log(selectorbis);
-               $(selectorbis).load('../plugins/escalade/ajax/central.php');
-            }
-         });
+               // get central list for plugin and insert in group tab
+               $(selector).each(function(){
+                  
+                  if (this.innerHTML.indexOf('escalade_block') < 0) {
+                     
+                     if (option.url.indexOf("-1") > 0) { //option.params
+                        suffix = "_all";
+                     }
+                     
+                     //prepare a span element to load new elements
+                     $(this).prepend("<span id='escalade_block"+suffix+"'>test</span>");
+                     
+                     //ajax request
+                     selectorbis = "#escalade_block"+suffix;
+                     //console.log(selectorbis);
+                     $(selectorbis).load('../plugins/escalade/ajax/central.php');
+                  }
+               });
+            }, 300);
+         }
       });
    }
    
