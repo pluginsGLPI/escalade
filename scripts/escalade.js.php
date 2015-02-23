@@ -30,7 +30,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
          data: {'tickets_id': tickets_id},
          success: function(response, opts) {
             if ($(".escalade_active:last").length > 0) {
-               $(".escalade_active:last").after(response);
+               $("table:contains('$locale_actor') td:last-child a[href*=group],[onclick*=group]").last().after(response);
             } else {
                //OLD : assign_bloc.insertHtml("beforeEnd", response.responseText);
                $("table:contains('$locale_actor') td:last-child").append(response);
