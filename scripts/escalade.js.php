@@ -71,16 +71,18 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
    
    // only in ticket form
    if (location.pathname.indexOf('ticket.form.php') > 0) {
-      $('#tabspanel + div.ui-tabs').on("tabsload", function( event, ui ) {
-   
-         tickets_id = getUrlParameter('id');
-         
-         //only in edit form
-         if (tickets_id == undefined) return;
-         
-         setTimeout(function() {
-            ticketEscalation();
-         }, 300);
+      $("#tabspanel + div.ui-tabs").ready(function() {
+         $("#tabspanel + div.ui-tabs").on("tabsload", function( event, ui ) {
+            
+            tickets_id = getUrlParameter('id');
+            
+            //only in edit form
+            if (tickets_id == undefined) return;
+            
+            setTimeout(function() {
+               ticketEscalation();
+            }, 300);
+         });
       });
    }
 JAVASCRIPT;
