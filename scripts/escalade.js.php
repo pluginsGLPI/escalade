@@ -21,7 +21,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
       var url = '../plugins/escalade/ajax/history.php';
       
       //set active group in red
-      $("table:contains('$locale_actor') td:last-child a[href*=group]").addClass('escalade_active');
+      $(".ui-tabs-panel:visible").find("table:contains('$locale_actor') td:last-child a[href*=group]").addClass('escalade_active');
 
       //add new histories in assign actor
       $.ajax({
@@ -30,10 +30,10 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
          data: {'tickets_id': tickets_id},
          success: function(response, opts) {
             if ($(".escalade_active:last").length > 0) {
-               $("table:contains('$locale_actor') td:last-child a[href*=group],[onclick*=group]").last().after(response);
+               $(".ui-tabs-panel:visible").find("table:contains('$locale_actor') td:last-child a[href*=group],[onclick*=group]").last().after(response);
             } else {
                //OLD : assign_bloc.insertHtml("beforeEnd", response.responseText);
-               $("table:contains('$locale_actor') td:last-child").append(response);
+               $(".ui-tabs-panel:visible").find("table:contains('$locale_actor') td:last-child").append(response);
             }
             
          }
@@ -83,8 +83,8 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
    }
    
    // only in ticket form
-   if (location.pathname.indexOf('ticket.form.php') > 0) {
-      $("#tabspanel + div.ui-tabs").ready(function() {
+   $(document).ready(function() {
+      if (location.pathname.indexOf('ticket.form.php') != 0) {
          $("#tabspanel + div.ui-tabs").on("tabsload", function( event, ui ) {
             
             tickets_id = getUrlParameter('id');
@@ -96,8 +96,8 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
                ticketEscalation();
             }, 300);
          });
-      });
-   }
+      }
+   });
 JAVASCRIPT;
       echo $JS;
    }
