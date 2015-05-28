@@ -28,7 +28,7 @@ function plugin_init_escalade() {
                }
             }
 
-            if (strpos($_SERVER['REQUEST_URI'], "ticket.form.php") !== false) {
+            if (strpos($_SERVER['REQUEST_URI'], "ticket.form.php") !== false && isset($_GET['id'])) {
                //remove btn feature
                $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'scripts/remove_btn.js.php';
 
@@ -41,7 +41,6 @@ function plugin_init_escalade() {
                if ($_SESSION['plugins']['escalade']['config']['use_filter_assign_group']) {
                   $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'scripts/filtergroup.js.php';
                }
-
             }
 
             Plugin::registerClass('PluginEscaladeGroup_Group', array('addtabon' => 'Group'));
