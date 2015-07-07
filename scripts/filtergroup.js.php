@@ -11,10 +11,11 @@ if (location.pathname.indexOf('ticket.form.php') == 0) {
 
 // only in ticket form
 
-var url = '{$CFG_GLPI['root_doc']}/plugins/escalade/ajax/group_values.php';
+var urlGroup = '{$CFG_GLPI['root_doc']}/plugins/escalade/ajax/group_values.php';
+var urlUser = '{$CFG_GLPI['root_doc']}/plugins/escalade/ajax/user_values.php';
 var tickets_id = getUrlParameter('id');
 
-function redefineDropdown(id, url, tickets_id) {
+function redefineDropdown(id, url, tickets_id, itemtype) {
 
 $('#' + id).select2({
    width: '80%',
@@ -28,7 +29,7 @@ $('#' + id).select2({
       data: function (term, page) {
          return {
             ticket_id: tickets_id,
-            itemtype: "Group",
+            itemtype: itemtype,
             display_emptychoice: 1,
             displaywith: [],
             emptylabel: "-----",
@@ -62,7 +63,7 @@ $('#' + id).select2({
                   $.ajax(url, {
                   data: {
                      ticket_id: tickets_id,
-                     itemtype: "Group",
+                     itemtype: itemtype,
                      display_emptychoice: true,
                      displaywith: [],
                      emptylabel: "-----",
@@ -106,8 +107,13 @@ $(document).ready(function() {
 
       $('#tabspanel + div.ui-tabs').on("tabsload", function( event, ui ) {
          setTimeout(function() {
+            // Group
             var assign_select_dom_id = $("*[name='_groups_id_assign']")[0].id;
-            redefineDropdown(assign_select_dom_id, url, 0);
+            redefineDropdown(assign_select_dom_id, urlGroup, 0, 'Group');
+            
+            // User
+            var assign_select_dom_id = $("*[name='_users_id_assign']")[0].id;
+            redefineDropdown(assign_select_dom_id, urlUser, 0, 'User');
          }, 300);
       });
 
@@ -117,6 +123,7 @@ $(document).ready(function() {
       // -----------------------
       
       $(document).ajaxSend(function( event, jqxhr, settings ) {
+         // Group
          if (settings.url.indexOf("dropdownItilActors.php") > 0 
             && settings.data.indexOf("group") > 0
                && settings.data.indexOf("assign") > 0
@@ -125,7 +132,21 @@ $(document).ready(function() {
             setTimeout(function() {
                if ($("*[name='_itil_assign[groups_id]']").length) {
                   var assign_select_dom_id = $("*[name='_itil_assign[groups_id]']")[0].id;
-                  redefineDropdown(assign_select_dom_id, url, tickets_id);
+                  redefineDropdown(assign_select_dom_id, urlGroup, tickets_id, 'Group');
+               }
+            }, 300);
+         }
+
+         // User
+         if (settings.url.indexOf("dropdownItilActors.php") > 0 
+            && settings.data.indexOf("user") > 0
+               && settings.data.indexOf("assign") > 0
+            ) {
+            //delay the execution (ajax requestcomplete event fired before dom loading)
+            setTimeout(function() {
+               if ($("*[name='_itil_assign[users_id]']").length) {
+                  var assign_select_dom_id = $("*[name='_itil_assign[users_id]']")[0].id;
+                  redefineDropdown(assign_select_dom_id, urlUser, tickets_id, 'User');
                }
             }, 300);
             

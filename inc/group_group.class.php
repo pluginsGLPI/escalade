@@ -83,7 +83,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
       Html::closeForm();
    }
 
-   function getGroups($ticket_id) {
+   function getGroups($ticket_id, $removeAlreadyAssigned=true) {
       $groups = $user_groups = $ticket_groups = array();
 
       // get groups for user connected
@@ -118,7 +118,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
       }
 
       //remove already assigned groups
-      if (! empty($ticket_groups)) {
+      if (!empty($ticket_groups) && $removeAlreadyAssigned) {
          $groups = array_diff_assoc($groups, $ticket_groups);
       }
 
