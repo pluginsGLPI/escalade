@@ -21,27 +21,30 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
             $remove_delete_user_btn = "false";
    }
 
-	$JS = <<<JAVASCRIPT
-	function removeOnButtons(str) {
-   	$("table:contains('$locale_actor') td:last-child a[onclick*="+str+"]").remove();
-	}
+   $JS = <<<JAVASCRIPT
+   function removeOnButtons(str) {
+      $("table:contains('$locale_actor') td:last-child a[onclick*='"+str+"']").remove();
+   }
 	
 	// only in ticket form
    if (location.pathname.indexOf('ticket.form.php') > 0) {
       $(document).ready(function() {
-         //delay the execution (ajax requestcomplete event fired before dom loading)
-         setTimeout( function () {
-            //remove "delete" group buttons
-            if ({$remove_delete_group_btn}) {
-               removeOnButtons("group_ticket");
-            }
-   
-            //remove "delete" user buttons
-            if ({$remove_delete_user_btn}) {
-               removeOnButtons("ticket_user");
-            }
-         }, 300);
+         $(document).ajaxComplete(function (event, xhr, option) {
+            if (option.url.indexOf('common.tabs.php') > 0) {
+               //delay the execution (ajax requestcomplete event fired before dom loading)
+               setTimeout( function () {
+                  //remove "delete" group buttons
+                  if ({$remove_delete_group_btn}) {
+                     removeOnButtons("group_ticket");
+                  }
 
+                  //remove "delete" user buttons
+                  if ({$remove_delete_user_btn}) {
+                     removeOnButtons("ticket_user");
+                  }
+               }, 300);
+            }
+        }, this);
       });
    }
 JAVASCRIPT;
