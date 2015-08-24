@@ -45,7 +45,8 @@
    <issues>https://github.com/pluginsGLPI/escalade/issues</issues>
    <readme>https://github.com/pluginsGLPI/escalade/blob/master/README.md</readme>
    <authors>
-      <author>Alexandre Delaunay (Teclib')</author>
+      <author>Alexandre Delaunay</author>
+      <author>Teclib</author>
    </authors>
    <versions>
       <version>
