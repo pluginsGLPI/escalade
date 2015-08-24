@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+   <name>Escalade </name>
+   <key>escalade</key>
+   <state>stable</state>
+   <logo>https://raw.githubusercontent.com/pluginsGLPI/escalade/master/escalade</logo>
+   <description>
+      <short>
+         <fr><![CDATA[Cette extension permet de simplifier l'escalade de ticket vers des groupes différents]]></fr>
+         <en><![CDATA[This plugin simplifies the ticket escalation to different groups]]></en>
+      </short>
+      <long>
+         <fr>
+            Cette extension permet de simplifier l'escalade de ticket vers des groupes différents.<br />
+            Elle ajoute les fonctionnalités suivantes :
+            <ul> 
+               <li>Affichage d'un historique visuel de l'assignation des groupes sur un ticket.</li>
+               <li>Escalade rapide à un groupe présent dans cette historique.</li>
+               <li>Assignation du groupe initiateur lors de l'apport d'une solution.</li>
+               <li>Attribution du responsable et groupe technique lors d'un changement de catégorie de ticket.</li>
+               <li>Clonage rapide de ticket.</li>
+               <li>Cloture des tickets clonés en même temps.</li>
+               <li>Prendre le premier ou dernier groupe du technicien (sur modification du ticket).</li>
+               <li>Bouton d'assignation rapide à soi-même d'un ticket.</li>
+            </ul>
+         </fr>
+         <en>
+            This plugin simplifies the ticket escalation to different groups.<br />
+            It adds the following features : 
+            <ul>
+               <li>Display a visual history of the assignement groups on a ticket.</li>
+               <li>Rapid escalation to a group present in history.</li>
+               <li>Assign initiator group when ticket solution provided.</li>
+               <li>provide automatic assignment of tickets on ticket category change.</li>
+               <li>Fast cloning of ticket.</li>
+               <li>Closing cloned tickets simultaneously.</li>
+               <li>Take the first or last group of technician (on ticket modification).</li>
+               <li>New button for rapid self-assignment of a ticket.</li>
+            </ul>
+         </en>
+      </long>
+   </description>
+   <homepage>https://github.com/pluginsGLPI/escalade</homepage>
+   <download>https://github.com/pluginsGLPI/escalade/releases</download>
+   <issues>https://github.com/pluginsGLPI/escalade/issues</issues>
+   <readme>https://github.com/pluginsGLPI/escalade/blob/master/README.md</readme>
+   <authors>
+      <author>Alexandre Delaunay (Teclib')</author>
+   </authors>
+   <versions>
+      <version>
+          <num>0.85-1.1</num>
+          <compatibility>0.85</compatibility>
+      </version>
+      <version>
+          <num>0.85-1.0</num>
+          <compatibility>0.85</compatibility>
+      </version>
+      <version>
+          <num>2.0.2</num>
+          <compatibility>0.84</compatibility>
+      </version>  
+      <version>
+          <num>1.2</num>
+          <compatibility>0.83</compatibility>
+      </version>  
+   </versions>
+   <langs>
+      <lang>fr_FR</lang>
+      <lang>en_GB</lang>
+   </langs>
+   <license><![CDATA[GPL v2+]]></license>
+   <tags>
+         <fr>
+            <tag>Groupes</tag>
+            <tag>Ticket</tag>
+            <tag>Helpdesk</tag>
+            <tag>Escalade</tag>
+            <tag>Clone</tag>
+            <tag>Attribution</tag>
+         </fr>
+         <en>
+            <tag>Groups</tag>
+            <tag>Ticket</tag>
+            <tag>Assistance</tag>
+            <tag>Escalation</tag>
+            <tag>Clone</tag>
+            <tag>Assignement</tag>
+         </en>
+   </tags>
+   <screenshots>
+      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/escalade/master/escalade_config.png</screenshot>
+      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/escalade/master/escalade_history.png</screenshot>
+      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/escalade/master/escalade_history2.png</screenshot>
+   </screenshots>
+</root>
