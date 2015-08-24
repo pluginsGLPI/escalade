@@ -3,7 +3,7 @@
    <name>Escalade </name>
    <key>escalade</key>
    <state>stable</state>
-   <logo>https://raw.githubusercontent.com/pluginsGLPI/escalade/master/escalade</logo>
+   <logo>https://raw.githubusercontent.com/pluginsGLPI/escalade/master/escalade.png</logo>
    <description>
       <short>
          <fr><![CDATA[Cette extension permet de simplifier l'escalade de ticket vers des groupes différents]]></fr>
