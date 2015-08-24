@@ -11,32 +11,30 @@
       </short>
       <long>
          <fr>
-            Cette extension permet de simplifier l'escalade de ticket vers des groupes différents.<br />
-            Elle ajoute les fonctionnalités suivantes :
-            <ul> 
-               <li>Affichage d'un historique visuel de l'assignation des groupes sur un ticket.</li>
-               <li>Escalade rapide à un groupe présent dans cette historique.</li>
-               <li>Assignation du groupe initiateur lors de l'apport d'une solution.</li>
-               <li>Attribution du responsable et groupe technique lors d'un changement de catégorie de ticket.</li>
-               <li>Clonage rapide de ticket.</li>
-               <li>Cloture des tickets clonés en même temps.</li>
-               <li>Prendre le premier ou dernier groupe du technicien (sur modification du ticket).</li>
-               <li>Bouton d'assignation rapide à soi-même d'un ticket.</li>
-            </ul>
+Cette extension permet de simplifier l'escalade de ticket vers des groupes différents.   
+Elle ajoute les fonctionnalités suivantes :
+
+* Affichage d'un historique visuel de l'assignation des groupes sur un ticket.
+* Escalade rapide à un groupe présent dans cette historique.
+* Assignation du groupe initiateur lors de l'apport d'une solution.
+* Attribution du responsable et groupe technique lors d'un changement de catégorie de ticket.
+* Clonage rapide de ticket.
+* Cloture des tickets clonés en même temps.
+* Prendre le premier ou dernier groupe du technicien (sur modification du ticket).
+* Bouton d'assignation rapide à soi-même d'un ticket.
          </fr>
          <en>
-            This plugin simplifies the ticket escalation to different groups.<br />
-            It adds the following features : 
-            <ul>
-               <li>Display a visual history of the assignement groups on a ticket.</li>
-               <li>Rapid escalation to a group present in history.</li>
-               <li>Assign initiator group when ticket solution provided.</li>
-               <li>provide automatic assignment of tickets on ticket category change.</li>
-               <li>Fast cloning of ticket.</li>
-               <li>Closing cloned tickets simultaneously.</li>
-               <li>Take the first or last group of technician (on ticket modification).</li>
-               <li>New button for rapid self-assignment of a ticket.</li>
-            </ul>
+This plugin simplifies the ticket escalation to different groups.   
+It adds the following features : 
+
+* Display a visual history of the assignement groups on a ticket.
+* Rapid escalation to a group present in history.
+* Assign initiator group when ticket solution provided.
+* provide automatic assignment of tickets on ticket category change.
+* Fast cloning of ticket.
+* Closing cloned tickets simultaneously.
+* Take the first or last group of technician (on ticket modification).
+* New button for rapid self-assignment of a ticket. 
          </en>
       </long>
    </description>
@@ -90,8 +88,8 @@
          </en>
    </tags>
    <screenshots>
-      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/escalade/master/escalade_config.png</screenshot>
-      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/escalade/master/escalade_history.png</screenshot>
-      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/escalade/master/escalade_history2.png</screenshot>
+      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/escalade/master/screenshots/escalade_config.png</screenshot>
+      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/escalade/master/screenshots/escalade_history.png</screenshot>
+      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/escalade/master/screenshots/escalade_history2.png</screenshot>
    </screenshots>
 </root>
