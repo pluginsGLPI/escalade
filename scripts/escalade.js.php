@@ -14,26 +14,33 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
    $locale_group_view = __('Group View');
 
    $JS = <<<JAVASCRIPT
-
-   tickets_id = null;
+   var tickets_id = null;
    
    function ticketEscalation() {
       var url = '../plugins/escalade/ajax/history.php';
       
       //set active group in red
-      $(".ui-tabs-panel:visible").find("table:contains('$locale_actor') td:last-child a[href*=group]").addClass('escalade_active');
+      $(".ui-tabs-panel:visible")
+         .find("table:contains('$locale_actor') td:last-child a[href*=group]")
+         .addClass('escalade_active');
 
       //add new histories in assign actor
       $.ajax({
          type: "POST",
-         url: url,
-         data: {'tickets_id': tickets_id},
+         url:  url,
+         data: {
+            'tickets_id': tickets_id},
          success: function(response, opts) {
             if ($(".escalade_active:last").length > 0) {
-               $(".ui-tabs-panel:visible").find("table:contains('$locale_actor') td:last-child a[href*=group],[onclick*=group]").last().after(response);
+               $(".ui-tabs-panel:visible")
+                  .find("table:contains('$locale_actor') td:last-child a[href*=group],[onclick*=group]")
+                  .last()
+                  .after(response);
             } else {
                //OLD : assign_bloc.insertHtml("beforeEnd", response.responseText);
-               $(".ui-tabs-panel:visible").find("table:contains('$locale_actor') td:last-child").append(response);
+               $(".ui-tabs-panel:visible")
+                  .find("table:contains('$locale_actor') td:last-child")
+                  .append(response);
             }
             
          }
@@ -43,8 +50,9 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
    function doOnCentralPage() {
       //intercept ajax load of group tab
       $(document).ajaxComplete(function(event, jqxhr, option) {
-         
-         if (option.url == "../plugins/escalade/ajax/central.php") return;
+         if (option.url == "../plugins/escalade/ajax/central.php") {
+            return;
+         }
 
          if (option.url.indexOf('common.tabs.php') > 0 
             /* && (
@@ -61,9 +69,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
                
                // get central list for plugin and insert in group tab
                $(selector).each(function(){
-                  
                   if (this.innerHTML.indexOf('escalade_block') < 0) {
-                     
                      if (option.url.indexOf("-1") > 0) { //option.params
                         suffix = "_all";
                      }
@@ -90,7 +96,9 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
             tickets_id = getUrlParameter('id');
             
             //only in edit form
-            if (tickets_id == undefined) return;
+            if (tickets_id == undefined) {
+               return;
+            }
             
             setTimeout(function() {
                ticketEscalation();
@@ -98,6 +106,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
          });
       }
    });
+
 JAVASCRIPT;
       echo $JS;
    }
