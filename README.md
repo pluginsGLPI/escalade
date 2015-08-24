@@ -8,7 +8,7 @@ A new dashboard on the user's home page is added, and a new criteria in ticket's
 
 To finish, there's also a clone ticket feature, accessible through an icon on the ticket form.
 
-![Group history](https://raw.githubusercontent.com/PluginsGLPI/mreporting/master/screenshots/escalade_history.png)
+![Group history](https://raw.githubusercontent.com/pluginsGLPI/escalade/master/screenshots/escalade_history.png)
 
 * Download : https://github.com/PluginsGLPI/escalade/releases
 * Vanilla versions : https://forge.indepnet.net/projects/escalade/files
