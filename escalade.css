@@ -1,11 +1,11 @@
-.escalade {
-   margin-left:10px;
-}
 .escalade .up {
    margin-left:6px;
 }
 .escalade .climb {
    margin-left:2px;
+}
+.escalade_history {
+   margin-top: 7px;
 }
 a.escalade_active, .escalade_active a {
    color:red !important;

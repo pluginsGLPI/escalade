@@ -31,6 +31,7 @@ class PluginEscaladeHistory extends CommonDBTM {
 
 
    static function getHistory($tickets_id, $full_history = false) {
+      global $CFG_GLPI;
 
       $filter_groups_id = array();
       if ($_SESSION['plugins']['escalade']['config']['use_filter_assign_group']) {
@@ -56,7 +57,7 @@ class PluginEscaladeHistory extends CommonDBTM {
       if ($full_history) {
          //show 1st group
          echo "<div class='escalade_active'>";
-         echo "<img src='$plugin_dir/pics/groupes.png' width='20' />";
+         echo "&nbsp;<img src='".$CFG_GLPI['root_doc']."/pics/group.png' />&nbsp;";
          if ($group->getFromDB($first_group['groups_id'])) {
             echo $group->getLink(true);
          }
@@ -83,7 +84,7 @@ class PluginEscaladeHistory extends CommonDBTM {
          
 
          //group link
-         echo "<img src='$plugin_dir/pics/groupes.png' width='20' />";
+         echo "&nbsp;<img src='".$CFG_GLPI['root_doc']."/pics/group.png' />&nbsp;";
          if ($group->getFromDB($hline['groups_id'])) {
             echo self::showGroupLink($group, $full_history);
          }

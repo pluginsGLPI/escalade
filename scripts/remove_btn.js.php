@@ -8,21 +8,22 @@ header("Content-type: application/javascript");
 if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
    
    $locale_actor = __('Actor');
+   $esc_config = $_SESSION['plugins']['escalade']['config'];
    
    $remove_delete_group_btn = "true";
-   if (isset($_SESSION['plugins']['escalade']['config']['remove_delete_group_btn'])
-         && $_SESSION['plugins']['escalade']['config']['remove_delete_group_btn']) {
-            $remove_delete_group_btn = "false";
-         }
+   if (isset($esc_config['remove_delete_group_btn'])
+       && $esc_config['remove_delete_group_btn']) {
+      $remove_delete_group_btn = "false";
+   }
    
    $remove_delete_user_btn = "true";
-   if (isset($_SESSION['plugins']['escalade']['config']['remove_delete_user_btn'])
-         && $_SESSION['plugins']['escalade']['config']['remove_delete_user_btn']) {
-            $remove_delete_user_btn = "false";
+   if (isset($esc_config['remove_delete_user_btn'])
+       && $esc_config['remove_delete_user_btn']) {
+      $remove_delete_user_btn = "false";
    }
 
 	$JS = <<<JAVASCRIPT
-	function removeOnButtons(str) {
+	var removeOnButtons = function(str) {
    	$("table:contains('$locale_actor') td:last-child a[onclick*="+str+"]").remove();
 	}
 	
