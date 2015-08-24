@@ -1,4 +1,4 @@
-function getUrlParameter(val) {
+var getUrlParameter = function(val) {
    var result = "Not found",
        tmp = [];
 

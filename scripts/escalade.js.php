@@ -16,7 +16,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
    $JS = <<<JAVASCRIPT
    var tickets_id = null;
    
-   function ticketEscalation() {
+   var ticketEscalation = function() {
       var url = '../plugins/escalade/ajax/history.php';
       
       //set active group in red
@@ -47,7 +47,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
       });
    }
    
-   function doOnCentralPage() {
+   var doOnCentralPage = function() {
       //intercept ajax load of group tab
       $(document).ajaxComplete(function(event, jqxhr, option) {
          if (option.url == "../plugins/escalade/ajax/central.php") {
