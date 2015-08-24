@@ -8,7 +8,8 @@ function plugin_init_escalade() {
 
    $plugin = new Plugin();
    if (isset($_SESSION['glpiID']) 
-      && $plugin->isInstalled('escalade') && $plugin->isActivated('escalade')) {
+      && $plugin->isInstalled('escalade') 
+      && $plugin->isActivated('escalade')) {
 
       //load config in session
       if (TableExists("glpi_plugin_escalade_configs")) {
@@ -30,7 +31,9 @@ function plugin_init_escalade() {
                }
             }
 
-            if (strpos($_SERVER['REQUEST_URI'], "ticket.form.php") !== false && isset($_GET['id'])) {
+            if (strpos($_SERVER['REQUEST_URI'], "ticket.form.php") !== false 
+                && isset($_GET['id'])) {
+
                //remove btn feature
                $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'scripts/remove_btn.js.php';
 
@@ -91,13 +94,11 @@ function plugin_version_escalade() {
 
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_escalade_check_prerequisites() {
-
-   if (version_compare(GLPI_VERSION,'0.85','lt')) {
+   if (!version_compare(GLPI_VERSION,'0.85','lt')) {
       echo "This plugin requires GLPI >= 0.85";
-   } else {
-      return true;
-   }
-   return false;
+      return false;
+   } 
+   return true;
 }
 
 // Check configuration process for plugin : need to return true if succeeded
