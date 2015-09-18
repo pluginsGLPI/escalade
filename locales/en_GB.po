@@ -1,20 +1,22 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE ESCALADE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the ESCALADE package.
-# Alexandre DELAUNAY <adelaunay@teclib.com>, 2013.
-#
+# 
+# Translators:
+# Alexandre DELAUNAY <adelaunay@teclib.com>, 2013
 msgid ""
 msgstr ""
-"Project-Id-Version: ESCALADE 2.0\n"
+"Project-Id-Version: GLPI Project - Plugin Escalade\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-30 09:41+0200\n"
-"PO-Revision-Date: 2015-02-23 14:45+0100\n"
-"Language-Team: TECLIB <contact@teclib.com>\n"
-"Last-Translator: Emmanuel Haguet <ehaguet@teclib.com>\n"
+"PO-Revision-Date: 2015-09-18 09:50+0000\n"
+"Last-Translator: Jérémy MOREAU <jmoreau.dev@gmail.com>\n"
+"Language-Team: English (United Kingdom) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/en_GB/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language-Team: \n"
+"Language: en_GB\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.5.4\n"
 
 #: hook.php:219
@@ -93,9 +95,7 @@ msgstr "a time of modification"
 msgid ""
 "Nota: This feature (creation part) is duplicate with the <a "
 "href='##link##'>Behavior</a>plugin. This last has priority."
-msgstr ""
-"Nota: This feature (creation part) is duplicate with the <a "
-"href='##link##'>Behavior</a>plugin. This last has priority."
+msgstr "Nota: This feature (creation part) is duplicate with the <a href='##link##'>Behavior</a>plugin. This last has priority."
 
 #: inc/config.class.php:164
 msgid "Display delete button of assigned groups"
