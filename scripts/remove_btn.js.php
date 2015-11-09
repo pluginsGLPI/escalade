@@ -24,7 +24,9 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
 
 	$JS = <<<JAVASCRIPT
 	var removeOnButtons = function(str) {
-   	$("table:contains('$locale_actor') td:last-child a[onclick*="+str+"]").remove();
+   	$("table:contains('$locale_actor') td:last-child a[onclick*="+str+"], \
+         .tab_actors .actor-bloc:last a[onclick*="+str+"]")
+            .remove();
 	}
 	
 	// only in ticket form

@@ -25,9 +25,13 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
       if ($(".escalade_active").length > 0) {
          return;
       }
+
+      // prepare jquery selector to find assign block
+      var assign_selector = "table:contains('$locale_actor') td:last, \
+                           .tab_actors .actor-bloc:last";
       
       //set active group in red
-      $("table:contains('$locale_actor') td:last-child a[href*=group]")
+      $(assign_selector).find("a[href*=group]")
          .addClass('escalade_active');
 
       //add new histories in assign actor
@@ -37,11 +41,11 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
          data:    {'tickets_id': tickets_id},
          success: function(response, opts) {
             if ($(".escalade_active:last").length > 0) {
-               $("table:contains('$locale_actor') td:last-child a[href*=group],[onclick*=group]")
+               $(assign_selector).find("a[href*=group]")
                   .last()
                   .after(response);
             } else {
-               $("table:contains('$locale_actor') td:last-child")
+               $(assign_selector)
                   .append(response);
             }
             
