@@ -91,7 +91,7 @@ function plugin_init_escalade() {
 function plugin_version_escalade() {
    return array(
          'name'           => __("Escalation", "escalade"),
-         'version'        => "0.90-1.0",
+         'version'        => "0.90-1.0.1",
          'author'         => "<a href='http://www.teclib.com'>Teclib'</a>",
          'homepage'       => "https://github.com/pluginsGLPI/escalade",
          'license'        => 'GPLv2+',
