@@ -128,13 +128,10 @@ $(document).ready(function() {
             && settings.data.indexOf("group") > 0
                && settings.data.indexOf("assign") > 0
             ) {
-            //delay the execution (ajax requestcomplete event fired before dom loading)
-            setTimeout(function() {
-               if ($("*[name='_itil_assign[groups_id]']").length) {
-                  var assign_select_dom_id = $("*[name='_itil_assign[groups_id]']")[0].id;
-                  redefineDropdown(assign_select_dom_id, urlGroup, tickets_id, 'Group');
-               }
-            }, 300);
+            checkDOMChange("input[name='_itil_assign[groups_id]'", function() {
+               var assign_select_dom_id = $("input[name='_itil_assign[groups_id]']")[0].id;
+               redefineDropdown(assign_select_dom_id, urlGroup, tickets_id, 'Group');
+            });
          }
 
          // User
@@ -142,13 +139,10 @@ $(document).ready(function() {
             && settings.data.indexOf("user") > 0
                && settings.data.indexOf("assign") > 0
             ) {
-            //delay the execution (ajax requestcomplete event fired before dom loading)
-            setTimeout(function() {
-               if ($("*[name='_itil_assign[users_id]']").length) {
-                  var assign_select_dom_id = $("*[name='_itil_assign[users_id]']")[0].id;
-                  redefineDropdown(assign_select_dom_id, urlUser, tickets_id, 'User');
-               }
-            }, 300);
+            checkDOMChange("input[name='_itil_assign[users_id]'", function() {
+               var assign_select_dom_id = $("*[name='_itil_assign[users_id]']")[0].id;
+               redefineDropdown(assign_select_dom_id, urlUser, tickets_id, 'User');
+            });
             
          }
       });
