@@ -22,31 +22,40 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
       $remove_delete_user_btn = "false";
    }
 
-	$JS = <<<JAVASCRIPT
-	var removeOnButtons = function(str) {
-   	$("table:contains('$locale_actor') td:last-child a[onclick*="+str+"], \
+   $JS = <<<JAVASCRIPT
+   var removeDeleteButtons = function(str) {
+      $("table:contains('$locale_actor') td:last-child a[onclick*="+str+"], \
          .tab_actors .actor-bloc:last a[onclick*="+str+"]")
             .remove();
-	}
-	
-	// only in ticket form
-   if (location.pathname.indexOf('ticket.form.php') > 0) {
-      $(document).ready(function() {
-         //delay the execution (ajax requestcomplete event fired before dom loading)
-         setTimeout( function () {
-            //remove "delete" group buttons
-            if ({$remove_delete_group_btn}) {
-               removeOnButtons("group_ticket");
-            }
-   
-            //remove "delete" user buttons
-            if ({$remove_delete_user_btn}) {
-               removeOnButtons("ticket_user");
-            }
-         }, 300);
-
-      });
    }
+   
+   var removeAllDeleteButtons = function() {
+      //remove "delete" group buttons
+      if ({$remove_delete_group_btn}) {
+         removeDeleteButtons("group_ticket");
+      }
+
+      //remove "delete" user buttons
+      if ({$remove_delete_user_btn}) {
+         removeDeleteButtons("ticket_user");
+      }
+   }
+
+
+   $(document).ready(function() {
+      // only in ticket form
+      if (location.pathname.indexOf('ticket.form.php') > 0) {
+         $(".ui-tabs-panel:visible").ready(function() {
+            removeAllDeleteButtons();
+         })
+
+         $("#tabspanel + div.ui-tabs").on("tabsload", function() {
+            setTimeout(function() {
+               removeAllDeleteButtons();
+            }, 300);
+         });
+      }
+   });
 JAVASCRIPT;
    echo $JS;
 }
