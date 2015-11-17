@@ -22,35 +22,21 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
       }
 
       // if escalade block already inserted
-      if ($(".escalade_active").length > 0) {
+      if ($(".escalade_active").get(0)) {
          return;
       }
 
-      // prepare jquery selector to find assign block
-      var assign_selector = "table:contains('$locale_actor') td:last, \
-                           .tab_actors .actor-bloc:last";
-      
       //set active group in red
-      $(assign_selector).find("a[href*=group]")
-         .addClass('escalade_active');
-
-      //add new histories in assign actor
-      $.ajax({
-         type:    "POST",
-         url:     '../plugins/escalade/ajax/history.php',
-         data:    {'tickets_id': tickets_id},
-         success: function(response, opts) {
-            if ($(".escalade_active:last").length > 0) {
-               $(assign_selector).find("a[href*=group]")
-                  .last()
-                  .after(response);
-            } else {
-               $(assign_selector)
-                  .append(response);
-            }
-            
-         }
-      });
+      $("table:contains('$locale_actor') td:last, .tab_actors .actor-bloc:last")
+         .find("a[href*=group]")
+         .addClass('escalade_active')
+         .last()
+         .append(
+            $('<div>').load(
+               '../plugins/escalade/ajax/history.php',
+               {'tickets_id': tickets_id}
+            )
+         );
    }
    
    $(document).ready(function() {
