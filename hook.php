@@ -177,10 +177,15 @@ function plugin_escalade_install() {
                ENGINE=InnoDB;";
       $DB->query($query);
 
-      //getAllDatasFromTable('glpi_users')
+      $config = new PluginEscaladeConfig();
+      $config->getFromDB(1);
+      $default_value = $config->fields["use_filter_assign_group"];
+
       $user = new User();
       foreach ($user->find() as $data) {
-         $DB->query("INSERT INTO glpi_plugin_escalade_users (`users_id`, `use_filter_assign_group`) VALUES (".$data['id'].", 0)");
+         $query = "INSERT INTO glpi_plugin_escalade_users (`users_id`, `use_filter_assign_group`) 
+                     VALUES (".$data['id'].", $default_value)";
+         $DB->query($query);
       } 
    }
 
@@ -223,7 +228,13 @@ function plugin_escalade_item_add_user($item) {
    global $DB;
 
    if ($item instanceof User) {
-      $DB->query("INSERT INTO glpi_plugin_escalade_users (`users_id`, `use_filter_assign_group`) VALUES (".$item->getID().", 0)");
+      $config = new PluginEscaladeConfig();
+      $config->getFromDB(1);
+      $default_value = $config->fields["use_filter_assign_group"];
+
+      $query = "INSERT INTO glpi_plugin_escalade_users (`users_id`, `use_filter_assign_group`) 
+                  VALUES (".$item->getID().", $default_value)";
+      $DB->query($query);
    }
 
    if ($item instanceof Ticket_User) {
