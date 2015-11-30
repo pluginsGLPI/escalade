@@ -56,6 +56,7 @@ function plugin_init_escalade() {
             }
 
             Plugin::registerClass('PluginEscaladeGroup_Group', array('addtabon' => 'Group'));
+            Plugin::registerClass('PluginEscaladeUser', array('addtabon' => array('User')));
          }
       }
 
@@ -78,12 +79,17 @@ function plugin_init_escalade() {
          'Ticket'       => 'plugin_escalade_post_prepareadd_ticket',
       );
 
+      $PLUGIN_HOOKS['item_purge']['escalade']= array(
+         'User'         => 'plugin_escalade_item_purge',
+      );
+      $PLUGIN_HOOKS['item_add']['escalade']['User'] = 'plugin_escalade_item_add_user';
+
       // == Interface links ==
       if (Session::haveRight('config', UPDATE)) {
          $PLUGIN_HOOKS['config_page']['escalade'] = 'front/config.form.php';
       }
 
-
+      $PLUGIN_HOOKS['use_massive_action']['escalade'] = 1;
    }
 }
 

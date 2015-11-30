@@ -32,7 +32,49 @@
  --------------------------------------------------------------------------
 */
 
-class PluginEscaladeUser {
+class PluginEscaladeUser extends CommonDBTM {
+
+   /**
+    * @since version 0.85
+    *
+    * @see CommonDBTM::showMassiveActionsSubForm()
+   **/
+   static function showMassiveActionsSubForm(MassiveAction $ma) {
+      switch ($ma->action) {
+         case "use_filter_assign_group" :
+            Dropdown::showYesNo("use_filter_assign_group", 0, -1, array(
+               'width' => '100%',
+            ));
+            echo "<br><br><input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
+               _sx('button','Post') . "\" >";
+         break;
+      }
+      return true;
+   }
+
+   /**
+    * @since version 0.85
+    *
+    * @see CommonDBTM::processMassiveActionsForOneItemtype()
+    **/
+   static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item, array $ids) {
+      switch ($ma->getAction()) {
+         case "use_filter_assign_group":
+            $escalade_user = new self();
+            $input = $ma->getInput();
+
+            foreach ($ids as $id) {
+               if ($escalade_user->getFromDBByQuery("WHERE users_id = $id")) {
+                  $escalade_user->fields['use_filter_assign_group'] = $input['use_filter_assign_group'];
+                  if ($escalade_user->update($escalade_user->fields)) {
+                     $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_OK);
+                  } else {
+                     $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
+                  }
+               }
+            }
+      }
+   }
 
    static private function getUserGroup($entity, $userid, $filter='', $first=true) {
       global $DB;
@@ -67,6 +109,75 @@ class PluginEscaladeUser {
    static function getTechnicianGroup($entity, $userid, $first=true) {
 
       return self::getUserGroup($entity, $userid, '`is_assign`', $first);
+   }
+
+   function showForm($ID) {
+
+      $is_exist = $this->getFromDBByQuery("WHERE users_id = '$ID'");
+
+      if (! $is_exist) { //"Security"
+         $this->fields["use_filter_assign_group"] = 0;
+      }
+
+      echo "<form action='" . $this->getFormURL() . "' method='post'>";
+      echo "<table class='tab_cadre_fixe'>";
+
+      $rand = mt_rand();
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td><label>";
+      echo __("Enable filtering on the groups assignment", "escalade");
+      echo "&nbsp;";
+      Dropdown::showYesNo("use_filter_assign_group", $this->fields["use_filter_assign_group"], -1, array(
+         'width' => '100%',
+         'rand' => $rand,
+      ));
+      echo "</label>";
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td class='center' colspan='2'>";
+      echo "<input type='hidden' name='users_id' value='$ID'>";
+      if (! $is_exist) {
+         echo "<input type='submit' name='add' value='"._sx('button', 'Add')."' class='submit'>";
+      } else {
+         echo "<input type='hidden' name='id' value='".$this->getID()."'>";
+         echo "<input type='submit' name='update' value='"._sx('button', 'Update')."' class='submit'>";
+      }
+      echo "</td></tr>";
+
+      echo "</table>";
+      Html::closeForm();
+   }
+
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
+      
+      switch ($item->getType()) {
+         case 'User':
+            $user = new self();
+            $ID   = $item->getField('id');
+
+            /*
+            if (!$user->GetfromDB($ID)) {
+               $user->createAccess($ID);
+            }
+            */
+            $user->showForm($ID);
+         break;
+      }
+      return true;
+   }
+
+   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
+
+      switch ($item->getType()) {
+         case 'User':
+            return __("Escalation", "escalade");
+         default :
+            return '';
+      }
+
    }
 
 }

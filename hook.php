@@ -165,6 +165,25 @@ function plugin_escalade_install() {
       $migration->migrationOneTable('glpi_plugin_escalade_configs');
    }
    
+   // update to 0.90-1.1
+   if (! TableExists('glpi_plugin_escalade_users')) {
+      $query = "CREATE TABLE `glpi_plugin_escalade_users` (
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `users_id` INT(11) NOT NULL,
+                  `use_filter_assign_group` TINYINT(1) NOT NULL DEFAULT '0',
+                  PRIMARY KEY (`id`),
+                  INDEX `users_id` (`users_id`)
+               )
+               ENGINE=InnoDB;";
+      $DB->query($query);
+
+      //getAllDatasFromTable('glpi_users')
+      $user = new User();
+      foreach ($user->find() as $data) {
+         $DB->query("INSERT INTO glpi_plugin_escalade_users (`users_id`, `use_filter_assign_group`) VALUES (".$data['id'].", 0)");
+      } 
+   }
+
    return true;
 }
 
@@ -175,14 +194,24 @@ function plugin_escalade_uninstall() {
    $tables = array(
       'glpi_plugin_escalade_histories',
       'glpi_plugin_escalade_configs',
-      'glpi_plugin_escalade_groups_groups'
+      'glpi_plugin_escalade_groups_groups',
+      'glpi_plugin_escalade_users',
    );
    foreach ($tables as $table) {
       $DB->query("DROP TABLE IF EXISTS `$table`");
    }
+
    return true;
 }
 
+function plugin_escalade_item_purge($item) {
+   global $DB;
+
+   if ($item instanceof User) {
+      $DB->query("DELETE FROM glpi_plugin_escalade_users WHERE users_id = ".$item->getID());
+   }
+   return true;
+}
 
 function plugin_escalade_item_update($item) {
 
@@ -192,6 +221,10 @@ function plugin_escalade_item_update($item) {
 
 function plugin_escalade_item_add_user($item) {
    global $DB;
+
+   if ($item instanceof User) {
+      $DB->query("INSERT INTO glpi_plugin_escalade_users (`users_id`, `use_filter_assign_group`) VALUES (".$item->getID().", 0)");
+   }
 
    if ($item instanceof Ticket_User) {
       //prevent escalade hook to trigger on ticket creation
@@ -248,6 +281,7 @@ function plugin_escalade_post_prepareadd_ticket ($item) {
 
 function plugin_escalade_getAddSearchOptions($itemtype) {
    $sopt = array();
+
    if ($itemtype == 'Ticket') {
          $sopt[1881]['table']         = 'glpi_groups';
          $sopt[1881]['field']         = 'completename';
@@ -262,5 +296,27 @@ function plugin_escalade_getAddSearchOptions($itemtype) {
                                                          => array('jointype'  => 'child',
                                                                   'condition' => '')));
    }
+   if ($itemtype == 'User') {
+      $sopt[2150]['table']         = 'glpi_plugin_escalade_users';
+      $sopt[2150]['field']         = 'use_filter_assign_group';
+      $sopt[2150]['linkfield']     = 'id';
+      $sopt[2150]['datatype']      = 'bool';
+      $sopt[2150]['searchtype']    = array('equals');
+      $sopt[2150]['name']          = __("Enable filtering on the groups assignment", 'escalade');
+      $sopt[2150]['joinparams']    = array('beforejoin'
+                                       => array('table' => 'glpi_plugin_escalade_users',
+                                                'joinparams' => array('jointype' => 'child',
+                                                                     'condition' => '')));
+   }
    return $sopt;
+}
+
+function plugin_escalade_MassiveActions($itemtype) {
+
+   switch ($itemtype) {
+      case 'User':
+         return array('PluginEscaladeUser' . MassiveAction::CLASS_ACTION_SEPARATOR . 'use_filter_assign_group' => 
+            __("Enable filtering on the groups assignment", 'escalade'));
+   }
+   return array();
 }
