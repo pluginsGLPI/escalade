@@ -212,10 +212,10 @@ class PluginEscaladeHistory extends CommonDBTM {
          $options['criteria'][1]['value']      = 'mygroups';
          $options['criteria'][1]['link']       = 'AND';
 
-         $options['criteria'][1]['field']      = 8; // groups_id_assign 
-         $options['criteria'][1]['searchtype'] = 'notequals';
-         $options['criteria'][1]['value']      = 'mygroups';
-         $options['criteria'][1]['link']       = 'AND';
+         $options['criteria'][2]['field']      = 8; // groups_id_assign 
+         $options['criteria'][2]['searchtype'] = 'notequals';
+         $options['criteria'][2]['value']      = 'mygroups';
+         $options['criteria'][2]['link']       = 'AND';
 
          echo "<table class='tab_cadrehov' id='pluginEscaladeCentralList'>";
          echo "<tr><th colspan='5'>";
