@@ -184,6 +184,7 @@ class PluginEscaladeHistory extends CommonDBTM {
                             getEntitiesRestrictRequest("AND","glpi_tickets");
 
       $query  .= " ORDER BY glpi_tickets.date_mod DESC";
+
       $result  = $DB->query($query);
       $numrows = $DB->numrows($result);
       if (!$numrows) return;
@@ -196,32 +197,20 @@ class PluginEscaladeHistory extends CommonDBTM {
       if ($numrows > 0) {
          //construct link to ticket list
          $options['reset'] = 'reset';
-         $num = 0;
-         foreach ($_SESSION['glpigroups'] as $gID) {
-            $options['field'][$num]      = 8;
 
-            if ($type == "notold") {
-               $options['searchtype'][$num] = 'notequals';
-               $options['contains'][$num]   = $gID;
-               $options['link'][$num]       = ($num==0)?'AND':'OR';
-               $num++;
-
-               $options['field'][$num]      = 1881; //see hook.php, function ..._getAddSearchOptions
-            }
-            $options['searchtype'][$num] = 'equals';
-            $options['contains'][$num]   = $gID;
-            if ($type == "notold") {
-               $options['link'][$num]       = 'AND';
-            } else {
-               $options['link'][$num]       = ($num==0) ?'AND':'OR';
-            }
-            $num++;
-            $options['field'][$num]      = 12; // status
-            $options['searchtype'][$num] = 'equals';
-            $options['contains'][$num]   = $type;
-            $options['link'][$num]       = 'AND';
-            $num++;
+         $options['criteria'][0]['field']      = 12; // status
+         $options['criteria'][0]['searchtype'] = 'equals';
+         if ($type == 'notold') {
+            $options['criteria'][0]['value']   = 'notold';
+         } else if ($type == 'solved') {
+            $options['criteria'][0]['value']   = 5;
          }
+         $options['criteria'][0]['link']       = 'AND';
+
+         $options['criteria'][1]['field']      = 8; // groups_id_assign
+         $options['criteria'][1]['searchtype'] = 'equals';
+         $options['criteria'][1]['value']      = 'mygroups';
+         $options['criteria'][1]['link']       = 'AND';
 
          echo "<table class='tab_cadrehov' id='pluginEscaladeCentralList'>";
          echo "<tr><th colspan='5'>";
