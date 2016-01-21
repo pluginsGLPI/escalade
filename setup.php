@@ -7,7 +7,7 @@ function plugin_init_escalade() {
    $PLUGIN_HOOKS['csrf_compliant']['escalade']= true;
 
    $plugin = new Plugin();
-   if (isset($_SESSION['glpiID']) 
+   if (isset($_SESSION['glpiID'])
       && $plugin->isInstalled('escalade') && $plugin->isActivated('escalade')) {
       //load config in session
       if (TableExists("glpi_plugin_escalade_configs")) {
@@ -39,7 +39,7 @@ function plugin_init_escalade() {
                if ($_SESSION['plugins']['escalade']['config']['assign_me_ticket'] == true) {
                   $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'scripts/assign_me.js.php';
                }
-               
+
                //filter group feature
                if ($_SESSION['plugins']['escalade']['config']['use_filter_assign_group'] == true) {
                   $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'scripts/filtergroup.js.php';
@@ -89,7 +89,7 @@ function plugin_init_escalade() {
 function plugin_version_escalade() {
    return array(
          'name'           => __("Escalation", "escalade"),
-         'version'        => "2.0.3",
+         'version'        => "2.0.4",
          'author'         => "<a href='http://www.teclib.com'>Teclib'</a> &
                               <a href='http://www.lefigaro.fr/'>LE FIGARO</a>",
          'homepage'       => "https://forge.indepnet.net/projects/escalade",
