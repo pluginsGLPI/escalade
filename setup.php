@@ -7,8 +7,8 @@ function plugin_init_escalade() {
    $PLUGIN_HOOKS['csrf_compliant']['escalade'] = true;
 
    $plugin = new Plugin();
-   if (isset($_SESSION['glpiID']) 
-      && $plugin->isInstalled('escalade') 
+   if (isset($_SESSION['glpiID'])
+      && $plugin->isInstalled('escalade')
       && $plugin->isActivated('escalade')) {
 
       //load config in session
@@ -18,7 +18,7 @@ function plugin_init_escalade() {
          // == Load js scripts ==
          if (isset($_SESSION['plugins']['escalade']['config'])) {
             $escalade_config = $_SESSION['plugins']['escalade']['config'];
-            
+
             $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'scripts/function.js';
 
             // on central page
@@ -30,7 +30,7 @@ function plugin_init_escalade() {
             }
 
             // on ticket page (in edition)
-            if (strpos($_SERVER['REQUEST_URI'], "ticket.form.php") !== false 
+            if (strpos($_SERVER['REQUEST_URI'], "ticket.form.php") !== false
                 && isset($_GET['id'])) {
 
                //history and climb feature
@@ -39,7 +39,7 @@ function plugin_init_escalade() {
                }
 
                //remove btn feature
-               if (!$escalade_config['remove_delete_group_btn'] 
+               if (!$escalade_config['remove_delete_group_btn']
                   || !$escalade_config['remove_delete_user_btn']) {
                   $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'scripts/remove_btn.js.php';
                }
@@ -48,7 +48,7 @@ function plugin_init_escalade() {
                if ($escalade_config['cloneandlink_ticket']) {
                   $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'scripts/cloneandlink_ticket.js.php';
                }
-               
+
                //filter group feature
                if ($escalade_config['use_filter_assign_group']) {
                   $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'scripts/filtergroup.js.php';
@@ -110,7 +110,7 @@ function plugin_escalade_check_prerequisites() {
    if (version_compare(GLPI_VERSION, '0.85', 'lt')) {
       echo "This plugin requires GLPI >= 0.85";
       return false;
-   } 
+   }
    return true;
 }
 

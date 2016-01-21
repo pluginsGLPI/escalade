@@ -6,7 +6,7 @@ function plugin_escalade_install() {
    $plugin = new Plugin();
    $found = $plugin->find("name = 'escalade'");
    $plugin_escalade = array_shift($found);
-   
+
    //init migration
    $migration = new Migration($plugin_escalade['version']);
 
@@ -22,7 +22,7 @@ function plugin_escalade_install() {
          KEY `groups_id` (`groups_id`)
       ) ENGINE = MYISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
       $DB->query($query);
-   } 
+   }
 
    if (! TableExists('glpi_plugin_escalade_configs')) {
       $query = "CREATE TABLE `glpi_plugin_escalade_configs` (
@@ -47,50 +47,50 @@ function plugin_escalade_install() {
       ) ENGINE = MYISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
       $DB->query($query);
 
-      $query = "INSERT INTO glpi_plugin_escalade_configs 
+      $query = "INSERT INTO glpi_plugin_escalade_configs
       VALUES (NULL, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, '".Ticket::WAITING."')";
       $DB->query($query);
    }
 
    // == Update to 1.2 ==
    if (! FieldExists('glpi_plugin_escalade_configs', 'cloneandlink_ticket')) {
-      $migration->addField('glpi_plugin_escalade_configs', 'cloneandlink_ticket', 
+      $migration->addField('glpi_plugin_escalade_configs', 'cloneandlink_ticket',
                            'INT(11) NOT NULL',
                            array('after' => 'reassign_tech_from_cat'));
       $migration->migrationOneTable('glpi_plugin_escalade_configs');
    }
    if (! FieldExists('glpi_plugin_escalade_configs', 'close_linkedtickets')) {
-      $migration->addField('glpi_plugin_escalade_configs', 'close_linkedtickets', 
+      $migration->addField('glpi_plugin_escalade_configs', 'close_linkedtickets',
                            'INT(11) NOT NULL',
                            array('after' => 'cloneandlink_ticket'));
       $migration->migrationOneTable('glpi_plugin_escalade_configs');
    }
 
    if (! FieldExists('glpi_plugin_escalade_configs', 'use_assign_user_group')) {
-      $migration->addField('glpi_plugin_escalade_configs', 'use_assign_user_group', 
+      $migration->addField('glpi_plugin_escalade_configs', 'use_assign_user_group',
                            'INT(11) NOT NULL',
                            array('after' => 'close_linkedtickets'));
       $migration->migrationOneTable('glpi_plugin_escalade_configs');
    }
    if (! FieldExists('glpi_plugin_escalade_configs', 'use_assign_user_group_creation')) {
-      $migration->addField('glpi_plugin_escalade_configs', 'use_assign_user_group_creation', 
+      $migration->addField('glpi_plugin_escalade_configs', 'use_assign_user_group_creation',
                            'INT(11) NOT NULL',
                            array('after' => 'use_assign_user_group'));
       $migration->migrationOneTable('glpi_plugin_escalade_configs');
    }
    if (! FieldExists('glpi_plugin_escalade_configs', 'use_assign_user_group_modification')) {
-      $migration->addField('glpi_plugin_escalade_configs', 'use_assign_user_group_modification', 
+      $migration->addField('glpi_plugin_escalade_configs', 'use_assign_user_group_modification',
                            'INT(11) NOT NULL',
                            array('after' => 'use_assign_user_group_creation'));
       $migration->migrationOneTable('glpi_plugin_escalade_configs');
    }
    if (! FieldExists('glpi_plugin_escalade_configs', 'remove_delete_group_btn')) {
-      $migration->addField('glpi_plugin_escalade_configs', 'remove_delete_group_btn', 
+      $migration->addField('glpi_plugin_escalade_configs', 'remove_delete_group_btn',
                            'INT(11) NOT NULL',
                            array('after' => 'remove_group'));
       $migration->migrationOneTable('glpi_plugin_escalade_configs');
    }
-   if (! isIndex("glpi_plugin_escalade_histories", 'tickets_id') 
+   if (! isIndex("glpi_plugin_escalade_histories", 'tickets_id')
       || ! isIndex("glpi_plugin_escalade_histories", 'groups_id')) {
       $migration->addKey("glpi_plugin_escalade_histories", 'tickets_id', 'tickets_id');
       $migration->addKey("glpi_plugin_escalade_histories", 'groups_id', 'groups_id');
@@ -100,13 +100,13 @@ function plugin_escalade_install() {
 
    // == Update to 1.3 ==
    if (! FieldExists('glpi_plugin_escalade_configs', 'remove_delete_user_btn')) {
-      $migration->addField('glpi_plugin_escalade_configs', 'remove_delete_user_btn', 
+      $migration->addField('glpi_plugin_escalade_configs', 'remove_delete_user_btn',
                            'INT(11) NOT NULL DEFAULT 1',
                            array('after' => 'remove_delete_group_btn'));
       $migration->migrationOneTable('glpi_plugin_escalade_configs');
    }
    if (! FieldExists('glpi_plugin_escalade_configs', 'use_filter_assign_group')) {
-      $migration->addField('glpi_plugin_escalade_configs', 'use_filter_assign_group', 
+      $migration->addField('glpi_plugin_escalade_configs', 'use_filter_assign_group',
                            'INT(11) NOT NULL',
                            array('after' => 'use_assign_user_group_modification'));
       $migration->migrationOneTable('glpi_plugin_escalade_configs');
@@ -119,8 +119,8 @@ function plugin_escalade_install() {
          PRIMARY KEY (`id`)
       ) ENGINE = MYISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
       $DB->query($query);
-   }   
-   
+   }
+
    // Update for 0.84 status
    if (TableExists('glpi_plugin_escalade_configs')) {
       foreach ($DB->request("glpi_plugin_escalade_configs") as $data) {
@@ -164,7 +164,7 @@ function plugin_escalade_install() {
       $migration->dropField("glpi_plugin_escalade_configs", "assign_me_ticket");
       $migration->migrationOneTable('glpi_plugin_escalade_configs');
    }
-   
+
    // update to 0.90-1.1
    if (! TableExists('glpi_plugin_escalade_users')) {
       $query = "CREATE TABLE `glpi_plugin_escalade_users` (
@@ -183,10 +183,10 @@ function plugin_escalade_install() {
 
       $user = new User();
       foreach ($user->find() as $data) {
-         $query = "INSERT INTO glpi_plugin_escalade_users (`users_id`, `use_filter_assign_group`) 
+         $query = "INSERT INTO glpi_plugin_escalade_users (`users_id`, `use_filter_assign_group`)
                      VALUES (".$data['id'].", $default_value)";
          $DB->query($query);
-      } 
+      }
    }
 
    return true;
@@ -220,7 +220,7 @@ function plugin_escalade_item_purge($item) {
 
 function plugin_escalade_item_update($item) {
 
-   if ($item instanceof Ticket) return PluginEscaladeTicket::item_update($item);  
+   if ($item instanceof Ticket) return PluginEscaladeTicket::item_update($item);
    return true;
 }
 
@@ -232,7 +232,7 @@ function plugin_escalade_item_add_user($item) {
       $config->getFromDB(1);
       $default_value = $config->fields["use_filter_assign_group"];
 
-      $query = "INSERT INTO glpi_plugin_escalade_users (`users_id`, `use_filter_assign_group`) 
+      $query = "INSERT INTO glpi_plugin_escalade_users (`users_id`, `use_filter_assign_group`)
                   VALUES (".$item->getID().", $default_value)";
       $DB->query($query);
    }
@@ -269,15 +269,15 @@ function plugin_escalade_item_add_ticket($item) {
 function plugin_escalade_pre_item_add_group_ticket($item) {
    if ($item instanceof Group_Ticket
       && $item->input['type'] == CommonITILActor::ASSIGN) {
-      return PluginEscaladeTicket::addHistoryOnAddGroup($item);   
+      return PluginEscaladeTicket::addHistoryOnAddGroup($item);
    }
    return $item;
 }
 
 function plugin_escalade_item_add_group_ticket($item) {
-   if ($item instanceof Group_Ticket 
+   if ($item instanceof Group_Ticket
       && $item->fields['type'] == CommonITILActor::ASSIGN) {
-      return PluginEscaladeTicket::processAfterAddGroup($item);  
+      return PluginEscaladeTicket::processAfterAddGroup($item);
    }
    return $item;
 }
@@ -285,7 +285,7 @@ function plugin_escalade_item_add_group_ticket($item) {
 
 function plugin_escalade_post_prepareadd_ticket ($item) {
    if ($item instanceof Ticket) {
-      return PluginEscaladeTicket::assignUserGroup($item);  
+      return PluginEscaladeTicket::assignUserGroup($item);
    }
    return $item;
 }
@@ -326,7 +326,7 @@ function plugin_escalade_MassiveActions($itemtype) {
 
    switch ($itemtype) {
       case 'User':
-         return array('PluginEscaladeUser' . MassiveAction::CLASS_ACTION_SEPARATOR . 'use_filter_assign_group' => 
+         return array('PluginEscaladeUser' . MassiveAction::CLASS_ACTION_SEPARATOR . 'use_filter_assign_group' =>
             __("Enable filtering on the groups assignment", 'escalade'));
    }
    return array();
