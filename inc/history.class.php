@@ -200,13 +200,19 @@ class PluginEscaladeHistory extends CommonDBTM {
          }
          $options['link'][0]       = 'AND';
 
-         $options['field'][1]      = 1881; // groups_id_assign for escalade history
-         $options['searchtype'][1] = 'equals';
-         $options['value'][1]      = 'mygroups';
-         $options['link'][1]       = 'AND';
+         if ($type == 'notold') {
+            $options['field'][1]      = 1881; // groups_id_assign for escalade history
+            $options['searchtype'][1] = 'equals';
+            $options['value'][1]      = 'mygroups';
+            $options['link'][1]       = 'AND';
+         }
 
          $options['field'][2]      = 8; // groups_id_assign
-         $options['searchtype'][2] = 'notequals';
+         if ($type == 'notold') {
+            $options['searchtype'][2] = 'notequals';
+         } else {
+            $options['searchtype'][2] = 'equals';
+         }
          $options['value'][2]      = 'mygroups';
          $options['link'][2]       = 'AND';
 
