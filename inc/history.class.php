@@ -190,24 +190,25 @@ class PluginEscaladeHistory extends CommonDBTM {
       if ($numrows > 0) {
          //construct link to ticket list
          $options['reset'] = 'reset';
-         $options['criteria'][0]['field']      = 12; // status
-         $options['criteria'][0]['searchtype'] = 'equals';
+
+         $options['field'][0]      = 12; // status
+         $options['searchtype'][0] = 'equals';
          if ($type == 'notold') {
-            $options['criteria'][0]['value']   = 'notold';
+            $options['contains'][0]   = 'notold';
          } else if ($type == 'solved') {
-            $options['criteria'][0]['value']   = 5;
+            $options['contains'][0]   = 5;
          }
-         $options['criteria'][0]['link']       = 'AND';
+         $options['link'][0]       = 'AND';
 
-         $options['criteria'][1]['field']      = 1881; // groups_id_assign for escalade history
-         $options['criteria'][1]['searchtype'] = 'equals';
-         $options['criteria'][1]['value']      = 'mygroups';
-         $options['criteria'][1]['link']       = 'AND';
+         $options['field'][1]      = 1881; // groups_id_assign for escalade history
+         $options['searchtype'][1] = 'equals';
+         $options['value'][1]      = 'mygroups';
+         $options['link'][1]       = 'AND';
 
-         $options['criteria'][1]['field']      = 8; // groups_id_assign
-         $options['criteria'][1]['searchtype'] = 'notequals';
-         $options['criteria'][1]['value']      = 'mygroups';
-         $options['criteria'][1]['link']       = 'AND';
+         $options['field'][2]      = 8; // groups_id_assign
+         $options['searchtype'][2] = 'notequals';
+         $options['value'][2]      = 'mygroups';
+         $options['link'][2]       = 'AND';
 
          echo "<table><tr><td class='top' width='450px'>";
 
