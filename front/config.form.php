@@ -18,7 +18,7 @@ if (isset($_POST["add"])) {
    Session::checkRight("config", CREATE);
    $newID=$config->add($_POST);
    Html::back();
-   
+
 } elseif (isset($_POST["update"])) {
 
    Session::checkRight("config", UPDATE);
@@ -30,7 +30,7 @@ if (isset($_POST["add"])) {
    Session::checkRight("config", DELETE);
    $config->delete($_POST, 1);
    Html::redirect("./config.form.php");
-   
+
 } else {
 
    Html::header(__("Escalation", "escalade"), '', "plugins", "escalade", "config");

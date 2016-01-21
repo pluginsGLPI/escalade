@@ -110,7 +110,7 @@ $(document).ready(function() {
             // Group
             var assign_select_dom_id = $("*[name='_groups_id_assign']")[0].id;
             redefineDropdown(assign_select_dom_id, urlGroup, 0, 'Group');
-            
+
             // User
             /*var assign_select_dom_id = $("*[name='_users_id_assign']")[0].id;
             redefineDropdown(assign_select_dom_id, urlUser, 0, 'User');*/
@@ -121,10 +121,10 @@ $(document).ready(function() {
       // -----------------------
       // ---- Update Ticket ----
       // -----------------------
-      
+
       $(document).ajaxSend(function( event, jqxhr, settings ) {
          // Group
-         if (settings.url.indexOf("dropdownItilActors.php") > 0 
+         if (settings.url.indexOf("dropdownItilActors.php") > 0
             && settings.data.indexOf("group") > 0
                && settings.data.indexOf("assign") > 0
             ) {
@@ -135,7 +135,7 @@ $(document).ready(function() {
          }
 
          // User
-         /*if (settings.url.indexOf("dropdownItilActors.php") > 0 
+         /*if (settings.url.indexOf("dropdownItilActors.php") > 0
             && settings.data.indexOf("user") > 0
                && settings.data.indexOf("assign") > 0
             ) {
@@ -143,7 +143,7 @@ $(document).ready(function() {
                var assign_select_dom_id = $("*[name='_itil_assign[users_id]']")[0].id;
                redefineDropdown(assign_select_dom_id, urlUser, tickets_id, 'User');
             });
-            
+
          }*/
       });
 

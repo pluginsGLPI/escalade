@@ -1,7 +1,7 @@
 <?php
 
 class PluginEscaladeConfig extends CommonDBTM {
-   
+
    static function canCreate() {
       return true;
    }
@@ -16,15 +16,15 @@ class PluginEscaladeConfig extends CommonDBTM {
 
    function showForm($ID, $options = array()) {
       global $CFG_GLPI;
-      
+
       if (! $this->canView()) {
          return false;
       }
-      
+
 
       $this->getFromDB($ID);
       $this->check($ID, READ);
-      
+
       $this->showFormHeader($options);
 
       $rand = mt_rand();
@@ -47,9 +47,9 @@ class PluginEscaladeConfig extends CommonDBTM {
          }
       </script>";
       echo "</td>";
-      
+
       $style = ($this->fields["remove_group"]) ? "" : "style='display: none !important;'";
-      
+
       $rand = mt_rand();
       echo "<td id='show_history_td1' $style><label for='dropdown_show_history$rand'>";
       echo __("show group assign history visually", "escalade");
@@ -71,7 +71,7 @@ class PluginEscaladeConfig extends CommonDBTM {
          'rand' => $rand,
       ));
       echo "</td>";
-      
+
       $rand = mt_rand();
       echo "<td><label for='dropdown_remove_tech$rand'>" . __("Remove technician(s) on escalation", "escalade") .  "</label></td>";
       echo "<td>";
@@ -90,7 +90,7 @@ class PluginEscaladeConfig extends CommonDBTM {
       self::dropdownGenericStatus(
          "Ticket", "ticket_last_status", $rand, $this->fields["ticket_last_status"]);
       echo "</td>";
-      
+
       $rand = mt_rand();
       echo "<td id='show_solve_return_group_td1' $style><label for='dropdown_solve_return_group$rand'>";
       echo __("Assign ticket to intial group on solve ticket", "escalade");
@@ -114,7 +114,7 @@ class PluginEscaladeConfig extends CommonDBTM {
          'rand' => $rand,
       ));
       echo "</td>";
-      
+
       $rand = mt_rand();
       echo "<td><label for='dropdown_reassign_group_from_cat$rand'>";
       echo __("Assign the technical groupe on ticket category change", "escalade");
@@ -136,7 +136,7 @@ class PluginEscaladeConfig extends CommonDBTM {
          'rand' => $rand,
       ));
       echo "</td>";
-      
+
       $rand = mt_rand();
       echo "<td><label for='dropdown_close_linkedtickets$rand'>";
       echo __("Close cloned tickets at the same time", "escalade");
@@ -154,7 +154,7 @@ class PluginEscaladeConfig extends CommonDBTM {
             1 => __('First'),
             2 => __('Last'),
       );
-      
+
       $rand = mt_rand();
       echo "<tr class='tab_bg_1'>";
       echo "<td><label for='dropdown_use_assign_user_group$rand'>" . __("Use the technician's group", "escalade") . "</label></td>";
@@ -167,21 +167,21 @@ class PluginEscaladeConfig extends CommonDBTM {
          'rand' => $rand,
       ));
       echo "</td>";
-      
+
       $rand = mt_rand();
       echo "<td><label for='dropdown_use_assign_user_group_creation$rand'>";
       echo __("a time of creation", "escalade")."</label>";
-      Dropdown::showYesNo("use_assign_user_group_creation", 
+      Dropdown::showYesNo("use_assign_user_group_creation",
                           $this->fields["use_assign_user_group_creation"], -1, array(
          //'width' => '100%',
          'rand' => $rand,
       ));
       echo "</td>";
-      
+
       $rand = mt_rand();
       echo "<td style='padding:0px'><label for='dropdown_use_assign_user_group_modification$rand'>";
       echo __("a time of modification", "escalade")."</label>";
-      Dropdown::showYesNo("use_assign_user_group_modification", 
+      Dropdown::showYesNo("use_assign_user_group_modification",
                           $this->fields["use_assign_user_group_modification"], -1, array(
          //'width' => '25%',
          'rand' => $rand,
@@ -190,9 +190,9 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo "</tr></table>";
       $plugin = new Plugin();
       if ($plugin->isInstalled('behaviors') && $plugin->isActivated('behaviors')) {
-         echo "<i>".str_replace('##link##', 
-            $CFG_GLPI["root_doc"]."/front/config.form.php?forcetab=PluginBehaviorsConfig%241", 
-            __("Nota: This feature (creation part) is duplicate with the <a href='##link##'>Behavior</a>plugin. This last has priority.", 
+         echo "<i>".str_replace('##link##',
+            $CFG_GLPI["root_doc"]."/front/config.form.php?forcetab=PluginBehaviorsConfig%241",
+            __("Nota: This feature (creation part) is duplicate with the <a href='##link##'>Behavior</a>plugin. This last has priority.",
             "escalade"))."</i>";
       }
       echo "</td>";
@@ -208,7 +208,7 @@ class PluginEscaladeConfig extends CommonDBTM {
          'rand' => $rand,
       ));
       echo "</td>";
-      
+
       $rand = mt_rand();
       echo "<td><label for='dropdown_remove_delete_user_btn$rand'>";
       echo __("Display delete button of assigned users", "escalade") . "</td>";
@@ -258,9 +258,9 @@ class PluginEscaladeConfig extends CommonDBTM {
 
    static function dropdownGenericStatus($itemtype, $name, $rand, $value = CommonITILObject::INCOMING) {
       $item = new $itemtype();
-      
+
       $tab[-1] = __("Don't change", "escalade");
-      
+
       $i = 1;
       foreach ($item->getAllStatusArray(false) as $status) {
          $tab[$i] = $status;

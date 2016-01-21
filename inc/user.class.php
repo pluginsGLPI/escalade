@@ -84,7 +84,7 @@ class PluginEscaladeUser extends CommonDBTM {
                 INNER JOIN glpi_groups ON (glpi_groups.id = glpi_groups_users.groups_id)
                 WHERE glpi_groups_users.users_id='$userid'".
                 getEntitiesRestrictRequest(' AND ', 'glpi_groups', '', $entity, true, true);
-                
+
       if ($filter) {
          $query .= "AND ($filter)";
       }

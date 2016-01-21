@@ -6,16 +6,16 @@ header("Content-type: application/javascript");
 
 //not executed in self-service interface & right verification
 if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
-   
+
    $locale_actor = __('Actor');
    $esc_config = $_SESSION['plugins']['escalade']['config'];
-   
+
    $remove_delete_group_btn = "true";
    if (isset($esc_config['remove_delete_group_btn'])
        && $esc_config['remove_delete_group_btn']) {
       $remove_delete_group_btn = "false";
    }
-   
+
    $remove_delete_user_btn = "true";
    if (isset($esc_config['remove_delete_user_btn'])
        && $esc_config['remove_delete_user_btn']) {
@@ -28,7 +28,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
          .tab_actors .actor-bloc:last a[onclick*="+str+"]")
             .remove();
    }
-   
+
    var removeAllDeleteButtons = function() {
       //remove "delete" group buttons
       if ({$remove_delete_group_btn}) {

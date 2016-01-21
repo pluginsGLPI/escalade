@@ -6,10 +6,10 @@ header("Content-type: application/javascript");
 
 //not executed in self-service interface & right verification
 if ($_SESSION['glpiactiveprofile']['interface'] == "central"
-   && Session::haveRight("ticket", CREATE) 
-   && Session::haveRight("ticket", UPDATE) 
+   && Session::haveRight("ticket", CREATE)
+   && Session::haveRight("ticket", UPDATE)
    ) {
-   
+
    $locale_cloneandlink  = __("Clone and link", "escalade");
    $locale_linkedtickets = _n('Linked ticket', 'Linked tickets', 2);
 
@@ -24,7 +24,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
       setTimeout( function () {
          if ($("#cloneandlink_ticket").length > 0) { return; }
          var duplicate_html = "&nbsp;<img src='../plugins/escalade/pics/cloneandlink_ticket.png' "+
-            "alt='$locale_cloneandlink' " + 
+            "alt='$locale_cloneandlink' " +
             "title='$locale_cloneandlink' class='pointer' id='cloneandlink_ticket'>";
 
          $("th:contains('$locale_linkedtickets')>img")
@@ -33,11 +33,11 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
 
       }, 100);
    }
-   
+
    addOnclick = function() {
       //onclick event on new buttons
       $('#cloneandlink_ticket').on('click', function() {
-  
+
          var tickets_id = getUrlParameter('id');
 
          $.ajax({
@@ -45,7 +45,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
             data:    { 'tickets_id': tickets_id },
             success: function(response, opts) {
                var res = JSON.parse(response);
-               
+
                if (res.success == false) {
                   return false;
                }
@@ -57,7 +57,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
          });
       });
    }
-   
+
    $(document).ajaxStop(function() {
       addCloneLink();
    });

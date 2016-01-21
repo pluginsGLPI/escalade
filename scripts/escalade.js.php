@@ -5,10 +5,10 @@ include ("../../../inc/includes.php");
 header("Content-type: application/javascript");
 
 //not executed in self-service interface & right verification
-if ($_SESSION['glpiactiveprofile']['interface'] == "central" 
-   && (Session::haveRight("ticket", CREATE) 
+if ($_SESSION['glpiactiveprofile']['interface'] == "central"
+   && (Session::haveRight("ticket", CREATE)
       || Session::haveRight("ticket", UPDATE))) {
-   
+
    $locale_actor = __('Actor');
 
    $JS = <<<JAVASCRIPT
@@ -38,7 +38,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
             )
          );
    }
-   
+
    $(document).ready(function() {
       // only in ticket form
       if (location.pathname.indexOf('ticket.form.php') != 0) {
