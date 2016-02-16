@@ -1,10 +1,25 @@
-function getUrlParameter(sParam) {
-    var sPageURL = window.location.search.substring(1);
-    var sURLVariables = sPageURL.split('&');
-    for (var i=0; i < sURLVariables.length; i++) {
-        var sParameterName = sURLVariables[i].split('=');
-        if (sParameterName[0] == sParam) {
-            return sParameterName[1];
-        }
-    }
-}
+var getUrlParameter = function(val) {
+   var result = "Not found",
+       tmp = [];
+
+   location.search
+      .substr(1) // remove '?'
+      .split("&")
+      .forEach(function (item) {
+         tmp = item.split("=");
+         if (tmp[0] === val) {
+            result = decodeURIComponent(tmp[1]);
+         }
+      });
+   return result;
+};
+
+
+var checkDOMChange = function (selector, handler) {
+   if ($(selector).get(0)) {
+      return handler();
+   }
+   setTimeout( function() {
+      checkDOMChange(selector, handler);
+   }, 100 );
+};

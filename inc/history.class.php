@@ -31,6 +31,7 @@ class PluginEscaladeHistory extends CommonDBTM {
 
 
    static function getHistory($tickets_id, $full_history = false) {
+      global $CFG_GLPI;
 
       $filter_groups_id = array();
       if ($_SESSION['plugins']['escalade']['config']['use_filter_assign_group']) {
@@ -40,12 +41,12 @@ class PluginEscaladeHistory extends CommonDBTM {
       } else {
          $use_filter_assign_group = false;
       }
-      
+
       $plugin_dir = ($full_history) ? ".." : "../plugins/escalade";
 
       //get all line for this ticket
       $group = new Group();
-      
+
       $history = new self();
       $found = $history->find("tickets_id = $tickets_id", "date_mod DESC");
       $nb_histories = count($found);
@@ -56,7 +57,7 @@ class PluginEscaladeHistory extends CommonDBTM {
       if ($full_history) {
          //show 1st group
          echo "<div class='escalade_active'>";
-         echo "<img src='$plugin_dir/pics/groupes.png' width='20' />";
+         echo "&nbsp;<img src='".$CFG_GLPI['root_doc']."/pics/group.png' />&nbsp;";
          if ($group->getFromDB($first_group['groups_id'])) {
             echo $group->getLink(true);
          }
@@ -68,7 +69,7 @@ class PluginEscaladeHistory extends CommonDBTM {
       $i = 0;
       foreach ($found as $key => $hline) {
          echo "<div class='escalade_history'>";
-         
+
          if (! $use_filter_assign_group || isset($filter_groups_id[$hline['groups_id']])) {
 	         //up link and image
 	         echo "<a href='$plugin_dir/front/climb_group.php?tickets_id="
@@ -80,14 +81,14 @@ class PluginEscaladeHistory extends CommonDBTM {
 	      } else {
 	         echo "&nbsp;&nbsp;&nbsp;";
 	      }
-         
+
 
          //group link
-         echo "<img src='$plugin_dir/pics/groupes.png' width='20' />";
+         echo "&nbsp;<img src='".$CFG_GLPI['root_doc']."/pics/group.png' />&nbsp;";
          if ($group->getFromDB($hline['groups_id'])) {
             echo self::showGroupLink($group, $full_history);
          }
-         
+
          echo "</div>";
 
          $i++;
@@ -103,7 +104,7 @@ class PluginEscaladeHistory extends CommonDBTM {
       }
 
       echo "</div>";
-      
+
    }
 
    static function showGroupLink($group, $full_history = false) {
@@ -111,7 +112,7 @@ class PluginEscaladeHistory extends CommonDBTM {
       if (!$group->can($group->fields['id'], READ)) {
          return $group->getNameID(true);
       }
-      
+
       $link_item = $group->getFormURL();
 
       $link  = $link_item;
@@ -130,7 +131,7 @@ class PluginEscaladeHistory extends CommonDBTM {
 
    static function showCentralSpecificList($type) {
       global $CFG_GLPI, $DB;
-      
+
       if (! Session::haveRight("ticket", Ticket::READALL)
           && ! Session::haveRight("ticket", Ticket::READASSIGN)
           && ! Session::haveRight("ticket", CREATE)
@@ -141,7 +142,7 @@ class PluginEscaladeHistory extends CommonDBTM {
       $groups        = implode("','",$_SESSION['glpigroups']);
       $numrows = 0;
       $is_deleted    = " `glpi_tickets`.`is_deleted` = 0 ";
-      
+
 
       if ($type == "notold") {
          $title = __("Tickets to follow (climbed)", "escalade");
@@ -155,16 +156,16 @@ class PluginEscaladeHistory extends CommonDBTM {
          $query_join = "LEFT JOIN `glpi_plugin_escalade_histories`
             ON (`glpi_tickets`.`id` = `glpi_plugin_escalade_histories`.`tickets_id`)
          LEFT JOIN `glpi_groups_tickets`
-            ON (`glpi_tickets`.`id` = `glpi_groups_tickets`.`tickets_id` 
+            ON (`glpi_tickets`.`id` = `glpi_groups_tickets`.`tickets_id`
                AND `glpi_groups_tickets`.`type`=2)";
       } else {
          $title = __("Tickets to close (climbed)", "escalade");
          $status = CommonITILObject::SOLVED;
-         
+
          $search_assign = " (`glpi_groups_tickets`.`groups_id` IN ('$groups'))";
-         
+
          $query_join = "LEFT JOIN `glpi_groups_tickets`
-            ON (`glpi_tickets`.`id` = `glpi_groups_tickets`.`tickets_id` 
+            ON (`glpi_tickets`.`id` = `glpi_groups_tickets`.`tickets_id`
                AND `glpi_groups_tickets`.`type`=2)";
       }
 
@@ -175,7 +176,7 @@ class PluginEscaladeHistory extends CommonDBTM {
                   ON (`glpi_tickets`.`id` = `glpi_tickets_users`.`tickets_id`)";
 
       $query .= $query_join;
-      
+
 
 
       $query .= "WHERE $is_deleted AND ( $search_assign )
@@ -183,6 +184,7 @@ class PluginEscaladeHistory extends CommonDBTM {
                             getEntitiesRestrictRequest("AND","glpi_tickets");
 
       $query  .= " ORDER BY glpi_tickets.date_mod DESC";
+
       $result  = $DB->query($query);
       $numrows = $DB->numrows($result);
       if (!$numrows) return;
@@ -195,32 +197,31 @@ class PluginEscaladeHistory extends CommonDBTM {
       if ($numrows > 0) {
          //construct link to ticket list
          $options['reset'] = 'reset';
-         $num = 0;
-         foreach ($_SESSION['glpigroups'] as $gID) {
-            $options['field'][$num]      = 8;
 
-            if ($type == "notold") {
-               $options['searchtype'][$num] = 'notequals';
-               $options['contains'][$num]   = $gID;
-               $options['link'][$num]       = ($num==0)?'AND':'OR';
-               $num++;
-
-               $options['field'][$num]      = 1881; //see hook.php, function ..._getAddSearchOptions
-            }
-            $options['searchtype'][$num] = 'equals';
-            $options['contains'][$num]   = $gID;
-            if ($type == "notold") {
-               $options['link'][$num]       = 'AND';
-            } else {
-               $options['link'][$num]       = ($num==0) ?'AND':'OR';
-            }
-            $num++;
-            $options['field'][$num]      = 12; // status
-            $options['searchtype'][$num] = 'equals';
-            $options['contains'][$num]   = $type;
-            $options['link'][$num]       = 'AND';
-            $num++;
+         $options['criteria'][0]['field']      = 12; // status
+         $options['criteria'][0]['searchtype'] = 'equals';
+         if ($type == 'notold') {
+            $options['criteria'][0]['value']   = 'notold';
+         } else if ($type == 'solved') {
+            $options['criteria'][0]['value']   = 5;
          }
+         $options['criteria'][0]['link']       = 'AND';
+
+         if ($type == 'notold') {
+            $options['criteria'][1]['field']      = 1881; // groups_id_assign for escalade history
+            $options['criteria'][1]['searchtype'] = 'equals';
+            $options['criteria'][1]['value']      = 'mygroups';
+            $options['criteria'][1]['link']       = 'AND';
+         }
+
+         $options['criteria'][2]['field']      = 8; // groups_id_assign 
+         if ($type == 'notold') {
+            $options['criteria'][2]['searchtype'] = 'notequals';
+         } else {
+            $options['criteria'][2]['searchtype'] = 'equals';
+         }
+         $options['criteria'][2]['value']      = 'mygroups';
+         $options['criteria'][2]['link']       = 'AND';
 
          echo "<table class='tab_cadrehov' id='pluginEscaladeCentralList'>";
          echo "<tr><th colspan='5'>";
@@ -245,5 +246,5 @@ class PluginEscaladeHistory extends CommonDBTM {
       }
 
    }
-   
+
 }

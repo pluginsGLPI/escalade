@@ -1,11 +1,11 @@
-<?php 
+<?php
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
 class PluginEscaladeGroup_Group extends CommonDBRelation {
-   
+
    // use when you a PluginEscaladeGroup_Group is add
    function getSearchOptions() {
       return array();
@@ -25,8 +25,8 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
    		$PluginEscaladeGroup_Group->manageGroup($item->getID());
       }
       return true;
-   }   
-   
+   }
+
 
    function manageGroup($groups_id) {
       global $CFG_GLPI;
@@ -60,7 +60,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
          echo "</td>";
          echo "</tr>";
       }
-      
+
       foreach ($gg_found as $gg_id => $gg) {
          $group->getFromDB($gg['groups_id_destination']);
          echo "<tr class='tab_bg_1'>";
@@ -74,7 +74,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
          echo "</td>";
          echo "</tr>";
       }
-      
+
       echo "</table>";
       if (Session::haveRight('group', UPDATE)) {
          Html::openArrowMassives("manageGroup", true);
@@ -100,7 +100,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
          foreach($ticket->getGroups(CommonITILActor::ASSIGN) as $current_group) {
             $ticket_groups[$current_group['groups_id']] = $current_group['groups_id'];
          }
-      } 
+      }
 
       // To do an escalation, the user must be in a group currently assigned to the ticket
       // or no group is assigned to the ticket

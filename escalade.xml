@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+   <name>Escalade </name>
+   <key>escalade</key>
+   <state>stable</state>
+   <logo>https://raw.githubusercontent.com/pluginsGLPI/escalade/master/escalade.png</logo>
+   <description>
+      <short>
+         <fr><![CDATA[Cette extension permet de simplifier l'escalade de ticket vers des groupes différents]]></fr>
+         <en><![CDATA[This plugin simplifies the ticket escalation to different groups]]></en>
+      </short>
+      <long>
+         <fr>
+Cette extension permet de simplifier l'escalade de ticket vers des groupes différents.   
+Elle ajoute les fonctionnalités suivantes :
+
+* Affichage d'un historique visuel de l'assignation des groupes sur un ticket.
+* Escalade rapide à un groupe présent dans cette historique.
+* Assignation du groupe initiateur lors de l'apport d'une solution.
+* Attribution du responsable et groupe technique lors d'un changement de catégorie de ticket.
+* Clonage rapide de ticket.
+* Cloture des tickets clonés en même temps.
+* Prendre le premier ou dernier groupe du technicien (sur modification du ticket).
+* Bouton d'assignation rapide à soi-même d'un ticket.
+         </fr>
+         <en>
+This plugin simplifies the ticket escalation to different groups.   
+It adds the following features : 
+
+* Display a visual history of the assignement groups on a ticket.
+* Rapid escalation to a group present in history.
+* Assign initiator group when ticket solution provided.
+* provide automatic assignment of tickets on ticket category change.
+* Fast cloning of ticket.
+* Closing cloned tickets simultaneously.
+* Take the first or last group of technician (on ticket modification).
+* New button for rapid self-assignment of a ticket. 
+         </en>
+      </long>
+   </description>
+   <homepage>https://github.com/pluginsGLPI/escalade</homepage>
+   <download>https://github.com/pluginsGLPI/escalade/releases</download>
+   <issues>https://github.com/pluginsGLPI/escalade/issues</issues>
+   <readme>https://github.com/pluginsGLPI/escalade/blob/master/README.md</readme>
+   <authors>
+      <author>Alexandre Delaunay</author>
+      <author>Teclib'</author>
+   </authors>
+   <versions>
+      <version>
+          <num>0.90-1.1</num>
+          <compatibility>0.90</compatibility>
+          <compatibility>0.85</compatibility>
+      </version>
+      <version>
+          <num>0.90-1.0.1</num>
+          <compatibility>0.90</compatibility>
+          <compatibility>0.85</compatibility>
+      </version>
+      <version>
+          <num>2.0.2</num>
+          <compatibility>0.84</compatibility>
+      </version>  
+      <version>
+          <num>1.2</num>
+          <compatibility>0.83</compatibility>
+      </version>  
+   </versions>
+   <langs>
+      <lang>fr_FR</lang>
+      <lang>en_GB</lang>
+   </langs>
+   <license><![CDATA[GPL v2+]]></license>
+   <tags>
+         <fr>
+            <tag>Groupes</tag>
+            <tag>Ticket</tag>
+            <tag>Helpdesk</tag>
+            <tag>Escalade</tag>
+            <tag>Clone</tag>
+            <tag>Attribution</tag>
+         </fr>
+         <en>
+            <tag>Groups</tag>
+            <tag>Ticket</tag>
+            <tag>Assistance</tag>
+            <tag>Escalation</tag>
+            <tag>Clone</tag>
+            <tag>Assignement</tag>
+         </en>
+   </tags>
+   <screenshots>
+      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/escalade/master/screenshots/escalade_config.png</screenshot>
+      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/escalade/master/screenshots/escalade_history.png</screenshot>
+      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/escalade/master/screenshots/escalade_history2.png</screenshot>
+   </screenshots>
+</root>

@@ -110,10 +110,10 @@ $(document).ready(function() {
             // Group
             var assign_select_dom_id = $("*[name='_groups_id_assign']")[0].id;
             redefineDropdown(assign_select_dom_id, urlGroup, 0, 'Group');
-            
+
             // User
-            var assign_select_dom_id = $("*[name='_users_id_assign']")[0].id;
-            redefineDropdown(assign_select_dom_id, urlUser, 0, 'User');
+            /*var assign_select_dom_id = $("*[name='_users_id_assign']")[0].id;
+            redefineDropdown(assign_select_dom_id, urlUser, 0, 'User');*/
          }, 300);
       });
 
@@ -121,36 +121,30 @@ $(document).ready(function() {
       // -----------------------
       // ---- Update Ticket ----
       // -----------------------
-      
+
       $(document).ajaxSend(function( event, jqxhr, settings ) {
          // Group
-         if (settings.url.indexOf("dropdownItilActors.php") > 0 
+         if (settings.url.indexOf("dropdownItilActors.php") > 0
             && settings.data.indexOf("group") > 0
                && settings.data.indexOf("assign") > 0
             ) {
-            //delay the execution (ajax requestcomplete event fired before dom loading)
-            setTimeout(function() {
-               if ($("*[name='_itil_assign[groups_id]']").length) {
-                  var assign_select_dom_id = $("*[name='_itil_assign[groups_id]']")[0].id;
-                  redefineDropdown(assign_select_dom_id, urlGroup, tickets_id, 'Group');
-               }
-            }, 300);
+            checkDOMChange("input[name='_itil_assign[groups_id]'", function() {
+               var assign_select_dom_id = $("input[name='_itil_assign[groups_id]']")[0].id;
+               redefineDropdown(assign_select_dom_id, urlGroup, tickets_id, 'Group');
+            });
          }
 
          // User
-         if (settings.url.indexOf("dropdownItilActors.php") > 0 
+         /*if (settings.url.indexOf("dropdownItilActors.php") > 0
             && settings.data.indexOf("user") > 0
                && settings.data.indexOf("assign") > 0
             ) {
-            //delay the execution (ajax requestcomplete event fired before dom loading)
-            setTimeout(function() {
-               if ($("*[name='_itil_assign[users_id]']").length) {
-                  var assign_select_dom_id = $("*[name='_itil_assign[users_id]']")[0].id;
-                  redefineDropdown(assign_select_dom_id, urlUser, tickets_id, 'User');
-               }
-            }, 300);
-            
-         }
+            checkDOMChange("input[name='_itil_assign[users_id]'", function() {
+               var assign_select_dom_id = $("*[name='_itil_assign[users_id]']")[0].id;
+               redefineDropdown(assign_select_dom_id, urlUser, tickets_id, 'User');
+            });
+
+         }*/
       });
 
    }

@@ -1,4 +1,4 @@
-<?php 
+<?php
 $AJAX_INCLUDE = 1;
 include ("../../../inc/includes.php");
 header("Content-Type: text/html; charset=UTF-8");
@@ -18,7 +18,7 @@ if (count($groups_id_filtred) > 0) {
    }
    $newarray = implode(", ", $myarray);
    $condition = " id IN ($newarray)";
-   
+
 } else {
    $condition = "1=0";
 }
