@@ -1,5 +1,5 @@
 var getUrlParameter = function(val) {
-   var result = "Not found",
+   var result = undefined,
        tmp = [];
 
    location.search
