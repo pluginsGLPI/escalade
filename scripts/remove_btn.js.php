@@ -22,6 +22,12 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
       $remove_delete_user_btn = "false";
    }
 
+   $remove_delete_supplier_btn = "true";
+   if (isset($esc_config['remove_delete_supplier_btn'])
+       && $esc_config['remove_delete_supplier_btn']) {
+      $remove_delete_supplier_btn = "false";
+   }
+
    $JS = <<<JAVASCRIPT
    var removeDeleteButtons = function(str) {
       $("table:contains('$locale_actor') td:last-child a[onclick*="+str+"], \
@@ -38,6 +44,11 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
       //remove "delete" user buttons
       if ({$remove_delete_user_btn}) {
          removeDeleteButtons("ticket_user");
+      }
+
+      //remove "delete" supplier buttons
+      if ({$remove_delete_supplier_btn}) {
+         removeDeleteButtons("supplier_ticket");
       }
    }
 

@@ -105,6 +105,10 @@ msgstr "Afficher les boutons de suppression des groupes attribués"
 msgid "Display delete button of assigned users"
 msgstr "Afficher les boutons de suppression des utilisateurs attribués"
 
+#: inc/config.class.php:226
+msgid "Display delete button of assigned suppliers"
+msgstr "Afficher les boutons de suppression des fournisseurs attribués"
+
 #: inc/config.class.php:186
 msgid "Enable filtering on the groups assignment"
 msgstr "Activer le filtrage sur les groupes d'attribution"

@@ -30,6 +30,7 @@ function plugin_escalade_install() {
          `remove_group`                            INT(11) NOT NULL,
          `remove_delete_group_btn`                 INT(11) NOT NULL,
          `remove_delete_user_btn`                  INT(11) NOT NULL,
+         `remove_delete_supplier_btn`              INT(11) NOT NULL,
          `show_history`                            INT(11) NOT NULL,
          `task_history`                            INT(11) NOT NULL,
          `remove_tech`                             INT(11) NOT NULL,
@@ -189,6 +190,14 @@ function plugin_escalade_install() {
                      VALUES (".$data['id'].", $default_value)";
          $DB->query($query);
       }
+   }
+
+   // update to 0.90-1.3
+   if (! FieldExists('glpi_plugin_escalade_configs', 'remove_delete_supplier_btn')) {
+      $migration->addField('glpi_plugin_escalade_configs', 'remove_delete_supplier_btn',
+                           'INT(11) NOT NULL DEFAULT 1',
+                           array('after' => 'remove_delete_group_btn'));
+      $migration->migrationOneTable('glpi_plugin_escalade_configs');
    }
 
    return true;

@@ -220,9 +220,16 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
+      $rand = mt_rand();
       echo "<tr class='tab_bg_1'>";
-      echo "<td></td>";
-      echo "<td></td>";
+      echo "<td><label for='dropdown_remove_delete_supplier_btn$rand'>";
+      echo __("Display delete button of assigned suppliers", "escalade") . "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("remove_delete_supplier_btn", $this->fields["remove_delete_supplier_btn"], -1, array(
+         'width' => '25%',
+         'rand' => $rand,
+      ));
+      echo "</td>";
 
       $rand = mt_rand();
       echo "<td><label for='dropdown_use_filter_assign_group$rand'>";
