@@ -93,7 +93,7 @@ class PluginEscaladeConfig extends CommonDBTM {
 
       $rand = mt_rand();
       echo "<td id='show_solve_return_group_td1' $style><label for='dropdown_solve_return_group$rand'>";
-      echo __("Assign ticket to intial group on solve ticket", "escalade");
+      echo __("Assign ticket to initial group on solve ticket", "escalade");
       echo "</td>";
       echo "<td id='show_solve_return_group_td2' $style>";
       Dropdown::showYesNo("solve_return_group", $this->fields["solve_return_group"], -1, array(
@@ -117,7 +117,7 @@ class PluginEscaladeConfig extends CommonDBTM {
 
       $rand = mt_rand();
       echo "<td><label for='dropdown_reassign_group_from_cat$rand'>";
-      echo __("Assign the technical groupe on ticket category change", "escalade");
+      echo __("Assign the technical group on ticket category change", "escalade");
       echo "</td>";
       echo "<td>";
       Dropdown::showYesNo("reassign_group_from_cat", $this->fields["reassign_group_from_cat"], -1, array(
