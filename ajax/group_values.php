@@ -26,11 +26,12 @@ if (count($groups_id_filtred) > 0) {
 $rand = mt_rand();
 $_SESSION['glpicondition'][$rand] = $condition;
 
-$_GET["condition"] = $rand;
-if(!isset($_GET["entity_restrict"]) && $ticket_id){
-  $ticket = new Ticket(); 
-  $ticket->getFromDB($ticket_id);
-  $_GET["entity_restrict"] = $ticket->fields['entities_id'];
+$_POST["condition"] = $rand;
+
+if(!isset($_POST["entity_restrict"]) && $ticket_id){
+   $ticket = new Ticket(); 
+   $ticket->getFromDB($ticket_id);
+   $_POST["entity_restrict"] = $ticket->fields['entities_id'];
 }
 
 require ("../../../ajax/getDropdownValue.php");

@@ -26,6 +26,7 @@ $('#' + id).select2({
    ajax: {
       url: url,
       dataType: 'json',
+      type: 'POST',
       data: function (term, page) {
          return {
             ticket_id: tickets_id,
@@ -75,7 +76,8 @@ $('#' + id).select2({
                      permit_select_parent: false,
                      specific_tags: [],
                      _one_id: id},
-               dataType: 'json',
+                     dataType: 'json',
+                     type: 'POST'
                }).done(function(data) { callback(data); });
             }
          }
