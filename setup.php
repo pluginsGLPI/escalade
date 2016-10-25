@@ -27,6 +27,8 @@
  --------------------------------------------------------------------------
  */
 
+define ('PLUGIN_ESCALADE_VERSION', '1.3.1');
+
 // Init the hooks of the plugins -Needed
 function plugin_init_escalade() {
    global $PLUGIN_HOOKS;
@@ -124,7 +126,7 @@ function plugin_init_escalade() {
 function plugin_version_escalade() {
    return array(
          'name'           => __("Escalation", "escalade"),
-         'version'        => "0.90-1.3",
+         'version'        => PLUGIN_ESCALADE_VERSION,
          'author'         => "<a href='http://www.teclib.com'>Teclib'</a>",
          'homepage'       => "https://github.com/pluginsGLPI/escalade",
          'license'        => 'GPLv2+',
