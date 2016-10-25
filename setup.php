@@ -27,7 +27,7 @@
  --------------------------------------------------------------------------
  */
 
-define ('PLUGIN_ESCALADE_VERSION', '1.3.1');
+define ('PLUGIN_ESCALADE_VERSION', '2.1.0');
 
 // Init the hooks of the plugins -Needed
 function plugin_init_escalade() {
