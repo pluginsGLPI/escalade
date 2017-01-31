@@ -21,7 +21,6 @@ class PluginEscaladeConfig extends CommonDBTM {
          return false;
       }
 
-
       $this->getFromDB($ID);
       $this->check($ID, READ);
 

@@ -8,8 +8,8 @@ $user = new PluginEscaladeUser();
 
 if (isset($_POST["add"])) {
    $user->add($_POST);
-} elseif (isset($_POST["update"])) {
-	$user->update($_POST);
+} else if (isset($_POST["update"])) {
+    $user->update($_POST);
 }
 
 Html::back();

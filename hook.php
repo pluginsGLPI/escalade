@@ -130,7 +130,6 @@ function plugin_escalade_install() {
       $migration->migrationOneTable('glpi_plugin_escalade_histories');
    }
 
-
    // == Update to 1.3 ==
    if (! FieldExists('glpi_plugin_escalade_configs', 'remove_delete_user_btn')) {
       $migration->addField('glpi_plugin_escalade_configs', 'remove_delete_user_btn',
@@ -268,7 +267,9 @@ function plugin_escalade_item_purge($item) {
 
 function plugin_escalade_item_update($item) {
 
-   if ($item instanceof Ticket) return PluginEscaladeTicket::item_update($item);
+   if ($item instanceof Ticket) {
+      return PluginEscaladeTicket::item_update($item);
+   }
    return true;
 }
 

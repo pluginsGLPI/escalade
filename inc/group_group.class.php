@@ -22,7 +22,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
       if ($item->getType()=='Group') {
          $PluginEscaladeGroup_Group = new PluginEscaladeGroup_Group();
-   		$PluginEscaladeGroup_Group->manageGroup($item->getID());
+           $PluginEscaladeGroup_Group->manageGroup($item->getID());
       }
       return true;
    }
@@ -55,7 +55,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
                                        'used' => $groups_id_used));
 
          echo "<input type='hidden' name='groups_id_source' value='".$groups_id."' />";
-         echo "&nbsp;<input type='submit' class='submit' name='addgroup' value='"._sx('button','Add')."'/>";
+         echo "&nbsp;<input type='submit' class='submit' name='addgroup' value='"._sx('button', 'Add')."'/>";
 
          echo "</td>";
          echo "</tr>";
@@ -78,7 +78,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
       echo "</table>";
       if (Session::haveRight('group', UPDATE)) {
          Html::openArrowMassives("manageGroup", true);
-         Html::closeArrowMassives(array('deleteitem' => _sx('button','Delete permanently')));
+         Html::closeArrowMassives(array('deleteitem' => _sx('button', 'Delete permanently')));
       }
       Html::closeForm();
    }
@@ -94,10 +94,10 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
       }
 
       // get groups already assigned in the ticket
-      if($ticket_id > 0) {
+      if ($ticket_id > 0) {
          $ticket = new Ticket();
          $ticket->getFromDB($ticket_id);
-         foreach($ticket->getGroups(CommonITILActor::ASSIGN) as $current_group) {
+         foreach ($ticket->getGroups(CommonITILActor::ASSIGN) as $current_group) {
             $ticket_groups[$current_group['groups_id']] = $current_group['groups_id'];
          }
       }
@@ -105,7 +105,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
       // To do an escalation, the user must be in a group currently assigned to the ticket
       // or no group is assigned to the ticket
       // TODO : matching with "view all tickets (yes/no) option in profile user"
-      if(!empty($ticket_groups) && count(array_intersect($ticket_groups, $user_groups)) == 0) {
+      if (!empty($ticket_groups) && count(array_intersect($ticket_groups, $user_groups)) == 0) {
          return array();
       }
 

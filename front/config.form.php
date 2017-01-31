@@ -19,13 +19,13 @@ if (isset($_POST["add"])) {
    $newID=$config->add($_POST);
    Html::back();
 
-} elseif (isset($_POST["update"])) {
+} else if (isset($_POST["update"])) {
 
    Session::checkRight("config", UPDATE);
    $config->update($_POST);
    Html::back();
 
-} elseif (isset($_POST["delete"])) {
+} else if (isset($_POST["delete"])) {
 
    Session::checkRight("config", DELETE);
    $config->delete($_POST, 1);

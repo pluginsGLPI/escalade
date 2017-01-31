@@ -46,7 +46,7 @@ class PluginEscaladeUser extends CommonDBTM {
                'width' => '100%',
             ));
             echo "<br><br><input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
-               _sx('button','Post') . "\" >";
+               _sx('button', 'Post') . "\" >";
          break;
       }
       return true;
@@ -152,7 +152,7 @@ class PluginEscaladeUser extends CommonDBTM {
    }
 
    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
-      
+
       switch ($item->getType()) {
          case 'User':
             $user = new self();
