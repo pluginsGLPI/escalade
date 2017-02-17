@@ -123,6 +123,12 @@ function plugin_init_escalade() {
       }
 
       $PLUGIN_HOOKS['use_massive_action']['escalade'] = 1;
+
+      // add more target to some notifications
+      $PLUGIN_HOOKS['item_add_targets']['escalade']['NotificationTargetPlanningRecall']
+         = ['PluginEscaladeNotification', 'addTargets'];
+      $PLUGIN_HOOKS['item_action_targets']['escalade']['NotificationTargetPlanningRecall']
+         = ['PluginEscaladeNotification', 'getActionTargets'];
    }
 }
 
