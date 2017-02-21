@@ -40,7 +40,6 @@ class PluginEscaladeNotification {
          $target->addTarget(self::NTRGT_TASK_GROUP,
             __('Group in charge of the task'));
 
-
          // add plugins targets
          $target->addTarget(self::NTRGT_TICKET_ESCALADE_GROUP,
             __('Group escalated in the ticket', 'escalade'));
