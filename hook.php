@@ -60,9 +60,6 @@ function plugin_escalade_install() {
       $query = "CREATE TABLE `glpi_plugin_escalade_configs` (
          `id`                                      INT(11) NOT NULL AUTO_INCREMENT,
          `remove_group`                            INT(11) NOT NULL,
-         `remove_delete_group_btn`                 INT(11) NOT NULL,
-         `remove_delete_user_btn`                  INT(11) NOT NULL,
-         `remove_delete_supplier_btn`              INT(11) NOT NULL,
          `show_history`                            INT(11) NOT NULL,
          `task_history`                            INT(11) NOT NULL,
          `remove_tech`                             INT(11) NOT NULL,
@@ -74,6 +71,13 @@ function plugin_escalade_install() {
          `use_assign_user_group`                   INT(11) NOT NULL,
          `use_assign_user_group_creation`          INT(11) NOT NULL,
          `use_assign_user_group_modification`      INT(11) NOT NULL,
+         `remove_delete_requester_user_btn`        TINYINT(1) NOT NULL DEFAULT 1,
+         `remove_delete_watcher_user_btn`          TINYINT(1) NOT NULL DEFAULT 1,
+         `remove_delete_assign_user_btn`           TINYINT(1) NOT NULL DEFAULT 0,
+         `remove_delete_requester_group_btn`       TINYINT(1) NOT NULL DEFAULT 1,
+         `remove_delete_watcher_group_btn`         TINYINT(1) NOT NULL DEFAULT 1,
+         `remove_delete_assign_group_btn`          TINYINT(1) NOT NULL DEFAULT 0,
+         `remove_delete_assign_supplier_btn`       TINYINT(1) NOT NULL DEFAULT 1,
          `use_filter_assign_group`                 INT(11) NOT NULL,
          `ticket_last_status`                      INT(11) NOT NULL,
          PRIMARY KEY (`id`)
@@ -117,12 +121,6 @@ function plugin_escalade_install() {
                            array('after' => 'use_assign_user_group_creation'));
       $migration->migrationOneTable('glpi_plugin_escalade_configs');
    }
-   if (! FieldExists('glpi_plugin_escalade_configs', 'remove_delete_group_btn')) {
-      $migration->addField('glpi_plugin_escalade_configs', 'remove_delete_group_btn',
-                           'INT(11) NOT NULL',
-                           array('after' => 'remove_group'));
-      $migration->migrationOneTable('glpi_plugin_escalade_configs');
-   }
    if (! isIndex("glpi_plugin_escalade_histories", 'tickets_id')
       || ! isIndex("glpi_plugin_escalade_histories", 'groups_id')) {
       $migration->addKey("glpi_plugin_escalade_histories", 'tickets_id', 'tickets_id');
@@ -131,12 +129,6 @@ function plugin_escalade_install() {
    }
 
    // == Update to 1.3 ==
-   if (! FieldExists('glpi_plugin_escalade_configs', 'remove_delete_user_btn')) {
-      $migration->addField('glpi_plugin_escalade_configs', 'remove_delete_user_btn',
-                           'INT(11) NOT NULL DEFAULT 1',
-                           array('after' => 'remove_delete_group_btn'));
-      $migration->migrationOneTable('glpi_plugin_escalade_configs');
-   }
    if (! FieldExists('glpi_plugin_escalade_configs', 'use_filter_assign_group')) {
       $migration->addField('glpi_plugin_escalade_configs', 'use_filter_assign_group',
                            'INT(11) NOT NULL',
@@ -223,13 +215,49 @@ function plugin_escalade_install() {
       }
    }
 
-   // update to 0.90-1.3
-   if (! FieldExists('glpi_plugin_escalade_configs', 'remove_delete_supplier_btn')) {
-      $migration->addField('glpi_plugin_escalade_configs', 'remove_delete_supplier_btn',
-                           'INT(11) NOT NULL DEFAULT 1',
-                           array('after' => 'remove_delete_group_btn'));
-      $migration->migrationOneTable('glpi_plugin_escalade_configs');
+   // ## update to 2.2.0
+   // add new fields
+   if (! FieldExists('glpi_plugin_escalade_configs', 'remove_delete_requester_user_btn')) {
+      $migration->addField('glpi_plugin_escalade_configs', 'remove_delete_requester_user_btn',
+                           'bool', ['value' => 1]);
    }
+   if (! FieldExists('glpi_plugin_escalade_configs', 'remove_delete_requester_group_btn')) {
+      $migration->addField('glpi_plugin_escalade_configs', 'remove_delete_requester_group_btn',
+                           'bool', ['value' => 1]);
+   }
+   if (! FieldExists('glpi_plugin_escalade_configs', 'remove_delete_watcher_user_btn')) {
+      $migration->addField('glpi_plugin_escalade_configs', 'remove_delete_watcher_user_btn',
+                           'bool', ['value' => 1]);
+   }
+   if (! FieldExists('glpi_plugin_escalade_configs', 'remove_delete_watcher_group_btn')) {
+      $migration->addField('glpi_plugin_escalade_configs', 'remove_delete_watcher_group_btn',
+                           'bool', ['value' => 1]);
+   }
+
+   // migrate old fields
+   if (FieldExists('glpi_plugin_escalade_configs', 'remove_delete_user_btn')) {
+      $migration->changeField('glpi_plugin_escalade_configs',
+                              'remove_delete_user_btn',
+                              'remove_delete_assign_user_btn',
+                              'bool',
+                              ['value' => 0]);
+   }
+   if (FieldExists('glpi_plugin_escalade_configs', 'remove_delete_group_btn')) {
+      $migration->changeField('glpi_plugin_escalade_configs',
+                              'remove_delete_group_btn',
+                              'remove_delete_assign_group_btn',
+                              'bool',
+                              ['value' => 0]);
+   }
+   if (FieldExists('glpi_plugin_escalade_configs', 'remove_delete_supplier_btn')) {
+      $migration->changeField('glpi_plugin_escalade_configs',
+                              'remove_delete_supplier_btn',
+                              'remove_delete_assign_supplier_btn',
+                              'bool',
+                              ['value' => 1]);
+   }
+
+   $migration->migrationOneTable('glpi_plugin_escalade_configs');
 
    return true;
 }
