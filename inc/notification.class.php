@@ -15,6 +15,12 @@ class PluginEscaladeNotification {
    const NTRGT_TICKET_ESCALADE_GROUP          = 457951;
    const NTRGT_TICKET_ESCALADE_GROUP_MANAGER  = 457952;
 
+   /**
+    * Add additional targets (recipient) to Glpi Notification 'planningrecall'
+    * This function aims to provide a list of keys (integer, see const above) values (labels) for targets
+    * @param NotificationTarget $target the current NotificationTarget.
+    *                                   we compute (atm) only NotificationTargetPlanningRecall
+    */
    static function addTargets(NotificationTarget $target) {
       // only for Planning recall
       if ($target instanceof NotificationTargetPlanningRecall) {
@@ -52,6 +58,11 @@ class PluginEscaladeNotification {
       }
    }
 
+   /**
+    * Computer targets with real users_id/email
+    * @param NotificationTarget $target the current NotificationTarget.
+    *                                   we compute (atm) only NotificationTargetPlanningRecall
+    */
    static function getActionTargets(NotificationTarget $target) {
       if ($target instanceof NotificationTargetPlanningRecall) {
          $item = new $target->obj->fields['itemtype'];
