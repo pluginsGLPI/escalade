@@ -26,7 +26,7 @@
  --------------------------------------------------------------------------
  */
 
-define ('PLUGIN_ESCALADE_VERSION', '2.1.0');
+define ('PLUGIN_ESCALADE_VERSION', '2.2.0');
 
 /**
  * Init hooks of the plugin.
@@ -72,8 +72,8 @@ function plugin_init_escalade() {
                }
 
                //remove btn feature
-               if (!$escalade_config['remove_delete_group_btn']
-                  || !$escalade_config['remove_delete_user_btn']) {
+               if (!$escalade_config['remove_delete_assign_group_btn']
+                  || !$escalade_config['remove_delete_assign_group_btn']) {
                   $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/remove_btn.js.php';
                }
 
