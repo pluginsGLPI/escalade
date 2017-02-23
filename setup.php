@@ -156,11 +156,11 @@ function plugin_version_escalade() {
  * @return boolean
  */
 function plugin_escalade_check_prerequisites() {
-   if (version_compare(GLPI_VERSION, '0.85', 'lt')) {
+   if (version_compare(GLPI_VERSION, '9.1.3', 'lt')) {
       if (method_exists('Plugin', 'messageIncompatible')) {
-         echo Plugin::messageIncompatible('core', '0.85');
+         echo Plugin::messageIncompatible('core', '9.1.3');
       } else {
-         echo "This plugin requires GLPI >= 0.85";
+         echo "This plugin requires GLPI >= 9.1.3";
       }
       return false;
    }
