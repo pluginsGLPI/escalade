@@ -83,7 +83,7 @@ class PluginEscaladeNotification {
                case self::NTRGT_TICKET_TECH_GROUP:
                   $manager = 0;
 
-               // manager of group's users
+                  // manager of group's users
                case self::NTRGT_TICKET_REQUESTER_GROUP_MANAGER:
                   if (!isset($group_type)) {
                      $group_type = CommonITILActor::REQUESTER;
@@ -100,7 +100,7 @@ class PluginEscaladeNotification {
                      $group_type = CommonITILActor::ASSIGN;
                   }
 
-                  self::addGroupsOfTicket($ticket->getID(), $manager, $group_type, $target);
+                  self::addGroupsOfTicket($target, $ticket->getID(), $manager, $group_type);
                   break;
 
                // users
@@ -114,7 +114,7 @@ class PluginEscaladeNotification {
                   if (!isset($user_type)) {
                      $user_type = CommonITILActor::ASSIGN;
                   }
-                  self::addUsersOfTicket($ticket->getID(), $user_type, $target);
+                  self::addUsersOfTicket($target, $ticket->getID(), $user_type);
                   break;
 
                // task group
@@ -130,7 +130,7 @@ class PluginEscaladeNotification {
                      $manager = 1;
                   }
                   $history = new PluginEscaladeHistory;
-                  foreach($history->find("`tickets_id` = ".$ticket->getID()) as $found_history) {
+                  foreach ($history->find("`tickets_id` = ".$ticket->getID()) as $found_history) {
                      $target->getAddressesByGroup($manager, $found_history['groups_id']);
                   }
                   break;
@@ -142,19 +142,19 @@ class PluginEscaladeNotification {
    /**
     * Add all group's users for a ticket and a type of actors
     *
+    * @param NotificationTarget $target     The current notification target (the recipient)
     * @param integer            $tickets_id The ticket's identifier
     * @param integer            $manager    0 all users, 1 only supervisors, 2 all users without supervisors
     * @param integer            $group_type @see CommonITILActor
-    * @param NotificationTarget $target     The current notification target (the recipient)
     *
     * @return  nothing
     */
-   static function addGroupsOfTicket($tickets_id = 0,
+   static function addGroupsOfTicket(NotificationTarget $target,
+                                     $tickets_id = 0,
                                      $manager = 0,
-                                     $group_type = CommonITILActor::REQUESTER,
-                                     NotificationTarget $target) {
+                                     $group_type = CommonITILActor::REQUESTER) {
       $group_ticket = new Group_Ticket;
-      foreach($group_ticket->find("`tickets_id` = $tickets_id
+      foreach ($group_ticket->find("`tickets_id` = $tickets_id
                                    AND `type` = $group_type") as $current) {
          $target->getAddressesByGroup($manager, $current['groups_id']);
       }
@@ -162,18 +162,18 @@ class PluginEscaladeNotification {
 
    /**
     * Add all users for a ticket and a type of actors
+    * @param NotificationTarget $target     The current notification target (the recipient)
     * @param integer            $tickets_id The ticket's identifier
     * @param integer            $user_type  @see CommonITILActor
-    * @param NotificationTarget $target     The current notification target (the recipient)
     *
     * @return  nothing
     */
-   static function addUsersOfTicket($tickets_id = 0,
-                                    $user_type = CommonITILActor::REQUESTER,
-                                    NotificationTarget $target) {
+   static function addUsersOfTicket(NotificationTarget $target,
+                                    $tickets_id = 0,
+                                    $user_type = CommonITILActor::REQUESTER) {
       $ticket_user = new Ticket_User;
       $user        = new User;
-      foreach($ticket_user->find("`type` = $user_type
+      foreach ($ticket_user->find("`type` = $user_type
                                   AND `tickets_id` = $tickets_id") as $current) {
          if ($user->getFromDB($current['users_id'])) {
             $target->addToAddressesList(['language' => $user->getField('language'),
