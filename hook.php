@@ -196,9 +196,8 @@ function plugin_escalade_install() {
                   `users_id` INT(11) NOT NULL,
                   `use_filter_assign_group` TINYINT(1) NOT NULL DEFAULT '0',
                   PRIMARY KEY (`id`),
-                  INDEX `users_id` (`users_id`)
-               )
-               ENGINE=InnoDB;";
+                  KEY `users_id` (`users_id`)
+               ) ENGINE = MYISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
       $DB->query($query);
 
       include_once(GLPI_ROOT."/plugins/escalade/inc/config.class.php");
