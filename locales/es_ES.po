@@ -1,0 +1,182 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Alexandre DELAUNAY <adelaunay@teclib.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: GLPI Plugin - Escalade\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-06-02 14:46+0200\n"
+"PO-Revision-Date: 2017-08-23 11:14+0200\n"
+"Last-Translator: Iñigo C. Sánchez <icabrera@grupo-otua.com>\n"
+"Language-Team: Iñigo C. Sánchez - icabrera@grupo-otua.com\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.3\n"
+
+#: hook.php:300
+msgid "Group concerned by the escalation"
+msgstr "Grupo afectado por el escalado"
+
+#: hook.php:316 hook.php:330 inc/config.class.php:229 inc/user.class.php:129
+msgid "Enable filtering on the groups assignment"
+msgstr "Habilitar filtrado en la asignación de grupos"
+
+#: setup.php:99 front/config.form.php:36 inc/group_group.class.php:16
+#: inc/user.class.php:176
+msgid "Escalation"
+msgstr "Escalado"
+
+#: ajax/assign_me.php:5 front/climb_group.php:6
+msgid "missing parameters"
+msgstr "faltan parámetros"
+
+#: front/popup_histories.php:4
+msgid "full assignation history"
+msgstr "histórico de asignación completo"
+
+#: inc/config.class.php:14
+msgid "Configuration Escalade plugin"
+msgstr "Configuración del complemento de Escalado"
+
+#: inc/config.class.php:33
+msgid "Remove old assign group on new group assign"
+msgstr ""
+"Eliminar el grupo de asignación anterior cuando se asigne un nuevo grupo"
+
+#: inc/config.class.php:55
+msgid "show group assign history visually"
+msgstr "mostrar histórico visual de asignación de grupo"
+
+#: inc/config.class.php:67
+msgid "Escalation history in tasks"
+msgstr "Histórico de escalado en tareas"
+
+#: inc/config.class.php:76
+msgid "Remove technician(s) on escalation"
+msgstr "Eliminar técnico(s) en el escalado"
+
+#: inc/config.class.php:88
+msgid "Ticket status after an escalation"
+msgstr "Estado de solicitud después de un escalado"
+
+#: inc/config.class.php:96
+msgid "Assign ticket to initial group on solve ticket"
+msgstr "Asignar una solicitud al grupo inicial a su resolución"
+
+#: inc/config.class.php:109
+msgid "Assign the technical manager on ticket category change"
+msgstr "Assign the technical manager on ticket category change"
+
+#: inc/config.class.php:120
+msgid "Assign the technical group on ticket category change"
+msgstr "Asignar al grupo técnico cuando cambie la categoría"
+
+#: inc/config.class.php:132
+msgid "Clone tickets"
+msgstr "Clonar solicitudes"
+
+#: inc/config.class.php:142
+msgid "Close cloned tickets at the same time"
+msgstr "Cerrar al mismo tiempo las solicitudes clonadas"
+
+#: inc/config.class.php:160
+msgid "Use the technician's group"
+msgstr "Usar el grupo de técnicos"
+
+#: inc/config.class.php:173
+msgid "at time of creation"
+msgstr "a la hora de crear"
+
+#: inc/config.class.php:183
+msgid "at time of modification"
+msgstr "a la hora de modificar"
+
+#: inc/config.class.php:195
+msgid ""
+"Note: This feature (creation part) is duplicate with the <a "
+"href='##link##'>Behavior</a>plugin. This last has priority."
+msgstr ""
+"Nota: Esta función (parte de creación) está duplicada con el complemento "
+"<a href='##link##'>Comportamiento</a>. Este último tiene prioridad."
+
+#: inc/config.class.php:204
+msgid "Display delete button of assigned groups"
+msgstr "Mostrar el botón de borrar a los grupos asignados"
+
+#: inc/config.class.php:214
+msgid "Display delete button of assigned users"
+msgstr "Mostrar el botón de borrar a los usuarios asignados"
+
+#: inc/config.class.php:262
+msgid "Don't change"
+msgstr "No cambiar"
+
+#: inc/history.class.php:80
+msgid "Reassign the ticket to group"
+msgstr "Reasignar la solicitud al grupo"
+
+#: inc/history.class.php:103
+msgid "View full history"
+msgstr "Ver histórico completo"
+
+#: inc/history.class.php:148
+msgid "Tickets to follow (climbed)"
+msgstr "Solicitudes a seguir (escaladas)"
+
+#: inc/history.class.php:162
+msgid "Tickets to close (climbed)"
+msgstr "Solicitudes a cerrar (escaladas)"
+
+#: inc/ticket.class.php:95
+msgid "Solution provided, back to the group"
+msgstr "Solución proporcionada, devuelta al grupo"
+
+#: inc/ticket.class.php:153
+msgid "Solution rejected, return to the group"
+msgstr "Solución rechazada, retorna al grupo"
+
+#: inc/ticket.class.php:228
+msgid "escalated to the group"
+msgstr "escalado al grupo"
+
+#: inc/ticket.class.php:592
+msgid "Error : get old ticket"
+msgstr "Error : obteniendo antigua solicitud"
+
+#: inc/ticket.class.php:610
+msgid "Error : adding new ticket"
+msgstr "Error : añadiendo nueva solicitud"
+
+#: inc/ticket.class.php:622
+msgid "Error : adding link between the two tickets"
+msgstr "Error : añadiendo el enlace entre dos solicitudes"
+
+#: inc/ticket.class.php:631 inc/ticket.class.php:672 inc/ticket.class.php:677
+msgid "This ticket has been from the ticket num"
+msgstr "Esta solicitud ha sido realizada desde la solicitud nro"
+
+#: inc/ticket.class.php:636
+msgid "Error : adding follow ups"
+msgstr "Error: añadiendo seguimiento"
+
+#: inc/ticket.class.php:647
+msgid "Error : adding actors (user)"
+msgstr "Error : añadiendo actores (usuario)"
+
+#: inc/ticket.class.php:656
+msgid "Error : adding actors (group)"
+msgstr "Error : añadiendo actores (grupo)"
+
+#: inc/ticket.class.php:666
+msgid "Error : adding documents"
+msgstr "Error : añadiendo documentos"
+
+#: scripts/cloneandlink_ticket.js.php:13
+msgid "Clone and link"
+msgstr "Clonar y enlazar"
