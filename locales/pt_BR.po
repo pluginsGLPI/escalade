@@ -4,6 +4,7 @@
 # 
 # Translators:
 # Arthur Ramos Schaefer <arthur.r.schaefer@gmail.com>, 2017
+# Arthur Ramos Schaefer <arthur.r.schaefer@gmail.com>, 2017
 # Pedro Sousa <pedroluisvsousa@gmail.com>, 2017
 # Wanderlei Hüttel <wanderlei.huttel@gmail.com>, 2017
 msgid ""
@@ -11,8 +12,8 @@ msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-30 09:41+0200\n"
-"PO-Revision-Date: 2017-04-19 13:22+0000\n"
-"Last-Translator: Wanderlei Hüttel <wanderlei.huttel@gmail.com>\n"
+"PO-Revision-Date: 2017-08-03 17:53+0000\n"
+"Last-Translator: Arthur Ramos Schaefer <arthur.r.schaefer@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,7 +48,7 @@ msgstr "Remover grupo antigo na nova atribuição de grupo"
 
 #: inc/config.class.php:62
 msgid "show group assign history visually"
-msgstr "Mostrar visualmente histórico de atribuição de grupo"
+msgstr "mostrar visualmente histórico de atribuição de grupo"
 
 #: inc/config.class.php:72
 msgid "Escalation history in tasks"
@@ -157,7 +158,7 @@ msgstr "Erro :  adicionando relação entre dois chamados"
 
 #: inc/ticket.class.php:622 inc/ticket.class.php:663 inc/ticket.class.php:668
 msgid "This ticket has been from the ticket num"
-msgstr "Este chamado foi criado a partir do chamado No."
+msgstr "Este chamado foi criado a partir do chamado Número"
 
 #: inc/ticket.class.php:627
 msgid "Error : adding followups"
