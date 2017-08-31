@@ -145,7 +145,7 @@ function plugin_version_escalade() {
          'author'         => "<a href='http://www.teclib.com'>Teclib'</a>",
          'homepage'       => "https://github.com/pluginsGLPI/escalade",
          'license'        => 'GPLv2+',
-         'minGlpiVersion' => "0.85",
+         'minGlpiVersion' => "9.2",
    );
 }
 
@@ -156,11 +156,11 @@ function plugin_version_escalade() {
  * @return boolean
  */
 function plugin_escalade_check_prerequisites() {
-   if (version_compare(GLPI_VERSION, '9.1.3', 'lt')) {
+   if (version_compare(GLPI_VERSION, '9.2', 'lt')) {
       if (method_exists('Plugin', 'messageIncompatible')) {
-         echo Plugin::messageIncompatible('core', '9.1.3');
+         echo Plugin::messageIncompatible('core', '9.2');
       } else {
-         echo "This plugin requires GLPI >= 9.1.3";
+         echo "This plugin requires GLPI >= 9.2";
       }
       return false;
    }
