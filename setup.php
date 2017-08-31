@@ -35,7 +35,7 @@ define ('PLUGIN_ESCALADE_VERSION', '2.2.0');
  * @return void
  */
 function plugin_init_escalade() {
-   global $PLUGIN_HOOKS;
+   global $PLUGIN_HOOKS, $DB;
 
    $PLUGIN_HOOKS['csrf_compliant']['escalade'] = true;
 
@@ -45,7 +45,7 @@ function plugin_init_escalade() {
       && $plugin->isActivated('escalade')) {
 
       //load config in session
-      if (TableExists("glpi_plugin_escalade_configs")) {
+      if ($DB->tableExists("glpi_plugin_escalade_configs")) {
          PluginEscaladeConfig::loadInSession();
 
          // == Load js scripts ==
