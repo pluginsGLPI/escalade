@@ -1,14 +1,7 @@
 <?php
 
 class PluginEscaladeConfig extends CommonDBTM {
-
-   static function canCreate() {
-      return true;
-   }
-
-   static function canView() {
-      return true;
-   }
+   static $rightname  = 'config';
 
    static function getTypeName($nb = 0) {
       return __("Configuration Escalade plugin", "escalade");
@@ -17,11 +10,7 @@ class PluginEscaladeConfig extends CommonDBTM {
    function showForm($ID, $options = array()) {
       global $CFG_GLPI;
 
-      if (! $this->canView()) {
-         return false;
-      }
-
-      $this->getFromDB($ID);
+      $this->initForm($ID, $options);
       $this->check($ID, READ);
 
       echo "<div class='escalade_config'>";
@@ -283,7 +272,6 @@ class PluginEscaladeConfig extends CommonDBTM {
       echo "</tr>";
 
       $options['candel']       = false;
-      $options['withtemplate'] = true;
       $this->showFormButtons($options);
       echo "</div>";
    }
