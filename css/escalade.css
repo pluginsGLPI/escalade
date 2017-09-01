@@ -17,11 +17,17 @@ a.escalade_history, .escalade_history a {
    display: inline-block;
    width: 10px;
    height: 10px;
-   background: url('pics/up.png') bottom;
    margin-bottom:-2px;
+   position: relative;
 }
-.escalade .escalade_history a.up_a:hover {
-   background: url('pics/up_active.png') bottom;
+.escalade a.up_a:before {
+   font-family: FontAwesome;
+   position: absolute;
+   content: '\f062';
+   color:#D1D3D1;
+}
+.escalade a.up_a:hover:before {
+   color:#50C250;
 }
 
 .escalade_config .tab_cadre_fixe > tbody > tr:nth-child(odd) {
