@@ -27,7 +27,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
             "alt='$locale_cloneandlink' " +
             "title='$locale_cloneandlink' class='pointer' id='cloneandlink_ticket'>";
 
-         $("th:contains('$locale_linkedtickets')>img")
+         $("th:contains('$locale_linkedtickets')>span.fa")
             .after(duplicate_html);
          addOnclick();
 
