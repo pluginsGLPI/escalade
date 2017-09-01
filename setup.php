@@ -139,14 +139,27 @@ function plugin_init_escalade() {
  * @return array
  */
 function plugin_version_escalade() {
-   return array(
+   return [
          'name'           => __("Escalation", "escalade"),
          'version'        => PLUGIN_ESCALADE_VERSION,
          'author'         => "<a href='http://www.teclib.com'>Teclib'</a>",
          'homepage'       => "https://github.com/pluginsGLPI/escalade",
          'license'        => 'GPLv2+',
-         'minGlpiVersion' => "9.2",
+         'requirements'   => [
+            'glpi' => [
+               'min' => '9.2',
+<<<<<<< HEAD
+               'dev' => true
+            ]
+         ]
+      ];
+=======
+               'max' => '9.3',
+               'dev' => true
+            ]
+         ]
    );
+>>>>>>> 9.2 dev again
 }
 
 /**
@@ -157,12 +170,8 @@ function plugin_version_escalade() {
  */
 function plugin_escalade_check_prerequisites() {
    $version = rtrim(GLPI_VERSION, '-dev');
-   if (version_compare($version, '9.2', 'lt')) {
-      if (method_exists('Plugin', 'messageIncompatible')) {
-         echo Plugin::messageIncompatible('core', '9.2');
-      } else {
-         echo "This plugin requires GLPI >= 9.2";
-      }
+   if (!method_exists('Plugins', 'checkGlpiVersion') && version_compare($version, '9.2', 'lt')) {
+      echo "This plugin requires GLPI >= 9.2";
       return false;
    }
    return true;
