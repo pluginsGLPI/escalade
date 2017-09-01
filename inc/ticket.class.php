@@ -634,7 +634,7 @@ class PluginEscaladeTicket {
       if (! $followup->add([
          'tickets_id'      => $newID,
          'users_id'        => Session::getLoginUserID(),
-         'content'         => __("This ticket has been from the ticket num", "escalade")." ".
+         'content'         => __("This ticket has been cloned from the ticket num", "escalade")." ".
                               $tickets_id,
          'is_private'      => true,
          'requesttypes_id' => 6 //other
