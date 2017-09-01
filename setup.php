@@ -156,7 +156,8 @@ function plugin_version_escalade() {
  * @return boolean
  */
 function plugin_escalade_check_prerequisites() {
-   if (version_compare(GLPI_VERSION, '9.2', 'lt')) {
+   $version = rtrim(GLPI_VERSION, '-dev');
+   if (version_compare($version, '9.2', 'lt')) {
       if (method_exists('Plugin', 'messageIncompatible')) {
          echo Plugin::messageIncompatible('core', '9.2');
       } else {
