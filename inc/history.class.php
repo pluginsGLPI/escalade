@@ -33,7 +33,7 @@ class PluginEscaladeHistory extends CommonDBTM {
    static function getHistory($tickets_id, $full_history = false) {
       global $CFG_GLPI;
 
-      $filter_groups_id = array();
+      $filter_groups_id = [];
       if ($_SESSION['plugins']['escalade']['config']['use_filter_assign_group']) {
           $groups_groups = new PluginEscaladeGroup_Group();
              $filter_groups_id = $groups_groups->getGroups($tickets_id);
@@ -138,13 +138,14 @@ class PluginEscaladeHistory extends CommonDBTM {
       if (! Session::haveRight("ticket", Ticket::READALL)
           && ! Session::haveRight("ticket", Ticket::READASSIGN)
           && ! Session::haveRight("ticket", CREATE)
-          && ! Session::haveRight("ticketvalidation", TicketValidation::VALIDATEREQUEST & TicketValidation::VALIDATEINCIDENT)) {
+          && ! Session::haveRight("ticketvalidation", TicketValidation::VALIDATEREQUEST
+                                                      & TicketValidation::VALIDATEINCIDENT)) {
          return false;
       }
 
-      $groups        = implode("','", $_SESSION['glpigroups']);
-      $numrows = 0;
-      $is_deleted    = " `glpi_tickets`.`is_deleted` = 0 ";
+      $groups     = implode("','", $_SESSION['glpigroups']);
+      $numrows    = 0;
+      $is_deleted = " `glpi_tickets`.`is_deleted` = 0 ";
 
       if ($type == "notold") {
          $title = __("Tickets to follow (climbed)", "escalade");
@@ -172,15 +173,15 @@ class PluginEscaladeHistory extends CommonDBTM {
       }
 
       $query = "SELECT DISTINCT `glpi_tickets`.`id`
-               FROM `glpi_tickets`
-               LEFT JOIN `glpi_tickets_users`
+                FROM `glpi_tickets`
+                LEFT JOIN `glpi_tickets_users`
                   ON (`glpi_tickets`.`id` = `glpi_tickets_users`.`tickets_id`)";
 
       $query .= $query_join;
 
       $query .= "WHERE $is_deleted AND ( $search_assign )
-                            AND (`status` IN ($status))".
-                            getEntitiesRestrictRequest("AND", "glpi_tickets");
+                  AND (`status` IN ($status))".
+                  getEntitiesRestrictRequest("AND", "glpi_tickets");
 
       $query  .= " ORDER BY glpi_tickets.date_mod DESC";
 
@@ -245,7 +246,5 @@ class PluginEscaladeHistory extends CommonDBTM {
          echo "</table>";
          echo "<br />";
       }
-
    }
-
 }

@@ -88,33 +88,33 @@ function plugin_init_escalade() {
                }
             }
 
-            Plugin::registerClass('PluginEscaladeGroup_Group', array('addtabon' => 'Group'));
-            Plugin::registerClass('PluginEscaladeUser', array('addtabon' => array('User')));
+            Plugin::registerClass('PluginEscaladeGroup_Group', ['addtabon' => 'Group']);
+            Plugin::registerClass('PluginEscaladeUser', ['addtabon' => ['User']]);
          }
       }
 
       $PLUGIN_HOOKS['add_css']['escalade'][]= 'css/escalade.css';
 
       // == Ticket modifications
-      $PLUGIN_HOOKS['item_update']['escalade']= array(
+      $PLUGIN_HOOKS['item_update']['escalade']= [
          'Ticket'       => 'plugin_escalade_item_update',
-      );
-      $PLUGIN_HOOKS['item_add']['escalade'] = array(
+      ];
+      $PLUGIN_HOOKS['item_add']['escalade'] = [
          'Group_Ticket' => 'plugin_escalade_item_add_group_ticket',
          'Ticket_User'  => 'plugin_escalade_item_add_user',
          'Ticket'       => 'plugin_escalade_item_add_ticket',
-      );
-      $PLUGIN_HOOKS['pre_item_add']['escalade'] = array(
+      ];
+      $PLUGIN_HOOKS['pre_item_add']['escalade'] = [
          'Group_Ticket' => 'plugin_escalade_pre_item_add_group_ticket',
          'Ticket'       => 'plugin_escalade_pre_item_add_ticket',
-      );
-      $PLUGIN_HOOKS['post_prepareadd']['escalade'] = array(
+      ];
+      $PLUGIN_HOOKS['post_prepareadd']['escalade'] = [
          'Ticket'       => 'plugin_escalade_post_prepareadd_ticket',
-      );
+      ];
 
-      $PLUGIN_HOOKS['item_purge']['escalade']= array(
+      $PLUGIN_HOOKS['item_purge']['escalade']= [
          'User'         => 'plugin_escalade_item_purge',
-      );
+      ];
       $PLUGIN_HOOKS['item_add']['escalade']['User'] = 'plugin_escalade_item_add_user';
 
       // == Interface links ==
@@ -177,11 +177,5 @@ function plugin_escalade_check_prerequisites() {
  * @return boolean
  */
 function plugin_escalade_check_config($verbose=false) {
-   if (true) { // Your configuration check
-      return true;
-   }
-   if ($verbose) {
-      __('Installed / not configured');
-   }
-   return false;
+   return true;
 }
