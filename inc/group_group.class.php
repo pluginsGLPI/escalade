@@ -12,11 +12,6 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
    static public $itemtype_2   = 'Group';
    static public $items_id_2   = 'groups_id_destination';
 
-   // use when you a PluginEscaladeGroup_Group is add
-   function getSearchOptions() {
-      return array();
-   }
-
    function getForbiddenStandardMassiveAction() {
       $forbidden   = parent::getForbiddenStandardMassiveAction();
       $forbidden[] = 'update';
@@ -24,16 +19,16 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
    }
 
 
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      if ($item->getType()=='Group') {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
+      if ($item instanceof Group) {
          return __("Escalation", "escalade");
       }
       return '';
    }
 
 
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      if ($item->getType()=='Group') {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
+      if ($item instanceof Group) {
          $PluginEscaladeGroup_Group = new PluginEscaladeGroup_Group();
            $PluginEscaladeGroup_Group->manageGroup($item->getID());
       }
@@ -53,14 +48,14 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
       echo "<h2>Escalade</h2>";
       if (Session::haveRight('group', UPDATE)) {
          echo "<form method='post' id='manageGroup' action='".PluginEscaladeGroup_Group::getFormURL()."'>";
-         $groups_id_used = array();
+         $groups_id_used = [];
          foreach ($gg_found as $gg) {
             $groups_id_used[] = $gg['groups_id_destination'];
          }
 
-         Dropdown::show('Group', array('name' => 'groups_id_destination',
-                                       'condition' => "is_assign=1",
-                                       'used' => $groups_id_used));
+         Dropdown::show('Group', ['name'      => 'groups_id_destination',
+                                  'condition' => "is_assign=1",
+                                  'used'      => $groups_id_used]);
 
          echo Html::hidden('groups_id_source', ['value' => $groups_id]);
          echo Html::submit(_sx('button', 'Add'), ['name' => 'addgroup']);
@@ -105,7 +100,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
    }
 
    function getGroups($ticket_id, $removeAlreadyAssigned=true) {
-      $groups = $user_groups = $ticket_groups = array();
+      $groups = $user_groups = $ticket_groups = [];
 
       // get groups for user connected
       $tmp_user_groups  = Group_User::getUserGroups($_SESSION['glpiID']);
@@ -163,5 +158,4 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
 
       return $groups;
    }
-
 }
