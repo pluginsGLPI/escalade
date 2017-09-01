@@ -13,7 +13,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
 
    $JS = <<<JAVASCRIPT
 
-   var doOnCentralPage = function() {
+   var doOnTabChange = function() {
       //intercept ajax load of group tab
       $(document).ajaxComplete(function(event, jqxhr, option) {
          if (option.url == "../plugins/escalade/ajax/central.php") {
@@ -23,38 +23,40 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
          if (option.url.indexOf('common.tabs.php') > 0) {
             //delay the execution (ajax requestcomplete event fired before dom loading)
             setTimeout(function () {
-
-               var suffix = "";
-               var selector = "#ui-tabs-2 .tab_cadre_central .top:last" +
-                  ", .alltab:contains('$locale_group_view') + .tab_cadre_central .top:last";
-
-               // get central list for plugin and insert in group tab
-               $(selector).each(function(){
-                  if (this.innerHTML.indexOf('escalade_block') < 0) {
-                     if (option.url.indexOf("-1") > 0) { //option.params
-                        suffix = "_all";
-                     }
-
-                     //prepare a span element to load new elements
-                     $(this).prepend("<span id='escalade_block" + suffix + "'>test</span>");
-
-                     //ajax request
-                     $("#escalade_block" + suffix).load('../plugins/escalade/ajax/central.php');
-                  }
-               });
+               insertEscaladeBlock();
             }, 300);
          }
       });
    }
 
-   $(document).ready(function() {
-      $(".ui-tabs-panel:visible").ready(function() {
-         doOnCentralPage();
-      })
+   var insertEscaladeBlock = function() {
+      var selector = "#ui-tabs-2 .tab_cadre_central .top:last" +
+         ", .alltab:contains('$locale_group_view') + .tab_cadre_central .top:last";
 
+      // get central list for plugin and insert in group tab
+      $(selector).each(function(){
+         if (this.innerHTML.indexOf('escalade_block') < 0) {
+
+            //prepare a span element to load new elements
+            $(this).prepend("<span id='escalade_block'>test</span>");
+
+            //ajax request
+            $("#escalade_block").load('../plugins/escalade/ajax/central.php');
+         }
+      });
+   };
+
+   $(document).ready(function() {
+      //try to insert directly (if we are on central group page)
+      insertEscaladeBlock();
+
+      // try to intercept tabs changes
+      $(".ui-tabs-panel:visible").ready(function() {
+         doOnTabChange();
+      });
       $("#tabspanel + div.ui-tabs").on("tabsload", function() {
          setTimeout(function() {
-            doOnCentralPage();
+            doOnTabChange();
          }, 300);
       });
    });
