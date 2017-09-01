@@ -148,18 +148,10 @@ function plugin_version_escalade() {
          'requirements'   => [
             'glpi' => [
                'min' => '9.2',
-<<<<<<< HEAD
                'dev' => true
             ]
          ]
       ];
-=======
-               'max' => '9.3',
-               'dev' => true
-            ]
-         ]
-   );
->>>>>>> 9.2 dev again
 }
 
 /**

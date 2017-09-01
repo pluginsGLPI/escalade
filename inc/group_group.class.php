@@ -5,11 +5,24 @@ if (!defined('GLPI_ROOT')) {
 }
 
 class PluginEscaladeGroup_Group extends CommonDBRelation {
+   // From CommonDBRelation
+   static public $itemtype_1   = 'Group';
+   static public $items_id_1   = 'groups_id_source';
+
+   static public $itemtype_2   = 'Group';
+   static public $items_id_2   = 'groups_id_destination';
 
    // use when you a PluginEscaladeGroup_Group is add
    function getSearchOptions() {
       return array();
    }
+
+   function getForbiddenStandardMassiveAction() {
+      $forbidden   = parent::getForbiddenStandardMassiveAction();
+      $forbidden[] = 'update';
+      return $forbidden;
+   }
+
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       if ($item->getType()=='Group') {
@@ -32,55 +45,63 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
       global $CFG_GLPI;
 
       $group = new Group();
-
-      if (Session::haveRight('group', UPDATE)) {
-         echo "<form method='post' name='' id='manageGroup' action=\"".$CFG_GLPI['root_doc'] .
-            "/plugins/escalade/front/group_group.form.php\">";
-      }
-      echo "<table width='950' class='tab_cadre_fixe'>";
-      echo "<tr>";
-      echo "<th colspan='2'>Escalade</th>";
-      echo "</tr>";
+      $rand  = mt_rand();
 
       $gg_found = $this->find("groups_id_source='$groups_id'");
+      $nb = count($gg_found);
+
+      echo "<h2>Escalade</h2>";
       if (Session::haveRight('group', UPDATE)) {
+         echo "<form method='post' id='manageGroup' action='".PluginEscaladeGroup_Group::getFormURL()."'>";
          $groups_id_used = array();
          foreach ($gg_found as $gg) {
             $groups_id_used[] = $gg['groups_id_destination'];
          }
 
-         echo "<tr>";
-         echo "<td colspan='2' align='center'>";
-         Dropdown::show('Group', array('name' => 'groups_id_destination', 'condition' => "is_assign=1",
+         Dropdown::show('Group', array('name' => 'groups_id_destination',
+                                       'condition' => "is_assign=1",
                                        'used' => $groups_id_used));
 
-         echo "<input type='hidden' name='groups_id_source' value='".$groups_id."' />";
-         echo "&nbsp;<input type='submit' class='submit' name='addgroup' value='"._sx('button', 'Add')."'/>";
-
-         echo "</td>";
-         echo "</tr>";
+         echo Html::hidden('groups_id_source', ['value' => $groups_id]);
+         echo Html::submit(_sx('button', 'Add'), ['name' => 'addgroup']);
+         Html::closeForm();
       }
+
+      if (Session::haveRight('group', UPDATE) && $nb) {
+         Html::openMassiveActionsForm('mass'.__CLASS__.$rand);
+         $massiveactionparams = [
+            'num_displayed'    => min($nb, $_SESSION['glpilist_limit']),
+            'container'        => 'mass'.__CLASS__.$rand
+         ];
+         Html::showMassiveActions($massiveactionparams);
+      }
+
+      echo "<table class='tab_cadre_fixe'>";
+      echo "<tr>
+         <th width='20'>".Html::getCheckAllAsCheckbox('mass'.__CLASS__.$rand)."</th>
+         <th>".__('group')."</th>
+      </tr>";
 
       foreach ($gg_found as $gg_id => $gg) {
          $group->getFromDB($gg['groups_id_destination']);
          echo "<tr class='tab_bg_1'>";
-         echo "<td width='30'>";
+         echo "<td>";
          if (Session::haveRight('group', UPDATE)) {
-            echo "<input type='checkbox' name='delgroup[]' value='$gg_id' />";
+            Html::showMassiveActionCheckBox(__CLASS__, $gg_id);
          }
          echo "</td>";
-         echo "<td>";
-         echo $group->getLink(true);
-         echo "</td>";
+         echo "<td>".$group->getLink(true)."</td>";
          echo "</tr>";
       }
 
       echo "</table>";
-      if (Session::haveRight('group', UPDATE)) {
-         Html::openArrowMassives("manageGroup", true);
-         Html::closeArrowMassives(array('deleteitem' => _sx('button', 'Delete permanently')));
+      if (Session::haveRight('group', UPDATE) && $nb) {
+         if ($nb > 10) {
+            $massiveactionparams['ontop'] = false;
+            Html::showMassiveActions($massiveactionparams);
+         }
+         Html::closeForm();
       }
-      Html::closeForm();
    }
 
    function getGroups($ticket_id, $removeAlreadyAssigned=true) {
