@@ -180,17 +180,13 @@ class PluginEscaladeConfig extends CommonDBTM {
       $rand = mt_rand();
       echo "<td>";
       Dropdown::showYesNo("use_assign_user_group_creation",
-                          $this->fields["use_assign_user_group_creation"], -1, [
-         'rand' => $rand,
-      ]);
+                          $this->fields["use_assign_user_group_creation"], -1, ['rand' => $rand]);
       echo "</td>";
 
       $rand = mt_rand();
       echo "<td style='padding:0px'>";
       Dropdown::showYesNo("use_assign_user_group_modification",
-                          $this->fields["use_assign_user_group_modification"], -1, [
-         'rand' => $rand,
-      ]);
+                          $this->fields["use_assign_user_group_modification"], -1, ['rand' => $rand]);
       echo "</td>";
       echo "</tr></table>";
       $plugin = new Plugin();
