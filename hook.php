@@ -404,7 +404,7 @@ function plugin_escalade_MassiveActions($itemtype) {
    switch ($itemtype) {
       case 'User':
          return ['PluginEscaladeUser'.MassiveAction::CLASS_ACTION_SEPARATOR.'use_filter_assign_group'
-                  => _("Enable filtering on the groups assignment", 'escalade')];
+                  => __("Enable filtering on the groups assignment", 'escalade')];
    }
    return [];
 }
