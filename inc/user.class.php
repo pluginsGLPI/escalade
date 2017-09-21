@@ -42,11 +42,11 @@ class PluginEscaladeUser extends CommonDBTM {
    static function showMassiveActionsSubForm(MassiveAction $ma) {
       switch ($ma->action) {
          case "use_filter_assign_group" :
-            Dropdown::showYesNo("use_filter_assign_group", 0, -1, array(
+            Dropdown::showYesNo("use_filter_assign_group", 0, -1, [
                'width' => '100%',
-            ));
+            ]);
             echo "<br><br><input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
-               _sx('button','Post') . "\" >";
+               _sx('button', 'Post') . "\" >";
          break;
       }
       return true;
@@ -76,7 +76,7 @@ class PluginEscaladeUser extends CommonDBTM {
       }
    }
 
-   static private function getUserGroup($entity, $userid, $filter='', $first=true) {
+   static private function getUserGroup($entity, $userid, $filter = '', $first=true) {
       global $DB;
 
       $query = "SELECT glpi_groups.id
@@ -91,7 +91,7 @@ class PluginEscaladeUser extends CommonDBTM {
 
       $query.= " ORDER BY glpi_groups_users.id";
 
-      $rep = array();
+      $rep = [];
       foreach ($DB->request($query) as $data) {
          if ($first) {
             return $data['id'];
@@ -128,10 +128,10 @@ class PluginEscaladeUser extends CommonDBTM {
       echo "<td><label>";
       echo __("Enable filtering on the groups assignment", "escalade");
       echo "&nbsp;";
-      Dropdown::showYesNo("use_filter_assign_group", $this->fields["use_filter_assign_group"], -1, array(
+      Dropdown::showYesNo("use_filter_assign_group", $this->fields["use_filter_assign_group"], -1, [
          'width' => '100%',
-         'rand' => $rand,
-      ));
+         'rand'  => $rand,
+      ]);
       echo "</label>";
       echo "</td>";
       echo "</tr>";
@@ -152,17 +152,10 @@ class PluginEscaladeUser extends CommonDBTM {
    }
 
    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
-      
       switch ($item->getType()) {
          case 'User':
             $user = new self();
             $ID   = $item->getField('id');
-
-            /*
-            if (!$user->GetfromDB($ID)) {
-               $user->createAccess($ID);
-            }
-            */
             $user->showForm($ID);
          break;
       }
@@ -170,14 +163,11 @@ class PluginEscaladeUser extends CommonDBTM {
    }
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
-
       switch ($item->getType()) {
          case 'User':
             return __("Escalation", "escalade");
          default :
             return '';
       }
-
    }
-
 }
