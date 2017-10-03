@@ -114,6 +114,7 @@ function plugin_init_escalade() {
 
       $PLUGIN_HOOKS['item_purge']['escalade']= [
          'User'         => 'plugin_escalade_item_purge',
+         'Ticket'       => 'plugin_escalade_item_purge',
       ];
       $PLUGIN_HOOKS['item_add']['escalade']['User'] = 'plugin_escalade_item_add_user';
 
