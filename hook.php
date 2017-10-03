@@ -283,6 +283,13 @@ function plugin_escalade_item_purge($item) {
    if ($item instanceof User) {
       $DB->query("DELETE FROM glpi_plugin_escalade_users WHERE users_id = ".$item->getID());
    }
+
+   if ($item instanceof Ticket) {
+      $history = new PluginEscaladeHistory;
+      $history->deleteByCriteria([
+         'tickets_id' => $item->getID()
+      ]);
+   }
    return true;
 }
 
