@@ -42,6 +42,11 @@ class PluginEscaladeTicket {
       if (isset($item->input['itilcategories_id'])) {
          self::qualification($item);
       }
+
+      // notification on solve date modification
+      if (in_array('solvedate', $item->updates)) {
+         NotificationEvent::raiseEvent('update_solvedate', $item);
+      }
    }
 
 
