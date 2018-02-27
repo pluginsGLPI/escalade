@@ -63,18 +63,20 @@ function plugin_init_escalade() {
             }
 
             // on ticket page (in edition)
+            if ((strpos($_SERVER['REQUEST_URI'], "ticket.form.php") !== false
+               || strpos($_SERVER['REQUEST_URI'], "problem.form.php") !== false
+               || strpos($_SERVER['REQUEST_URI'], "change.form.php") !== false) && isset($_GET['id'])) {
+               //remove btn feature
+               $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/remove_btn.js.php';
+            }
+
+            // on ticket page (in edition)
             if (strpos($_SERVER['REQUEST_URI'], "ticket.form.php") !== false
                 && isset($_GET['id'])) {
 
                //history and climb feature
                if ($escalade_config['show_history']) {
                   $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/escalade.js.php';
-               }
-
-               //remove btn feature
-               if (!$escalade_config['remove_delete_assign_group_btn']
-                  || !$escalade_config['remove_delete_assign_group_btn']) {
-                  $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/remove_btn.js.php';
                }
 
                //clone ticket feature
