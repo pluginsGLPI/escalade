@@ -66,8 +66,8 @@ function plugin_init_escalade() {
             if ((strpos($_SERVER['REQUEST_URI'], "ticket.form.php") !== false
                || strpos($_SERVER['REQUEST_URI'], "problem.form.php") !== false
                || strpos($_SERVER['REQUEST_URI'], "change.form.php") !== false) && isset($_GET['id'])) {
-               
-               if (!$escalade_config['remove_delete_requester_user_btn']     
+
+               if (!$escalade_config['remove_delete_requester_user_btn']
                   || !$escalade_config['remove_delete_watcher_user_btn']
                   || !$escalade_config['remove_delete_assign_user_btn']
                   || !$escalade_config['remove_delete_requester_group_btn']
