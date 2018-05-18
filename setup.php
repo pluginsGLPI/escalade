@@ -164,7 +164,7 @@ function plugin_version_escalade() {
          'license'        => 'GPLv2+',
          'requirements'   => [
             'glpi' => [
-               'min' => '9.2',
+               'min' => '9.3',
                'dev' => true
             ]
          ]
@@ -179,8 +179,8 @@ function plugin_version_escalade() {
  */
 function plugin_escalade_check_prerequisites() {
    $version = rtrim(GLPI_VERSION, '-dev');
-   if (!method_exists('Plugins', 'checkGlpiVersion') && version_compare($version, '9.2', 'lt')) {
-      echo "This plugin requires GLPI >= 9.2";
+   if (!method_exists('Plugins', 'checkGlpiVersion') && version_compare($version, '9.3', 'lt')) {
+      echo "This plugin requires GLPI >= 9.3";
       return false;
    }
    return true;
