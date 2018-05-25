@@ -4,7 +4,7 @@
 # 
 # Translators:
 # Alexandre DELAUNAY <adelaunay@teclib.com>, 2013
-# alexandre delaunay <delaunay.alexandre@gmail.com>, 2016
+# Alexandre Delaunay <delaunay.alexandre@gmail.com>, 2016
 # Johan Cwiklinski <trasher@x-tnd.be>, 2016
 # Pierre <plebel@teclib.com>, 2016
 msgid ""
@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-30 09:41+0200\n"
-"PO-Revision-Date: 2017-08-03 17:53+0000\n"
+"PO-Revision-Date: 2017-09-23 21:40+0000\n"
 "Last-Translator: Johan Cwiklinski <trasher@x-tnd.be>\n"
 "Language-Team: French (France) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/fr_FR/)\n"
 "MIME-Version: 1.0\n"
