@@ -61,44 +61,55 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
 
    var removeAllDeleteButtons = function() {
 
+      // Get type from path to handle multiple ticket type
+      var type = 'ticket';
+      if (location.pathname.indexOf('problem.form.php') > 0) {
+         type = 'problem';
+      }
+      if (location.pathname.indexOf('change.form.php') > 0) {
+         type = 'change';
+      }
+
       // ## REQUESTER
       //remove "delete" group buttons
       if ({$remove_delete_requester_group_btn}) {
-         removeDeleteButtons("group_ticket", 0);
+         removeDeleteButtons("group_"+type, 0);
       }
       //remove "delete" user buttons
       if ({$remove_delete_requester_user_btn}) {
-         removeDeleteButtons("ticket_user", 0);
+         removeDeleteButtons(type+"_user", 0);
       }
 
       // ## WATCHER
       //remove "delete" group buttons
       if ({$remove_delete_watcher_group_btn}) {
-         removeDeleteButtons("group_ticket", 1);
+         removeDeleteButtons("group_"+type, 1);
       }
       //remove "delete" user buttons
       if ({$remove_delete_watcher_user_btn}) {
-         removeDeleteButtons("ticket_user", 1);
+         removeDeleteButtons(type+"_user", 1);
       }
 
       // ## ASSIGN
       //remove "delete" group buttons
       if ({$remove_delete_assign_group_btn}) {
-         removeDeleteButtons("group_ticket", 2);
+         removeDeleteButtons("group_"+type, 2);
       }
       //remove "delete" user buttons
       if ({$remove_delete_assign_user_btn}) {
-         removeDeleteButtons("ticket_user", 2);
+         removeDeleteButtons(type+"_user", 2);
       }
       //remove "delete" supplier buttons
       if ({$remove_delete_assign_supplier_btn}) {
-         removeDeleteButtons("supplier_ticket", 2);
+         removeDeleteButtons("supplier_"+type, 2);
       }
    }
 
    $(document).ready(function() {
       // only in ticket form
-      if (location.pathname.indexOf('ticket.form.php') > 0) {
+      if (location.pathname.indexOf('ticket.form.php') > 0
+         || location.pathname.indexOf('problem.form.php') > 0
+         || location.pathname.indexOf('change.form.php') > 0) {
          $(".ui-tabs-panel:visible").ready(function() {
             removeAllDeleteButtons();
          })

@@ -181,4 +181,10 @@ class PluginEscaladeNotification {
          }
       }
    }
+
+   static function getEvents(NotificationTarget $target) {
+      if ($target instanceof NotificationTargetTicket) {
+         $target->events['update_solvedate'] = __('Solve date modification', 'escalade');
+      }
+   }
 }

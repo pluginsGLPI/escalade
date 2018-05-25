@@ -26,7 +26,7 @@
  --------------------------------------------------------------------------
  */
 
-define ('PLUGIN_ESCALADE_VERSION', '2.2.1');
+define ('PLUGIN_ESCALADE_VERSION', '2.2.2');
 
 /**
  * Init hooks of the plugin.
@@ -63,18 +63,29 @@ function plugin_init_escalade() {
             }
 
             // on ticket page (in edition)
+            if ((strpos($_SERVER['REQUEST_URI'], "ticket.form.php") !== false
+               || strpos($_SERVER['REQUEST_URI'], "problem.form.php") !== false
+               || strpos($_SERVER['REQUEST_URI'], "change.form.php") !== false) && isset($_GET['id'])) {
+
+               if (!$escalade_config['remove_delete_requester_user_btn']
+                  || !$escalade_config['remove_delete_watcher_user_btn']
+                  || !$escalade_config['remove_delete_assign_user_btn']
+                  || !$escalade_config['remove_delete_requester_group_btn']
+                  || !$escalade_config['remove_delete_watcher_group_btn']
+                  || !$escalade_config['remove_delete_assign_group_btn']
+                  || !$escalade_config['remove_delete_assign_supplier_btn']) {
+                  //remove btn feature
+                  $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/remove_btn.js.php';
+               }
+            }
+
+            // on ticket page (in edition)
             if (strpos($_SERVER['REQUEST_URI'], "ticket.form.php") !== false
                 && isset($_GET['id'])) {
 
                //history and climb feature
                if ($escalade_config['show_history']) {
                   $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/escalade.js.php';
-               }
-
-               //remove btn feature
-               if (!$escalade_config['remove_delete_assign_group_btn']
-                  || !$escalade_config['remove_delete_assign_group_btn']) {
-                  $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/remove_btn.js.php';
                }
 
                //clone ticket feature
@@ -130,6 +141,11 @@ function plugin_init_escalade() {
          = ['PluginEscaladeNotification', 'addTargets'];
       $PLUGIN_HOOKS['item_action_targets']['escalade']['NotificationTargetPlanningRecall']
          = ['PluginEscaladeNotification', 'getActionTargets'];
+
+      // Add additional events for Ticket notifications
+      $PLUGIN_HOOKS['item_get_events']['escalade'] = [
+         'NotificationTargetTicket' =>  ['PluginEscaladeNotification', 'getEvents']
+      ];
    }
 }
 

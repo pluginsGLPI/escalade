@@ -42,6 +42,11 @@ class PluginEscaladeTicket {
       if (isset($item->input['itilcategories_id'])) {
          self::qualification($item);
       }
+
+      // notification on solve date modification
+      if (in_array('solvedate', $item->updates)) {
+         NotificationEvent::raiseEvent('update_solvedate', $item);
+      }
    }
 
 
@@ -514,11 +519,12 @@ class PluginEscaladeTicket {
 
          $tickets = Ticket_Ticket::getLinkedTicketsTo($ticket->getID());
          if (count($tickets)) {
+            $linkedTicket = new Ticket();
             foreach ($tickets as $data) {
                $input['id'] = $data['tickets_id'];
-               if ($ticket->can($input['id'], UPDATE)
+               if ($linkedTicket->can($input['id'], UPDATE)
                    && $data['link'] == Ticket_Ticket::DUPLICATE_WITH) {
-                  $ticket->update($input);
+                  $linkedTicket->update($input);
                }
             }
          }
