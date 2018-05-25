@@ -26,7 +26,7 @@
  --------------------------------------------------------------------------
  */
 
-define ('PLUGIN_ESCALADE_VERSION', '2.2.1');
+define ('PLUGIN_ESCALADE_VERSION', '2.2.2');
 
 /**
  * Init hooks of the plugin.
