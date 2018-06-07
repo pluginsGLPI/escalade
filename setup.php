@@ -40,7 +40,7 @@ function plugin_init_escalade() {
    $PLUGIN_HOOKS['csrf_compliant']['escalade'] = true;
 
    $plugin = new Plugin();
-   if (isset($_SESSION['glpiID'])
+   if ((isset($_SESSION['glpiID']) || isCommandLine())
       && $plugin->isInstalled('escalade')
       && $plugin->isActivated('escalade')) {
 
