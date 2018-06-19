@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-30 09:41+0200\n"
-"PO-Revision-Date: 2018-03-27 06:32+0000\n"
+"PO-Revision-Date: 2018-06-12 13:29+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech (Czech Republic) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/cs_CZ/)\n"
 "MIME-Version: 1.0\n"
@@ -42,11 +42,11 @@ msgstr "Nastavení zásuvného modulu Escalade"
 
 #: inc/config.class.php:33
 msgid "Remove old assign group on new group assign"
-msgstr "Při přidělení nové skupiny odebrat původní skupinu"
+msgstr "Při přidělení nové skupiny odebrat tu původní"
 
 #: inc/config.class.php:62
 msgid "show group assign history visually"
-msgstr "zobrazit přiřazenou historii skupiny vizuálně"
+msgstr "zobrazit historii přiřazení skupiny vizuálně"
 
 #: inc/config.class.php:72
 msgid "Escalation history in tasks"
@@ -62,7 +62,7 @@ msgstr "Stav požadavku po eskalaci"
 
 #: inc/config.class.php:95
 msgid "Assign ticket to intial group on solve ticket"
-msgstr "Přiřadit požadavek prvotní skupině pro řešení požadavku"
+msgstr "Při řešení požadavku ho přiřadit prvotní skupině"
 
 #: inc/config.class.php:105
 msgid "Assign the technical manager on ticket category change"
@@ -116,7 +116,7 @@ msgstr "Neměnit"
 
 #: inc/history.class.php:75
 msgid "Reassign the ticket to group"
-msgstr "Přiřadit požadavek skupině"
+msgstr "Změnit přiřazení požadavku na skupinu"
 
 #: inc/history.class.php:97
 msgid "View full history"
@@ -168,7 +168,7 @@ msgstr "Chyba: přidávání řešitelů (uživatel)"
 
 #: inc/ticket.class.php:647
 msgid "Error : adding actors (group)"
-msgstr "Chyba: přidávání řešitelů (skupiny)"
+msgstr "Chyba: přidávání řešitelů (skupina)"
 
 #: inc/ticket.class.php:657
 msgid "Error : adding documents"
@@ -176,7 +176,7 @@ msgstr "Chyba: přidávání dokumentů"
 
 #: scripts/assign_me.js.php:7
 msgid "Assign me this ticket"
-msgstr "Přiřadit si tento požadavek"
+msgstr "Přidělit si tento požadavek"
 
 #: scripts/cloneandlink_ticket.js.php:7
 msgid "Clone and link"
