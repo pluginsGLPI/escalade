@@ -28,6 +28,11 @@
 
 define ('PLUGIN_ESCALADE_VERSION', '2.2.2');
 
+// Minimal GLPI version, inclusive
+define("PLUGIN_ESCALADE_MIN_GLPI", "9.2");
+// Maximum GLPI version, exclusive
+define("PLUGIN_ESCALADE_MAX_GLPI", "9.3");
+
 /**
  * Init hooks of the plugin.
  * REQUIRED
@@ -157,18 +162,19 @@ function plugin_init_escalade() {
  */
 function plugin_version_escalade() {
    return [
-         'name'           => __("Escalation", "escalade"),
-         'version'        => PLUGIN_ESCALADE_VERSION,
-         'author'         => "<a href='http://www.teclib.com'>Teclib'</a>",
-         'homepage'       => "https://github.com/pluginsGLPI/escalade",
-         'license'        => 'GPLv2+',
-         'requirements'   => [
-            'glpi' => [
-               'min' => '9.2',
-               'dev' => true
-            ]
+      'name'           => __("Escalation", "escalade"),
+      'version'        => PLUGIN_ESCALADE_VERSION,
+      'author'         => "<a href='http://www.teclib.com'>Teclib'</a>",
+      'homepage'       => "https://github.com/pluginsGLPI/escalade",
+      'license'        => 'GPLv2+',
+      'requirements'   => [
+         'glpi' => [
+            'min' => PLUGIN_ESCALADE_MIN_GLPI,
+            'max' => PLUGIN_ESCALADE_MAX_GLPI,
+            'dev' => true, //Required to allow 9.2-dev
          ]
-      ];
+      ]
+   ];
 }
 
 /**
@@ -178,11 +184,25 @@ function plugin_version_escalade() {
  * @return boolean
  */
 function plugin_escalade_check_prerequisites() {
-   $version = rtrim(GLPI_VERSION, '-dev');
-   if (!method_exists('Plugins', 'checkGlpiVersion') && version_compare($version, '9.2', 'lt')) {
-      echo "This plugin requires GLPI >= 9.2";
-      return false;
+
+   //Version check is not done by core in GLPI < 9.2 but has to be delegated to core in GLPI >= 9.2.
+   if (!method_exists('Plugin', 'checkGlpiVersion')) {
+      $version = preg_replace('/^((\d+\.?)+).*$/', '$1', GLPI_VERSION);
+      $matchMinGlpiReq = version_compare($version, PLUGIN_ESCALADE_MIN_GLPI, '>=');
+      $matchMaxGlpiReq = version_compare($version, PLUGIN_ESCALADE_MAX_GLPI, '<');
+
+      if (!$matchMinGlpiReq || !$matchMaxGlpiReq) {
+         echo vsprintf(
+            'This plugin requires GLPI >= %1$s and < %2$s.',
+            [
+               PLUGIN_ESCALADE_MIN_GLPI,
+               PLUGIN_ESCALADE_MAX_GLPI,
+            ]
+         );
+         return false;
+      }
    }
+
    return true;
 }
 
