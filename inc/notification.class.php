@@ -119,7 +119,7 @@ class PluginEscaladeNotification {
 
                // task group
                case self::NTRGT_TASK_GROUP:
-                  $target->getAddressesByGroup(0, $item->getField('groups_id_tech'));
+                  $target->addForGroup(0, $item->getField('groups_id_tech'));
                   break;
 
                // escalation groups
@@ -131,7 +131,7 @@ class PluginEscaladeNotification {
                   }
                   $history = new PluginEscaladeHistory;
                   foreach ($history->find("`tickets_id` = ".$ticket->getID()) as $found_history) {
-                     $target->getAddressesByGroup($manager, $found_history['groups_id']);
+                     $target->addForGroup($manager, $found_history['groups_id']);
                   }
                   break;
             }
@@ -156,7 +156,7 @@ class PluginEscaladeNotification {
       $group_ticket = new Group_Ticket;
       foreach ($group_ticket->find("`tickets_id` = $tickets_id
                                    AND `type` = $group_type") as $current) {
-         $target->getAddressesByGroup($manager, $current['groups_id']);
+         $target->addForGroup($manager, $current['groups_id']);
       }
    }
 
@@ -176,8 +176,8 @@ class PluginEscaladeNotification {
       foreach ($ticket_user->find("`type` = $user_type
                                   AND `tickets_id` = $tickets_id") as $current) {
          if ($user->getFromDB($current['users_id'])) {
-            $target->addToAddressesList(['language' => $user->getField('language'),
-                                         'users_id' => $user->getField('id')]);
+            $target->addToRecipientsList(['language' => $user->getField('language'),
+                                          'users_id' => $user->getField('id')]);
          }
       }
    }
