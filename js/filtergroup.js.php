@@ -83,20 +83,7 @@ $('#' + id).select2({
          }
 
       },
-      formatResult: function(result, container, query, escapeMarkup) {
-         var markup=[];
-         window.Select2.util.markMatch(result.text, query.term, markup, escapeMarkup);
-         if (result.level) {
-            var a='';
-            var i=result.level;
-            while (i>1) {
-               a = a+'&nbsp;&nbsp;&nbsp;';
-               i=i-1;
-            }
-            return a+'&raquo;'+markup.join('');
-         }
-         return markup.join('');
-      }
+      templateResult: formatResult
    });
 }
 
