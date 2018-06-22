@@ -7,7 +7,7 @@ class PluginEscaladeConfig extends CommonDBTM {
       return __("Configuration Escalade plugin", "escalade");
    }
 
-   function showForm($ID, $options = array()) {
+   function showForm($ID, $options = []) {
       global $CFG_GLPI;
 
       $this->initForm($ID, $options);

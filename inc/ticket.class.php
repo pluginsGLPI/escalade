@@ -29,11 +29,11 @@ class PluginEscaladeTicket {
          if (isset($item->input['status']) && $item->input['status'] == CommonITILObject::CLOSED) {
             //close linked tickets
             self::linkedTickets($item, CommonITILObject::CLOSED);
-         } //solution rejected
-         else if (isset($item->input['status'])
-               && $item->input['status'] == CommonITILObject::ASSIGNED
-               && isset($item->oldvalues['status'])
-               && $item->oldvalues['status'] == CommonITILObject::SOLVED) {
+         } else if (isset($item->input['status'])
+            && $item->input['status'] == CommonITILObject::ASSIGNED
+            && isset($item->oldvalues['status'])
+            && $item->oldvalues['status'] == CommonITILObject::SOLVED) {
+            //solution rejected
             self::AssignLastGroupOnRejectedSolution($item);
          }
       }

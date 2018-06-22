@@ -213,6 +213,6 @@ function plugin_escalade_check_prerequisites() {
  *
  * @return boolean
  */
-function plugin_escalade_check_config($verbose=false) {
+function plugin_escalade_check_config($verbose = false) {
    return true;
 }

@@ -99,7 +99,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
       }
    }
 
-   function getGroups($ticket_id, $removeAlreadyAssigned=true) {
+   function getGroups($ticket_id, $removeAlreadyAssigned = true) {
       $groups = $user_groups = $ticket_groups = [];
 
       // get groups for user connected
@@ -122,7 +122,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
       // or no group is assigned to the ticket
       // TODO : matching with "view all tickets (yes/no) option in profile user"
       if (!empty($ticket_groups) && count(array_intersect($ticket_groups, $user_groups)) == 0) {
-         return array();
+         return [];
       }
 
       //get all group which we can climb
