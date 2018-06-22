@@ -681,12 +681,12 @@ class PluginEscaladeTicket {
 
       //add history to the new ticket
       $changes[0] = '0';
-      $changes[1] = __("This ticket has been from the ticket num", "escalade")." ".$tickets_id;
+      $changes[1] = __("This ticket has been cloned from the ticket num", "escalade")." ".$tickets_id;
       $changes[2] = "";
       Log::history($newID, 'Ticket', $changes, 'Ticket');
 
       //add message (ticket cloned) after redirect
-      Session::addMessageAfterRedirect(__("This ticket has been from the ticket num", "escalade").
+      Session::addMessageAfterRedirect(__("This ticket has been cloned from the ticket num", "escalade").
                                        " ".$tickets_id);
 
       //all ok
