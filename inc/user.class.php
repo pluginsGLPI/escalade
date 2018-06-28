@@ -64,7 +64,7 @@ class PluginEscaladeUser extends CommonDBTM {
             $input = $ma->getInput();
 
             foreach ($ids as $id) {
-               if ($escalade_user->getFromDBByQuery("WHERE users_id = $id")) {
+               if ($escalade_user->getFromDBByCrit(['users_id' => $id])) {
                   $escalade_user->fields['use_filter_assign_group'] = $input['use_filter_assign_group'];
                   if ($escalade_user->update($escalade_user->fields)) {
                      $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_OK);
@@ -76,7 +76,7 @@ class PluginEscaladeUser extends CommonDBTM {
       }
    }
 
-   static private function getUserGroup($entity, $userid, $filter = '', $first=true) {
+   static private function getUserGroup($entity, $userid, $filter = '', $first = true) {
       global $DB;
 
       $query = "SELECT glpi_groups.id
@@ -101,19 +101,19 @@ class PluginEscaladeUser extends CommonDBTM {
       return ($first ? 0 : array_pop($rep));
    }
 
-   static function getRequesterGroup($entity, $userid, $first=true) {
+   static function getRequesterGroup($entity, $userid, $first = true) {
 
       return self::getUserGroup($entity, $userid, '`is_requester`', $first);
    }
 
-   static function getTechnicianGroup($entity, $userid, $first=true) {
+   static function getTechnicianGroup($entity, $userid, $first = true) {
 
       return self::getUserGroup($entity, $userid, '`is_assign`', $first);
    }
 
    function showForm($ID) {
 
-      $is_exist = $this->getFromDBByQuery("WHERE users_id = '$ID'");
+      $is_exist = $this->getFromDBByCrit(['users_id' => $ID]);
 
       if (! $is_exist) { //"Security"
          $this->fields["use_filter_assign_group"] = 0;
