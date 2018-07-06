@@ -4,13 +4,13 @@
 # 
 # Translators:
 # Cédric Anne, 2018
-# Kaya Zeren <kayazeren@gmail.com>, 2015-2016
+# Kaya Zeren <kayazeren@gmail.com>, 2015-2016,2018
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-22 12:38+0000\n"
-"PO-Revision-Date: 2018-06-22 12:46+0000\n"
+"PO-Revision-Date: 2018-06-28 07:59+0000\n"
 "Last-Translator: Cédric Anne\n"
 "Language-Team: Turkish (Turkey) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/tr_TR/)\n"
 "MIME-Version: 1.0\n"

@@ -6,12 +6,13 @@
 # Alexandre DELAUNAY <adelaunay@teclib.com>, 2013
 # Cédric Anne, 2018
 # Obscandoble Beembersdoockle <timur.mamezhanoff@gmail.com>, 2016
+# Pavlo Lacenko <pavelhimik@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-22 12:38+0000\n"
-"PO-Revision-Date: 2018-06-22 12:45+0000\n"
+"PO-Revision-Date: 2018-06-28 07:59+0000\n"
 "Last-Translator: Cédric Anne\n"
 "Language-Team: Russian (Russia) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/ru_RU/)\n"
 "MIME-Version: 1.0\n"
