@@ -119,7 +119,14 @@ Elle ajoute les fonctionnalités suivantes :
    <langs>
       <lang>cs_CZ</lang>
       <lang>en_GB</lang>
+      <lang>en_US</lang>
+      <lang>es_ES</lang>
+      <lang>fi_FI</lang>
       <lang>fr_FR</lang>
+      <lang>it_IT</lang>
+      <lang>lv_LV</lang>
+      <lang>ru_RU</lang>
+      <lang>tr_TR</lang>
    </langs>
    <license><![CDATA[GPL v2+]]></license>
    <tags>
