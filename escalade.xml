@@ -6,23 +6,24 @@
    <logo>https://raw.githubusercontent.com/pluginsGLPI/escalade/master/escalade.png</logo>
    <description>
       <short>
-         <fr><![CDATA[Cette extension permet de simplifier l'escalade de ticket vers des groupes différents]]></fr>
+         <cs><![CDATA[Tento zásuvný modul zjednodušuje eskalaci požadavku na jiné skupiny]]></cs>
          <en><![CDATA[This plugin simplifies the ticket escalation to different groups]]></en>
+         <fr><![CDATA[Cette extension permet de simplifier l'escalade de ticket vers des groupes différents]]></fr>
       </short>
       <long>
-         <fr>
-Cette extension permet de simplifier l'escalade de ticket vers des groupes différents.   
-Elle ajoute les fonctionnalités suivantes :
+         <cs>
+Tento zásuvný modul zjednodušuje eskalaci požadavku na jiné skupiny.   
+Přidává následující funkce: 
 
-* Affichage d'un historique visuel de l'assignation des groupes sur un ticket.
-* Escalade rapide à un groupe présent dans cette historique.
-* Assignation du groupe initiateur lors de l'apport d'une solution.
-* Attribution du responsable et groupe technique lors d'un changement de catégorie de ticket.
-* Clonage rapide de ticket.
-* Cloture des tickets clonés en même temps.
-* Prendre le premier ou dernier groupe du technicien (sur modification du ticket).
-* Bouton d'assignation rapide à soi-même d'un ticket.
-         </fr>
+* Zobrazení vizuální historie přiřazení požadavku skupinám.
+* Zrychlená eskalace na skupinu nacházející se v historii.
+* Přiřazení skupiny iniciátora když je poskytnuto řešení požadavku.
+* Poskytnutí automatického přiřazování požadavků při změně jeho kategorie.
+* Rychlé klonování požadavku.
+* Současné uzavření klonovaných požadavků.
+* Vzetí první nebo poslední skupiny technika (při změně požadavku).
+* Nové tlačítko pro zrychlené přiřazení požadavku sám sobě. 
+         </cs>
          <en>
 This plugin simplifies the ticket escalation to different groups.   
 It adds the following features : 
@@ -36,6 +37,19 @@ It adds the following features :
 * Take the first or last group of technician (on ticket modification).
 * New button for rapid self-assignment of a ticket. 
          </en>
+         <fr>
+Cette extension permet de simplifier l'escalade de ticket vers des groupes différents.   
+Elle ajoute les fonctionnalités suivantes :
+
+* Affichage d'un historique visuel de l'assignation des groupes sur un ticket.
+* Escalade rapide à un groupe présent dans cette historique.
+* Assignation du groupe initiateur lors de l'apport d'une solution.
+* Attribution du responsable et groupe technique lors d'un changement de catégorie de ticket.
+* Clonage rapide de ticket.
+* Cloture des tickets clonés en même temps.
+* Prendre le premier ou dernier groupe du technicien (sur modification du ticket).
+* Bouton d'assignation rapide à soi-même d'un ticket.
+         </fr>
       </long>
    </description>
    <homepage>https://github.com/pluginsGLPI/escalade</homepage>
@@ -47,6 +61,10 @@ It adds the following features :
       <author>Teclib'</author>
    </authors>
    <versions>
+      <version>
+         <num>2.3.2</num>
+         <compatibility>9.3</compatibility>
+      </version>
       <version>
          <num>2.3.1</num>
          <compatibility>9.3</compatibility>
@@ -103,19 +121,27 @@ It adds the following features :
       </version>  
    </versions>
    <langs>
-      <lang>fr_FR</lang>
+      <lang>cs_CZ</lang>
       <lang>en_GB</lang>
+      <lang>en_US</lang>
+      <lang>es_ES</lang>
+      <lang>fi_FI</lang>
+      <lang>fr_FR</lang>
+      <lang>it_IT</lang>
+      <lang>lv_LV</lang>
+      <lang>ru_RU</lang>
+      <lang>tr_TR</lang>
    </langs>
    <license><![CDATA[GPL v2+]]></license>
    <tags>
-         <fr>
-            <tag>Groupes</tag>
-            <tag>Ticket</tag>
-            <tag>Helpdesk</tag>
-            <tag>Escalade</tag>
-            <tag>Clone</tag>
-            <tag>Attribution</tag>
-         </fr>
+         <cs>
+            <tag>Skupiny</tag>
+            <tag>Požadavek</tag>
+            <tag>Asistence</tag>
+            <tag>Eskalace</tag>
+            <tag>Klon</tag>
+            <tag>Přiřazení</tag>
+         </cs>
          <en>
             <tag>Groups</tag>
             <tag>Ticket</tag>
@@ -124,6 +150,14 @@ It adds the following features :
             <tag>Clone</tag>
             <tag>Assignement</tag>
          </en>
+         <fr>
+            <tag>Groupes</tag>
+            <tag>Ticket</tag>
+            <tag>Helpdesk</tag>
+            <tag>Escalade</tag>
+            <tag>Clone</tag>
+            <tag>Attribution</tag>
+         </fr>
    </tags>
    <screenshots>
       <screenshot>https://raw.githubusercontent.com/pluginsGLPI/escalade/master/screenshots/escalade_config.png</screenshot>

@@ -52,7 +52,7 @@ function plugin_escalade_install() {
          PRIMARY KEY (`id`),
          KEY `tickets_id` (`tickets_id`),
          KEY `groups_id` (`groups_id`)
-      ) ENGINE = MYISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+      ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
       $DB->query($query);
    }
 
@@ -81,7 +81,7 @@ function plugin_escalade_install() {
          `use_filter_assign_group`                 INT(11) NOT NULL,
          `ticket_last_status`                      INT(11) NOT NULL,
          PRIMARY KEY (`id`)
-      ) ENGINE = MYISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+      ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
       $DB->query($query);
 
       $query = "INSERT INTO glpi_plugin_escalade_configs
@@ -135,7 +135,7 @@ function plugin_escalade_install() {
          `groups_id_source` int(11) NOT NULL DEFAULT '0',
          `groups_id_destination` int(11) NOT NULL DEFAULT '0',
          PRIMARY KEY (`id`)
-      ) ENGINE = MYISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+      ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
       $DB->query($query);
    }
 
