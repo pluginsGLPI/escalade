@@ -210,9 +210,31 @@ class PluginEscaladeTicket {
 
       //add line in history table
       $history = new PluginEscaladeHistory();
+
+      $group_ticket       = new Group_Ticket();
+      $group_ticket->getFromDBByRequest(['ORDER'   => 'id DESC',
+                                                 'LIMIT'      => 1,
+                                                 'tickets_id' => $tickets_id,
+                                                 'type'       => 2]);
+
+      $previous_groups_id = 0;
+      $counter            = 0;
+
+      if (count($group_ticket->fields) > 0) {
+         $previous_groups_id = $group_ticket->fields['groups_id'];
+
+         $last_history_groups = PluginEscaladeHistory::getLastHistoryForTicketAndGroup($tickets_id, $groups_id, $previous_groups_id);
+
+         if (count($last_history_groups->fields) > 0) {
+            $counter = $last_history_groups->fields['counter'] + 1;
+         }
+      }
+
       $history->add([
-         'tickets_id' => $tickets_id,
-         'groups_id'  => $groups_id
+         'tickets_id'         => $tickets_id,
+         'groups_id'          => $groups_id,
+         'previous_groups_id' => $previous_groups_id,
+         'counter'            => $counter
       ]);
 
       //remove old user(s) (pass if user added by new ticket)
