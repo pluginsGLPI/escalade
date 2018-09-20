@@ -6,6 +6,8 @@ if (!defined('GLPI_ROOT')) {
 class PluginEscaladeHistory extends CommonDBTM {
    const HISTORY_LIMIT = 4;
 
+   static $rightname = 'plugin_escalade';
+
    static function getFirstLineForTicket($tickets_id) {
       $found = self::getFullHistory($tickets_id);
       if (count($found) == 0) {

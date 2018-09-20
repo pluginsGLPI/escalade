@@ -35,6 +35,7 @@ function plugin_escalade_install() {
    global $DB;
 
    //get version
+   include_once(GLPI_ROOT . "/plugins/escalade/inc/profile.class.php");
    $plugin = new Plugin();
    $found = $plugin->find("name = 'escalade'");
    $plugin_escalade = array_shift($found);
@@ -252,6 +253,8 @@ function plugin_escalade_install() {
 
    $migration->migrationOneTable('glpi_plugin_escalade_configs');
 
+   PluginEscaladeProfile::initProfile();
+   PluginEscaladeProfile::createFirstAccess($_SESSION['glpiactiveprofile']['id']);
    return true;
 }
 
@@ -274,6 +277,12 @@ function plugin_escalade_uninstall() {
       $DB->query("DROP TABLE IF EXISTS `$table`");
    }
 
+   $profileRight = new ProfileRight();
+   foreach (PluginEscaladeProfile::getAllRights() as $right) {
+      $profileRight->deleteByCriteria(['name' => $right['field']]);
+   }
+
+   PluginEscaladeProfile::removeRightsFromSession();
    return true;
 }
 
