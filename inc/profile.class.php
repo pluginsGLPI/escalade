@@ -49,7 +49,7 @@ class PluginEscaladeProfile extends CommonDBTM {
          $prof = new self();
 
          self::addDefaultProfileInfos($ID,
-                                      array('plugin_escalade' => ALLSTANDARDRIGHT));
+                                      ['plugin_escalade' => ALLSTANDARDRIGHT]);
          $prof->showForm($ID);
       }
       return true;
@@ -58,7 +58,7 @@ class PluginEscaladeProfile extends CommonDBTM {
    static function createFirstAccess($ID) {
       //85
       self::addDefaultProfileInfos($ID,
-                                   array('plugin_escalade' => ALLSTANDARDRIGHT), true);
+                                   ['plugin_escalade' => ALLSTANDARDRIGHT], true);
    }
 
    /**
@@ -72,7 +72,7 @@ class PluginEscaladeProfile extends CommonDBTM {
          if (countElementsInTable('glpi_profilerights',
                                   ["`profiles_id`" => $profiles_id,
                                    "`name`" => $right]) && $drop_existing) {
-            $profileRight->deleteByCriteria(array('profiles_id' => $profiles_id, 'name' => $right));
+            $profileRight->deleteByCriteria(['profiles_id' => $profiles_id, 'name' => $right]);
          }
          if (!countElementsInTable('glpi_profilerights',
                                    ["`profiles_id`" => $profiles_id,
@@ -96,10 +96,10 @@ class PluginEscaladeProfile extends CommonDBTM {
     *
     * @return nothing
     **/
-   function showForm($profiles_id = 0, $openform = TRUE, $closeform = TRUE) {
+   function showForm($profiles_id = 0, $openform = true, $closeform = true) {
 
       echo "<div class='firstbloc'>";
-      if (($canedit = Session::haveRightsOr(self::$rightname, array(CREATE, UPDATE, PURGE)))
+      if (($canedit = Session::haveRightsOr(self::$rightname, [CREATE, UPDATE, PURGE]))
           && $openform) {
          $profile = new Profile();
          echo "<form method='post' action='" . $profile->getFormURL() . "'>";
@@ -109,16 +109,16 @@ class PluginEscaladeProfile extends CommonDBTM {
       $profile->getFromDB($profiles_id);
       if ($profile->getField('interface') == 'central') {
          $rights = $this->getAllRights();
-         $profile->displayRightsChoiceMatrix($rights, array('canedit'       => $canedit,
+         $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
                                                             'default_class' => 'tab_bg_2',
-                                                            'title'         => __('General')));
+                                                            'title'         => __('General')]);
       }
 
       if ($canedit
           && $closeform) {
          echo "<div class='center'>";
-         echo Html::hidden('id', array('value' => $profiles_id));
-         echo Html::submit(_sx('button', 'Save'), array('name' => 'update'));
+         echo Html::hidden('id', ['value' => $profiles_id]);
+         echo Html::submit(_sx('button', 'Save'), ['name' => 'update']);
          echo "</div>\n";
          Html::closeForm();
       }
@@ -169,7 +169,7 @@ class PluginEscaladeProfile extends CommonDBTM {
       foreach ($profile->getAllRights(true) as $data) {
          if (countElementsInTable("glpi_profilerights",
                                   ["`name`" => $data['field']]) == 0) {
-            ProfileRight::addProfileRights(array($data['field']));
+            ProfileRight::addProfileRights([$data['field']]);
          }
       }
 

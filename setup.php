@@ -43,7 +43,7 @@ function plugin_init_escalade() {
    global $PLUGIN_HOOKS, $DB;
 
    $PLUGIN_HOOKS['csrf_compliant']['escalade'] = true;
-   $PLUGIN_HOOKS['change_profile']['escalade'] = array('PluginEscaladeProfile', 'initProfile');
+   $PLUGIN_HOOKS['change_profile']['escalade'] = ['PluginEscaladeProfile', 'initProfile'];
 
    $plugin = new Plugin();
    if ((isset($_SESSION['glpiID']) || isCommandLine())
@@ -107,7 +107,7 @@ function plugin_init_escalade() {
 
             Plugin::registerClass('PluginEscaladeGroup_Group', ['addtabon' => 'Group']);
             Plugin::registerClass('PluginEscaladeUser', ['addtabon' => ['User']]);
-            Plugin::registerClass('PluginEscaladeProfile', array('addtabon' => 'Profile'));
+            Plugin::registerClass('PluginEscaladeProfile', ['addtabon' => 'Profile']);
          }
       }
 
