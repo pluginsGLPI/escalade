@@ -223,6 +223,7 @@ class PluginEscaladeTicket {
          if ($backtrace['function'] == "add"
             && ($backtrace['object'] instanceOf CommonITILObject)) {
             $keep_users_id = true;
+            break;
          }
       }
       if (!$keep_users_id) {
