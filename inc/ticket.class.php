@@ -220,13 +220,13 @@ class PluginEscaladeTicket {
       $keep_users_id = false;
 
       foreach ($backtraces as $backtrace) {
-        if ($backtrace['function'] == "add"
+         if ($backtrace['function'] == "add"
             && ($backtrace['object'] instanceOf CommonITILObject)) {
-           $keep_users_id = true;
-        }
+            $keep_users_id = true;
+         }
       }
       if (!$keep_users_id) {
-        self::removeAssignUsers($tickets_id);
+         self::removeAssignUsers($tickets_id);
       }
 
       //add a task to inform the escalation (pass if solution)
