@@ -17,6 +17,10 @@ var tickets_id = getUrlParameter('id');
 
 function redefineDropdown(id, url, tickets_id, itemtype) {
 
+if (typeof templateResult === "undefined" && typeof formatResult !== "undefined") {
+   var templateResult = formatResult;
+}
+
 $('#' + id).select2({
    width: '80%',
    minimumInputLength: 0,
