@@ -62,6 +62,10 @@ Elle ajoute les fonctionnalités suivantes :
    </authors>
    <versions>
       <version>
+         <num>2.3.3</num>
+         <compatibility>9.3</compatibility>
+      </version>
+      <version>
          <num>2.3.2</num>
          <compatibility>9.3</compatibility>
       </version>

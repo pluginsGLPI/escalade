@@ -215,12 +215,18 @@ class PluginEscaladeTicket {
          'groups_id'  => $groups_id
       ]);
 
-      //remove old user(s) (pass if user added by new ticket form)
-      $backtrace   = debug_backtrace();
-      $first_trace = array_pop($backtrace);
-      if (strpos($first_trace['file'], 'ticket.form.php') === false
-          || $first_trace['function'] != "add"
-          || !($first_trace['object'] instanceOf Ticket)) {
+      //remove old user(s) (pass if user added by new ticket)
+      $backtraces   = debug_backtrace();
+      $keep_users_id = false;
+
+      foreach ($backtraces as $backtrace) {
+         if ($backtrace['function'] == "add"
+            && ($backtrace['object'] instanceOf CommonITILObject)) {
+            $keep_users_id = true;
+            break;
+         }
+      }
+      if (!$keep_users_id) {
          self::removeAssignUsers($tickets_id);
       }
 
