@@ -250,10 +250,11 @@ class PluginEscaladeTicket {
 
       //check if event is not triggered by behaviors plugin
       //to prevent user remove when "add technician group" option is active
-      if (strpos($first_trace['file'], 'ticket.form.php') !== false
-         && $first_trace['function'] == "add"
-         && $first_trace['object'] instanceOf Ticket) {
-         return;
+      foreach ($backtraces as $backtrace) {
+         if ($backtrace['function'] == "add"
+            && ($backtrace['object'] instanceOf CommonITILObject)) {
+            return;
+         }
       }
 
       if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] != -1) {
