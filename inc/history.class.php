@@ -41,7 +41,7 @@ class PluginEscaladeHistory extends CommonDBTM {
 
    static function getFullHistory($tickets_id) {
       $history = new self();
-      return $history->find("tickets_id = $tickets_id", "date_mod DESC");
+      return $history->find(['tickets_id' => $tickets_id], "date_mod DESC");
    }
 
 
@@ -63,7 +63,7 @@ class PluginEscaladeHistory extends CommonDBTM {
       $group = new Group();
 
       $history = new self();
-      $found = $history->find("tickets_id = $tickets_id", "date_mod DESC");
+      $found = $history->find(['tickets_id' => $tickets_id], "date_mod DESC");
       $nb_histories = count($found);
 
       //remove first line (current assign)
