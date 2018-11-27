@@ -80,14 +80,13 @@ class PluginEscaladeTicket {
 
          //add the first history group (if not already exist)
          $group_ticket = new Group_Ticket;
-         $condition = "tickets_id = $tickets_id AND groups_id = ".$first_history['groups_id'].
-                      " AND type = 2";
+         $condition = [
+            'tickets_id' => $tickets_id,
+            'groups_id'  => $first_history['groups_id'],
+            'type'       => CommonITILActor::ASSIGN
+         ];
          if (!$group_ticket->find($condition)) {
-            $group_ticket->add([
-               'tickets_id' => $tickets_id,
-               'groups_id'  => $first_history['groups_id'],
-               'type'       => CommonITILActor::ASSIGN
-            ]);
+            $group_ticket->add($condition);
          }
 
          //add a task to inform the escalation
@@ -200,7 +199,11 @@ class PluginEscaladeTicket {
 
       //if group already assigned, return
       $group_ticket = new Group_Ticket();
-      $condition = "tickets_id = $tickets_id AND groups_id = $groups_id AND type = 2";
+      $condition = [
+         'tickets_id' => $tickets_id,
+         'groups_id'  => $groups_id,
+         'type'       => CommonITILActor::ASSIGN
+      ];
       if ($group_ticket->find($condition)) {
          unset($_SESSION['plugin_escalade']['keep_users']);
          return;
@@ -368,7 +371,11 @@ class PluginEscaladeTicket {
    static function climb_group($tickets_id, $groups_id, $full_history = false) {
       //don't add group if already exist for this ticket
       $group_ticket = new Group_Ticket;
-      $condition = "tickets_id = $tickets_id AND groups_id = $groups_id AND type = 2";
+      $condition = [
+         'tickets_id' => $tickets_id,
+         'groups_id'  => $groups_id,
+         'type'       => CommonITILActor::ASSIGN
+      ];
       if (! $group_ticket->find($condition)) {
 
          // add group to ticket
@@ -402,17 +409,16 @@ class PluginEscaladeTicket {
     * @return nothing
     */
    static function removeAssignGroups($tickets_id, $keep_groups_id = false) {
-      $where_keep = "";
+      $where_keep = [
+         'tickets_id' => $tickets_id,
+         'type'       => CommonITILActor::ASSIGN,
+      ];
       if ($keep_groups_id !== false) {
-         if (is_array($keep_groups_id)) {
-            $where_keep = "AND groups_id NOT IN (".implode(",", $keep_groups_id).")";
-         } else {
-            $where_keep = "AND groups_id != $keep_groups_id";
-         }
+         $where_keep[] = ['NOT' => ['groups_id' => $keep_groups_id]];
       }
 
       $group_ticket = new Group_Ticket();
-      $found = $group_ticket->find("tickets_id = $tickets_id AND type = 2 $where_keep");
+      $found = $group_ticket->find($where_keep);
       foreach ($found as $id => $gt) {
          $group_ticket->delete($gt);
       }
@@ -432,17 +438,16 @@ class PluginEscaladeTicket {
          return true;
       }
 
-      $where_keep = "";
+      $where_keep = [
+         'tickets_id' => $tickets_id,
+         'type'       => CommonITILActor::ASSIGN,
+      ];
       if ($keep_users_id !== false) {
-         if (is_array($keep_users_id)) {
-            $where_keep = "AND users_id NOT IN (".implode(",", $keep_users_id).")";
-         } else {
-            $where_keep = "AND users_id != $keep_users_id";
-         }
+         $where_keep[] = ['NOT' => ['users_id' => $keep_users_id]];
       }
 
       $ticket_user = new Ticket_User();
-      $found = $ticket_user->find("tickets_id = $tickets_id AND type = 2 $where_keep");
+      $found = $ticket_user->find($where_keep);
       foreach ($found as $id => $tu) {
 
          //if user must be keeped (see item_add_user function)
@@ -502,8 +507,9 @@ class PluginEscaladeTicket {
          $group_ticket = new Group_Ticket();
 
          //The ticket cannot have this group already assigned
-         $found = $group_ticket->find("tickets_id = $tickets_id AND groups_id = $groups_id
-                                       AND type = ".CommonITILActor::ASSIGN);
+         $found = $group_ticket->find(['tickets_id' => $tickets_id,
+                                       'groups_id'  => $groups_id,
+                                       'type'       => CommonITILActor::ASSIGN]);
          if (!empty($found)) {
             return;
          }
@@ -586,16 +592,16 @@ class PluginEscaladeTicket {
          $group_ticket = new Group_Ticket();
 
          //check if group is not already present
-         $group_found = $group_ticket->find("tickets_id = '".$item->fields['id'].
-            "' AND groups_id = '".$category->fields['groups_id']."' AND type = 2");
+         $group_condition = [
+            'tickets_id' => $item->fields['id'],
+            'groups_id'  => $category->fields['groups_id'],
+            'type'       => CommonITILActor::ASSIGN,
+         ];
+         $group_found = $group_ticket->find($group_condition);
          if (empty($group_found)) {
 
             //add group to ticket
-            $group_ticket->add([
-               'tickets_id' => $item->fields['id'],
-               'groups_id'  => $category->fields['groups_id'],
-               'type'       => CommonITILActor::ASSIGN
-            ]);
+            $group_ticket->add($group_condition);
          }
       }
 
@@ -606,16 +612,16 @@ class PluginEscaladeTicket {
          $ticket_user = new Ticket_User();
 
          //check if user is not already present
-         $user_found = $ticket_user->find("tickets_id = '".$item->fields['id'].
-            "' AND users_id = '".$category->fields['users_id']."' AND type = 2");
+         $user_condition = [
+            'tickets_id' => $item->fields['id'],
+            'users_id'   => $category->fields['users_id'],
+            'type'       => CommonITILActor::ASSIGN,
+         ];
+         $user_found = $ticket_user->find($user_condition);
          if (empty($user_found)) {
 
             //add user to ticket
-            $ticket_user->add([
-               'tickets_id' => $item->fields['id'],
-               'users_id'   => $category->fields['users_id'],
-               'type'       => CommonITILActor::ASSIGN
-            ]);
+            $ticket_user->add($user_condition);
          }
       }
    }
@@ -665,9 +671,10 @@ class PluginEscaladeTicket {
       }
 
       //add a followup to indicate duplication
-      $followup = new TicketFollowup();
+      $followup = new ITILFollowup();
       if (! $followup->add([
-         'tickets_id'      => $newID,
+         'items_id'        => $newID,
+         'itemtype'        => Ticket::class,
          'users_id'        => Session::getLoginUserID(),
          'content'         => __("This ticket has been cloned from the ticket num", "escalade")." ".
                               $tickets_id,
@@ -727,9 +734,9 @@ class PluginEscaladeTicket {
    static function assign_me($tickets_id) {
 
       $tu = new Ticket_User();
-      $found = $tu->find("`tickets_id` = '$tickets_id'
-                           AND `users_id` = '".$_SESSION['glpiID']."'
-                           AND `type` = '".CommonITILActor::ASSIGN."'");
+      $found = $tu->find(['tickets_id' => $tickets_id,
+                          'users_id'   => $_SESSION['glpiID'],
+                          'type'       => CommonITILActor::ASSIGN]);
 
       if (empty($found)) {
          $ticket = new Ticket();

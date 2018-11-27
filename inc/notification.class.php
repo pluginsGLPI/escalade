@@ -130,7 +130,7 @@ class PluginEscaladeNotification {
                      $manager = 1;
                   }
                   $history = new PluginEscaladeHistory;
-                  foreach ($history->find("`tickets_id` = ".$ticket->getID()) as $found_history) {
+                  foreach ($history->find(['tickets_id' => $ticket->getID()]) as $found_history) {
                      $target->addForGroup($manager, $found_history['groups_id']);
                   }
                   break;
@@ -154,8 +154,8 @@ class PluginEscaladeNotification {
                                      $manager = 0,
                                      $group_type = CommonITILActor::REQUESTER) {
       $group_ticket = new Group_Ticket;
-      foreach ($group_ticket->find("`tickets_id` = $tickets_id
-                                   AND `type` = $group_type") as $current) {
+      foreach ($group_ticket->find(['tickets_id' => $tickets_id,
+                                    'type' => $group_type]) as $current) {
          $target->addForGroup($manager, $current['groups_id']);
       }
    }
@@ -173,8 +173,8 @@ class PluginEscaladeNotification {
                                     $user_type = CommonITILActor::REQUESTER) {
       $ticket_user = new Ticket_User;
       $user        = new User;
-      foreach ($ticket_user->find("`type` = $user_type
-                                  AND `tickets_id` = $tickets_id") as $current) {
+      foreach ($ticket_user->find(['type' => $user_type,
+                                   'tickets_id' => $tickets_id]) as $current) {
          if ($user->getFromDB($current['users_id'])) {
             $target->addToRecipientsList(['language' => $user->getField('language'),
                                           'users_id' => $user->getField('id')]);

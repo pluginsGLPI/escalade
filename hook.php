@@ -36,7 +36,7 @@ function plugin_escalade_install() {
 
    //get version
    $plugin = new Plugin();
-   $found = $plugin->find("name = 'escalade'");
+   $found = $plugin->find(['name' => 'escalade']);
    $plugin_escalade = array_shift($found);
 
    //init migration

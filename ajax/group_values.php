@@ -12,21 +12,12 @@ $PluginEscaladeGroup_Group = new PluginEscaladeGroup_Group();
    $groups_id_filtred = $PluginEscaladeGroup_Group->getGroups($ticket_id);
 
 if (count($groups_id_filtred) > 0) {
-   $myarray = [];
-   foreach ($groups_id_filtred as $groups_id => $groups_name) {
-      $myarray[] = $groups_id;
-   }
-   $newarray = implode(", ", $myarray);
-   $condition = " id IN ($newarray)";
-
+   $condition = ['id' => array_keys($groups_id_filtred)];
 } else {
-   $condition = "1=0";
+   $condition = ['false'];
 }
 
-$rand = mt_rand();
-$_SESSION['glpicondition'][$rand] = $condition;
-
-$_POST["condition"] = $rand;
+$_POST["condition"] = Dropdown::addNewCondition($condition);
 
 if (!isset($_POST["entity_restrict"]) && $ticket_id) {
    $ticket = new Ticket();

@@ -42,7 +42,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
       $group = new Group();
       $rand  = mt_rand();
 
-      $gg_found = $this->find("groups_id_source='$groups_id'");
+      $gg_found = $this->find(['groups_id_source' => $groups_id]);
       $nb = count($gg_found);
 
       echo "<h2>Escalade</h2>";
@@ -54,7 +54,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
          }
 
          Dropdown::show('Group', ['name'      => 'groups_id_destination',
-                                  'condition' => "is_assign=1",
+                                  'condition' => ['is_assign' => 1],
                                   'used'      => $groups_id_used]);
 
          echo Html::hidden('groups_id_source', ['value' => $groups_id]);
@@ -127,7 +127,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
 
       //get all group which we can climb
       if (count($groups) > 0) {
-         $group_group = $this->find("groups_id_source IN (".implode(", ", $groups).")");
+         $group_group = $this->find(['groups_id_source' => $groups]);
          foreach ($group_group as $current_group) {
             $groups[$current_group['groups_id_destination']] = $current_group['groups_id_destination'];
          }
