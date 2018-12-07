@@ -24,9 +24,24 @@ class PluginEscaladeHistory extends CommonDBTM {
       }
    }
 
+   static function getLastHistoryForTicketAndGroup($tickets_id, $groups_id, $previous_groups_id) {
+      $history = new self();
+      $history->getFromDBByRequest(['ORDER'   => 'date_mod DESC',
+                                                 'LIMIT'      => 1,
+                                                 'WHERE' =>
+                                                 [
+                                                   'tickets_id' => $tickets_id,
+                                                   'groups_id' => [$groups_id, $previous_groups_id],
+                                                   'previous_groups_id' => [$groups_id, $previous_groups_id]
+                                                 ]
+                                               ]);
+
+      return $history;
+   }
+
    static function getFullHistory($tickets_id) {
       $history = new self();
-      return $history->find("tickets_id = $tickets_id", "date_mod DESC");
+      return $history->find(['tickets_id' => $tickets_id], "date_mod DESC");
    }
 
 
@@ -48,7 +63,7 @@ class PluginEscaladeHistory extends CommonDBTM {
       $group = new Group();
 
       $history = new self();
-      $found = $history->find("tickets_id = $tickets_id", "date_mod DESC");
+      $found = $history->find(['tickets_id' => $tickets_id], "date_mod DESC");
       $nb_histories = count($found);
 
       //remove first line (current assign)
