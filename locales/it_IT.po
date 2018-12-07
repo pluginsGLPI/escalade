@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-22 12:38+0000\n"
-"PO-Revision-Date: 2018-06-28 07:58+0000\n"
+"POT-Creation-Date: 2018-12-07 15:09+0000\n"
+"PO-Revision-Date: 2018-12-07 15:09+0000\n"
 "Last-Translator: Cédric Anne\n"
 "Language-Team: Italian (Italy) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/it_IT/)\n"
 "MIME-Version: 1.0\n"
@@ -32,11 +32,19 @@ msgstr "parametri mancanti"
 msgid "full assignation history"
 msgstr "Cronologia completa delle assegnazioni"
 
-#: hook.php:376
+#: hook.php:424
 msgid "Group concerned by the escalation"
 msgstr "Gruppo coinvolto nell'escalazione"
 
-#: hook.php:396 hook.php:414 inc/config.class.php:260 inc/user.class.php:129
+#: hook.php:442
+msgid "Number of escalations"
+msgstr ""
+
+#: hook.php:456
+msgid "Number of escalations between two groups"
+msgstr ""
+
+#: hook.php:469 hook.php:487 inc/config.class.php:260 inc/user.class.php:129
 msgid "Enable filtering on the groups assignment"
 msgstr "Abilitare il filtro per gruppi di assegnazione"
 
@@ -130,63 +138,63 @@ msgstr ""
 msgid "Solve date modification"
 msgstr ""
 
-#: inc/history.class.php:80
+#: inc/history.class.php:95
 msgid "Reassign the ticket to group"
 msgstr "Riassegna la chiamata al gruppo"
 
-#: inc/history.class.php:104
+#: inc/history.class.php:119
 msgid "View full history"
 msgstr "Vedere la cronologia completa"
 
-#: inc/history.class.php:151
+#: inc/history.class.php:166
 msgid "Tickets to follow (climbed)"
 msgstr "Chiamate da seguire (già scalate)"
 
-#: inc/history.class.php:165
+#: inc/history.class.php:180
 msgid "Tickets to close (climbed)"
 msgstr "Chiamate da chiudere (già scalate)"
 
-#: inc/ticket.class.php:102
+#: inc/ticket.class.php:101
 msgid "Solution provided, back to the group"
 msgstr "Soluzione fornita, rimandata al gruppo"
 
-#: inc/ticket.class.php:164
+#: inc/ticket.class.php:163
 msgid "Solution rejected, return to the group"
 msgstr "Soluzione rifiutata, rimandata al gruppo"
 
-#: inc/ticket.class.php:241
+#: inc/ticket.class.php:272
 msgid "escalated to the group"
 msgstr "Escalare al gruppo"
 
-#: inc/ticket.class.php:606
+#: inc/ticket.class.php:641
 msgid "Error : get old ticket"
 msgstr "Errore: recupera le chiamate vecchie"
 
-#: inc/ticket.class.php:622
+#: inc/ticket.class.php:657
 msgid "Error : adding new ticket"
 msgstr "Errore: aggiungi nuove chiamate"
 
-#: inc/ticket.class.php:634
+#: inc/ticket.class.php:669
 msgid "Error : adding link between the two tickets"
 msgstr "Errore: durante il collegamento tra due chiamate"
 
-#: inc/ticket.class.php:643 inc/ticket.class.php:684 inc/ticket.class.php:689
+#: inc/ticket.class.php:679 inc/ticket.class.php:720 inc/ticket.class.php:725
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Questa chiamata deriva dalla chiamata numero"
 
-#: inc/ticket.class.php:648
+#: inc/ticket.class.php:684
 msgid "Error : adding followups"
 msgstr "Error: durante l'aggiunta di un commento"
 
-#: inc/ticket.class.php:659
+#: inc/ticket.class.php:695
 msgid "Error : adding actors (user)"
 msgstr "Errore: durante l'aggiunta di attori (utenti)"
 
-#: inc/ticket.class.php:668
+#: inc/ticket.class.php:704
 msgid "Error : adding actors (group)"
 msgstr "Errore: durante l'aggiunta di attori (gruppi)"
 
-#: inc/ticket.class.php:678
+#: inc/ticket.class.php:714
 msgid "Error : adding documents"
 msgstr "Errore aggiungendo documenti"
 
