@@ -424,7 +424,7 @@ function plugin_escalade_getAddSearchOptions($itemtype) {
          $sopt[1881]['name']          = __("Group concerned by the escalation", "escalade");
          $sopt[1881]['forcegroupby']  = true;
          $sopt[1881]['massiveaction'] = false;
-         $sopt[1881]['condition']     = 'is_assign';
+         $sopt[1881]['condition']     = ['is_assign' => 1];
          $sopt[1881]['joinparams']    = [
             'beforejoin' => [
                'table'      => 'glpi_plugin_escalade_histories',
