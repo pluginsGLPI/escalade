@@ -269,7 +269,7 @@ class PluginEscaladeTicket {
             'tickets_id' => $tickets_id,
             'is_private' => true,
             'state'      => Planning::INFO,
-            'content'    => __("escalated to the group", "escalade") . " " . $group->getName()
+            'content'    => Toolbox::addslashes_deep(__("escalated to the group", "escalade") . " " . $group->getName())
          ]);
       }
 
