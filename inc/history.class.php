@@ -72,7 +72,7 @@ class PluginEscaladeHistory extends CommonDBTM {
       if ($full_history) {
          //show 1st group
          echo "<div class='escalade_active'>";
-         echo "&nbsp;<img src='".$CFG_GLPI['root_doc']."/pics/group.png' />&nbsp;";
+         echo "&nbsp;<i class='fas fa-users></i>'&nbsp;";
          if ($group->getFromDB($first_group['groups_id'])) {
             echo $group->getLink(true);
          }
@@ -98,7 +98,7 @@ class PluginEscaladeHistory extends CommonDBTM {
          }
 
          //group link
-         echo "&nbsp;<img src='".$CFG_GLPI['root_doc']."/pics/group.png' />&nbsp;";
+         echo "&nbsp;<i class='fas fa-users'></i>&nbsp;";
          if ($group->getFromDB($hline['groups_id'])) {
             echo self::showGroupLink($group, $full_history);
          }

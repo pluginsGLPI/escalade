@@ -10,7 +10,7 @@
 a.escalade_active, .escalade_active a {
    color:red !important;
 }
-a.escalade_history, .escalade_history a {
+a.escalade_history, .escalade_history a, .escalade_history i {
    color:grey !important;
 }
 .escalade a.up_a {
@@ -21,7 +21,7 @@ a.escalade_history, .escalade_history a {
    position: relative;
 }
 .escalade a.up_a:before {
-   font-family: FontAwesome;
+   font-family: 'Font Awesome 5 Free';
    position: absolute;
    content: '\f062';
    color:#D1D3D1;
