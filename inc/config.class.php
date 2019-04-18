@@ -277,7 +277,8 @@ class PluginEscaladeConfig extends CommonDBTM {
       $config->getFromDB(1);
       unset($config->fields['id']);
 
-      if (isset($config->fields['use_filter_assign_group'])
+      if (isset($_SESSION['glpiID'])
+          && isset($config->fields['use_filter_assign_group'])
           && $config->fields['use_filter_assign_group']) {
          $user = new PluginEscaladeUser();
          if ($user->getFromDBByCrit(['users_id' => $_SESSION['glpiID']])) {
