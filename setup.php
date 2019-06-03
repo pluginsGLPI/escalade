@@ -26,7 +26,7 @@
  --------------------------------------------------------------------------
  */
 
-define ('PLUGIN_ESCALADE_VERSION', '2.4.3');
+define ('PLUGIN_ESCALADE_VERSION', '2.4.4');
 
 // Minimal GLPI version, inclusive
 define("PLUGIN_ESCALADE_MIN_GLPI", "9.4");
