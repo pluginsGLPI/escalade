@@ -291,7 +291,7 @@ function plugin_escalade_install() {
 
          foreach ($h as $k => $details) {
             $DB->update(
-               $this->getTable(),
+               'glpi_plugin_escalade_histories',
                ['previous_groups_id' => $details['previous_groups_id'], 'counter' => $details['counter']],
                ['id' => $details['id']]
             );
