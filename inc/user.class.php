@@ -126,7 +126,7 @@ class PluginEscaladeUser extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'>";
       echo "<td><label>";
-      echo __("Enable filtering on the groups assignment", "escalade");
+      echo __("Bypass filtering on the groups assignment", "escalade");
       echo "&nbsp;";
       Dropdown::showYesNo("use_filter_assign_group", $this->fields["use_filter_assign_group"], -1, [
          'width' => '100%',
