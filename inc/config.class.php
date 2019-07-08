@@ -282,7 +282,10 @@ class PluginEscaladeConfig extends CommonDBTM {
           && $config->fields['use_filter_assign_group']) {
          $user = new PluginEscaladeUser();
          if ($user->getFromDBByCrit(['users_id' => $_SESSION['glpiID']])) {
-            $config->fields['use_filter_assign_group'] = $user->fields['use_filter_assign_group'];
+            //if a bypass is defined for user
+            if ($user->fields['use_filter_assign_group']) {
+               $config->fields['use_filter_assign_group'] = 0;
+            }
          }
       }
 
