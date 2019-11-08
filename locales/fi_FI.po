@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-07 15:09+0000\n"
+"POT-Creation-Date: 2019-11-08 14:52+0000\n"
 "PO-Revision-Date: 2019-01-22 09:31+0000\n"
 "Last-Translator: Markku Vepsä\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/fi_FI/)\n"
@@ -18,34 +18,58 @@ msgstr ""
 "Language: fi_FI\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: front/config.form.php:36 inc/user.class.php:168
-#: inc/group_group.class.php:24 setup.php:165
+#: js/cloneandlink_ticket.js.php:13
+msgid "Clone and link"
+msgstr "Kloonaa ja linkitä"
+
+#: inc/group_group.class.php:24 inc/user.class.php:168
+#: front/config.form.php:36 setup.php:165
 msgid "Escalation"
 msgstr "Eskalaatio"
 
-#: front/climb_group.php:6 ajax/assign_me.php:5
-msgid "missing parameters"
-msgstr "puuttuvat parametrit"
+#: inc/ticket.class.php:101
+msgid "Solution provided, back to the group"
+msgstr "Ratkaisu tarjottu, takaisin ryhmälle"
 
-#: front/popup_histories.php:4
-msgid "full assignation history"
-msgstr "täysi osoitushistoria"
+#: inc/ticket.class.php:163
+msgid "Solution rejected, return to the group"
+msgstr "Ratkaisu hylättiin, palautettu ryhmään"
 
-#: hook.php:424
-msgid "Group concerned by the escalation"
-msgstr "Ryhmä, jota eskalaatio koskee"
+#: inc/ticket.class.php:272
+msgid "escalated to the group"
+msgstr "eskaloitu ryhmälle"
 
-#: hook.php:442
-msgid "Number of escalations"
-msgstr "Eskalaatioiden määrä"
+#: inc/ticket.class.php:641
+msgid "Error : get old ticket"
+msgstr "Virhe : noudettaessa tikettiä"
 
-#: hook.php:456
-msgid "Number of escalations between two groups"
-msgstr "Kahden ryhmän välisten eskalaatioiden määrä"
+#: inc/ticket.class.php:657
+msgid "Error : adding new ticket"
+msgstr "Virhe : lisättäessä uutta tikettiä"
 
-#: hook.php:469 hook.php:487 inc/config.class.php:260 inc/user.class.php:129
-msgid "Enable filtering on the groups assignment"
-msgstr "Ota suodatus käyttöön ryhmiin osoituksessa"
+#: inc/ticket.class.php:669
+msgid "Error : adding link between the two tickets"
+msgstr "Virhe : lisättäessä linkkiä tikettien välille"
+
+#: inc/ticket.class.php:679 inc/ticket.class.php:720 inc/ticket.class.php:725
+msgid "This ticket has been cloned from the ticket num"
+msgstr "Tiketti kloonattu tiketistä nro"
+
+#: inc/ticket.class.php:684
+msgid "Error : adding followups"
+msgstr "Virhe : lisättäessä seurantaa"
+
+#: inc/ticket.class.php:695
+msgid "Error : adding actors (user)"
+msgstr "Virhe : lisättäessä toimijoita (käyttäjä)"
+
+#: inc/ticket.class.php:704
+msgid "Error : adding actors (group)"
+msgstr "Virhe : lisättäessä toimijoita (ryhmä)"
+
+#: inc/ticket.class.php:714
+msgid "Error : adding documents"
+msgstr "Virhe : lisättäessä asiakirjoja"
 
 #: inc/config.class.php:7
 msgid "Configuration Escalade plugin"
@@ -113,9 +137,29 @@ msgstr "Huomio: Tämä ominaisuus (luonnin osa) on vastaava kuin <a href='##link
 msgid "Display delete button"
 msgstr "Näytä poistopainike"
 
-#: inc/config.class.php:295
+#: inc/config.class.php:260 inc/user.class.php:129 hook.php:469 hook.php:487
+msgid "Enable filtering on the groups assignment"
+msgstr "Ota suodatus käyttöön ryhmiin osoituksessa"
+
+#: inc/config.class.php:296
 msgid "Don't change"
 msgstr "Älä muuta"
+
+#: inc/history.class.php:95
+msgid "Reassign the ticket to group"
+msgstr "Uudelleenosoita tiketti ryhmälle"
+
+#: inc/history.class.php:119
+msgid "View full history"
+msgstr "Näytä koko historia"
+
+#: inc/history.class.php:166
+msgid "Tickets to follow (climbed)"
+msgstr "Seurattavat tiketit (nostettu)"
+
+#: inc/history.class.php:180
+msgid "Tickets to close (climbed)"
+msgstr "Suljettavat tiketit (nostettu)"
 
 #: inc/notification.class.php:29
 msgid "Requester user of the ticket"
@@ -137,66 +181,22 @@ msgstr "Toimeksiantajan tehtävästä/muistutuksesta"
 msgid "Solve date modification"
 msgstr "Ratkaise päivämäärän muutos"
 
-#: inc/history.class.php:95
-msgid "Reassign the ticket to group"
-msgstr "Uudelleenosoita tiketti ryhmälle"
+#: front/climb_group.php:6 ajax/assign_me.php:5
+msgid "missing parameters"
+msgstr "puuttuvat parametrit"
 
-#: inc/history.class.php:119
-msgid "View full history"
-msgstr "Näytä koko historia"
+#: front/popup_histories.php:4
+msgid "full assignation history"
+msgstr "täysi osoitushistoria"
 
-#: inc/history.class.php:166
-msgid "Tickets to follow (climbed)"
-msgstr "Seurattavat tiketit (nostettu)"
+#: hook.php:424
+msgid "Group concerned by the escalation"
+msgstr "Ryhmä, jota eskalaatio koskee"
 
-#: inc/history.class.php:180
-msgid "Tickets to close (climbed)"
-msgstr "Suljettavat tiketit (nostettu)"
+#: hook.php:442
+msgid "Number of escalations"
+msgstr "Eskalaatioiden määrä"
 
-#: inc/ticket.class.php:101
-msgid "Solution provided, back to the group"
-msgstr "Ratkaisu tarjottu, takaisin ryhmälle"
-
-#: inc/ticket.class.php:163
-msgid "Solution rejected, return to the group"
-msgstr "Ratkaisu hylättiin, palautettu ryhmään"
-
-#: inc/ticket.class.php:272
-msgid "escalated to the group"
-msgstr "eskaloitu ryhmälle"
-
-#: inc/ticket.class.php:641
-msgid "Error : get old ticket"
-msgstr "Virhe : noudettaessa tikettiä"
-
-#: inc/ticket.class.php:657
-msgid "Error : adding new ticket"
-msgstr "Virhe : lisättäessä uutta tikettiä"
-
-#: inc/ticket.class.php:669
-msgid "Error : adding link between the two tickets"
-msgstr "Virhe : lisättäessä linkkiä tikettien välille"
-
-#: inc/ticket.class.php:679 inc/ticket.class.php:720 inc/ticket.class.php:725
-msgid "This ticket has been cloned from the ticket num"
-msgstr "Tiketti kloonattu tiketistä nro"
-
-#: inc/ticket.class.php:684
-msgid "Error : adding followups"
-msgstr "Virhe : lisättäessä seurantaa"
-
-#: inc/ticket.class.php:695
-msgid "Error : adding actors (user)"
-msgstr "Virhe : lisättäessä toimijoita (käyttäjä)"
-
-#: inc/ticket.class.php:704
-msgid "Error : adding actors (group)"
-msgstr "Virhe : lisättäessä toimijoita (ryhmä)"
-
-#: inc/ticket.class.php:714
-msgid "Error : adding documents"
-msgstr "Virhe : lisättäessä asiakirjoja"
-
-#: js/cloneandlink_ticket.js.php:13
-msgid "Clone and link"
-msgstr "Kloonaa ja linkitä"
+#: hook.php:456
+msgid "Number of escalations between two groups"
+msgstr "Kahden ryhmän välisten eskalaatioiden määrä"

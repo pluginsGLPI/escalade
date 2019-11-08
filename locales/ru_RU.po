@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-07 15:09+0000\n"
+"POT-Creation-Date: 2019-11-08 14:52+0000\n"
 "PO-Revision-Date: 2018-12-07 15:09+0000\n"
 "Last-Translator: Cédric Anne\n"
 "Language-Team: Russian (Russia) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/ru_RU/)\n"
@@ -21,34 +21,58 @@ msgstr ""
 "Language: ru_RU\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: front/config.form.php:36 inc/user.class.php:168
-#: inc/group_group.class.php:24 setup.php:165
+#: js/cloneandlink_ticket.js.php:13
+msgid "Clone and link"
+msgstr "Клонировать и связать"
+
+#: inc/group_group.class.php:24 inc/user.class.php:168
+#: front/config.form.php:36 setup.php:165
 msgid "Escalation"
 msgstr "Переназначение"
 
-#: front/climb_group.php:6 ajax/assign_me.php:5
-msgid "missing parameters"
-msgstr "отсутсвуют параметры"
+#: inc/ticket.class.php:101
+msgid "Solution provided, back to the group"
+msgstr "Решение найдено, возврат к группе"
 
-#: front/popup_histories.php:4
-msgid "full assignation history"
-msgstr "Полная история назначений"
+#: inc/ticket.class.php:163
+msgid "Solution rejected, return to the group"
+msgstr "Решение отклонено, возврат к группе"
 
-#: hook.php:424
-msgid "Group concerned by the escalation"
-msgstr "Группа, назначенная при переназначении"
+#: inc/ticket.class.php:272
+msgid "escalated to the group"
+msgstr "Назначена группе"
 
-#: hook.php:442
-msgid "Number of escalations"
-msgstr ""
+#: inc/ticket.class.php:641
+msgid "Error : get old ticket"
+msgstr "Ошибка получения данных заявки"
 
-#: hook.php:456
-msgid "Number of escalations between two groups"
-msgstr ""
+#: inc/ticket.class.php:657
+msgid "Error : adding new ticket"
+msgstr "Ошибка добавления заявки"
 
-#: hook.php:469 hook.php:487 inc/config.class.php:260 inc/user.class.php:129
-msgid "Enable filtering on the groups assignment"
-msgstr "Разрешить фильтрацию по назначенным группам"
+#: inc/ticket.class.php:669
+msgid "Error : adding link between the two tickets"
+msgstr "Ошибка связывания заявок"
+
+#: inc/ticket.class.php:679 inc/ticket.class.php:720 inc/ticket.class.php:725
+msgid "This ticket has been cloned from the ticket num"
+msgstr "Заявка создана из другой, №"
+
+#: inc/ticket.class.php:684
+msgid "Error : adding followups"
+msgstr "Ошибка добавления комментария"
+
+#: inc/ticket.class.php:695
+msgid "Error : adding actors (user)"
+msgstr "Ошибка добавления пользователя"
+
+#: inc/ticket.class.php:704
+msgid "Error : adding actors (group)"
+msgstr "Ошибка добавления группы"
+
+#: inc/ticket.class.php:714
+msgid "Error : adding documents"
+msgstr "Ошибка добавления документа"
 
 #: inc/config.class.php:7
 msgid "Configuration Escalade plugin"
@@ -116,9 +140,29 @@ msgstr "Обратите внимание: эта функциональност
 msgid "Display delete button"
 msgstr ""
 
-#: inc/config.class.php:295
+#: inc/config.class.php:260 inc/user.class.php:129 hook.php:469 hook.php:487
+msgid "Enable filtering on the groups assignment"
+msgstr "Разрешить фильтрацию по назначенным группам"
+
+#: inc/config.class.php:296
 msgid "Don't change"
 msgstr "Не изменять"
+
+#: inc/history.class.php:95
+msgid "Reassign the ticket to group"
+msgstr "Переназначить заявку группе"
+
+#: inc/history.class.php:119
+msgid "View full history"
+msgstr "Просмотреть полную историю"
+
+#: inc/history.class.php:166
+msgid "Tickets to follow (climbed)"
+msgstr "Заявки к просмотру"
+
+#: inc/history.class.php:180
+msgid "Tickets to close (climbed)"
+msgstr "Заявки к закрытию"
 
 #: inc/notification.class.php:29
 msgid "Requester user of the ticket"
@@ -140,66 +184,22 @@ msgstr ""
 msgid "Solve date modification"
 msgstr ""
 
-#: inc/history.class.php:95
-msgid "Reassign the ticket to group"
-msgstr "Переназначить заявку группе"
+#: front/climb_group.php:6 ajax/assign_me.php:5
+msgid "missing parameters"
+msgstr "отсутсвуют параметры"
 
-#: inc/history.class.php:119
-msgid "View full history"
-msgstr "Просмотреть полную историю"
+#: front/popup_histories.php:4
+msgid "full assignation history"
+msgstr "Полная история назначений"
 
-#: inc/history.class.php:166
-msgid "Tickets to follow (climbed)"
-msgstr "Заявки к просмотру"
+#: hook.php:424
+msgid "Group concerned by the escalation"
+msgstr "Группа, назначенная при переназначении"
 
-#: inc/history.class.php:180
-msgid "Tickets to close (climbed)"
-msgstr "Заявки к закрытию"
+#: hook.php:442
+msgid "Number of escalations"
+msgstr ""
 
-#: inc/ticket.class.php:101
-msgid "Solution provided, back to the group"
-msgstr "Решение найдено, возврат к группе"
-
-#: inc/ticket.class.php:163
-msgid "Solution rejected, return to the group"
-msgstr "Решение отклонено, возврат к группе"
-
-#: inc/ticket.class.php:272
-msgid "escalated to the group"
-msgstr "Назначена группе"
-
-#: inc/ticket.class.php:641
-msgid "Error : get old ticket"
-msgstr "Ошибка получения данных заявки"
-
-#: inc/ticket.class.php:657
-msgid "Error : adding new ticket"
-msgstr "Ошибка добавления заявки"
-
-#: inc/ticket.class.php:669
-msgid "Error : adding link between the two tickets"
-msgstr "Ошибка связывания заявок"
-
-#: inc/ticket.class.php:679 inc/ticket.class.php:720 inc/ticket.class.php:725
-msgid "This ticket has been cloned from the ticket num"
-msgstr "Заявка создана из другой, №"
-
-#: inc/ticket.class.php:684
-msgid "Error : adding followups"
-msgstr "Ошибка добавления комментария"
-
-#: inc/ticket.class.php:695
-msgid "Error : adding actors (user)"
-msgstr "Ошибка добавления пользователя"
-
-#: inc/ticket.class.php:704
-msgid "Error : adding actors (group)"
-msgstr "Ошибка добавления группы"
-
-#: inc/ticket.class.php:714
-msgid "Error : adding documents"
-msgstr "Ошибка добавления документа"
-
-#: js/cloneandlink_ticket.js.php:13
-msgid "Clone and link"
-msgstr "Клонировать и связать"
+#: hook.php:456
+msgid "Number of escalations between two groups"
+msgstr ""

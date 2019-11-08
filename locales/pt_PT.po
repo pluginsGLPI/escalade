@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-07 15:09+0000\n"
+"POT-Creation-Date: 2019-11-08 14:52+0000\n"
 "PO-Revision-Date: 2019-02-26 15:13+0000\n"
 "Last-Translator: Rui Melo <viper5000pt@gmail.com>\n"
 "Language-Team: Portuguese (Portugal) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/pt_PT/)\n"
@@ -17,34 +17,58 @@ msgstr ""
 "Language: pt_PT\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: front/config.form.php:36 inc/user.class.php:168
-#: inc/group_group.class.php:24 setup.php:165
+#: js/cloneandlink_ticket.js.php:13
+msgid "Clone and link"
+msgstr "Clonar e ligar"
+
+#: inc/group_group.class.php:24 inc/user.class.php:168
+#: front/config.form.php:36 setup.php:165
 msgid "Escalation"
 msgstr "Escalação"
 
-#: front/climb_group.php:6 ajax/assign_me.php:5
-msgid "missing parameters"
-msgstr "Parâmetros ausentes"
+#: inc/ticket.class.php:101
+msgid "Solution provided, back to the group"
+msgstr "Solução fornecida, volta para o grupo"
 
-#: front/popup_histories.php:4
-msgid "full assignation history"
-msgstr "histórico completo de designação"
+#: inc/ticket.class.php:163
+msgid "Solution rejected, return to the group"
+msgstr "Solução rejeitada, retorno ao grupo"
 
-#: hook.php:424
-msgid "Group concerned by the escalation"
-msgstr "Grupo preocupado com a escalada"
+#: inc/ticket.class.php:272
+msgid "escalated to the group"
+msgstr "Escalado para o grupo"
 
-#: hook.php:442
-msgid "Number of escalations"
-msgstr "Número de escaladas"
+#: inc/ticket.class.php:641
+msgid "Error : get old ticket"
+msgstr "Erro: comprar passagem velha"
 
-#: hook.php:456
-msgid "Number of escalations between two groups"
-msgstr "Número de escaladas entre dois grupos"
+#: inc/ticket.class.php:657
+msgid "Error : adding new ticket"
+msgstr "Erro: adicionando novo ticket"
 
-#: hook.php:469 hook.php:487 inc/config.class.php:260 inc/user.class.php:129
-msgid "Enable filtering on the groups assignment"
-msgstr "Ativar filtragem na atribuição de grupos"
+#: inc/ticket.class.php:669
+msgid "Error : adding link between the two tickets"
+msgstr "Erro: adição de ligação entre os dois ingressos"
+
+#: inc/ticket.class.php:679 inc/ticket.class.php:720 inc/ticket.class.php:725
+msgid "This ticket has been cloned from the ticket num"
+msgstr "Este bilhete foi clonado do bilhete num"
+
+#: inc/ticket.class.php:684
+msgid "Error : adding followups"
+msgstr "Erro: adicionando followups"
+
+#: inc/ticket.class.php:695
+msgid "Error : adding actors (user)"
+msgstr "Erro: adição de atores (usuário)"
+
+#: inc/ticket.class.php:704
+msgid "Error : adding actors (group)"
+msgstr "Erro: adição de atores (grupo)"
+
+#: inc/ticket.class.php:714
+msgid "Error : adding documents"
+msgstr "Erro: adição documentos"
 
 #: inc/config.class.php:7
 msgid "Configuration Escalade plugin"
@@ -112,9 +136,29 @@ msgstr "Nota: Este recurso (parte de criação) é duplicado com o plugin <a hre
 msgid "Display delete button"
 msgstr "Exibir o botão de exclusão"
 
-#: inc/config.class.php:295
+#: inc/config.class.php:260 inc/user.class.php:129 hook.php:469 hook.php:487
+msgid "Enable filtering on the groups assignment"
+msgstr "Ativar filtragem na atribuição de grupos"
+
+#: inc/config.class.php:296
 msgid "Don't change"
 msgstr "Não alterar"
+
+#: inc/history.class.php:95
+msgid "Reassign the ticket to group"
+msgstr "Reatribuir o ticket ao grupo"
+
+#: inc/history.class.php:119
+msgid "View full history"
+msgstr "Ver histórico completo"
+
+#: inc/history.class.php:166
+msgid "Tickets to follow (climbed)"
+msgstr "Bilhetes a seguir (subiu)"
+
+#: inc/history.class.php:180
+msgid "Tickets to close (climbed)"
+msgstr "bilhetes para fechar (subiu)"
 
 #: inc/notification.class.php:29
 msgid "Requester user of the ticket"
@@ -136,66 +180,22 @@ msgstr "Solicitar usuário da tarefa / lembrete"
 msgid "Solve date modification"
 msgstr "Resolver modificação de data"
 
-#: inc/history.class.php:95
-msgid "Reassign the ticket to group"
-msgstr "Reatribuir o ticket ao grupo"
+#: front/climb_group.php:6 ajax/assign_me.php:5
+msgid "missing parameters"
+msgstr "Parâmetros ausentes"
 
-#: inc/history.class.php:119
-msgid "View full history"
-msgstr "Ver histórico completo"
+#: front/popup_histories.php:4
+msgid "full assignation history"
+msgstr "histórico completo de designação"
 
-#: inc/history.class.php:166
-msgid "Tickets to follow (climbed)"
-msgstr "Bilhetes a seguir (subiu)"
+#: hook.php:424
+msgid "Group concerned by the escalation"
+msgstr "Grupo preocupado com a escalada"
 
-#: inc/history.class.php:180
-msgid "Tickets to close (climbed)"
-msgstr "bilhetes para fechar (subiu)"
+#: hook.php:442
+msgid "Number of escalations"
+msgstr "Número de escaladas"
 
-#: inc/ticket.class.php:101
-msgid "Solution provided, back to the group"
-msgstr "Solução fornecida, volta para o grupo"
-
-#: inc/ticket.class.php:163
-msgid "Solution rejected, return to the group"
-msgstr "Solução rejeitada, retorno ao grupo"
-
-#: inc/ticket.class.php:272
-msgid "escalated to the group"
-msgstr "Escalado para o grupo"
-
-#: inc/ticket.class.php:641
-msgid "Error : get old ticket"
-msgstr "Erro: comprar passagem velha"
-
-#: inc/ticket.class.php:657
-msgid "Error : adding new ticket"
-msgstr "Erro: adicionando novo ticket"
-
-#: inc/ticket.class.php:669
-msgid "Error : adding link between the two tickets"
-msgstr "Erro: adição de ligação entre os dois ingressos"
-
-#: inc/ticket.class.php:679 inc/ticket.class.php:720 inc/ticket.class.php:725
-msgid "This ticket has been cloned from the ticket num"
-msgstr "Este bilhete foi clonado do bilhete num"
-
-#: inc/ticket.class.php:684
-msgid "Error : adding followups"
-msgstr "Erro: adicionando followups"
-
-#: inc/ticket.class.php:695
-msgid "Error : adding actors (user)"
-msgstr "Erro: adição de atores (usuário)"
-
-#: inc/ticket.class.php:704
-msgid "Error : adding actors (group)"
-msgstr "Erro: adição de atores (grupo)"
-
-#: inc/ticket.class.php:714
-msgid "Error : adding documents"
-msgstr "Erro: adição documentos"
-
-#: js/cloneandlink_ticket.js.php:13
-msgid "Clone and link"
-msgstr "Clonar e ligar"
+#: hook.php:456
+msgid "Number of escalations between two groups"
+msgstr "Número de escaladas entre dois grupos"

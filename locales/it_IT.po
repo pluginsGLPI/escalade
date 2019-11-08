@@ -4,14 +4,14 @@
 # 
 # Translators:
 # Cédric Anne, 2018
-# Giudy <spam@habilitas.it>, 2016-2017
+# Giudy <spam@habilitas.it>, 2016-2017,2019
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-07 15:09+0000\n"
-"PO-Revision-Date: 2018-12-07 15:09+0000\n"
-"Last-Translator: Cédric Anne\n"
+"POT-Creation-Date: 2019-11-08 14:52+0000\n"
+"PO-Revision-Date: 2019-10-08 09:29+0000\n"
+"Last-Translator: Giudy <spam@habilitas.it>\n"
 "Language-Team: Italian (Italy) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/it_IT/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,38 +19,62 @@ msgstr ""
 "Language: it_IT\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: front/config.form.php:36 inc/user.class.php:168
-#: inc/group_group.class.php:24 setup.php:165
+#: js/cloneandlink_ticket.js.php:13
+msgid "Clone and link"
+msgstr "Clona e collega"
+
+#: inc/group_group.class.php:24 inc/user.class.php:168
+#: front/config.form.php:36 setup.php:165
 msgid "Escalation"
-msgstr "Escalazione"
+msgstr "Escalation"
 
-#: front/climb_group.php:6 ajax/assign_me.php:5
-msgid "missing parameters"
-msgstr "parametri mancanti"
+#: inc/ticket.class.php:101
+msgid "Solution provided, back to the group"
+msgstr "Soluzione fornita, rimandata al gruppo"
 
-#: front/popup_histories.php:4
-msgid "full assignation history"
-msgstr "Cronologia completa delle assegnazioni"
+#: inc/ticket.class.php:163
+msgid "Solution rejected, return to the group"
+msgstr "Soluzione rifiutata, rimandata al gruppo"
 
-#: hook.php:424
-msgid "Group concerned by the escalation"
-msgstr "Gruppo coinvolto nell'escalazione"
+#: inc/ticket.class.php:272
+msgid "escalated to the group"
+msgstr "Escalation al gruppo"
 
-#: hook.php:442
-msgid "Number of escalations"
-msgstr ""
+#: inc/ticket.class.php:641
+msgid "Error : get old ticket"
+msgstr "Errore: recupera le chiamate vecchie"
 
-#: hook.php:456
-msgid "Number of escalations between two groups"
-msgstr ""
+#: inc/ticket.class.php:657
+msgid "Error : adding new ticket"
+msgstr "Errore: aggiungi nuove chiamate"
 
-#: hook.php:469 hook.php:487 inc/config.class.php:260 inc/user.class.php:129
-msgid "Enable filtering on the groups assignment"
-msgstr "Abilitare il filtro per gruppi di assegnazione"
+#: inc/ticket.class.php:669
+msgid "Error : adding link between the two tickets"
+msgstr "Errore: durante il collegamento tra due chiamate"
+
+#: inc/ticket.class.php:679 inc/ticket.class.php:720 inc/ticket.class.php:725
+msgid "This ticket has been cloned from the ticket num"
+msgstr "Questa chiamata deriva dalla chiamata numero"
+
+#: inc/ticket.class.php:684
+msgid "Error : adding followups"
+msgstr "Error: durante l'aggiunta di un commento"
+
+#: inc/ticket.class.php:695
+msgid "Error : adding actors (user)"
+msgstr "Errore: durante l'aggiunta di attori (utenti)"
+
+#: inc/ticket.class.php:704
+msgid "Error : adding actors (group)"
+msgstr "Errore: durante l'aggiunta di attori (gruppi)"
+
+#: inc/ticket.class.php:714
+msgid "Error : adding documents"
+msgstr "Errore aggiungendo documenti"
 
 #: inc/config.class.php:7
 msgid "Configuration Escalade plugin"
-msgstr "Configurazione del plugin di escalazione"
+msgstr "Configurazione del plugin di Escalation"
 
 #: inc/config.class.php:22
 msgid "Remove old assign group on new group assign"
@@ -62,15 +86,15 @@ msgstr "Mostra la cronologia dei gruppi assegnatari visulamente"
 
 #: inc/config.class.php:56
 msgid "Escalation history in tasks"
-msgstr "Cronologia delle escalazioni nelle attività"
+msgstr "Cronologia delle escalation nelle attività"
 
 #: inc/config.class.php:65
 msgid "Remove technician(s) on escalation"
-msgstr "Rimuovere i tecnici(o) all'escalazione"
+msgstr "Rimuovere i tecnici(o) dall'escalation"
 
 #: inc/config.class.php:77
 msgid "Ticket status after an escalation"
-msgstr "Stato della chiamata dopo un'escalazione"
+msgstr "Stato della chiamata dopo un'escalation"
 
 #: inc/config.class.php:85
 msgid "Assign ticket to initial group on solve ticket"
@@ -112,31 +136,15 @@ msgstr "Nota: Questa funzione (creazione) è realizzata anche dal plugin <a href
 
 #: inc/config.class.php:205
 msgid "Display delete button"
-msgstr ""
+msgstr "Mostra il bottone di cancellazione"
 
-#: inc/config.class.php:295
+#: inc/config.class.php:260 inc/user.class.php:129 hook.php:469 hook.php:487
+msgid "Enable filtering on the groups assignment"
+msgstr "Abilitare il filtro per gruppi di assegnazione"
+
+#: inc/config.class.php:296
 msgid "Don't change"
 msgstr "Non cambiare"
-
-#: inc/notification.class.php:29
-msgid "Requester user of the ticket"
-msgstr ""
-
-#: inc/notification.class.php:51
-msgid "Group escalated in the ticket"
-msgstr ""
-
-#: inc/notification.class.php:53
-msgid "Manager of the group escalated in the ticket"
-msgstr ""
-
-#: inc/notification.class.php:57
-msgid "Requester user of the task/reminder"
-msgstr ""
-
-#: inc/notification.class.php:187
-msgid "Solve date modification"
-msgstr ""
 
 #: inc/history.class.php:95
 msgid "Reassign the ticket to group"
@@ -154,50 +162,42 @@ msgstr "Chiamate da seguire (già scalate)"
 msgid "Tickets to close (climbed)"
 msgstr "Chiamate da chiudere (già scalate)"
 
-#: inc/ticket.class.php:101
-msgid "Solution provided, back to the group"
-msgstr "Soluzione fornita, rimandata al gruppo"
+#: inc/notification.class.php:29
+msgid "Requester user of the ticket"
+msgstr "Utente richiedente nel ticket"
 
-#: inc/ticket.class.php:163
-msgid "Solution rejected, return to the group"
-msgstr "Soluzione rifiutata, rimandata al gruppo"
+#: inc/notification.class.php:51
+msgid "Group escalated in the ticket"
+msgstr "Gruppo oggetto dell'escalation nel ticket"
 
-#: inc/ticket.class.php:272
-msgid "escalated to the group"
-msgstr "Escalare al gruppo"
+#: inc/notification.class.php:53
+msgid "Manager of the group escalated in the ticket"
+msgstr "Manager del gruppo oggetto di escalation nel ticket"
 
-#: inc/ticket.class.php:641
-msgid "Error : get old ticket"
-msgstr "Errore: recupera le chiamate vecchie"
+#: inc/notification.class.php:57
+msgid "Requester user of the task/reminder"
+msgstr "Utente richiedente nel compito/promemoria"
 
-#: inc/ticket.class.php:657
-msgid "Error : adding new ticket"
-msgstr "Errore: aggiungi nuove chiamate"
+#: inc/notification.class.php:187
+msgid "Solve date modification"
+msgstr "Modifica data di risoluzione"
 
-#: inc/ticket.class.php:669
-msgid "Error : adding link between the two tickets"
-msgstr "Errore: durante il collegamento tra due chiamate"
+#: front/climb_group.php:6 ajax/assign_me.php:5
+msgid "missing parameters"
+msgstr "parametri mancanti"
 
-#: inc/ticket.class.php:679 inc/ticket.class.php:720 inc/ticket.class.php:725
-msgid "This ticket has been cloned from the ticket num"
-msgstr "Questa chiamata deriva dalla chiamata numero"
+#: front/popup_histories.php:4
+msgid "full assignation history"
+msgstr "Cronologia completa delle assegnazioni"
 
-#: inc/ticket.class.php:684
-msgid "Error : adding followups"
-msgstr "Error: durante l'aggiunta di un commento"
+#: hook.php:424
+msgid "Group concerned by the escalation"
+msgstr "Gruppo coinvolto nell'escalazione"
 
-#: inc/ticket.class.php:695
-msgid "Error : adding actors (user)"
-msgstr "Errore: durante l'aggiunta di attori (utenti)"
+#: hook.php:442
+msgid "Number of escalations"
+msgstr "Numero di escalation"
 
-#: inc/ticket.class.php:704
-msgid "Error : adding actors (group)"
-msgstr "Errore: durante l'aggiunta di attori (gruppi)"
-
-#: inc/ticket.class.php:714
-msgid "Error : adding documents"
-msgstr "Errore aggiungendo documenti"
-
-#: js/cloneandlink_ticket.js.php:13
-msgid "Clone and link"
-msgstr "Clona e collega"
+#: hook.php:456
+msgid "Number of escalations between two groups"
+msgstr "Numero di escalation tra due gruppi"

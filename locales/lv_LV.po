@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-07 15:09+0000\n"
+"POT-Creation-Date: 2019-11-08 14:52+0000\n"
 "PO-Revision-Date: 2018-12-11 06:36+0000\n"
 "Last-Translator: Andrejs <andrew.k2@gmail.com>\n"
 "Language-Team: Latvian (Latvia) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/lv_LV/)\n"
@@ -19,34 +19,58 @@ msgstr ""
 "Language: lv_LV\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
 
-#: front/config.form.php:36 inc/user.class.php:168
-#: inc/group_group.class.php:24 setup.php:165
+#: js/cloneandlink_ticket.js.php:13
+msgid "Clone and link"
+msgstr "Klonēt un saistīt"
+
+#: inc/group_group.class.php:24 inc/user.class.php:168
+#: front/config.form.php:36 setup.php:165
 msgid "Escalation"
 msgstr "Eskalācija"
 
-#: front/climb_group.php:6 ajax/assign_me.php:5
-msgid "missing parameters"
-msgstr "trūkstoši parametri"
+#: inc/ticket.class.php:101
+msgid "Solution provided, back to the group"
+msgstr "Atrisināts, atpakaļ pie grupas"
 
-#: front/popup_histories.php:4
-msgid "full assignation history"
-msgstr "pilna piešķiršanas vēsture"
+#: inc/ticket.class.php:163
+msgid "Solution rejected, return to the group"
+msgstr "Risinājums noraidīts, atgriezt grupai"
 
-#: hook.php:424
-msgid "Group concerned by the escalation"
-msgstr "Grupa saistīta ar eskalācijas procedūru"
+#: inc/ticket.class.php:272
+msgid "escalated to the group"
+msgstr "nodots grupai"
 
-#: hook.php:442
-msgid "Number of escalations"
-msgstr "Eskalāciju skaits"
+#: inc/ticket.class.php:641
+msgid "Error : get old ticket"
+msgstr "Kļūda : iegūt veco pieteikumu"
 
-#: hook.php:456
-msgid "Number of escalations between two groups"
-msgstr "Eskalāciju skaits starp divām grupām"
+#: inc/ticket.class.php:657
+msgid "Error : adding new ticket"
+msgstr "Kļūda : pievienojot jauno pieteikumu"
 
-#: hook.php:469 hook.php:487 inc/config.class.php:260 inc/user.class.php:129
-msgid "Enable filtering on the groups assignment"
-msgstr "Iespējot filtrēšanu grupu piešķiršanā"
+#: inc/ticket.class.php:669
+msgid "Error : adding link between the two tickets"
+msgstr "Kļūda : pievienojot sasaisti starp diviem pieteikumiem"
+
+#: inc/ticket.class.php:679 inc/ticket.class.php:720 inc/ticket.class.php:725
+msgid "This ticket has been cloned from the ticket num"
+msgstr "Šīs pieteikums ir no pieteikuma num"
+
+#: inc/ticket.class.php:684
+msgid "Error : adding followups"
+msgstr "Kļūda : pievienojot sekojumus"
+
+#: inc/ticket.class.php:695
+msgid "Error : adding actors (user)"
+msgstr "Kļūda : pievienojot dalībniekus (lietotājus)"
+
+#: inc/ticket.class.php:704
+msgid "Error : adding actors (group)"
+msgstr "Kļūda : pievienojot dalībniekus (grupas)"
+
+#: inc/ticket.class.php:714
+msgid "Error : adding documents"
+msgstr "Kļūda : pievienojot dokumentus"
 
 #: inc/config.class.php:7
 msgid "Configuration Escalade plugin"
@@ -114,9 +138,29 @@ msgstr "Piezīme: Šī iespēja (izveidošanas daļa) ir dublikāts ar papildspr
 msgid "Display delete button"
 msgstr "Parādīt dzēšanas pogu"
 
-#: inc/config.class.php:295
+#: inc/config.class.php:260 inc/user.class.php:129 hook.php:469 hook.php:487
+msgid "Enable filtering on the groups assignment"
+msgstr "Iespējot filtrēšanu grupu piešķiršanā"
+
+#: inc/config.class.php:296
 msgid "Don't change"
 msgstr "Nemainīt"
+
+#: inc/history.class.php:95
+msgid "Reassign the ticket to group"
+msgstr "Piešķirt pieteikumu grupai atkārtoti"
+
+#: inc/history.class.php:119
+msgid "View full history"
+msgstr "Parādīt pilno vēsturi"
+
+#: inc/history.class.php:166
+msgid "Tickets to follow (climbed)"
+msgstr "Pieteikumi kuriem sekot (uz augšu)"
+
+#: inc/history.class.php:180
+msgid "Tickets to close (climbed)"
+msgstr "Pieteikumi aizvēršanai (uz augšu)"
 
 #: inc/notification.class.php:29
 msgid "Requester user of the ticket"
@@ -138,66 +182,22 @@ msgstr "Pieteikuma/atgādinājuma pieteicējs"
 msgid "Solve date modification"
 msgstr "Risinājuma rediģēšanas datums"
 
-#: inc/history.class.php:95
-msgid "Reassign the ticket to group"
-msgstr "Piešķirt pieteikumu grupai atkārtoti"
+#: front/climb_group.php:6 ajax/assign_me.php:5
+msgid "missing parameters"
+msgstr "trūkstoši parametri"
 
-#: inc/history.class.php:119
-msgid "View full history"
-msgstr "Parādīt pilno vēsturi"
+#: front/popup_histories.php:4
+msgid "full assignation history"
+msgstr "pilna piešķiršanas vēsture"
 
-#: inc/history.class.php:166
-msgid "Tickets to follow (climbed)"
-msgstr "Pieteikumi kuriem sekot (uz augšu)"
+#: hook.php:424
+msgid "Group concerned by the escalation"
+msgstr "Grupa saistīta ar eskalācijas procedūru"
 
-#: inc/history.class.php:180
-msgid "Tickets to close (climbed)"
-msgstr "Pieteikumi aizvēršanai (uz augšu)"
+#: hook.php:442
+msgid "Number of escalations"
+msgstr "Eskalāciju skaits"
 
-#: inc/ticket.class.php:101
-msgid "Solution provided, back to the group"
-msgstr "Atrisināts, atpakaļ pie grupas"
-
-#: inc/ticket.class.php:163
-msgid "Solution rejected, return to the group"
-msgstr "Risinājums noraidīts, atgriezt grupai"
-
-#: inc/ticket.class.php:272
-msgid "escalated to the group"
-msgstr "nodots grupai"
-
-#: inc/ticket.class.php:641
-msgid "Error : get old ticket"
-msgstr "Kļūda : iegūt veco pieteikumu"
-
-#: inc/ticket.class.php:657
-msgid "Error : adding new ticket"
-msgstr "Kļūda : pievienojot jauno pieteikumu"
-
-#: inc/ticket.class.php:669
-msgid "Error : adding link between the two tickets"
-msgstr "Kļūda : pievienojot sasaisti starp diviem pieteikumiem"
-
-#: inc/ticket.class.php:679 inc/ticket.class.php:720 inc/ticket.class.php:725
-msgid "This ticket has been cloned from the ticket num"
-msgstr "Šīs pieteikums ir no pieteikuma num"
-
-#: inc/ticket.class.php:684
-msgid "Error : adding followups"
-msgstr "Kļūda : pievienojot sekojumus"
-
-#: inc/ticket.class.php:695
-msgid "Error : adding actors (user)"
-msgstr "Kļūda : pievienojot dalībniekus (lietotājus)"
-
-#: inc/ticket.class.php:704
-msgid "Error : adding actors (group)"
-msgstr "Kļūda : pievienojot dalībniekus (grupas)"
-
-#: inc/ticket.class.php:714
-msgid "Error : adding documents"
-msgstr "Kļūda : pievienojot dokumentus"
-
-#: js/cloneandlink_ticket.js.php:13
-msgid "Clone and link"
-msgstr "Klonēt un saistīt"
+#: hook.php:456
+msgid "Number of escalations between two groups"
+msgstr "Eskalāciju skaits starp divām grupām"

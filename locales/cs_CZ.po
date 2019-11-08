@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-07 15:09+0000\n"
+"POT-Creation-Date: 2019-11-08 14:52+0000\n"
 "PO-Revision-Date: 2018-12-10 06:54+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech (Czech Republic) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/cs_CZ/)\n"
@@ -20,34 +20,58 @@ msgstr ""
 "Language: cs_CZ\n"
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 
-#: front/config.form.php:36 inc/user.class.php:168
-#: inc/group_group.class.php:24 setup.php:165
+#: js/cloneandlink_ticket.js.php:13
+msgid "Clone and link"
+msgstr "Kopírovat a přiřadit"
+
+#: inc/group_group.class.php:24 inc/user.class.php:168
+#: front/config.form.php:36 setup.php:165
 msgid "Escalation"
 msgstr "Eskalace"
 
-#: front/climb_group.php:6 ajax/assign_me.php:5
-msgid "missing parameters"
-msgstr "chybějící parametry"
+#: inc/ticket.class.php:101
+msgid "Solution provided, back to the group"
+msgstr "Řešení poskytnuto, zpět ke skupině"
 
-#: front/popup_histories.php:4
-msgid "full assignation history"
-msgstr "úplná historie přiřazení"
+#: inc/ticket.class.php:163
+msgid "Solution rejected, return to the group"
+msgstr "Řešení odmítnuto, vráceno skupině"
 
-#: hook.php:424
-msgid "Group concerned by the escalation"
-msgstr "Skupina které se eskalace týká"
+#: inc/ticket.class.php:272
+msgid "escalated to the group"
+msgstr "eskalováno na skupinu"
 
-#: hook.php:442
-msgid "Number of escalations"
-msgstr "Počet eskalací"
+#: inc/ticket.class.php:641
+msgid "Error : get old ticket"
+msgstr "Chyba: získání původního požadavku"
 
-#: hook.php:456
-msgid "Number of escalations between two groups"
-msgstr "Počet eskalací mezi dvěma skupinami"
+#: inc/ticket.class.php:657
+msgid "Error : adding new ticket"
+msgstr "Chyba: přidávání nového požadavku"
 
-#: hook.php:469 hook.php:487 inc/config.class.php:260 inc/user.class.php:129
-msgid "Enable filtering on the groups assignment"
-msgstr "Filtrovat dle přiřazení skupin"
+#: inc/ticket.class.php:669
+msgid "Error : adding link between the two tickets"
+msgstr "Chyba: přidávání propojení mezi dvěma požadavky"
+
+#: inc/ticket.class.php:679 inc/ticket.class.php:720 inc/ticket.class.php:725
+msgid "This ticket has been cloned from the ticket num"
+msgstr "Tento požadavek byl z požadavku č."
+
+#: inc/ticket.class.php:684
+msgid "Error : adding followups"
+msgstr "Chyba: přidávání doplňující zprávy"
+
+#: inc/ticket.class.php:695
+msgid "Error : adding actors (user)"
+msgstr "Chyba: přidávání řešitelů (uživatel)"
+
+#: inc/ticket.class.php:704
+msgid "Error : adding actors (group)"
+msgstr "Chyba: přidávání řešitelů (skupina)"
+
+#: inc/ticket.class.php:714
+msgid "Error : adding documents"
+msgstr "Chyba: přidávání dokumentů"
 
 #: inc/config.class.php:7
 msgid "Configuration Escalade plugin"
@@ -115,9 +139,29 @@ msgstr "Pozn.: Tato funkce (část vytvoření) je duplicitní k zásuvnému mod
 msgid "Display delete button"
 msgstr "Zobrazit tlačítko mazání"
 
-#: inc/config.class.php:295
+#: inc/config.class.php:260 inc/user.class.php:129 hook.php:469 hook.php:487
+msgid "Enable filtering on the groups assignment"
+msgstr "Filtrovat dle přiřazení skupin"
+
+#: inc/config.class.php:296
 msgid "Don't change"
 msgstr "Neměnit"
+
+#: inc/history.class.php:95
+msgid "Reassign the ticket to group"
+msgstr "Změnit přiřazení požadavku na skupinu"
+
+#: inc/history.class.php:119
+msgid "View full history"
+msgstr "Zobrazit úplnou historii"
+
+#: inc/history.class.php:166
+msgid "Tickets to follow (climbed)"
+msgstr "Požadavky k řešení (zpracované)"
+
+#: inc/history.class.php:180
+msgid "Tickets to close (climbed)"
+msgstr "Požadavky k uzavření (zpracované)"
 
 #: inc/notification.class.php:29
 msgid "Requester user of the ticket"
@@ -139,66 +183,22 @@ msgstr "Uživatel-žadatel úkolu/připomínky"
 msgid "Solve date modification"
 msgstr "Změna data vyřešení"
 
-#: inc/history.class.php:95
-msgid "Reassign the ticket to group"
-msgstr "Změnit přiřazení požadavku na skupinu"
+#: front/climb_group.php:6 ajax/assign_me.php:5
+msgid "missing parameters"
+msgstr "chybějící parametry"
 
-#: inc/history.class.php:119
-msgid "View full history"
-msgstr "Zobrazit úplnou historii"
+#: front/popup_histories.php:4
+msgid "full assignation history"
+msgstr "úplná historie přiřazení"
 
-#: inc/history.class.php:166
-msgid "Tickets to follow (climbed)"
-msgstr "Požadavky k řešení (zpracované)"
+#: hook.php:424
+msgid "Group concerned by the escalation"
+msgstr "Skupina které se eskalace týká"
 
-#: inc/history.class.php:180
-msgid "Tickets to close (climbed)"
-msgstr "Požadavky k uzavření (zpracované)"
+#: hook.php:442
+msgid "Number of escalations"
+msgstr "Počet eskalací"
 
-#: inc/ticket.class.php:101
-msgid "Solution provided, back to the group"
-msgstr "Řešení poskytnuto, zpět ke skupině"
-
-#: inc/ticket.class.php:163
-msgid "Solution rejected, return to the group"
-msgstr "Řešení odmítnuto, vráceno skupině"
-
-#: inc/ticket.class.php:272
-msgid "escalated to the group"
-msgstr "eskalováno na skupinu"
-
-#: inc/ticket.class.php:641
-msgid "Error : get old ticket"
-msgstr "Chyba: získání původního požadavku"
-
-#: inc/ticket.class.php:657
-msgid "Error : adding new ticket"
-msgstr "Chyba: přidávání nového požadavku"
-
-#: inc/ticket.class.php:669
-msgid "Error : adding link between the two tickets"
-msgstr "Chyba: přidávání propojení mezi dvěma požadavky"
-
-#: inc/ticket.class.php:679 inc/ticket.class.php:720 inc/ticket.class.php:725
-msgid "This ticket has been cloned from the ticket num"
-msgstr "Tento požadavek byl z požadavku č."
-
-#: inc/ticket.class.php:684
-msgid "Error : adding followups"
-msgstr "Chyba: přidávání doplňující zprávy"
-
-#: inc/ticket.class.php:695
-msgid "Error : adding actors (user)"
-msgstr "Chyba: přidávání řešitelů (uživatel)"
-
-#: inc/ticket.class.php:704
-msgid "Error : adding actors (group)"
-msgstr "Chyba: přidávání řešitelů (skupina)"
-
-#: inc/ticket.class.php:714
-msgid "Error : adding documents"
-msgstr "Chyba: přidávání dokumentů"
-
-#: js/cloneandlink_ticket.js.php:13
-msgid "Clone and link"
-msgstr "Kopírovat a přiřadit"
+#: hook.php:456
+msgid "Number of escalations between two groups"
+msgstr "Počet eskalací mezi dvěma skupinami"
