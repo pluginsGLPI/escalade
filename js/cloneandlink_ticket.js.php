@@ -14,7 +14,10 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
    $locale_linkedtickets = _n('Linked ticket', 'Linked tickets', 2);
 
    $JS = <<<JAVASCRIPT
+   var plugin_url = CFG_GLPI.root_doc+"/"+GLPI_PLUGINS_PATH.escalade;
+
    addCloneLink = function() {
+
       //only in edit form
       if (getUrlParameter('id') == undefined) {
          return;
@@ -23,7 +26,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
       //delay the execution (ajax requestcomplete event fired before dom loading)
       setTimeout( function () {
          if ($("#cloneandlink_ticket").length > 0) { return; }
-         var duplicate_html = "&nbsp;<img src='../plugins/escalade/pics/cloneandlink_ticket.png' "+
+         var duplicate_html = "&nbsp;<img src='"+plugin_url+"/pics/cloneandlink_ticket.png' "+
             "alt='$locale_cloneandlink' " +
             "title='$locale_cloneandlink' class='pointer' id='cloneandlink_ticket'>";
 
@@ -41,7 +44,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
          var tickets_id = getUrlParameter('id');
 
          $.ajax({
-            url:     '../plugins/escalade/ajax/cloneandlink_ticket.php',
+            url:     plugin_url+'/ajax/cloneandlink_ticket.php',
             data:    { 'tickets_id': tickets_id },
             success: function(response, opts) {
                var res = JSON.parse(response);
