@@ -31,7 +31,7 @@ define ('PLUGIN_ESCALADE_VERSION', '2.4.4');
 // Minimal GLPI version, inclusive
 define("PLUGIN_ESCALADE_MIN_GLPI", "9.4");
 // Maximum GLPI version, exclusive
-define("PLUGIN_ESCALADE_MAX_GLPI", "9.5");
+define("PLUGIN_ESCALADE_MAX_GLPI", "9.6");
 
 /**
  * Init hooks of the plugin.
