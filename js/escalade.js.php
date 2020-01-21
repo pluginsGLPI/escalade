@@ -28,7 +28,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
 
       //set active group in red
       $("table:contains('$locale_actor') td:last, .tab_actors .actor-bloc:last")
-         .find("a[href*=group]")
+         .find("a[onclick*=submitGetLink]")
          .addClass('escalade_active')
          .last()
          .append(
