@@ -7,10 +7,10 @@
 [![GitHub release](https://img.shields.io/github/release/pluginsGLPI/escalade.svg)](https://github.com/pluginsGLPI/escalade/releases)
 [![GitHub build](https://travis-ci.org/pluginsGLPI/escalade.svg?)](https://travis-ci.org/pluginsGLPI/escalade/)
 
+![Screenshot](./screenshots/escalade_history.png)
+
 This GLPI plugin aims to simplifier the ticket escalation process in GLPI.  
 It also adds a graphical historical for assigned groups.  
-
-![Group history](https://raw.githubusercontent.com/pluginsGLPI/escalade/master/screenshots/escalade_history.png)
 
 A new dashboard on the user's home page is added, and a new criteria in ticket's search engine.   
 To finish, there's also a clone ticket feature, accessible through an icon on the ticket form.   
@@ -19,7 +19,7 @@ To finish, there's also a clone ticket feature, accessible through an icon on th
 
 ## Documentation
 
-We maintain a detailed documentation here -> ![Documentation](https://glpi-plugins.readthedocs.io/en/latest/escalade/index.html)
+We maintain a detailed documentation here -> [Documentation](https://glpi-plugins.readthedocs.io/en/latest/escalade/index.html)
 
 
 ## Contact
