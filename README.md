@@ -29,7 +29,7 @@ You can also chat with us via IRC in [#glpi on freenode](http://webchat.freenode
 
 ## Professional Services
 
-The GLPI Android Inventory Agent and GLPI Network services are available through our [Partner's Network](http://www.teclib-edition.com/en/partners/). We provide special training, bug fixes with editor subscription, contributions for new features, and more.
+The GLPI Network services are available through our [Partner's Network](http://www.teclib-edition.com/en/partners/). We provide special training, bug fixes with editor subscription, contributions for new features, and more.
 
 Obtain a personalized service experience, associated with benefits and opportunities.
 
@@ -43,6 +43,5 @@ Obtain a personalized service experience, associated with benefits and opportuni
 
 ## Copying
 
-* **Name**: [Escalade](https://glpi-project.org/fr/) is a registered trademark of [Teclib](http://www.teclib-edition.com/en/).
 * **Code**: you can redistribute it and/or modify
     it under the terms of the GNU General Public License ([GPL-2.0](https://www.gnu.org/licenses/gpl-2.0.en.html)).
