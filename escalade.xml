@@ -63,7 +63,8 @@ Elle ajoute les fonctionnalités suivantes :
    <versions>
       <version>
          <num>2.4.4</num>
-         <compatibility>9.4</compatibility>
+         <compatibility>~9.4.0</compatibility>
+         <download_url>https://github.com/pluginsGLPI/escalade/releases/download/2.4.4/glpi-escalade-2.4.4.tar.bz2</download_url>
       </version>
       <version>
          <num>2.4.3</num>
