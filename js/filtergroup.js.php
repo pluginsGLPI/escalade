@@ -37,7 +37,6 @@ $('#' + id).select2({
             condition: "",
             used: [],
             toadd: [],
-            entity_restrict: 0,
             limit: "50",
             permit_select_parent: 0,
             specific_tags: [],
