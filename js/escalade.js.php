@@ -25,18 +25,20 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
       if ($(".escalade_active").get(0)) {
          return;
       }
-
       //set active group in red
-      $("table:contains('$locale_actor') td:last, .tab_actors .actor-bloc:last")
-         .find("a[onclick*=submitGetLink]")
-         .addClass('escalade_active')
-         .last()
+      $("table:contains('$locale_actor') td:last, .tab_actors .actor-bloc:last .actor-content .actor_row:last")
+      .has("a[href*=group]")//.actor-content .actor-row:last a")
+         .addClass('escalade_active');
+
+      //set history
+      $("table:contains('$locale_actor') td:last, .tab_actors .actor-bloc:last .actor-content") /// .actor-content .actor-row:last")
          .append(
             $('<div>').load(
                '../plugins/escalade/ajax/history.php',
                {'tickets_id': tickets_id}
             )
          );
+
    }
 
    $(document).ready(function() {
