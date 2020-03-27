@@ -13,6 +13,8 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
 
    $JS = <<<JAVASCRIPT
 
+   var plugin_url = CFG_GLPI.root_doc+"/"+GLPI_PLUGINS_PATH.escalade;
+
    var ticketEscalation = function() {
       var tickets_id = getUrlParameter('id');
 
@@ -33,7 +35,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
          .last()
          .append(
             $('<div>').load(
-               '../plugins/escalade/ajax/history.php',
+               plugin_url+'/ajax/history.php',
                {'tickets_id': tickets_id}
             )
          );

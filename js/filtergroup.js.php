@@ -10,9 +10,9 @@ if (location.pathname.indexOf('ticket.form.php') == 0) {
 }
 
 // only in ticket form
-
-var urlGroup = '{$CFG_GLPI['root_doc']}/plugins/escalade/ajax/group_values.php';
-var urlUser = '{$CFG_GLPI['root_doc']}/plugins/escalade/ajax/user_values.php';
+var plugin_url = CFG_GLPI.root_doc+"/"+GLPI_PLUGINS_PATH.escalade;
+var urlGroup   = plugin_url+'/ajax/group_values.php';
+var urlUser    = plugin_url+'/ajax/user_values.php';
 var tickets_id = getUrlParameter('id');
 
 function redefineDropdown(id, url, tickets_id, itemtype) {

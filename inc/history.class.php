@@ -57,7 +57,7 @@ class PluginEscaladeHistory extends CommonDBTM {
          $use_filter_assign_group = false;
       }
 
-      $plugin_dir = ($full_history) ? ".." : "../plugins/escalade";
+      $plugin_dir = ($full_history) ? ".." : Plugin::getWebDir('escalade');
 
       //get all line for this ticket
       $group = new Group();

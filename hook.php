@@ -194,7 +194,7 @@ function plugin_escalade_install() {
                ENGINE=InnoDB;";
       $DB->query($query);
 
-      include_once(GLPI_ROOT."/plugins/escalade/inc/config.class.php");
+      include_once(Plugin::getPhpDir('escalade')."/inc/config.class.php");
 
       $config = new PluginEscaladeConfig();
       $config->getFromDB(1);
