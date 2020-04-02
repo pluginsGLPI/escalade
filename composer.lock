@@ -663,16 +663,16 @@
         },
         {
             "name": "glpi-project/tools",
-            "version": "0.1.8",
+            "version": "0.1.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/glpi-project/tools.git",
-                "reference": "39ca503a00454e6c5d7d97bd8baff358d262a897"
+                "reference": "9e078fff4c79986f7b452c70719e4580dcfc0020"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/glpi-project/tools/zipball/39ca503a00454e6c5d7d97bd8baff358d262a897",
-                "reference": "39ca503a00454e6c5d7d97bd8baff358d262a897",
+                "url": "https://api.github.com/repos/glpi-project/tools/zipball/9e078fff4c79986f7b452c70719e4580dcfc0020",
+                "reference": "9e078fff4c79986f7b452c70719e4580dcfc0020",
                 "shasum": ""
             },
             "require": {
@@ -709,7 +709,7 @@
                 "plugins",
                 "tools"
             ],
-            "time": "2019-06-07T09:46:17+00:00"
+            "time": "2020-04-02T09:18:16+00:00"
         },
         {
             "name": "grasmash/expander",
