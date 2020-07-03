@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-08 14:52+0000\n"
+"POT-Creation-Date: 2020-07-03 18:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,13 +17,57 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: js/cloneandlink_ticket.js.php:13
-msgid "Clone and link"
+#: hook.php:424
+msgid "Group concerned by the escalation"
 msgstr ""
 
-#: inc/group_group.class.php:24 inc/user.class.php:168 front/config.form.php:36
+#: hook.php:442
+msgid "Number of escalations"
+msgstr ""
+
+#: hook.php:456
+msgid "Number of escalations between two groups"
+msgstr ""
+
+#: hook.php:469 hook.php:487 inc/config.class.php:260
+msgid "Enable filtering on the groups assignment"
+msgstr ""
+
+#: front/popup_histories.php:4
+msgid "full assignation history"
+msgstr ""
+
+#: front/climb_group.php:6 ajax/assign_me.php:5
+msgid "missing parameters"
+msgstr ""
+
+#: front/config.form.php:36 inc/user.class.php:168 inc/group_group.class.php:24
 #: setup.php:165
 msgid "Escalation"
+msgstr ""
+
+#: inc/notification.class.php:29
+msgid "Requester user of the ticket"
+msgstr ""
+
+#: inc/notification.class.php:51
+msgid "Group escalated in the ticket"
+msgstr ""
+
+#: inc/notification.class.php:53
+msgid "Manager of the group escalated in the ticket"
+msgstr ""
+
+#: inc/notification.class.php:57
+msgid "Requester user of the task/reminder"
+msgstr ""
+
+#: inc/notification.class.php:187
+msgid "Solve date modification"
+msgstr ""
+
+#: inc/user.class.php:129
+msgid "Bypass filtering on the groups assignment"
 msgstr ""
 
 #: inc/ticket.class.php:101
@@ -68,6 +112,22 @@ msgstr ""
 
 #: inc/ticket.class.php:714
 msgid "Error : adding documents"
+msgstr ""
+
+#: inc/history.class.php:95
+msgid "Reassign the ticket to group"
+msgstr ""
+
+#: inc/history.class.php:119
+msgid "View full history"
+msgstr ""
+
+#: inc/history.class.php:166
+msgid "Tickets to follow (climbed)"
+msgstr ""
+
+#: inc/history.class.php:180
+msgid "Tickets to close (climbed)"
 msgstr ""
 
 #: inc/config.class.php:7
@@ -136,66 +196,10 @@ msgstr ""
 msgid "Display delete button"
 msgstr ""
 
-#: inc/config.class.php:260 inc/user.class.php:129 hook.php:469 hook.php:487
-msgid "Enable filtering on the groups assignment"
-msgstr ""
-
-#: inc/config.class.php:296
+#: inc/config.class.php:299
 msgid "Don't change"
 msgstr ""
 
-#: inc/history.class.php:95
-msgid "Reassign the ticket to group"
-msgstr ""
-
-#: inc/history.class.php:119
-msgid "View full history"
-msgstr ""
-
-#: inc/history.class.php:166
-msgid "Tickets to follow (climbed)"
-msgstr ""
-
-#: inc/history.class.php:180
-msgid "Tickets to close (climbed)"
-msgstr ""
-
-#: inc/notification.class.php:29
-msgid "Requester user of the ticket"
-msgstr ""
-
-#: inc/notification.class.php:51
-msgid "Group escalated in the ticket"
-msgstr ""
-
-#: inc/notification.class.php:53
-msgid "Manager of the group escalated in the ticket"
-msgstr ""
-
-#: inc/notification.class.php:57
-msgid "Requester user of the task/reminder"
-msgstr ""
-
-#: inc/notification.class.php:187
-msgid "Solve date modification"
-msgstr ""
-
-#: front/climb_group.php:6 ajax/assign_me.php:5
-msgid "missing parameters"
-msgstr ""
-
-#: front/popup_histories.php:4
-msgid "full assignation history"
-msgstr ""
-
-#: hook.php:424
-msgid "Group concerned by the escalation"
-msgstr ""
-
-#: hook.php:442
-msgid "Number of escalations"
-msgstr ""
-
-#: hook.php:456
-msgid "Number of escalations between two groups"
+#: js/cloneandlink_ticket.js.php:13
+msgid "Clone and link"
 msgstr ""

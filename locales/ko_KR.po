@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-08 14:52+0000\n"
-"PO-Revision-Date: 2020-01-30 02:25+0000\n"
-"Last-Translator: SeongHyeon Cho <jaymz9634@gmail.com>\n"
+"POT-Creation-Date: 2020-07-03 18:47+0000\n"
+"PO-Revision-Date: 2020-07-03 18:47+0000\n"
+"Last-Translator: Cédric Anne\n"
 "Language-Team: Korean (Korea) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/ko_KR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,14 +18,58 @@ msgstr ""
 "Language: ko_KR\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: js/cloneandlink_ticket.js.php:13
-msgid "Clone and link"
-msgstr "복제와 링크"
+#: hook.php:424
+msgid "Group concerned by the escalation"
+msgstr "이관에 관련된 그룹"
 
-#: inc/group_group.class.php:24 inc/user.class.php:168
-#: front/config.form.php:36 setup.php:165
+#: hook.php:442
+msgid "Number of escalations"
+msgstr "이관 수"
+
+#: hook.php:456
+msgid "Number of escalations between two groups"
+msgstr "두 그룹간의 이관 수"
+
+#: hook.php:469 hook.php:487 inc/config.class.php:260
+msgid "Enable filtering on the groups assignment"
+msgstr "그룹 할당에 필터링 활성화"
+
+#: front/popup_histories.php:4
+msgid "full assignation history"
+msgstr "전체 배치 이력"
+
+#: front/climb_group.php:6 ajax/assign_me.php:5
+msgid "missing parameters"
+msgstr "누락된 매개변수"
+
+#: front/config.form.php:36 inc/user.class.php:168
+#: inc/group_group.class.php:24 setup.php:165
 msgid "Escalation"
 msgstr "이관"
+
+#: inc/notification.class.php:29
+msgid "Requester user of the ticket"
+msgstr "티켓 요청 사용자"
+
+#: inc/notification.class.php:51
+msgid "Group escalated in the ticket"
+msgstr "티켓에서 그룹으로 이관됨"
+
+#: inc/notification.class.php:53
+msgid "Manager of the group escalated in the ticket"
+msgstr "티켓에서 그룹의 관리자로 이관됨"
+
+#: inc/notification.class.php:57
+msgid "Requester user of the task/reminder"
+msgstr "작업/알림의 요청 사용자"
+
+#: inc/notification.class.php:187
+msgid "Solve date modification"
+msgstr "해결 일자 변경"
+
+#: inc/user.class.php:129
+msgid "Bypass filtering on the groups assignment"
+msgstr ""
 
 #: inc/ticket.class.php:101
 msgid "Solution provided, back to the group"
@@ -70,6 +114,22 @@ msgstr "오류 : 시행자 추가 (그룹)"
 #: inc/ticket.class.php:714
 msgid "Error : adding documents"
 msgstr "오류 : 문서 추가"
+
+#: inc/history.class.php:95
+msgid "Reassign the ticket to group"
+msgstr "그룹에 티켓 재할당"
+
+#: inc/history.class.php:119
+msgid "View full history"
+msgstr "전체 이력 보기"
+
+#: inc/history.class.php:166
+msgid "Tickets to follow (climbed)"
+msgstr "추적할 티켓 (상승됨)"
+
+#: inc/history.class.php:180
+msgid "Tickets to close (climbed)"
+msgstr "종료할 티켓 (상승됨)"
 
 #: inc/config.class.php:7
 msgid "Configuration Escalade plugin"
@@ -137,66 +197,10 @@ msgstr "참고: 이 기능 (부분 생성)은 <a href='##link##'>Behavior</a>플
 msgid "Display delete button"
 msgstr "삭제 버튼 표시"
 
-#: inc/config.class.php:260 inc/user.class.php:129 hook.php:469 hook.php:487
-msgid "Enable filtering on the groups assignment"
-msgstr "그룹 할당에 필터링 활성화"
-
-#: inc/config.class.php:296
+#: inc/config.class.php:299
 msgid "Don't change"
 msgstr "변경 안함"
 
-#: inc/history.class.php:95
-msgid "Reassign the ticket to group"
-msgstr "그룹에 티켓 재할당"
-
-#: inc/history.class.php:119
-msgid "View full history"
-msgstr "전체 이력 보기"
-
-#: inc/history.class.php:166
-msgid "Tickets to follow (climbed)"
-msgstr "추적할 티켓 (상승됨)"
-
-#: inc/history.class.php:180
-msgid "Tickets to close (climbed)"
-msgstr "종료할 티켓 (상승됨)"
-
-#: inc/notification.class.php:29
-msgid "Requester user of the ticket"
-msgstr "티켓 요청 사용자"
-
-#: inc/notification.class.php:51
-msgid "Group escalated in the ticket"
-msgstr "티켓에서 그룹으로 이관됨"
-
-#: inc/notification.class.php:53
-msgid "Manager of the group escalated in the ticket"
-msgstr "티켓에서 그룹의 관리자로 이관됨"
-
-#: inc/notification.class.php:57
-msgid "Requester user of the task/reminder"
-msgstr "작업/알림의 요청 사용자"
-
-#: inc/notification.class.php:187
-msgid "Solve date modification"
-msgstr "해결 일자 변경"
-
-#: front/climb_group.php:6 ajax/assign_me.php:5
-msgid "missing parameters"
-msgstr "누락된 매개변수"
-
-#: front/popup_histories.php:4
-msgid "full assignation history"
-msgstr "전체 배치 이력"
-
-#: hook.php:424
-msgid "Group concerned by the escalation"
-msgstr "이관에 관련된 그룹"
-
-#: hook.php:442
-msgid "Number of escalations"
-msgstr "이관 수"
-
-#: hook.php:456
-msgid "Number of escalations between two groups"
-msgstr "두 그룹간의 이관 수"
+#: js/cloneandlink_ticket.js.php:13
+msgid "Clone and link"
+msgstr "복제와 링크"

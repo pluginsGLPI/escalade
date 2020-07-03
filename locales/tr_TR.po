@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-08 14:52+0000\n"
-"PO-Revision-Date: 2019-07-30 23:43+0000\n"
-"Last-Translator: Kaya Zeren <kayazeren@gmail.com>\n"
+"POT-Creation-Date: 2020-07-03 18:47+0000\n"
+"PO-Revision-Date: 2020-07-03 18:47+0000\n"
+"Last-Translator: Cédric Anne\n"
 "Language-Team: Turkish (Turkey) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/tr_TR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,14 +19,58 @@ msgstr ""
 "Language: tr_TR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: js/cloneandlink_ticket.js.php:13
-msgid "Clone and link"
-msgstr "Kopyala ve ilişkilendir"
+#: hook.php:424
+msgid "Group concerned by the escalation"
+msgstr "Yetkisi yükseltilecek grup"
 
-#: inc/group_group.class.php:24 inc/user.class.php:168
-#: front/config.form.php:36 setup.php:165
+#: hook.php:442
+msgid "Number of escalations"
+msgstr "Yetki yükseltme sayısı"
+
+#: hook.php:456
+msgid "Number of escalations between two groups"
+msgstr "İki grup arasındaki yetki yükseltme sayısı"
+
+#: hook.php:469 hook.php:487 inc/config.class.php:260
+msgid "Enable filtering on the groups assignment"
+msgstr "Grup atamaları süzülebilsin"
+
+#: front/popup_histories.php:4
+msgid "full assignation history"
+msgstr "tam atama geçmişi"
+
+#: front/climb_group.php:6 ajax/assign_me.php:5
+msgid "missing parameters"
+msgstr "eksik parametreler"
+
+#: front/config.form.php:36 inc/user.class.php:168
+#: inc/group_group.class.php:24 setup.php:165
 msgid "Escalation"
 msgstr "Yetki yükseltme"
+
+#: inc/notification.class.php:29
+msgid "Requester user of the ticket"
+msgstr "Destek kaydı isteğinde bulunan kullanıcı"
+
+#: inc/notification.class.php:51
+msgid "Group escalated in the ticket"
+msgstr "Destek kaydına atanmış grup"
+
+#: inc/notification.class.php:53
+msgid "Manager of the group escalated in the ticket"
+msgstr "Destek kaydına atanmış kullanıcının yöneticisi"
+
+#: inc/notification.class.php:57
+msgid "Requester user of the task/reminder"
+msgstr "Görev/anımsatıcı isteğinde bulunan kullanıcı"
+
+#: inc/notification.class.php:187
+msgid "Solve date modification"
+msgstr "Tarih değişikliğini çöz"
+
+#: inc/user.class.php:129
+msgid "Bypass filtering on the groups assignment"
+msgstr ""
 
 #: inc/ticket.class.php:101
 msgid "Solution provided, back to the group"
@@ -71,6 +115,22 @@ msgstr "Hata : aktör ekleme (grup)"
 #: inc/ticket.class.php:714
 msgid "Error : adding documents"
 msgstr "Hata : belge ekleme"
+
+#: inc/history.class.php:95
+msgid "Reassign the ticket to group"
+msgstr "Çağrıyı bir gruba ata"
+
+#: inc/history.class.php:119
+msgid "View full history"
+msgstr "Tam geçmişi görüntüle"
+
+#: inc/history.class.php:166
+msgid "Tickets to follow (climbed)"
+msgstr "İzlenecek çağrılar (çalışılmış)"
+
+#: inc/history.class.php:180
+msgid "Tickets to close (climbed)"
+msgstr "Kapatılacak çağrılar (çalışılmış)"
 
 #: inc/config.class.php:7
 msgid "Configuration Escalade plugin"
@@ -138,66 +198,10 @@ msgstr "Not: Bu özellik (oluşturulma kısmı) <a href='##link##'>Davranış</a
 msgid "Display delete button"
 msgstr "Sil düğmesi görüntülensin"
 
-#: inc/config.class.php:260 inc/user.class.php:129 hook.php:469 hook.php:487
-msgid "Enable filtering on the groups assignment"
-msgstr "Grup atamaları süzülebilsin"
-
-#: inc/config.class.php:296
+#: inc/config.class.php:299
 msgid "Don't change"
 msgstr "Değiştirilmesin"
 
-#: inc/history.class.php:95
-msgid "Reassign the ticket to group"
-msgstr "Çağrıyı bir gruba ata"
-
-#: inc/history.class.php:119
-msgid "View full history"
-msgstr "Tam geçmişi görüntüle"
-
-#: inc/history.class.php:166
-msgid "Tickets to follow (climbed)"
-msgstr "İzlenecek çağrılar (çalışılmış)"
-
-#: inc/history.class.php:180
-msgid "Tickets to close (climbed)"
-msgstr "Kapatılacak çağrılar (çalışılmış)"
-
-#: inc/notification.class.php:29
-msgid "Requester user of the ticket"
-msgstr "Destek kaydı isteğinde bulunan kullanıcı"
-
-#: inc/notification.class.php:51
-msgid "Group escalated in the ticket"
-msgstr "Destek kaydına atanmış grup"
-
-#: inc/notification.class.php:53
-msgid "Manager of the group escalated in the ticket"
-msgstr "Destek kaydına atanmış kullanıcının yöneticisi"
-
-#: inc/notification.class.php:57
-msgid "Requester user of the task/reminder"
-msgstr "Görev/anımsatıcı isteğinde bulunan kullanıcı"
-
-#: inc/notification.class.php:187
-msgid "Solve date modification"
-msgstr "Tarih değişikliğini çöz"
-
-#: front/climb_group.php:6 ajax/assign_me.php:5
-msgid "missing parameters"
-msgstr "eksik parametreler"
-
-#: front/popup_histories.php:4
-msgid "full assignation history"
-msgstr "tam atama geçmişi"
-
-#: hook.php:424
-msgid "Group concerned by the escalation"
-msgstr "Yetkisi yükseltilecek grup"
-
-#: hook.php:442
-msgid "Number of escalations"
-msgstr "Yetki yükseltme sayısı"
-
-#: hook.php:456
-msgid "Number of escalations between two groups"
-msgstr "İki grup arasındaki yetki yükseltme sayısı"
+#: js/cloneandlink_ticket.js.php:13
+msgid "Clone and link"
+msgstr "Kopyala ve ilişkilendir"
