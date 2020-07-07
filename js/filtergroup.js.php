@@ -10,16 +10,12 @@ if (location.pathname.indexOf('ticket.form.php') == 0) {
 }
 
 // only in ticket form
-
-var urlGroup = '{$CFG_GLPI['root_doc']}/plugins/escalade/ajax/group_values.php';
-var urlUser = '{$CFG_GLPI['root_doc']}/plugins/escalade/ajax/user_values.php';
+var plugin_url = CFG_GLPI.root_doc+"/"+GLPI_PLUGINS_PATH.escalade;
+var urlGroup   = plugin_url+'/ajax/group_values.php';
+var urlUser    = plugin_url+'/ajax/user_values.php';
 var tickets_id = getUrlParameter('id');
 
 function redefineDropdown(id, url, tickets_id, itemtype) {
-
-if (typeof templateResult === "undefined" && typeof formatResult !== "undefined") {
-   var templateResult = formatResult;
-}
 
 $('#' + id).select2({
    width: '80%',
@@ -31,7 +27,7 @@ $('#' + id).select2({
       url: url,
       dataType: 'json',
       type: 'POST',
-      data: function (term, page) {
+      data: function (params, page) {
          return {
             ticket_id: tickets_id,
             itemtype: itemtype,
@@ -41,11 +37,10 @@ $('#' + id).select2({
             condition: "",
             used: [],
             toadd: [],
-            entity_restrict: 0,
             limit: "50",
             permit_select_parent: 0,
             specific_tags: [],
-            searchText: term,
+            searchText: params.term,
             page_limit: 100, // page size
             page: page, // page number
                };
@@ -87,7 +82,6 @@ $('#' + id).select2({
          }
 
       },
-      templateResult: formatResult
    });
 }
 
@@ -101,7 +95,7 @@ $(document).ready(function() {
       $('#tabspanel + div.ui-tabs').on("tabsload", function( event, ui ) {
          setTimeout(function() {
             // Group
-            var assign_select_dom_id = $("*[name='_groups_id_assign']")[0].id;
+            var assign_select_dom_id = $("[name='_groups_id_assign']")[0].id;
             redefineDropdown(assign_select_dom_id, urlGroup, 0, 'Group');
 
             // User
@@ -114,15 +108,14 @@ $(document).ready(function() {
       // -----------------------
       // ---- Update Ticket ----
       // -----------------------
-
       $(document).ajaxSend(function( event, jqxhr, settings ) {
          // Group
          if (settings.url.indexOf("dropdownItilActors.php") > 0
             && settings.data.indexOf("group") > 0
                && settings.data.indexOf("assign") > 0
             ) {
-            checkDOMChange("input[name='_itil_assign[groups_id]'", function() {
-               var assign_select_dom_id = $("input[name='_itil_assign[groups_id]']")[0].id;
+            checkDOMChange("[name='_itil_assign[groups_id]'", function() {
+               var assign_select_dom_id = $("[name='_itil_assign[groups_id]']")[0].id;
                redefineDropdown(assign_select_dom_id, urlGroup, tickets_id, 'Group');
             });
          }

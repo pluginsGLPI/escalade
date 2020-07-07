@@ -3,9 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Cédric Anne, 2018
-# David Stepan <stepand@tiscali.cz>, 2016
-# Pavel Borecki <pavel.borecki@gmail.com>, 2018
+# SeongHyeon Cho <jaymz9634@gmail.com>, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
@@ -13,61 +11,61 @@ msgstr ""
 "POT-Creation-Date: 2020-07-03 18:47+0000\n"
 "PO-Revision-Date: 2020-07-03 18:47+0000\n"
 "Last-Translator: Cédric Anne\n"
-"Language-Team: Czech (Czech Republic) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/cs_CZ/)\n"
+"Language-Team: Korean (Korea) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/ko_KR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: cs_CZ\n"
-"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+"Language: ko_KR\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: hook.php:424
 msgid "Group concerned by the escalation"
-msgstr "Skupina které se eskalace týká"
+msgstr "이관에 관련된 그룹"
 
 #: hook.php:442
 msgid "Number of escalations"
-msgstr "Počet eskalací"
+msgstr "이관 수"
 
 #: hook.php:456
 msgid "Number of escalations between two groups"
-msgstr "Počet eskalací mezi dvěma skupinami"
+msgstr "두 그룹간의 이관 수"
 
 #: hook.php:469 hook.php:487 inc/config.class.php:260
 msgid "Enable filtering on the groups assignment"
-msgstr "Filtrovat dle přiřazení skupin"
+msgstr "그룹 할당에 필터링 활성화"
 
 #: front/popup_histories.php:4
 msgid "full assignation history"
-msgstr "úplná historie přiřazení"
+msgstr "전체 배치 이력"
 
 #: front/climb_group.php:6 ajax/assign_me.php:5
 msgid "missing parameters"
-msgstr "chybějící parametry"
+msgstr "누락된 매개변수"
 
 #: front/config.form.php:36 inc/user.class.php:168
 #: inc/group_group.class.php:24 setup.php:165
 msgid "Escalation"
-msgstr "Eskalace"
+msgstr "이관"
 
 #: inc/notification.class.php:29
 msgid "Requester user of the ticket"
-msgstr "Uživatel-žadatel požadavku"
+msgstr "티켓 요청 사용자"
 
 #: inc/notification.class.php:51
 msgid "Group escalated in the ticket"
-msgstr "Skupina eskalovaná v požadavku"
+msgstr "티켓에서 그룹으로 이관됨"
 
 #: inc/notification.class.php:53
 msgid "Manager of the group escalated in the ticket"
-msgstr "Vedoucí skupiny eskalované v požadavku"
+msgstr "티켓에서 그룹의 관리자로 이관됨"
 
 #: inc/notification.class.php:57
 msgid "Requester user of the task/reminder"
-msgstr "Uživatel-žadatel úkolu/připomínky"
+msgstr "작업/알림의 요청 사용자"
 
 #: inc/notification.class.php:187
 msgid "Solve date modification"
-msgstr "Změna data vyřešení"
+msgstr "해결 일자 변경"
 
 #: inc/user.class.php:129
 msgid "Bypass filtering on the groups assignment"
@@ -75,134 +73,134 @@ msgstr ""
 
 #: inc/ticket.class.php:101
 msgid "Solution provided, back to the group"
-msgstr "Řešení poskytnuto, zpět ke skupině"
+msgstr "해결책 제공됨, 그룹으로 돌아가기"
 
 #: inc/ticket.class.php:163
 msgid "Solution rejected, return to the group"
-msgstr "Řešení odmítnuto, vráceno skupině"
+msgstr "해결책 거부됨, 그룹으로 돌아가기"
 
 #: inc/ticket.class.php:272
 msgid "escalated to the group"
-msgstr "eskalováno na skupinu"
+msgstr "그룹으로 이관"
 
 #: inc/ticket.class.php:641
 msgid "Error : get old ticket"
-msgstr "Chyba: získání původního požadavku"
+msgstr "오류  : 오래된 티켓 가져오기"
 
 #: inc/ticket.class.php:657
 msgid "Error : adding new ticket"
-msgstr "Chyba: přidávání nového požadavku"
+msgstr "오류 : 새 티켓 추가"
 
 #: inc/ticket.class.php:669
 msgid "Error : adding link between the two tickets"
-msgstr "Chyba: přidávání propojení mezi dvěma požadavky"
+msgstr "오류 : 두 티켓간의 링크 추가"
 
 #: inc/ticket.class.php:679 inc/ticket.class.php:720 inc/ticket.class.php:725
 msgid "This ticket has been cloned from the ticket num"
-msgstr "Tento požadavek byl z požadavku č."
+msgstr "이 티켓은 그 티켓 번호에서 복제되었습니다"
 
 #: inc/ticket.class.php:684
 msgid "Error : adding followups"
-msgstr "Chyba: přidávání doplňující zprávy"
+msgstr "오류 : 추적 추가"
 
 #: inc/ticket.class.php:695
 msgid "Error : adding actors (user)"
-msgstr "Chyba: přidávání řešitelů (uživatel)"
+msgstr "오류 : 시행자 (사용자) 추가"
 
 #: inc/ticket.class.php:704
 msgid "Error : adding actors (group)"
-msgstr "Chyba: přidávání řešitelů (skupina)"
+msgstr "오류 : 시행자 추가 (그룹)"
 
 #: inc/ticket.class.php:714
 msgid "Error : adding documents"
-msgstr "Chyba: přidávání dokumentů"
+msgstr "오류 : 문서 추가"
 
 #: inc/history.class.php:95
 msgid "Reassign the ticket to group"
-msgstr "Změnit přiřazení požadavku na skupinu"
+msgstr "그룹에 티켓 재할당"
 
 #: inc/history.class.php:119
 msgid "View full history"
-msgstr "Zobrazit úplnou historii"
+msgstr "전체 이력 보기"
 
 #: inc/history.class.php:166
 msgid "Tickets to follow (climbed)"
-msgstr "Požadavky k řešení (zpracované)"
+msgstr "추적할 티켓 (상승됨)"
 
 #: inc/history.class.php:180
 msgid "Tickets to close (climbed)"
-msgstr "Požadavky k uzavření (zpracované)"
+msgstr "종료할 티켓 (상승됨)"
 
 #: inc/config.class.php:7
 msgid "Configuration Escalade plugin"
-msgstr "Nastavení zásuvného modulu Escalade"
+msgstr "구성 이관 플러그인"
 
 #: inc/config.class.php:22
 msgid "Remove old assign group on new group assign"
-msgstr "Při přiřazení nové skupiny odebrat tu původní"
+msgstr "새 그룹 할당에 이전 할당 그룹 제거"
 
 #: inc/config.class.php:44
 msgid "show group assign history visually"
-msgstr "zobrazit historii přiřazení skupiny vizuálně"
+msgstr "시각적 그룹 할당 이력 표시"
 
 #: inc/config.class.php:56
 msgid "Escalation history in tasks"
-msgstr "Historie eskalace v úkolech"
+msgstr "업무에 이력 이관"
 
 #: inc/config.class.php:65
 msgid "Remove technician(s) on escalation"
-msgstr "Odebrat techniky při eskalaci"
+msgstr "이관에 기술자(들) 제거"
 
 #: inc/config.class.php:77
 msgid "Ticket status after an escalation"
-msgstr "Stav požadavku po eskalaci"
+msgstr "이관 후 티켓 상태"
 
 #: inc/config.class.php:85
 msgid "Assign ticket to initial group on solve ticket"
-msgstr "Při řešení požadavku ho přiřadit prvotní skupině"
+msgstr "해결 티켓에서 초기 그룹에 티켓 할당"
 
 #: inc/config.class.php:98
 msgid "Assign the technical manager on ticket category change"
-msgstr "Přiřadit vedoucího technika kategorii při změně kategorie požadavku"
+msgstr "티켓 분류 변경에 기술적 관리자 할당"
 
 #: inc/config.class.php:109
 msgid "Assign the technical group on ticket category change"
-msgstr "Přiřadit skupinu techniků při změně kategorie požadavku"
+msgstr "티켓 분류 변경에 기술적 그룹 할당"
 
 #: inc/config.class.php:121
 msgid "Clone tickets"
-msgstr "Kopírovat požadavky"
+msgstr "티켓 복제"
 
 #: inc/config.class.php:131
 msgid "Close cloned tickets at the same time"
-msgstr "Současně uzavřít i požadavky-klony"
+msgstr "동시에 복제된 티켓 닫기"
 
 #: inc/config.class.php:149
 msgid "Use the technician's group"
-msgstr "Použít skupinu technika"
+msgstr "기술자 그룹 사용"
 
 #: inc/config.class.php:167
 msgid "a time of creation"
-msgstr "čas vytvoření"
+msgstr "생성 시간"
 
 #: inc/config.class.php:169
 msgid "a time of modification"
-msgstr "čas změny"
+msgstr "변경 시간"
 
 #: inc/config.class.php:196
 msgid ""
 "Nota: This feature (creation part) is duplicate with the <a "
 "href='##link##'>Behavior</a>plugin. This last has priority."
-msgstr "Pozn.: Tato funkce (část vytvoření) je duplicitní k zásuvnému modulu <a href='##link##'> Behavior </a>. Tato druhá má přednost."
+msgstr "참고: 이 기능 (부분 생성)은 <a href='##link##'>Behavior</a>플러그인과 중복됩니다. 이 최근이 우선됩니다."
 
 #: inc/config.class.php:205
 msgid "Display delete button"
-msgstr "Zobrazit tlačítko mazání"
+msgstr "삭제 버튼 표시"
 
 #: inc/config.class.php:299
 msgid "Don't change"
-msgstr "Neměnit"
+msgstr "변경 안함"
 
 #: js/cloneandlink_ticket.js.php:13
 msgid "Clone and link"
-msgstr "Kopírovat a přiřadit"
+msgstr "복제와 링크"

@@ -48,7 +48,7 @@ function plugin_escalade_install() {
          `id`              INT(11) NOT NULL AUTO_INCREMENT,
          `tickets_id`      INT(11) NOT NULL,
          `groups_id`       INT(11) NOT NULL,
-         `date_mod`        DATETIME NOT NULL,
+         `date_mod`        TIMESTAMP NOT NULL,
          PRIMARY KEY (`id`),
          KEY `tickets_id` (`tickets_id`),
          KEY `groups_id` (`groups_id`)
@@ -194,7 +194,7 @@ function plugin_escalade_install() {
                ENGINE=InnoDB;";
       $DB->query($query);
 
-      include_once(GLPI_ROOT."/plugins/escalade/inc/config.class.php");
+      include_once(Plugin::getPhpDir('escalade')."/inc/config.class.php");
 
       $config = new PluginEscaladeConfig();
       $config->getFromDB(1);

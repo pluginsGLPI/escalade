@@ -1,14 +1,14 @@
 # English translations for PACKAGE package.
-# Copyright (C) 2018 THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) 2020 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Automatically generated, 2018.
+# Automatically generated, 2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-07 15:09+0000\n"
-"PO-Revision-Date: 2018-12-07 15:09+0000\n"
+"POT-Creation-Date: 2020-07-03 18:47+0000\n"
+"PO-Revision-Date: 2020-07-03 18:47+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en_GB\n"
@@ -16,19 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=ASCII\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#: front/config.form.php:36 inc/user.class.php:168 inc/group_group.class.php:24
-#: setup.php:165
-msgid "Escalation"
-msgstr "Escalation"
-
-#: front/climb_group.php:6 ajax/assign_me.php:5
-msgid "missing parameters"
-msgstr "missing parameters"
-
-#: front/popup_histories.php:4
-msgid "full assignation history"
-msgstr "full assignation history"
 
 #: hook.php:424
 msgid "Group concerned by the escalation"
@@ -42,9 +29,106 @@ msgstr "Number of escalations"
 msgid "Number of escalations between two groups"
 msgstr "Number of escalations between two groups"
 
-#: hook.php:469 hook.php:487 inc/config.class.php:260 inc/user.class.php:129
+#: hook.php:469 hook.php:487 inc/config.class.php:260
 msgid "Enable filtering on the groups assignment"
 msgstr "Enable filtering on the groups assignment"
+
+#: front/popup_histories.php:4
+msgid "full assignation history"
+msgstr "full assignation history"
+
+#: front/climb_group.php:6 ajax/assign_me.php:5
+msgid "missing parameters"
+msgstr "missing parameters"
+
+#: front/config.form.php:36 inc/user.class.php:168 inc/group_group.class.php:24
+#: setup.php:165
+msgid "Escalation"
+msgstr "Escalation"
+
+#: inc/notification.class.php:29
+msgid "Requester user of the ticket"
+msgstr "Requester user of the ticket"
+
+#: inc/notification.class.php:51
+msgid "Group escalated in the ticket"
+msgstr "Group escalated in the ticket"
+
+#: inc/notification.class.php:53
+msgid "Manager of the group escalated in the ticket"
+msgstr "Manager of the group escalated in the ticket"
+
+#: inc/notification.class.php:57
+msgid "Requester user of the task/reminder"
+msgstr "Requester user of the task/reminder"
+
+#: inc/notification.class.php:187
+msgid "Solve date modification"
+msgstr "Solve date modification"
+
+#: inc/user.class.php:129
+msgid "Bypass filtering on the groups assignment"
+msgstr "Bypass filtering on the groups assignment"
+
+#: inc/ticket.class.php:101
+msgid "Solution provided, back to the group"
+msgstr "Solution provided, back to the group"
+
+#: inc/ticket.class.php:163
+msgid "Solution rejected, return to the group"
+msgstr "Solution rejected, return to the group"
+
+#: inc/ticket.class.php:272
+msgid "escalated to the group"
+msgstr "escalated to the group"
+
+#: inc/ticket.class.php:641
+msgid "Error : get old ticket"
+msgstr "Error : get old ticket"
+
+#: inc/ticket.class.php:657
+msgid "Error : adding new ticket"
+msgstr "Error : adding new ticket"
+
+#: inc/ticket.class.php:669
+msgid "Error : adding link between the two tickets"
+msgstr "Error : adding link between the two tickets"
+
+#: inc/ticket.class.php:679 inc/ticket.class.php:720 inc/ticket.class.php:725
+msgid "This ticket has been cloned from the ticket num"
+msgstr "This ticket has been cloned from the ticket num"
+
+#: inc/ticket.class.php:684
+msgid "Error : adding followups"
+msgstr "Error : adding followups"
+
+#: inc/ticket.class.php:695
+msgid "Error : adding actors (user)"
+msgstr "Error : adding actors (user)"
+
+#: inc/ticket.class.php:704
+msgid "Error : adding actors (group)"
+msgstr "Error : adding actors (group)"
+
+#: inc/ticket.class.php:714
+msgid "Error : adding documents"
+msgstr "Error : adding documents"
+
+#: inc/history.class.php:95
+msgid "Reassign the ticket to group"
+msgstr "Reassign the ticket to group"
+
+#: inc/history.class.php:119
+msgid "View full history"
+msgstr "View full history"
+
+#: inc/history.class.php:166
+msgid "Tickets to follow (climbed)"
+msgstr "Tickets to follow (climbed)"
+
+#: inc/history.class.php:180
+msgid "Tickets to close (climbed)"
+msgstr "Tickets to close (climbed)"
 
 #: inc/config.class.php:7
 msgid "Configuration Escalade plugin"
@@ -114,89 +198,9 @@ msgstr ""
 msgid "Display delete button"
 msgstr "Display delete button"
 
-#: inc/config.class.php:295
+#: inc/config.class.php:299
 msgid "Don't change"
 msgstr "Don't change"
-
-#: inc/notification.class.php:29
-msgid "Requester user of the ticket"
-msgstr "Requester user of the ticket"
-
-#: inc/notification.class.php:51
-msgid "Group escalated in the ticket"
-msgstr "Group escalated in the ticket"
-
-#: inc/notification.class.php:53
-msgid "Manager of the group escalated in the ticket"
-msgstr "Manager of the group escalated in the ticket"
-
-#: inc/notification.class.php:57
-msgid "Requester user of the task/reminder"
-msgstr "Requester user of the task/reminder"
-
-#: inc/notification.class.php:187
-msgid "Solve date modification"
-msgstr "Solve date modification"
-
-#: inc/history.class.php:95
-msgid "Reassign the ticket to group"
-msgstr "Reassign the ticket to group"
-
-#: inc/history.class.php:119
-msgid "View full history"
-msgstr "View full history"
-
-#: inc/history.class.php:166
-msgid "Tickets to follow (climbed)"
-msgstr "Tickets to follow (climbed)"
-
-#: inc/history.class.php:180
-msgid "Tickets to close (climbed)"
-msgstr "Tickets to close (climbed)"
-
-#: inc/ticket.class.php:101
-msgid "Solution provided, back to the group"
-msgstr "Solution provided, back to the group"
-
-#: inc/ticket.class.php:163
-msgid "Solution rejected, return to the group"
-msgstr "Solution rejected, return to the group"
-
-#: inc/ticket.class.php:272
-msgid "escalated to the group"
-msgstr "escalated to the group"
-
-#: inc/ticket.class.php:641
-msgid "Error : get old ticket"
-msgstr "Error : get old ticket"
-
-#: inc/ticket.class.php:657
-msgid "Error : adding new ticket"
-msgstr "Error : adding new ticket"
-
-#: inc/ticket.class.php:669
-msgid "Error : adding link between the two tickets"
-msgstr "Error : adding link between the two tickets"
-
-#: inc/ticket.class.php:679 inc/ticket.class.php:720 inc/ticket.class.php:725
-msgid "This ticket has been cloned from the ticket num"
-msgstr "This ticket has been cloned from the ticket num"
-
-#: inc/ticket.class.php:684
-msgid "Error : adding followups"
-msgstr "Error : adding followups"
-
-#: inc/ticket.class.php:695
-msgid "Error : adding actors (user)"
-msgstr "Error : adding actors (user)"
-
-#: inc/ticket.class.php:704
-msgid "Error : adding actors (group)"
-msgstr "Error : adding actors (group)"
-
-#: inc/ticket.class.php:714
-msgid "Error : adding documents"
-msgstr "Error : adding documents"
 
 #: js/cloneandlink_ticket.js.php:13
 msgid "Clone and link"
