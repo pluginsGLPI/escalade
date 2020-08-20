@@ -240,20 +240,19 @@ class PluginEscaladeTicket {
          'counter'            => $counter
       ]);
 
-      //remove old user(s) (pass if user added by new ticket)
+      // check if group assignment is made during ticket creation
+      // in this case, skip following steps as it cannot be considered as a group escalation
       $backtraces   = debug_backtrace();
-      $keep_users_id = false;
-
       foreach ($backtraces as $backtrace) {
          if ($backtrace['function'] == "add"
             && ($backtrace['object'] instanceOf CommonITILObject)) {
-            $keep_users_id = true;
+            return;
             break;
          }
       }
-      if (!$keep_users_id) {
-         self::removeAssignUsers($tickets_id);
-      }
+
+      //remove old user(s) (pass if user added by new ticket)
+      self::removeAssignUsers($tickets_id);
 
       //add a task to inform the escalation (pass if solution)
       if (isset($_SESSION['plugin_escalade']['solution'])) {
@@ -271,15 +270,6 @@ class PluginEscaladeTicket {
             'state'      => Planning::INFO,
             'content'    => Toolbox::addslashes_deep(__("escalated to the group", "escalade") . " " . $group->getName())
          ]);
-      }
-
-      //check if event is not triggered by behaviors plugin
-      //to prevent user remove when "add technician group" option is active
-      foreach ($backtraces as $backtrace) {
-         if ($backtrace['function'] == "add"
-            && ($backtrace['object'] instanceOf CommonITILObject)) {
-            return;
-         }
       }
 
       if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] != -1) {
