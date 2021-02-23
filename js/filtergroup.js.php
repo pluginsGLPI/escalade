@@ -3,6 +3,7 @@ include ("../../../inc/includes.php");
 
 //change mimetype
 header("Content-type: application/javascript");
+$token = Session::getNewIDORToken(Group::getType());
 
 $JS = <<<JAVASCRIPT
 if (location.pathname.indexOf('ticket.form.php') == 0) {
@@ -15,7 +16,8 @@ var urlGroup   = plugin_url+'/ajax/group_values.php';
 var urlUser    = plugin_url+'/ajax/user_values.php';
 var tickets_id = getUrlParameter('id');
 
-function redefineDropdown(id, url, tickets_id, itemtype) {
+
+function redefineDropdown(id, url, tickets_id, itemtype, token) {
 
 $('#' + id).select2({
    width: '80%',
@@ -43,6 +45,7 @@ $('#' + id).select2({
             searchText: params.term,
             page_limit: 100, // page size
             page: page, // page number
+            _idor_token: token,
                };
             },
             results: function (data, page) {
@@ -74,7 +77,8 @@ $('#' + id).select2({
                      limit: "50",
                      permit_select_parent: false,
                      specific_tags: [],
-                     _one_id: id},
+                     _one_id: id,
+                     _idor_token: token},
                      dataType: 'json',
                      type: 'POST'
                }).done(function(data) { callback(data); });
@@ -96,7 +100,7 @@ $(document).ready(function() {
          setTimeout(function() {
             // Group
             var assign_select_dom_id = $("[name='_groups_id_assign']")[0].id;
-            redefineDropdown(assign_select_dom_id, urlGroup, 0, 'Group');
+            redefineDropdown(assign_select_dom_id, urlGroup, 0, 'Group', "{$token}");
 
             // User
             /*var assign_select_dom_id = $("*[name='_users_id_assign']")[0].id;
@@ -116,7 +120,7 @@ $(document).ready(function() {
             ) {
             checkDOMChange("[name='_itil_assign[groups_id]'", function() {
                var assign_select_dom_id = $("[name='_itil_assign[groups_id]']")[0].id;
-               redefineDropdown(assign_select_dom_id, urlGroup, tickets_id, 'Group');
+               redefineDropdown(assign_select_dom_id, urlGroup, tickets_id, 'Group', "{$token}");
             });
          }
 
