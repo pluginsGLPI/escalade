@@ -18,6 +18,7 @@ if (count($groups_id_filtred) > 0) {
 }
 
 $_POST["condition"] = Dropdown::addNewCondition($condition);
+$_POST['_idor_token'] = Session::getNewIDORToken(Group::getType());
 
 if (!isset($_POST["entity_restrict"]) && $ticket_id) {
    $ticket = new Ticket();

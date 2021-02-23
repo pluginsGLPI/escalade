@@ -20,5 +20,6 @@ if (count($groups_id_filtred) > 0) {
 
 $_SESSION['glpigroups']  = $groups;
 $_GET['right']           = 'groups';
+$_POST['_idor_token']    = Session::getNewIDORToken(User::getType());
 
 require ("../../../ajax/getDropdownUsers.php");
