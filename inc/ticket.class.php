@@ -298,7 +298,7 @@ class PluginEscaladeTicket {
       $ticket = new Ticket();
       $ticket->getFromDB($tickets_id);
 
-      $event = "assign_".strtolower('Group');
+      $event = "assign_group";
       NotificationEvent::raiseEvent($event, $ticket);
    }
 
