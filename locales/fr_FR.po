@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-03 18:47+0000\n"
+"POT-Creation-Date: 2021-04-12 07:54+0000\n"
 "PO-Revision-Date: 2020-07-03 18:47+0000\n"
 "Last-Translator: Cédric Anne\n"
 "Language-Team: French (France) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/fr_FR/)\n"
@@ -22,19 +22,19 @@ msgstr ""
 "Language: fr_FR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: hook.php:424
+#: hook.php:426
 msgid "Group concerned by the escalation"
 msgstr "Groupe concerné par l'escalade"
 
-#: hook.php:442
+#: hook.php:444
 msgid "Number of escalations"
 msgstr "Nombre d'escalades"
 
-#: hook.php:456
+#: hook.php:458
 msgid "Number of escalations between two groups"
 msgstr "Nombre d'escalades entre deux groupes"
 
-#: hook.php:469 hook.php:487 inc/config.class.php:260
+#: hook.php:471 hook.php:489 inc/config.class.php:260
 msgid "Enable filtering on the groups assignment"
 msgstr "Activer le filtrage sur les groupes d'attribution"
 
@@ -83,39 +83,39 @@ msgstr "Solution apportée, retour vers le groupe"
 msgid "Solution rejected, return to the group"
 msgstr "Solution rejetée, renvoi vers le groupe"
 
-#: inc/ticket.class.php:272
+#: inc/ticket.class.php:271
 msgid "escalated to the group"
 msgstr "Escalade vers le groupe"
 
-#: inc/ticket.class.php:641
+#: inc/ticket.class.php:638
 msgid "Error : get old ticket"
 msgstr "Erreur : erreur récupération ancien ticket"
 
-#: inc/ticket.class.php:657
+#: inc/ticket.class.php:654
 msgid "Error : adding new ticket"
 msgstr "Erreur : ajout du nouveau ticket"
 
-#: inc/ticket.class.php:669
+#: inc/ticket.class.php:666
 msgid "Error : adding link between the two tickets"
 msgstr "Erreur : ajout lien entre les deux tickets"
 
-#: inc/ticket.class.php:679 inc/ticket.class.php:720 inc/ticket.class.php:725
+#: inc/ticket.class.php:676 inc/ticket.class.php:717 inc/ticket.class.php:722
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Ce ticket a été cloné depuis le ticket n°"
 
-#: inc/ticket.class.php:684
+#: inc/ticket.class.php:681
 msgid "Error : adding followups"
 msgstr "Erreur: ajout des suivis"
 
-#: inc/ticket.class.php:695
+#: inc/ticket.class.php:692
 msgid "Error : adding actors (user)"
 msgstr "Erreur : ajout des acteurs (utilisateur)"
 
-#: inc/ticket.class.php:704
+#: inc/ticket.class.php:701
 msgid "Error : adding actors (group)"
 msgstr "Erreur : ajout des acteurs (groupe)"
 
-#: inc/ticket.class.php:714
+#: inc/ticket.class.php:711
 msgid "Error : adding documents"
 msgstr "Erreur : ajout des documents"
 

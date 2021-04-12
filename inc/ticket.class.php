@@ -293,6 +293,13 @@ class PluginEscaladeTicket {
 
       //remove old groups (keep last assigned)
       self::removeAssignGroups($tickets_id, $groups_id);
+
+      //notified only the last group assigned
+      $ticket = new Ticket();
+      $ticket->getFromDB($tickets_id);
+
+      $event = "assign_group";
+      NotificationEvent::raiseEvent($event, $ticket);
    }
 
 

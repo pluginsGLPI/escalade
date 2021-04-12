@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-03 18:47+0000\n"
+"POT-Creation-Date: 2021-04-12 07:54+0000\n"
 "PO-Revision-Date: 2020-07-03 18:47+0000\n"
 "Last-Translator: Cédric Anne\n"
 "Language-Team: Portuguese (Portugal) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/pt_PT/)\n"
@@ -17,19 +17,19 @@ msgstr ""
 "Language: pt_PT\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: hook.php:424
+#: hook.php:426
 msgid "Group concerned by the escalation"
 msgstr "Grupo preocupado com a escalada"
 
-#: hook.php:442
+#: hook.php:444
 msgid "Number of escalations"
 msgstr "Número de escaladas"
 
-#: hook.php:456
+#: hook.php:458
 msgid "Number of escalations between two groups"
 msgstr "Número de escaladas entre dois grupos"
 
-#: hook.php:469 hook.php:487 inc/config.class.php:260
+#: hook.php:471 hook.php:489 inc/config.class.php:260
 msgid "Enable filtering on the groups assignment"
 msgstr "Ativar filtragem na atribuição de grupos"
 
@@ -78,39 +78,39 @@ msgstr "Solução fornecida, volta para o grupo"
 msgid "Solution rejected, return to the group"
 msgstr "Solução rejeitada, retorno ao grupo"
 
-#: inc/ticket.class.php:272
+#: inc/ticket.class.php:271
 msgid "escalated to the group"
 msgstr "Escalado para o grupo"
 
-#: inc/ticket.class.php:641
+#: inc/ticket.class.php:638
 msgid "Error : get old ticket"
 msgstr "Erro: comprar passagem velha"
 
-#: inc/ticket.class.php:657
+#: inc/ticket.class.php:654
 msgid "Error : adding new ticket"
 msgstr "Erro: adicionando novo ticket"
 
-#: inc/ticket.class.php:669
+#: inc/ticket.class.php:666
 msgid "Error : adding link between the two tickets"
 msgstr "Erro: adição de ligação entre os dois ingressos"
 
-#: inc/ticket.class.php:679 inc/ticket.class.php:720 inc/ticket.class.php:725
+#: inc/ticket.class.php:676 inc/ticket.class.php:717 inc/ticket.class.php:722
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Este bilhete foi clonado do bilhete num"
 
-#: inc/ticket.class.php:684
+#: inc/ticket.class.php:681
 msgid "Error : adding followups"
 msgstr "Erro: adicionando followups"
 
-#: inc/ticket.class.php:695
+#: inc/ticket.class.php:692
 msgid "Error : adding actors (user)"
 msgstr "Erro: adição de atores (usuário)"
 
-#: inc/ticket.class.php:704
+#: inc/ticket.class.php:701
 msgid "Error : adding actors (group)"
 msgstr "Erro: adição de atores (grupo)"
 
-#: inc/ticket.class.php:714
+#: inc/ticket.class.php:711
 msgid "Error : adding documents"
 msgstr "Erro: adição documentos"
 
