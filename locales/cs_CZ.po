@@ -4,15 +4,15 @@
 # 
 # Translators:
 # Cédric Anne, 2018
-# David Stepan <stepand@tiscali.cz>, 2016
+# David Stepan <stepand@tiscali.cz>, 2016,2020
 # Pavel Borecki <pavel.borecki@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-03 18:47+0000\n"
-"PO-Revision-Date: 2020-07-03 18:47+0000\n"
-"Last-Translator: Cédric Anne\n"
+"POT-Creation-Date: 2021-04-12 07:54+0000\n"
+"PO-Revision-Date: 2020-09-01 20:36+0000\n"
+"Last-Translator: David Stepan <stepand@tiscali.cz>\n"
 "Language-Team: Czech (Czech Republic) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/cs_CZ/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,19 +20,19 @@ msgstr ""
 "Language: cs_CZ\n"
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 
-#: hook.php:424
+#: hook.php:426
 msgid "Group concerned by the escalation"
 msgstr "Skupina které se eskalace týká"
 
-#: hook.php:442
+#: hook.php:444
 msgid "Number of escalations"
 msgstr "Počet eskalací"
 
-#: hook.php:456
+#: hook.php:458
 msgid "Number of escalations between two groups"
 msgstr "Počet eskalací mezi dvěma skupinami"
 
-#: hook.php:469 hook.php:487 inc/config.class.php:260
+#: hook.php:471 hook.php:489 inc/config.class.php:260
 msgid "Enable filtering on the groups assignment"
 msgstr "Filtrovat dle přiřazení skupin"
 
@@ -71,7 +71,7 @@ msgstr "Změna data vyřešení"
 
 #: inc/user.class.php:129
 msgid "Bypass filtering on the groups assignment"
-msgstr ""
+msgstr "Vynechat filtrování přiřazení skupin"
 
 #: inc/ticket.class.php:101
 msgid "Solution provided, back to the group"
@@ -81,39 +81,39 @@ msgstr "Řešení poskytnuto, zpět ke skupině"
 msgid "Solution rejected, return to the group"
 msgstr "Řešení odmítnuto, vráceno skupině"
 
-#: inc/ticket.class.php:272
+#: inc/ticket.class.php:271
 msgid "escalated to the group"
 msgstr "eskalováno na skupinu"
 
-#: inc/ticket.class.php:641
+#: inc/ticket.class.php:638
 msgid "Error : get old ticket"
 msgstr "Chyba: získání původního požadavku"
 
-#: inc/ticket.class.php:657
+#: inc/ticket.class.php:654
 msgid "Error : adding new ticket"
 msgstr "Chyba: přidávání nového požadavku"
 
-#: inc/ticket.class.php:669
+#: inc/ticket.class.php:666
 msgid "Error : adding link between the two tickets"
 msgstr "Chyba: přidávání propojení mezi dvěma požadavky"
 
-#: inc/ticket.class.php:679 inc/ticket.class.php:720 inc/ticket.class.php:725
+#: inc/ticket.class.php:676 inc/ticket.class.php:717 inc/ticket.class.php:722
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Tento požadavek byl z požadavku č."
 
-#: inc/ticket.class.php:684
+#: inc/ticket.class.php:681
 msgid "Error : adding followups"
 msgstr "Chyba: přidávání doplňující zprávy"
 
-#: inc/ticket.class.php:695
+#: inc/ticket.class.php:692
 msgid "Error : adding actors (user)"
 msgstr "Chyba: přidávání řešitelů (uživatel)"
 
-#: inc/ticket.class.php:704
+#: inc/ticket.class.php:701
 msgid "Error : adding actors (group)"
 msgstr "Chyba: přidávání řešitelů (skupina)"
 
-#: inc/ticket.class.php:714
+#: inc/ticket.class.php:711
 msgid "Error : adding documents"
 msgstr "Chyba: přidávání dokumentů"
 

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-03 18:47+0000\n"
+"POT-Creation-Date: 2021-04-12 07:54+0000\n"
 "PO-Revision-Date: 2020-07-03 18:47+0000\n"
 "Last-Translator: Cédric Anne\n"
 "Language-Team: Italian (Italy) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/it_IT/)\n"
@@ -19,19 +19,19 @@ msgstr ""
 "Language: it_IT\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: hook.php:424
+#: hook.php:426
 msgid "Group concerned by the escalation"
 msgstr "Gruppo coinvolto nell'escalazione"
 
-#: hook.php:442
+#: hook.php:444
 msgid "Number of escalations"
 msgstr "Numero di escalation"
 
-#: hook.php:456
+#: hook.php:458
 msgid "Number of escalations between two groups"
 msgstr "Numero di escalation tra due gruppi"
 
-#: hook.php:469 hook.php:487 inc/config.class.php:260
+#: hook.php:471 hook.php:489 inc/config.class.php:260
 msgid "Enable filtering on the groups assignment"
 msgstr "Abilitare il filtro per gruppi di assegnazione"
 
@@ -80,39 +80,39 @@ msgstr "Soluzione fornita, rimandata al gruppo"
 msgid "Solution rejected, return to the group"
 msgstr "Soluzione rifiutata, rimandata al gruppo"
 
-#: inc/ticket.class.php:272
+#: inc/ticket.class.php:271
 msgid "escalated to the group"
 msgstr "Escalation al gruppo"
 
-#: inc/ticket.class.php:641
+#: inc/ticket.class.php:638
 msgid "Error : get old ticket"
 msgstr "Errore: recupera le chiamate vecchie"
 
-#: inc/ticket.class.php:657
+#: inc/ticket.class.php:654
 msgid "Error : adding new ticket"
 msgstr "Errore: aggiungi nuove chiamate"
 
-#: inc/ticket.class.php:669
+#: inc/ticket.class.php:666
 msgid "Error : adding link between the two tickets"
 msgstr "Errore: durante il collegamento tra due chiamate"
 
-#: inc/ticket.class.php:679 inc/ticket.class.php:720 inc/ticket.class.php:725
+#: inc/ticket.class.php:676 inc/ticket.class.php:717 inc/ticket.class.php:722
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Questa chiamata deriva dalla chiamata numero"
 
-#: inc/ticket.class.php:684
+#: inc/ticket.class.php:681
 msgid "Error : adding followups"
 msgstr "Error: durante l'aggiunta di un commento"
 
-#: inc/ticket.class.php:695
+#: inc/ticket.class.php:692
 msgid "Error : adding actors (user)"
 msgstr "Errore: durante l'aggiunta di attori (utenti)"
 
-#: inc/ticket.class.php:704
+#: inc/ticket.class.php:701
 msgid "Error : adding actors (group)"
 msgstr "Errore: durante l'aggiunta di attori (gruppi)"
 
-#: inc/ticket.class.php:714
+#: inc/ticket.class.php:711
 msgid "Error : adding documents"
 msgstr "Errore aggiungendo documenti"
 
