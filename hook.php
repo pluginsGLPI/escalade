@@ -298,13 +298,6 @@ function plugin_escalade_install() {
             );
          }
       }
-      if ($DB->fieldExists('glpi_plugin_escalade_configs', 'remove_delete_supplier_btn')) {
-         $migration->changeField('glpi_plugin_escalade_configs',
-                                 'remove_delete_supplier_btn',
-                                 'remove_delete_assign_supplier_btn',
-                                 'bool',
-                                 ['value' => 1]);
-      }
 
    }
    //Update to 2.6.3
