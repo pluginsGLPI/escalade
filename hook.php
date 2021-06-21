@@ -80,6 +80,8 @@ function plugin_escalade_install() {
          `remove_delete_assign_supplier_btn`       TINYINT(1) NOT NULL DEFAULT 1,
          `use_filter_assign_group`                 INT(11) NOT NULL,
          `ticket_last_status`                      INT(11) NOT NULL,
+         `remove_requester`                        INT(11) NOT NULL,
+         `use_assign_requester_group`              INT(11) NOT NULL,
          PRIMARY KEY (`id`)
       ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
       $DB->query($query);
@@ -297,7 +299,26 @@ function plugin_escalade_install() {
             );
          }
       }
+      if ($DB->fieldExists('glpi_plugin_escalade_configs', 'remove_delete_supplier_btn')) {
+         $migration->changeField('glpi_plugin_escalade_configs',
+                                 'remove_delete_supplier_btn',
+                                 'remove_delete_assign_supplier_btn',
+                                 'bool',
+                                 ['value' => 1]);
+      }
 
+   }
+   //Update to 2.6.3
+   // add new fields
+   if (!$DB->fieldExists('glpi_plugin_escalade_configs', 'remove_requester')) {
+      $migration->addField('glpi_plugin_escalade_configs', 'remove_requester',
+                           'integer', ['after' => 'ticket_last_status']);
+      $migration->migrationOneTable('glpi_plugin_escalade_configs');
+   }
+   if (!$DB->fieldExists('glpi_plugin_escalade_configs', 'use_assign_requester_group')) {
+      $migration->addField('glpi_plugin_escalade_configs', 'use_assign_requester_group',
+                           'integer', ['after' => 'remove_requester']);
+      $migration->migrationOneTable('glpi_plugin_escalade_configs');
    }
 
    return true;
@@ -371,6 +392,9 @@ function plugin_escalade_item_add_user($item) {
       //this hook is only for assign
       if ($item->fields['type'] == CommonITILActor::ASSIGN) {
          return PluginEscaladeTicket::item_add_user($item);
+      }
+      if ($item->fields['type'] == CommonITILActor::REQUESTER) {
+         return PluginEscaladeTicket::item_add_user($item,CommonITILActor::REQUESTER);
       }
    }
    return true;

@@ -201,6 +201,17 @@ class PluginEscaladeConfig extends CommonDBTM {
 
       $rand = mt_rand();
       echo "<tr class='tab_bg_1'>";
+      echo "<td><label for='dropdown_remove_requester$rand'>".__("Remove requester(s) on escalation", "escalade"). "</label></td>";
+      echo "<td>";
+      Dropdown::showYesNo("remove_requester", $this->fields["remove_requester"], -1, [
+         'width' => '100%',
+         'rand' => $rand,
+      ]);
+      echo "</td>";
+      echo "</tr>";
+
+      $rand = mt_rand();
+      echo "<tr class='tab_bg_1'>";
       echo "<td><label for='dropdown_remove_delete_group_btn$rand'>";
       echo __("Display delete button", "escalade") . "</td>";
       echo "<td colspan='3'>";
