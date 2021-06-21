@@ -441,14 +441,21 @@ class PluginEscaladeTicket {
     * @param  int $tickets_id
     * @return nothing
     */
-   static function removeAssignUsers($tickets_id, $keep_users_id = false) {
-      if ($_SESSION['plugins']['escalade']['config']['remove_tech'] == false) {
+   static function removeAssignUsers($tickets_id, $keep_users_id = false, $type = CommonITILActor::ASSIGN) {
+      if ($_SESSION['plugins']['escalade']['config']['remove_tech'] == false
+          && $_SESSION['plugins']['escalade']['config']['remove_requester'] == false) {
+         return true;
+      }
+      if($type == CommonITILActor::ASSIGN && !$_SESSION['plugins']['escalade']['config']['remove_tech']) {
+         return true;
+      }
+      if($type == CommonITILActor::REQUESTER && !$_SESSION['plugins']['escalade']['config']['remove_requester']) {
          return true;
       }
 
       $where_keep = [
          'tickets_id' => $tickets_id,
-         'type'       => CommonITILActor::ASSIGN,
+         'type' => $type
       ];
       if ($keep_users_id !== false) {
          $where_keep[] = ['NOT' => ['users_id' => $keep_users_id]];
@@ -483,14 +490,14 @@ class PluginEscaladeTicket {
     * @param  Ticket_User $item Ticket_User object
     * @return nothing
     */
-   static function item_add_user(Ticket_User $item) {
+   static function item_add_user(Ticket_User $item, $type = CommonITILActor::ASSIGN) {
       $users_id   = $item->input['users_id'];
       $tickets_id = $item->input['tickets_id'];
       $ticket = new Ticket();
       $ticket->getFromDB($tickets_id);
       $groups_id = [];
 
-      self::removeAssignUsers($tickets_id, $users_id);
+      self::removeAssignUsers($tickets_id, $users_id, $type);
 
       // == Add user groups on modification ==
       //check this plugin config
