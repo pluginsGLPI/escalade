@@ -341,6 +341,13 @@ function plugin_escalade_item_purge($item) {
    return true;
 }
 
+function plugin_escalade_pre_item_update($item) {
+   if ($item instanceof Ticket) {
+      return PluginEscaladeTicket::pre_item_update($item);
+   }
+   return true;
+}
+
 function plugin_escalade_item_update($item) {
    if ($item instanceof Ticket) {
       return PluginEscaladeTicket::item_update($item);

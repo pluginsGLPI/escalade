@@ -5,6 +5,17 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginEscaladeTicket {
 
+   public static function pre_item_update(CommonDBTM $item) {
+      // If forcing INCOMING status on group change, prevent it from being
+      // dropped by take into account autocomputation
+      if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] == CommonITILObject::INCOMING
+         && $item->fields['status'] == CommonITILObject::INCOMING
+         && ($item->input['_itil_assign']['groups_id'] ?? 0) > 0
+      ) {
+         $item->input['_do_not_compute_status'] = true;
+      }
+   }
+
    /**
     * Provide a redirection to other functions
     * @param  CommonDBTM $item
