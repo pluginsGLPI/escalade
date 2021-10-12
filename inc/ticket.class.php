@@ -5,6 +5,17 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginEscaladeTicket {
 
+   public static function pre_item_update(CommonDBTM $item) {
+      // If forcing INCOMING status on group change, prevent it from being
+      // dropped by take into account autocomputation
+      if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] == CommonITILObject::INCOMING
+         && $item->fields['status'] == CommonITILObject::INCOMING
+         && ($item->input['_itil_assign']['groups_id'] ?? 0) > 0
+      ) {
+         $item->input['_do_not_compute_status'] = true;
+      }
+   }
+
    /**
     * Provide a redirection to other functions
     * @param  CommonDBTM $item
@@ -430,14 +441,21 @@ class PluginEscaladeTicket {
     * @param  int $tickets_id
     * @return nothing
     */
-   static function removeAssignUsers($tickets_id, $keep_users_id = false) {
-      if ($_SESSION['plugins']['escalade']['config']['remove_tech'] == false) {
+   static function removeAssignUsers($tickets_id, $keep_users_id = false, $type = CommonITILActor::ASSIGN) {
+      if ($_SESSION['plugins']['escalade']['config']['remove_tech'] == false
+          && $_SESSION['plugins']['escalade']['config']['remove_requester'] == false) {
+         return true;
+      }
+      if($type == CommonITILActor::ASSIGN && !$_SESSION['plugins']['escalade']['config']['remove_tech']) {
+         return true;
+      }
+      if($type == CommonITILActor::REQUESTER && !$_SESSION['plugins']['escalade']['config']['remove_requester']) {
          return true;
       }
 
       $where_keep = [
          'tickets_id' => $tickets_id,
-         'type'       => CommonITILActor::ASSIGN,
+         'type' => $type
       ];
       if ($keep_users_id !== false) {
          $where_keep[] = ['NOT' => ['users_id' => $keep_users_id]];
@@ -472,14 +490,14 @@ class PluginEscaladeTicket {
     * @param  Ticket_User $item Ticket_User object
     * @return nothing
     */
-   static function item_add_user(Ticket_User $item) {
+   static function item_add_user(Ticket_User $item, $type = CommonITILActor::ASSIGN) {
       $users_id   = $item->input['users_id'];
       $tickets_id = $item->input['tickets_id'];
       $ticket = new Ticket();
       $ticket->getFromDB($tickets_id);
       $groups_id = [];
 
-      self::removeAssignUsers($tickets_id, $users_id);
+      self::removeAssignUsers($tickets_id, $users_id, $type);
 
       // == Add user groups on modification ==
       //check this plugin config

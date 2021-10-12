@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Tiago Graca, 2020
+# Tiago Graça, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-12 07:54+0000\n"
-"PO-Revision-Date: 2020-11-24 02:36+0000\n"
-"Last-Translator: Tiago Graca\n"
+"POT-Creation-Date: 2021-10-12 12:08+0000\n"
+"PO-Revision-Date: 2021-10-12 12:37+0000\n"
+"Last-Translator: Cédric Anne\n"
 "Language-Team: French (Canada) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/fr_CA/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,19 +18,19 @@ msgstr ""
 "Language: fr_CA\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: hook.php:426
+#: hook.php:444
 msgid "Group concerned by the escalation"
 msgstr "Groupe concerné par l'escalade"
 
-#: hook.php:444
+#: hook.php:462
 msgid "Number of escalations"
 msgstr "Nombre d'escalades"
 
-#: hook.php:458
+#: hook.php:476
 msgid "Number of escalations between two groups"
 msgstr "Nombre d'escalades entre deux groupes"
 
-#: hook.php:471 hook.php:489 inc/config.class.php:260
+#: hook.php:489 hook.php:507 inc/config.class.php:271
 msgid "Enable filtering on the groups assignment"
 msgstr "Activer le filtrage sur l'attribution des groupes"
 
@@ -43,7 +43,7 @@ msgid "missing parameters"
 msgstr "paramètres manquants"
 
 #: front/config.form.php:36 inc/user.class.php:168
-#: inc/group_group.class.php:24 setup.php:165
+#: inc/group_group.class.php:24 setup.php:168
 msgid "Escalation"
 msgstr "Escalade"
 
@@ -71,47 +71,47 @@ msgstr "Date de modification de la résolution"
 msgid "Bypass filtering on the groups assignment"
 msgstr "Outrepasser le filtrage lors de l'assignation de groupes"
 
-#: inc/ticket.class.php:101
+#: inc/ticket.class.php:112
 msgid "Solution provided, back to the group"
 msgstr "Solution fournie, retour au groupe"
 
-#: inc/ticket.class.php:163
+#: inc/ticket.class.php:174
 msgid "Solution rejected, return to the group"
 msgstr "Solution rejetée, renvoi au groupe"
 
-#: inc/ticket.class.php:271
+#: inc/ticket.class.php:282
 msgid "escalated to the group"
 msgstr "escalade au groupe"
 
-#: inc/ticket.class.php:638
+#: inc/ticket.class.php:656
 msgid "Error : get old ticket"
 msgstr "Erreur : récupération ancien ticket"
 
-#: inc/ticket.class.php:654
+#: inc/ticket.class.php:672
 msgid "Error : adding new ticket"
 msgstr "Erreur : ajout de nouveau ticket"
 
-#: inc/ticket.class.php:666
+#: inc/ticket.class.php:684
 msgid "Error : adding link between the two tickets"
 msgstr "Erreur : ajout de lien entre les deux tickets"
 
-#: inc/ticket.class.php:676 inc/ticket.class.php:717 inc/ticket.class.php:722
+#: inc/ticket.class.php:694 inc/ticket.class.php:735 inc/ticket.class.php:740
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Ce ticket a été cloné depuis le ticket n°"
 
-#: inc/ticket.class.php:681
+#: inc/ticket.class.php:699
 msgid "Error : adding followups"
 msgstr "Erreur: ajout des suivis"
 
-#: inc/ticket.class.php:692
+#: inc/ticket.class.php:710
 msgid "Error : adding actors (user)"
 msgstr "Erreur : ajout des acteurs (utilisateur)"
 
-#: inc/ticket.class.php:701
+#: inc/ticket.class.php:719
 msgid "Error : adding actors (group)"
 msgstr "Erreur : ajout des acteurs (groupe)"
 
-#: inc/ticket.class.php:711
+#: inc/ticket.class.php:729
 msgid "Error : adding documents"
 msgstr "Erreur : ajout des documents"
 
@@ -193,11 +193,15 @@ msgid ""
 "href='##link##'>Behavior</a>plugin. This last has priority."
 msgstr "Note: Cette fonctionnalité (partie création) est en doublon avec le plugin <a href='##link##'>Comportement</a>. Ce dernier ayant la priorité."
 
-#: inc/config.class.php:205
+#: inc/config.class.php:204
+msgid "Remove requester(s) on escalation"
+msgstr ""
+
+#: inc/config.class.php:216
 msgid "Display delete button"
 msgstr "Afficher le bouton de suppression"
 
-#: inc/config.class.php:299
+#: inc/config.class.php:310
 msgid "Don't change"
 msgstr "Ne pas modifier"
 

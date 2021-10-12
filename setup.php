@@ -26,7 +26,7 @@
  --------------------------------------------------------------------------
  */
 
-define ('PLUGIN_ESCALADE_VERSION', '2.6.2');
+define ('PLUGIN_ESCALADE_VERSION', '2.7.0');
 
 // Minimal GLPI version, inclusive
 define("PLUGIN_ESCALADE_MIN_GLPI", "9.5");
@@ -112,6 +112,9 @@ function plugin_init_escalade() {
       $PLUGIN_HOOKS['add_css']['escalade'][]= 'css/escalade.css';
 
       // == Ticket modifications
+      $PLUGIN_HOOKS['pre_item_update']['escalade'] = [
+         'Ticket'       => 'plugin_escalade_pre_item_update',
+      ];
       $PLUGIN_HOOKS['item_update']['escalade']= [
          'Ticket'       => 'plugin_escalade_item_update',
       ];

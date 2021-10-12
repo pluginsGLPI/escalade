@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-12 07:54+0000\n"
-"PO-Revision-Date: 2020-07-03 18:47+0000\n"
+"POT-Creation-Date: 2021-10-12 12:08+0000\n"
+"PO-Revision-Date: 2021-10-12 12:37+0000\n"
 "Last-Translator: Cédric Anne\n"
 "Language-Team: Latvian (Latvia) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/lv_LV/)\n"
 "MIME-Version: 1.0\n"
@@ -19,19 +19,19 @@ msgstr ""
 "Language: lv_LV\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
 
-#: hook.php:426
+#: hook.php:444
 msgid "Group concerned by the escalation"
 msgstr "Grupa saistīta ar eskalācijas procedūru"
 
-#: hook.php:444
+#: hook.php:462
 msgid "Number of escalations"
 msgstr "Eskalāciju skaits"
 
-#: hook.php:458
+#: hook.php:476
 msgid "Number of escalations between two groups"
 msgstr "Eskalāciju skaits starp divām grupām"
 
-#: hook.php:471 hook.php:489 inc/config.class.php:260
+#: hook.php:489 hook.php:507 inc/config.class.php:271
 msgid "Enable filtering on the groups assignment"
 msgstr "Iespējot filtrēšanu grupu piešķiršanā"
 
@@ -44,7 +44,7 @@ msgid "missing parameters"
 msgstr "trūkstoši parametri"
 
 #: front/config.form.php:36 inc/user.class.php:168
-#: inc/group_group.class.php:24 setup.php:165
+#: inc/group_group.class.php:24 setup.php:168
 msgid "Escalation"
 msgstr "Eskalācija"
 
@@ -72,47 +72,47 @@ msgstr "Risinājuma rediģēšanas datums"
 msgid "Bypass filtering on the groups assignment"
 msgstr ""
 
-#: inc/ticket.class.php:101
+#: inc/ticket.class.php:112
 msgid "Solution provided, back to the group"
 msgstr "Atrisināts, atpakaļ pie grupas"
 
-#: inc/ticket.class.php:163
+#: inc/ticket.class.php:174
 msgid "Solution rejected, return to the group"
 msgstr "Risinājums noraidīts, atgriezt grupai"
 
-#: inc/ticket.class.php:271
+#: inc/ticket.class.php:282
 msgid "escalated to the group"
 msgstr "nodots grupai"
 
-#: inc/ticket.class.php:638
+#: inc/ticket.class.php:656
 msgid "Error : get old ticket"
 msgstr "Kļūda : iegūt veco pieteikumu"
 
-#: inc/ticket.class.php:654
+#: inc/ticket.class.php:672
 msgid "Error : adding new ticket"
 msgstr "Kļūda : pievienojot jauno pieteikumu"
 
-#: inc/ticket.class.php:666
+#: inc/ticket.class.php:684
 msgid "Error : adding link between the two tickets"
 msgstr "Kļūda : pievienojot sasaisti starp diviem pieteikumiem"
 
-#: inc/ticket.class.php:676 inc/ticket.class.php:717 inc/ticket.class.php:722
+#: inc/ticket.class.php:694 inc/ticket.class.php:735 inc/ticket.class.php:740
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Šīs pieteikums ir no pieteikuma num"
 
-#: inc/ticket.class.php:681
+#: inc/ticket.class.php:699
 msgid "Error : adding followups"
 msgstr "Kļūda : pievienojot sekojumus"
 
-#: inc/ticket.class.php:692
+#: inc/ticket.class.php:710
 msgid "Error : adding actors (user)"
 msgstr "Kļūda : pievienojot dalībniekus (lietotājus)"
 
-#: inc/ticket.class.php:701
+#: inc/ticket.class.php:719
 msgid "Error : adding actors (group)"
 msgstr "Kļūda : pievienojot dalībniekus (grupas)"
 
-#: inc/ticket.class.php:711
+#: inc/ticket.class.php:729
 msgid "Error : adding documents"
 msgstr "Kļūda : pievienojot dokumentus"
 
@@ -194,11 +194,15 @@ msgid ""
 "href='##link##'>Behavior</a>plugin. This last has priority."
 msgstr "Piezīme: Šī iespēja (izveidošanas daļa) ir dublikāts ar papildspraudni <a href='##link##'>Behavior</a>. Pēdējam ir prioritāte."
 
-#: inc/config.class.php:205
+#: inc/config.class.php:204
+msgid "Remove requester(s) on escalation"
+msgstr ""
+
+#: inc/config.class.php:216
 msgid "Display delete button"
 msgstr "Parādīt dzēšanas pogu"
 
-#: inc/config.class.php:299
+#: inc/config.class.php:310
 msgid "Don't change"
 msgstr "Nemainīt"
 
