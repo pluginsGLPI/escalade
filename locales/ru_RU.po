@@ -4,6 +4,7 @@
 # 
 # Translators:
 # Alexandre DELAUNAY <adelaunay@teclib.com>, 2013
+# Alexey Petukhov <lexx015@gmail.com>, 2021
 # Cédric Anne, 2018
 # Obscandoble Beembersdoockle <timur.mamezhanoff@gmail.com>, 2016
 # Pavlo Lacenko <pavelhimik@gmail.com>, 2018
@@ -11,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-12 07:54+0000\n"
-"PO-Revision-Date: 2020-07-03 18:47+0000\n"
+"POT-Creation-Date: 2021-10-12 12:08+0000\n"
+"PO-Revision-Date: 2021-10-12 12:37+0000\n"
 "Last-Translator: Cédric Anne\n"
 "Language-Team: Russian (Russia) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/ru_RU/)\n"
 "MIME-Version: 1.0\n"
@@ -21,19 +22,19 @@ msgstr ""
 "Language: ru_RU\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: hook.php:426
-msgid "Group concerned by the escalation"
-msgstr "Группа, назначенная при переназначении"
-
 #: hook.php:444
+msgid "Group concerned by the escalation"
+msgstr "Группа, назначенная при эскалации"
+
+#: hook.php:462
 msgid "Number of escalations"
-msgstr ""
+msgstr "Число эскалаций"
 
-#: hook.php:458
+#: hook.php:476
 msgid "Number of escalations between two groups"
-msgstr ""
+msgstr "Число эскалаций между двумя группами"
 
-#: hook.php:471 hook.php:489 inc/config.class.php:260
+#: hook.php:489 hook.php:507 inc/config.class.php:271
 msgid "Enable filtering on the groups assignment"
 msgstr "Разрешить фильтрацию по назначенным группам"
 
@@ -46,75 +47,75 @@ msgid "missing parameters"
 msgstr "отсутсвуют параметры"
 
 #: front/config.form.php:36 inc/user.class.php:168
-#: inc/group_group.class.php:24 setup.php:165
+#: inc/group_group.class.php:24 setup.php:168
 msgid "Escalation"
 msgstr "Переназначение"
 
 #: inc/notification.class.php:29
 msgid "Requester user of the ticket"
-msgstr ""
+msgstr "Инициатор заявки"
 
 #: inc/notification.class.php:51
 msgid "Group escalated in the ticket"
-msgstr ""
+msgstr "Группа, эскалированная в заявку"
 
 #: inc/notification.class.php:53
 msgid "Manager of the group escalated in the ticket"
-msgstr ""
+msgstr "Менеджер группы, эскалированной в заявку"
 
 #: inc/notification.class.php:57
 msgid "Requester user of the task/reminder"
-msgstr ""
+msgstr "Инициатор задачи/напоминания"
 
 #: inc/notification.class.php:187
 msgid "Solve date modification"
-msgstr ""
+msgstr "Изменение даты решения"
 
 #: inc/user.class.php:129
 msgid "Bypass filtering on the groups assignment"
-msgstr ""
+msgstr "Игнорирование фильтр назначения групп"
 
-#: inc/ticket.class.php:101
+#: inc/ticket.class.php:112
 msgid "Solution provided, back to the group"
 msgstr "Решение найдено, возврат к группе"
 
-#: inc/ticket.class.php:163
+#: inc/ticket.class.php:174
 msgid "Solution rejected, return to the group"
 msgstr "Решение отклонено, возврат к группе"
 
-#: inc/ticket.class.php:271
+#: inc/ticket.class.php:282
 msgid "escalated to the group"
 msgstr "Назначена группе"
 
-#: inc/ticket.class.php:638
+#: inc/ticket.class.php:656
 msgid "Error : get old ticket"
 msgstr "Ошибка получения данных заявки"
 
-#: inc/ticket.class.php:654
+#: inc/ticket.class.php:672
 msgid "Error : adding new ticket"
 msgstr "Ошибка добавления заявки"
 
-#: inc/ticket.class.php:666
+#: inc/ticket.class.php:684
 msgid "Error : adding link between the two tickets"
 msgstr "Ошибка связывания заявок"
 
-#: inc/ticket.class.php:676 inc/ticket.class.php:717 inc/ticket.class.php:722
+#: inc/ticket.class.php:694 inc/ticket.class.php:735 inc/ticket.class.php:740
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Заявка создана из другой, №"
 
-#: inc/ticket.class.php:681
+#: inc/ticket.class.php:699
 msgid "Error : adding followups"
 msgstr "Ошибка добавления комментария"
 
-#: inc/ticket.class.php:692
+#: inc/ticket.class.php:710
 msgid "Error : adding actors (user)"
 msgstr "Ошибка добавления пользователя"
 
-#: inc/ticket.class.php:701
+#: inc/ticket.class.php:719
 msgid "Error : adding actors (group)"
 msgstr "Ошибка добавления группы"
 
-#: inc/ticket.class.php:711
+#: inc/ticket.class.php:729
 msgid "Error : adding documents"
 msgstr "Ошибка добавления документа"
 
@@ -144,7 +145,7 @@ msgstr "Удалить группу, назначенную ранее, при �
 
 #: inc/config.class.php:44
 msgid "show group assign history visually"
-msgstr "Показывать визуальную историю переназначения групп"
+msgstr "показать визуально историю переназначения групп"
 
 #: inc/config.class.php:56
 msgid "Escalation history in tasks"
@@ -196,11 +197,15 @@ msgid ""
 "href='##link##'>Behavior</a>plugin. This last has priority."
 msgstr "Обратите внимание: эта функциональность (в части создания) также есть в плагине <a href='##link##'>Behavior</a>, который имеет более высокий приоритет."
 
-#: inc/config.class.php:205
-msgid "Display delete button"
+#: inc/config.class.php:204
+msgid "Remove requester(s) on escalation"
 msgstr ""
 
-#: inc/config.class.php:299
+#: inc/config.class.php:216
+msgid "Display delete button"
+msgstr "Показывать кнопку удаления"
+
+#: inc/config.class.php:310
 msgid "Don't change"
 msgstr "Не изменять"
 

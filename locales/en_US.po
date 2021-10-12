@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-12 07:54+0000\n"
-"PO-Revision-Date: 2020-07-03 18:47+0000\n"
+"POT-Creation-Date: 2021-10-12 12:08+0000\n"
+"PO-Revision-Date: 2021-10-12 12:37+0000\n"
 "Last-Translator: Cédric Anne\n"
 "Language-Team: English (United States) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/en_US/)\n"
 "MIME-Version: 1.0\n"
@@ -20,19 +20,19 @@ msgstr ""
 "Language: en_US\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: hook.php:426
+#: hook.php:444
 msgid "Group concerned by the escalation"
 msgstr "Group concerned by the escalation"
 
-#: hook.php:444
+#: hook.php:462
 msgid "Number of escalations"
 msgstr ""
 
-#: hook.php:458
+#: hook.php:476
 msgid "Number of escalations between two groups"
 msgstr ""
 
-#: hook.php:471 hook.php:489 inc/config.class.php:260
+#: hook.php:489 hook.php:507 inc/config.class.php:271
 msgid "Enable filtering on the groups assignment"
 msgstr "Enable filtering on the groups assignment"
 
@@ -45,7 +45,7 @@ msgid "missing parameters"
 msgstr "missing parameters"
 
 #: front/config.form.php:36 inc/user.class.php:168
-#: inc/group_group.class.php:24 setup.php:165
+#: inc/group_group.class.php:24 setup.php:168
 msgid "Escalation"
 msgstr "Escalation"
 
@@ -73,47 +73,47 @@ msgstr "Solve date modification"
 msgid "Bypass filtering on the groups assignment"
 msgstr ""
 
-#: inc/ticket.class.php:101
+#: inc/ticket.class.php:112
 msgid "Solution provided, back to the group"
 msgstr "Solution provided, back to the group"
 
-#: inc/ticket.class.php:163
+#: inc/ticket.class.php:174
 msgid "Solution rejected, return to the group"
 msgstr "Solution rejected, return to the group"
 
-#: inc/ticket.class.php:271
+#: inc/ticket.class.php:282
 msgid "escalated to the group"
 msgstr "escalated to the group"
 
-#: inc/ticket.class.php:638
+#: inc/ticket.class.php:656
 msgid "Error : get old ticket"
 msgstr "Error : get old ticket"
 
-#: inc/ticket.class.php:654
+#: inc/ticket.class.php:672
 msgid "Error : adding new ticket"
 msgstr "Error : adding new ticket"
 
-#: inc/ticket.class.php:666
+#: inc/ticket.class.php:684
 msgid "Error : adding link between the two tickets"
 msgstr "Error : adding link between the two tickets"
 
-#: inc/ticket.class.php:676 inc/ticket.class.php:717 inc/ticket.class.php:722
+#: inc/ticket.class.php:694 inc/ticket.class.php:735 inc/ticket.class.php:740
 msgid "This ticket has been cloned from the ticket num"
 msgstr "This ticket has been cloned from the ticket num"
 
-#: inc/ticket.class.php:681
+#: inc/ticket.class.php:699
 msgid "Error : adding followups"
 msgstr "Error : adding followups"
 
-#: inc/ticket.class.php:692
+#: inc/ticket.class.php:710
 msgid "Error : adding actors (user)"
 msgstr "Error : adding actors (user)"
 
-#: inc/ticket.class.php:701
+#: inc/ticket.class.php:719
 msgid "Error : adding actors (group)"
 msgstr "Error : adding actors (group)"
 
-#: inc/ticket.class.php:711
+#: inc/ticket.class.php:729
 msgid "Error : adding documents"
 msgstr "Error : adding documents"
 
@@ -195,11 +195,15 @@ msgid ""
 "href='##link##'>Behavior</a>plugin. This last has priority."
 msgstr "Note: This feature (creation part) is duplicate with the <a href='##link##'>Behavior</a>plugin. This last has priority."
 
-#: inc/config.class.php:205
+#: inc/config.class.php:204
+msgid "Remove requester(s) on escalation"
+msgstr ""
+
+#: inc/config.class.php:216
 msgid "Display delete button"
 msgstr "Display delete button"
 
-#: inc/config.class.php:299
+#: inc/config.class.php:310
 msgid "Don't change"
 msgstr "Don't change"
 

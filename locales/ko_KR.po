@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-12 07:54+0000\n"
-"PO-Revision-Date: 2020-07-03 18:47+0000\n"
+"POT-Creation-Date: 2021-10-12 12:08+0000\n"
+"PO-Revision-Date: 2021-10-12 12:37+0000\n"
 "Last-Translator: Cédric Anne\n"
 "Language-Team: Korean (Korea) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/ko_KR/)\n"
 "MIME-Version: 1.0\n"
@@ -18,19 +18,19 @@ msgstr ""
 "Language: ko_KR\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: hook.php:426
+#: hook.php:444
 msgid "Group concerned by the escalation"
 msgstr "이관에 관련된 그룹"
 
-#: hook.php:444
+#: hook.php:462
 msgid "Number of escalations"
 msgstr "이관 수"
 
-#: hook.php:458
+#: hook.php:476
 msgid "Number of escalations between two groups"
 msgstr "두 그룹간의 이관 수"
 
-#: hook.php:471 hook.php:489 inc/config.class.php:260
+#: hook.php:489 hook.php:507 inc/config.class.php:271
 msgid "Enable filtering on the groups assignment"
 msgstr "그룹 할당에 필터링 활성화"
 
@@ -43,7 +43,7 @@ msgid "missing parameters"
 msgstr "누락된 매개변수"
 
 #: front/config.form.php:36 inc/user.class.php:168
-#: inc/group_group.class.php:24 setup.php:165
+#: inc/group_group.class.php:24 setup.php:168
 msgid "Escalation"
 msgstr "이관"
 
@@ -71,47 +71,47 @@ msgstr "해결 일자 변경"
 msgid "Bypass filtering on the groups assignment"
 msgstr ""
 
-#: inc/ticket.class.php:101
+#: inc/ticket.class.php:112
 msgid "Solution provided, back to the group"
 msgstr "해결책 제공됨, 그룹으로 돌아가기"
 
-#: inc/ticket.class.php:163
+#: inc/ticket.class.php:174
 msgid "Solution rejected, return to the group"
 msgstr "해결책 거부됨, 그룹으로 돌아가기"
 
-#: inc/ticket.class.php:271
+#: inc/ticket.class.php:282
 msgid "escalated to the group"
 msgstr "그룹으로 이관"
 
-#: inc/ticket.class.php:638
+#: inc/ticket.class.php:656
 msgid "Error : get old ticket"
 msgstr "오류  : 오래된 티켓 가져오기"
 
-#: inc/ticket.class.php:654
+#: inc/ticket.class.php:672
 msgid "Error : adding new ticket"
 msgstr "오류 : 새 티켓 추가"
 
-#: inc/ticket.class.php:666
+#: inc/ticket.class.php:684
 msgid "Error : adding link between the two tickets"
 msgstr "오류 : 두 티켓간의 링크 추가"
 
-#: inc/ticket.class.php:676 inc/ticket.class.php:717 inc/ticket.class.php:722
+#: inc/ticket.class.php:694 inc/ticket.class.php:735 inc/ticket.class.php:740
 msgid "This ticket has been cloned from the ticket num"
 msgstr "이 티켓은 그 티켓 번호에서 복제되었습니다"
 
-#: inc/ticket.class.php:681
+#: inc/ticket.class.php:699
 msgid "Error : adding followups"
 msgstr "오류 : 추적 추가"
 
-#: inc/ticket.class.php:692
+#: inc/ticket.class.php:710
 msgid "Error : adding actors (user)"
 msgstr "오류 : 시행자 (사용자) 추가"
 
-#: inc/ticket.class.php:701
+#: inc/ticket.class.php:719
 msgid "Error : adding actors (group)"
 msgstr "오류 : 시행자 추가 (그룹)"
 
-#: inc/ticket.class.php:711
+#: inc/ticket.class.php:729
 msgid "Error : adding documents"
 msgstr "오류 : 문서 추가"
 
@@ -193,11 +193,15 @@ msgid ""
 "href='##link##'>Behavior</a>plugin. This last has priority."
 msgstr "참고: 이 기능 (부분 생성)은 <a href='##link##'>Behavior</a>플러그인과 중복됩니다. 이 최근이 우선됩니다."
 
-#: inc/config.class.php:205
+#: inc/config.class.php:204
+msgid "Remove requester(s) on escalation"
+msgstr ""
+
+#: inc/config.class.php:216
 msgid "Display delete button"
 msgstr "삭제 버튼 표시"
 
-#: inc/config.class.php:299
+#: inc/config.class.php:310
 msgid "Don't change"
 msgstr "변경 안함"
 
