@@ -40,7 +40,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
          if (this.innerHTML.indexOf('escalade_block') < 0) {
 
             //prepare a span element to load new elements
-            $(this).prepend("<span id='escalade_block'>test</span>");
+            $(this).prepend("<span id='escalade_block'></span>");
 
             //ajax request
             $("#escalade_block").load(plugin_url+'/ajax/central.php');
