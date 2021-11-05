@@ -86,7 +86,7 @@ function plugin_escalade_install() {
       $DB->query($query);
 
       $query = "INSERT INTO glpi_plugin_escalade_configs
-      VALUES (NULL, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, '".Ticket::WAITING."')";
+      VALUES (NULL, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, '".Ticket::WAITING."',0)";
       $DB->query($query);
    }
 
