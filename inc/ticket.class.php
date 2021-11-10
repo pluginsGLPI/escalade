@@ -276,7 +276,7 @@ class PluginEscaladeTicket {
       $history->add([
          'tickets_id'         => $tickets_id,
          'groups_id'          => $groups_id,
-         'previous_groups_id' => $previous_groups_id,
+         'groups_id_previous' => $previous_groups_id,
          'counter'            => $counter
       ]);
 
@@ -793,4 +793,42 @@ class PluginEscaladeTicket {
          ]);
       }
    }
+
+    static function filter_actors(array $params = []): array {
+        $itemtype = $params['params']['itemtype'];
+        $items_id = $params['params']['items_id'];
+
+        if ($itemtype == 'Ticket' && $params['params']['actortype'] == 'assign') {
+            // find filtered groups
+            $PluginEscaladeGroup_Group = new PluginEscaladeGroup_Group();
+            $groups_id_filtred = $PluginEscaladeGroup_Group->getGroups($items_id);
+            $groups_id_filtred = array_keys($groups_id_filtred);
+
+            foreach ($params['actors'] as $index => &$actor) {
+                //remove groups in children nodes
+                if (isset($actor['children'])) {
+                    foreach ($actor['children'] as $index_child => &$child) {
+                        if ($child['itemtype'] == "Group" && !in_array($child['items_id'], $groups_id_filtred)) {
+                            unset($actor['children'][$index_child]);
+                        }
+                    }
+
+                    if (count($actor['children']) > 0) {
+                        // reindex correctly children (to avoid select2 fails)
+                        $actor['children'] = array_values($actor['children']);
+                    } else {
+                        // otherwise remove empty parent
+                        unset($params['actors'][$index]);
+                    }
+                } else {
+                    // remove direct groups (don't sure this exists)
+                    if ($actor['itemtype'] == "Group" && !in_array($actor['items_id'], $groups_id_filtred)) {
+                        unset($params['actors'][$index]);
+                    }
+                }
+            }
+        }
+
+       return $params;
+    }
 }

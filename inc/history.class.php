@@ -61,7 +61,7 @@ class PluginEscaladeHistory extends CommonDBTM {
                                                  [
                                                    'tickets_id' => $tickets_id,
                                                    'groups_id' => [$groups_id, $previous_groups_id],
-                                                   'previous_groups_id' => [$groups_id, $previous_groups_id]
+                                                   'groups_id_previous' => [$groups_id, $previous_groups_id]
                                                  ]
                                                ]);
 
@@ -121,13 +121,13 @@ class PluginEscaladeHistory extends CommonDBTM {
             if ($full_history) {
                echo "&full_history=true";
             }
-             echo "' title='".__("Reassign the ticket to group", "escalade")."' class='up_a'></a>";
+             echo "' title='".__("Reassign the ticket to group", "escalade")."' class='btn btn-icon btn-sm btn-ghost-secondary'><i class='ti ti-arrow-up'></i></a>";
          } else {
             echo "&nbsp;&nbsp;&nbsp;";
          }
 
          //group link
-         echo "&nbsp;<i class='fas fa-users'></i>&nbsp;";
+         echo "&nbsp;<i class='ti ti-users'></i>&nbsp;";
          if ($group->getFromDB($hline['groups_id'])) {
             echo self::showGroupLink($group, $full_history);
          }

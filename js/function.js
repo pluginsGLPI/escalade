@@ -41,13 +41,3 @@ var getUrlParameter = function(val) {
       });
    return result;
 };
-
-
-var checkDOMChange = function (selector, handler) {
-   if ($(selector).get(0)) {
-      return handler();
-   }
-   setTimeout( function() {
-      checkDOMChange(selector, handler);
-   }, 100 );
-};

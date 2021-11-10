@@ -28,12 +28,14 @@
  * -------------------------------------------------------------------------
  */
 
+use Glpi\Plugin\Hooks;
+
 define ('PLUGIN_ESCALADE_VERSION', '2.7.2');
 
 // Minimal GLPI version, inclusive
-define("PLUGIN_ESCALADE_MIN_GLPI", "9.5");
+define("PLUGIN_ESCALADE_MIN_GLPI", "10.0.0");
 // Maximum GLPI version, exclusive
-define("PLUGIN_ESCALADE_MAX_GLPI", "9.6");
+define("PLUGIN_ESCALADE_MAX_GLPI", "10.0.99");
 
 /**
  * Init hooks of the plugin.
@@ -62,7 +64,7 @@ function plugin_init_escalade() {
             $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/function.js';
 
             // on central page
-            if (strpos($_SERVER['REQUEST_URI'], "central.php") !== false) {
+            if (strpos($_SERVER['REQUEST_URI'] ?? '', "central.php") !== false) {
                //history and climb feature
                if ($escalade_config['show_history']) {
                   $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/central.js.php';
@@ -70,9 +72,9 @@ function plugin_init_escalade() {
             }
 
             // on ticket page (in edition)
-            if ((strpos($_SERVER['REQUEST_URI'], "ticket.form.php") !== false
-               || strpos($_SERVER['REQUEST_URI'], "problem.form.php") !== false
-               || strpos($_SERVER['REQUEST_URI'], "change.form.php") !== false) && isset($_GET['id'])) {
+            if ((strpos($_SERVER['REQUEST_URI'] ?? '', "ticket.form.php") !== false
+               || strpos($_SERVER['REQUEST_URI'] ?? '', "problem.form.php") !== false
+               || strpos($_SERVER['REQUEST_URI'] ?? '', "change.form.php") !== false) && isset($_GET['id'])) {
 
                if (!$escalade_config['remove_delete_requester_user_btn']
                   || !$escalade_config['remove_delete_watcher_user_btn']
@@ -87,7 +89,7 @@ function plugin_init_escalade() {
             }
 
             // on ticket page (in edition)
-            if (strpos($_SERVER['REQUEST_URI'], "ticket.form.php") !== false
+            if (strpos($_SERVER['REQUEST_URI'] ?? '', "ticket.form.php") !== false
                 && isset($_GET['id'])) {
 
                //history and climb feature
@@ -98,11 +100,6 @@ function plugin_init_escalade() {
                //clone ticket feature
                if ($escalade_config['cloneandlink_ticket']) {
                   $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/cloneandlink_ticket.js.php';
-               }
-
-               //filter group feature
-               if ($escalade_config['use_filter_assign_group']) {
-                  $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/filtergroup.js.php';
                }
             }
 
@@ -138,6 +135,13 @@ function plugin_init_escalade() {
          'Ticket'       => 'plugin_escalade_item_purge',
       ];
       $PLUGIN_HOOKS['item_add']['escalade']['User'] = 'plugin_escalade_item_add_user';
+
+       //filter group feature
+       if ($escalade_config['use_filter_assign_group']) {
+          $PLUGIN_HOOKS[Hooks::FILTER_ACTORS]['escalade'] = [
+             'PluginEscaladeTicket', 'filter_actors',
+          ];
+       }
 
       // == Interface links ==
       if (Session::haveRight('config', UPDATE)) {

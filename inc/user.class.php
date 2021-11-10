@@ -36,7 +36,7 @@ class PluginEscaladeUser extends CommonDBTM {
     * @see CommonDBTM::showMassiveActionsSubForm()
    **/
    static function showMassiveActionsSubForm(MassiveAction $ma) {
-      switch ($ma->action) {
+      switch ($ma->getAction()) {
          case "use_filter_assign_group" :
             Dropdown::showYesNo("use_filter_assign_group", 0, -1, [
                'width' => '100%',
@@ -107,7 +107,7 @@ class PluginEscaladeUser extends CommonDBTM {
       return self::getUserGroup($entity, $userid, '`is_assign`', $first);
    }
 
-   function showForm($ID) {
+   function showForm($ID, array $options = []) {
 
       $is_exist = $this->getFromDBByCrit(['users_id' => $ID]);
 
