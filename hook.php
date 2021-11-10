@@ -36,55 +36,54 @@
 function plugin_escalade_install() {
    global $DB;
 
-   //get version
-   $plugin = new Plugin();
-   $found = $plugin->find(['name' => 'escalade']);
-   $plugin_escalade = array_shift($found);
-
    //init migration
-   $migration = new Migration($plugin_escalade['version']);
+   $migration = new Migration(PLUGIN_ESCALADE_VERSION);
+
+   $default_charset = DBConnection::getDefaultCharset();
+   $default_collation = DBConnection::getDefaultCollation();
+   $default_key_sign = DBConnection::getDefaultPrimaryKeySignOption();
 
    // == Tables creation (initial installation) ==
    if (!$DB->tableExists('glpi_plugin_escalade_histories')) {
       $query = "CREATE TABLE `glpi_plugin_escalade_histories` (
-         `id`              INT(11) NOT NULL AUTO_INCREMENT,
-         `tickets_id`      INT(11) NOT NULL,
-         `groups_id`       INT(11) NOT NULL,
+         `id`              INT {$default_key_sign} NOT NULL AUTO_INCREMENT,
+         `tickets_id`      INT {$default_key_sign} NOT NULL,
+         `groups_id`       INT {$default_key_sign} NOT NULL,
          `date_mod`        TIMESTAMP NOT NULL,
          PRIMARY KEY (`id`),
          KEY `tickets_id` (`tickets_id`),
          KEY `groups_id` (`groups_id`)
-      ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+      ) ENGINE=InnoDB DEFAULT CHARSET={$default_charset} COLLATE={$default_collation} ROW_FORMAT=DYNAMIC;";
       $DB->query($query);
    }
 
    if (!$DB->tableExists('glpi_plugin_escalade_configs')) {
       $query = "CREATE TABLE `glpi_plugin_escalade_configs` (
-         `id`                                      INT(11) NOT NULL AUTO_INCREMENT,
-         `remove_group`                            INT(11) NOT NULL,
-         `show_history`                            INT(11) NOT NULL,
-         `task_history`                            INT(11) NOT NULL,
-         `remove_tech`                             INT(11) NOT NULL,
-         `solve_return_group`                      INT(11) NOT NULL,
-         `reassign_group_from_cat`                 INT(11) NOT NULL,
-         `reassign_tech_from_cat`                  INT(11) NOT NULL,
-         `cloneandlink_ticket`                     INT(11) NOT NULL,
-         `close_linkedtickets`                     INT(11) NOT NULL,
-         `use_assign_user_group`                   INT(11) NOT NULL,
-         `use_assign_user_group_creation`          INT(11) NOT NULL,
-         `use_assign_user_group_modification`      INT(11) NOT NULL,
-         `remove_delete_requester_user_btn`        TINYINT(1) NOT NULL DEFAULT 1,
-         `remove_delete_watcher_user_btn`          TINYINT(1) NOT NULL DEFAULT 1,
-         `remove_delete_assign_user_btn`           TINYINT(1) NOT NULL DEFAULT 0,
-         `remove_delete_requester_group_btn`       TINYINT(1) NOT NULL DEFAULT 1,
-         `remove_delete_watcher_group_btn`         TINYINT(1) NOT NULL DEFAULT 1,
-         `remove_delete_assign_group_btn`          TINYINT(1) NOT NULL DEFAULT 0,
-         `remove_delete_assign_supplier_btn`       TINYINT(1) NOT NULL DEFAULT 1,
-         `use_filter_assign_group`                 INT(11) NOT NULL,
-         `ticket_last_status`                      INT(11) NOT NULL,
-         `remove_requester`                        INT(11) NOT NULL,
+         `id`                                      INT {$default_key_sign} NOT NULL AUTO_INCREMENT,
+         `remove_group`                            INT NOT NULL,
+         `show_history`                            INT NOT NULL,
+         `task_history`                            INT NOT NULL,
+         `remove_tech`                             INT NOT NULL,
+         `solve_return_group`                      INT NOT NULL,
+         `reassign_group_from_cat`                 INT NOT NULL,
+         `reassign_tech_from_cat`                  INT NOT NULL,
+         `cloneandlink_ticket`                     INT NOT NULL,
+         `close_linkedtickets`                     INT NOT NULL,
+         `use_assign_user_group`                   INT NOT NULL,
+         `use_assign_user_group_creation`          INT NOT NULL,
+         `use_assign_user_group_modification`      INT NOT NULL,
+         `remove_delete_requester_user_btn`        TINYINT NOT NULL DEFAULT 1,
+         `remove_delete_watcher_user_btn`          TINYINT NOT NULL DEFAULT 1,
+         `remove_delete_assign_user_btn`           TINYINT NOT NULL DEFAULT 0,
+         `remove_delete_requester_group_btn`       TINYINT NOT NULL DEFAULT 1,
+         `remove_delete_watcher_group_btn`         TINYINT NOT NULL DEFAULT 1,
+         `remove_delete_assign_group_btn`          TINYINT NOT NULL DEFAULT 0,
+         `remove_delete_assign_supplier_btn`       TINYINT NOT NULL DEFAULT 1,
+         `use_filter_assign_group`                 INT NOT NULL,
+         `ticket_last_status`                      INT NOT NULL,
+         `remove_requester`                        INT NOT NULL,
          PRIMARY KEY (`id`)
-      ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+      ) ENGINE=InnoDB DEFAULT CHARSET={$default_charset} COLLATE={$default_collation} ROW_FORMAT=DYNAMIC;";
       $DB->query($query);
 
       $query = "INSERT INTO glpi_plugin_escalade_configs
@@ -134,11 +133,11 @@ function plugin_escalade_install() {
    }
    if (!$DB->tableExists('glpi_plugin_escalade_groups_groups')) {
       $query = "CREATE TABLE `glpi_plugin_escalade_groups_groups` (
-         `id` INT(11) NOT NULL AUTO_INCREMENT,
-         `groups_id_source` int(11) NOT NULL DEFAULT '0',
-         `groups_id_destination` int(11) NOT NULL DEFAULT '0',
+         `id` INT {$default_key_sign} NOT NULL AUTO_INCREMENT,
+         `groups_id_source` int {$default_key_sign} NOT NULL DEFAULT '0',
+         `groups_id_destination` int {$default_key_sign} NOT NULL DEFAULT '0',
          PRIMARY KEY (`id`)
-      ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+      ) ENGINE=InnoDB DEFAULT CHARSET={$default_charset} COLLATE={$default_collation} ROW_FORMAT=DYNAMIC;";
       $DB->query($query);
    }
 
@@ -174,7 +173,7 @@ function plugin_escalade_install() {
          $DB->query($query);
       }
 
-      $query = "ALTER TABLE `glpi_plugin_escalade_configs` MODIFY `ticket_last_status` INT(11);";
+      $query = "ALTER TABLE `glpi_plugin_escalade_configs` MODIFY `ticket_last_status` INT;";
       $DB->query($query);
    }
 
@@ -188,9 +187,9 @@ function plugin_escalade_install() {
    // update to 0.90-1.1
    if (!$DB->tableExists('glpi_plugin_escalade_users')) {
       $query = "CREATE TABLE `glpi_plugin_escalade_users` (
-                  `id` INT(11) NOT NULL AUTO_INCREMENT,
-                  `users_id` INT(11) NOT NULL,
-                  `use_filter_assign_group` TINYINT(1) NOT NULL DEFAULT '0',
+                  `id` INT {$default_key_sign} NOT NULL AUTO_INCREMENT,
+                  `users_id` INT {$default_key_sign} NOT NULL,
+                  `use_filter_assign_group` TINYINT NOT NULL DEFAULT '0',
                   PRIMARY KEY (`id`),
                   INDEX `users_id` (`users_id`)
                )
@@ -255,10 +254,15 @@ function plugin_escalade_install() {
 
    $migration->migrationOneTable('glpi_plugin_escalade_configs');
 
-   if (!$DB->fieldExists('glpi_plugin_escalade_histories', 'previous_groups_id')
+   if ($DB->fieldExists('glpi_plugin_escalade_histories', 'previous_groups_id')) {
+      $migration->changeField('glpi_plugin_escalade_histories', 'previous_groups_id', 'groups_id_previous', "INT {$default_key_sign} NOT NULL DEFAULT 0");
+   }
+   $migration->migrationOneTable('glpi_plugin_escalade_histories');
+
+   if (!$DB->fieldExists('glpi_plugin_escalade_histories', 'groups_id_previous')
       || !$DB->fieldExists("glpi_plugin_escalade_histories", 'counter')) {
-      if (!$DB->fieldExists('glpi_plugin_escalade_histories', 'previous_groups_id')) {
-         $migration->addField('glpi_plugin_escalade_histories', 'previous_groups_id', 'integer', ['before' => 'groups_id']);
+      if (!$DB->fieldExists('glpi_plugin_escalade_histories', 'groups_id_previous')) {
+         $migration->addField('glpi_plugin_escalade_histories', 'groups_id_previous', "INT {$default_key_sign} NOT NULL DEFAULT 0", ['before' => 'groups_id']);
       }
       if (!$DB->fieldExists('glpi_plugin_escalade_histories', 'counter')) {
          $migration->addField('glpi_plugin_escalade_histories', 'counter', 'integer', ['after' => 'groups_id']);
@@ -287,7 +291,7 @@ function plugin_escalade_install() {
                $second = $h[$k+1]['groups_id'] < $details['groups_id'] ? $details['groups_id'] : $h[$k+1]['groups_id'];
 
                $counters[$first][$second] = isset($counters[$first][$second]) ? $counters[$first][$second] + 1 : 1;
-               $h[$k+1]['previous_groups_id'] = $details['groups_id'];
+               $h[$k+1]['groups_id_previous'] = $details['groups_id'];
                $h[$k+1]['counter'] = $counters[$first][$second];
             }
          }
@@ -295,7 +299,7 @@ function plugin_escalade_install() {
          foreach ($h as $k => $details) {
             $DB->update(
                'glpi_plugin_escalade_histories',
-               ['previous_groups_id' => $details['previous_groups_id'], 'counter' => $details['counter']],
+               ['groups_id_previous' => $details['groups_id_previous'], 'counter' => $details['counter']],
                ['id' => $details['id']]
             );
          }

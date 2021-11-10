@@ -55,12 +55,12 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
       //delay the execution (ajax requestcomplete event fired before dom loading)
       setTimeout( function () {
          if ($("#cloneandlink_ticket").length > 0) { return; }
-         var duplicate_html = "&nbsp;<img src='"+plugin_url+"/pics/cloneandlink_ticket.png' "+
-            "alt='$locale_cloneandlink' " +
-            "title='$locale_cloneandlink' class='pointer' id='cloneandlink_ticket'>";
+         var duplicate_html = "<button id='cloneandlink_ticket' class='btn btn-sm btn-ghost-secondary ms-auto'"+
+                "title='$locale_cloneandlink'><i class='ti ti-copy me-1'></i>" + __("Clone") +
+            "</button>";
 
-         $("th:contains('$locale_linkedtickets')>span.fa")
-            .after(duplicate_html);
+         $("#linked_tickets-heading .accordion-button")
+            .append(duplicate_html);
          addOnclick();
 
       }, 100);
@@ -90,7 +90,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
       });
    }
 
-   $(document).ajaxStop(function() {
+   $(document).on('glpi.tab.loaded', function() {
       addCloneLink();
    });
 

@@ -82,55 +82,45 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
    }
 
    $JS = <<<JAVASCRIPT
-   var removeDeleteButtons = function(str, num) {
-      $("table:contains('$locale_actor') td:last-child a[onclick*="+str+"], \
-         .tab_actors .actor-bloc:eq("+num+") a[onclick*="+str+"]")
+   var removeDeleteButtons = function(itemtype, actortype,) {
+      $("#actors .actor_entry[data-itemtype="+itemtype+"][data-actortype="+actortype+"]")
+            .siblings('.select2-selection__choice__remove')
             .remove();
    }
 
    var removeAllDeleteButtons = function() {
-
-      // Get type from path to handle multiple ticket type
-      var type = 'ticket';
-      if (location.pathname.indexOf('problem.form.php') > 0) {
-         type = 'problem';
-      }
-      if (location.pathname.indexOf('change.form.php') > 0) {
-         type = 'change';
-      }
-
       // ## REQUESTER
       //remove "delete" group buttons
       if ({$remove_delete_requester_group_btn}) {
-         removeDeleteButtons("group_"+type, 0);
+         removeDeleteButtons("Group", "requester");
       }
       //remove "delete" user buttons
       if ({$remove_delete_requester_user_btn}) {
-         removeDeleteButtons(type+"_user", 0);
+         removeDeleteButtons("User", "requester");
       }
 
       // ## WATCHER
       //remove "delete" group buttons
       if ({$remove_delete_watcher_group_btn}) {
-         removeDeleteButtons("group_"+type, 1);
+         removeDeleteButtons("Group", "observer");
       }
       //remove "delete" user buttons
       if ({$remove_delete_watcher_user_btn}) {
-         removeDeleteButtons(type+"_user", 1);
+         removeDeleteButtons("User", "observer");
       }
 
       // ## ASSIGN
       //remove "delete" group buttons
       if ({$remove_delete_assign_group_btn}) {
-         removeDeleteButtons("group_"+type, 2);
+         removeDeleteButtons("Group", "assign");
       }
       //remove "delete" user buttons
       if ({$remove_delete_assign_user_btn}) {
-         removeDeleteButtons(type+"_user", 2);
+         removeDeleteButtons("User", "assign");
       }
       //remove "delete" supplier buttons
       if ({$remove_delete_assign_supplier_btn}) {
-         removeDeleteButtons("supplier_"+type, 2);
+         removeDeleteButtons("Supplier", "assign");
       }
    }
 
@@ -139,14 +129,14 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
       if (location.pathname.indexOf('ticket.form.php') > 0
          || location.pathname.indexOf('problem.form.php') > 0
          || location.pathname.indexOf('change.form.php') > 0) {
-         $(".ui-tabs-panel:visible").ready(function() {
+         $(document).on('glpi.tab.loaded', function() {
             removeAllDeleteButtons();
-         })
 
-         $("#tabspanel + div.ui-tabs").on("tabsload", function() {
-            setTimeout(function() {
-               removeAllDeleteButtons();
-            }, 300);
+            // as the ticket loading may be long, try to remove until 10s pass
+            var tt = setInterval(function() {
+                removeAllDeleteButtons();
+            }, 500);
+            setTimeout(function() { clearInterval(tt); }, 10000);
          });
       }
    });
