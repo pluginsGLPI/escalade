@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-12 12:08+0000\n"
-"PO-Revision-Date: 2021-10-13 20:03+0000\n"
-"Last-Translator: Kaya Zeren <kayazeren@gmail.com>\n"
+"POT-Creation-Date: 2022-04-20 12:06+0000\n"
+"PO-Revision-Date: 2015-09-18 09:48+0000\n"
+"Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2015-2016,2018-2021\n"
 "Language-Team: Turkish (Turkey) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/tr_TR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,193 +19,193 @@ msgstr ""
 "Language: tr_TR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: hook.php:444
-msgid "Group concerned by the escalation"
-msgstr "Yetkisi yükseltilecek grup"
+#: inc/config.class.php:137
+msgid "Assign the technical group on ticket category change"
+msgstr "Destek kaydı kategorisi değiştiğinde atanacak teknik grup"
 
-#: hook.php:462
-msgid "Number of escalations"
-msgstr "Yetki yükseltme sayısı"
+#: inc/config.class.php:126
+msgid "Assign the technical manager on ticket category change"
+msgstr "Destek kaydı kategorisi değiştiğinde atanacak teknik yönetici"
 
-#: hook.php:476
-msgid "Number of escalations between two groups"
-msgstr "İki grup arasındaki yetki yükseltme sayısı"
+#: inc/config.class.php:113
+msgid "Assign ticket to initial group on solve ticket"
+msgstr "Destek kaydının çözümlenmesi için başlangıçta atanacak grup"
 
-#: hook.php:489 hook.php:507 inc/config.class.php:271
-msgid "Enable filtering on the groups assignment"
-msgstr "Grup atamaları süzülebilsin"
-
-#: front/popup_histories.php:4
-msgid "full assignation history"
-msgstr "tam atama geçmişi"
-
-#: front/climb_group.php:6 ajax/assign_me.php:5
-msgid "missing parameters"
-msgstr "eksik parametreler"
-
-#: front/config.form.php:36 inc/user.class.php:168
-#: inc/group_group.class.php:24 setup.php:168
-msgid "Escalation"
-msgstr "Yetki yükseltme"
-
-#: inc/notification.class.php:29
-msgid "Requester user of the ticket"
-msgstr "Destek kaydı isteğinde bulunan kullanıcı"
-
-#: inc/notification.class.php:51
-msgid "Group escalated in the ticket"
-msgstr "Destek kaydına atanmış grup"
-
-#: inc/notification.class.php:53
-msgid "Manager of the group escalated in the ticket"
-msgstr "Destek kaydına atanmış kullanıcının yöneticisi"
-
-#: inc/notification.class.php:57
-msgid "Requester user of the task/reminder"
-msgstr "Görev/anımsatıcı isteğinde bulunan kullanıcı"
-
-#: inc/notification.class.php:187
-msgid "Solve date modification"
-msgstr "Tarih değişikliğini çöz"
-
-#: inc/user.class.php:129
+#: inc/user.class.php:125
 msgid "Bypass filtering on the groups assignment"
 msgstr "Grup atamalarında süzgeçler atlansın"
 
-#: inc/ticket.class.php:112
-msgid "Solution provided, back to the group"
-msgstr "Çözüm sağlandı, gruba geri git"
+#: js/cloneandlink_ticket.js.php:42
+msgid "Clone and link"
+msgstr "Kopyala ve ilişkilendir"
 
-#: inc/ticket.class.php:174
-msgid "Solution rejected, return to the group"
-msgstr "Çözüm reddedildi, gruba geri git"
+#: inc/config.class.php:149
+msgid "Clone tickets"
+msgstr "Destek kayıtlarını kopyala"
 
-#: inc/ticket.class.php:282
-msgid "escalated to the group"
-msgstr "yetki grubuna yükseltildi"
+#: inc/config.class.php:159
+msgid "Close cloned tickets at the same time"
+msgstr "Kopyalanmış destek kayıtları aynı zamanda kapatılsın"
 
-#: inc/ticket.class.php:656
-msgid "Error : get old ticket"
-msgstr "Hata : eski çağrıyı al"
-
-#: inc/ticket.class.php:672
-msgid "Error : adding new ticket"
-msgstr "Hata : yeni çağrı ekleme"
-
-#: inc/ticket.class.php:684
-msgid "Error : adding link between the two tickets"
-msgstr "Hata : iki çağrı arasında ilişki ekleme"
-
-#: inc/ticket.class.php:694 inc/ticket.class.php:735 inc/ticket.class.php:740
-msgid "This ticket has been cloned from the ticket num"
-msgstr "Bu çağrı çağrı numarasından"
-
-#: inc/ticket.class.php:699
-msgid "Error : adding followups"
-msgstr "Hata : izleme ekleme"
-
-#: inc/ticket.class.php:710
-msgid "Error : adding actors (user)"
-msgstr "Hata : aktör ekleme (kullanıcı)"
-
-#: inc/ticket.class.php:719
-msgid "Error : adding actors (group)"
-msgstr "Hata : aktör ekleme (grup)"
-
-#: inc/ticket.class.php:729
-msgid "Error : adding documents"
-msgstr "Hata : belge ekleme"
-
-#: inc/history.class.php:95
-msgid "Reassign the ticket to group"
-msgstr "Çağrıyı bir gruba ata"
-
-#: inc/history.class.php:119
-msgid "View full history"
-msgstr "Tam geçmişi görüntüle"
-
-#: inc/history.class.php:166
-msgid "Tickets to follow (climbed)"
-msgstr "İzlenecek çağrılar (çalışılmış)"
-
-#: inc/history.class.php:180
-msgid "Tickets to close (climbed)"
-msgstr "Kapatılacak çağrılar (çalışılmış)"
-
-#: inc/config.class.php:7
+#: inc/config.class.php:35
 msgid "Configuration Escalade plugin"
 msgstr "Yetki yükseltme uygulama eki yapılandırması"
 
-#: inc/config.class.php:22
-msgid "Remove old assign group on new group assign"
-msgstr "Eski atanmış grubu yeni atanacak grup üzerine taşı"
+#: inc/config.class.php:244
+msgid "Display delete button"
+msgstr "Sil düğmesi görüntülensin"
 
-#: inc/config.class.php:44
-msgid "show group assign history visually"
-msgstr "grup atama geçmişini görsel olarak görüntüle"
+#: inc/config.class.php:338
+msgid "Don't change"
+msgstr "Değiştirilmesin"
 
-#: inc/config.class.php:56
+#: hook.php:495 hook.php:513 inc/config.class.php:299
+msgid "Enable filtering on the groups assignment"
+msgstr "Grup atamaları süzülebilsin"
+
+#: inc/ticket.class.php:748
+msgid "Error : adding actors (group)"
+msgstr "Hata : Aktör ekleme (grup)"
+
+#: inc/ticket.class.php:739
+msgid "Error : adding actors (user)"
+msgstr "Hata : Aktör ekleme (kullanıcı)"
+
+#: inc/ticket.class.php:758
+msgid "Error : adding documents"
+msgstr "Hata : Belge ekleme"
+
+#: inc/ticket.class.php:728
+msgid "Error : adding followups"
+msgstr "Hata : İzleme ekleme"
+
+#: inc/ticket.class.php:713
+msgid "Error : adding link between the two tickets"
+msgstr "Hata : İki destek kaydı arasında ilişki ekleme"
+
+#: inc/ticket.class.php:701
+msgid "Error : adding new ticket"
+msgstr "Hata : Yeni destek kaydı ekleme"
+
+#: inc/ticket.class.php:685
+msgid "Error : get old ticket"
+msgstr "Hata : Eski destek kaydı alma"
+
+#: front/config.form.php:65 inc/user.class.php:164
+#: inc/group_group.class.php:52 setup.php:174
+msgid "Escalation"
+msgstr "Yetki yükseltme"
+
+#: inc/config.class.php:84
 msgid "Escalation history in tasks"
 msgstr "Görevlere göre yetki yükseltme geçmişi"
 
-#: inc/config.class.php:65
-msgid "Remove technician(s) on escalation"
-msgstr "Teknisyenleri yetki yükseltmeden çıkar"
+#: hook.php:450
+msgid "Group concerned by the escalation"
+msgstr "Yetkisi yükseltilecek grup"
 
-#: inc/config.class.php:77
-msgid "Ticket status after an escalation"
-msgstr "Yetki yükseltme sonrası çağrı durumu"
+#: inc/notification.class.php:79
+msgid "Group escalated in the ticket"
+msgstr "Destek kaydına atanmış grup"
 
-#: inc/config.class.php:85
-msgid "Assign ticket to initial group on solve ticket"
-msgstr "Çağrının çözümlenmesi için başlangıçta atanacak grup"
+#: inc/notification.class.php:81
+msgid "Manager of the group escalated in the ticket"
+msgstr "Destek kaydına atanmış kullanıcının yöneticisi"
 
-#: inc/config.class.php:98
-msgid "Assign the technical manager on ticket category change"
-msgstr "Çağrı kategorisi değiştiğinde atanacak teknik yönetici"
-
-#: inc/config.class.php:109
-msgid "Assign the technical group on ticket category change"
-msgstr "Çağrı kategorisi değiştiğinde atanacak teknik grup"
-
-#: inc/config.class.php:121
-msgid "Clone tickets"
-msgstr "Çağrıları kopyala"
-
-#: inc/config.class.php:131
-msgid "Close cloned tickets at the same time"
-msgstr "Kopyalanmış çağrılar aynı zamanda kapatılsın"
-
-#: inc/config.class.php:149
-msgid "Use the technician's group"
-msgstr "Teknisyenin grubu kullanılsın"
-
-#: inc/config.class.php:167
-msgid "a time of creation"
-msgstr "oluşturulma zamanı"
-
-#: inc/config.class.php:169
-msgid "a time of modification"
-msgstr "değiştirilme zamanı"
-
-#: inc/config.class.php:196
+#: inc/config.class.php:224
 msgid ""
 "Nota: This feature (creation part) is duplicate with the <a "
 "href='##link##'>Behavior</a>plugin. This last has priority."
 msgstr "Not: Bu özellik (oluşturulma kısmı) <a href='##link##'>Davranış</a> uygulama eki ile çifttir. Bu sonuncusunun önceliği vardır."
 
-#: inc/config.class.php:204
+#: hook.php:468
+msgid "Number of escalations"
+msgstr "Yetki yükseltme sayısı"
+
+#: hook.php:482
+msgid "Number of escalations between two groups"
+msgstr "İki grup arasındaki yetki yükseltme sayısı"
+
+#: inc/history.class.php:124
+msgid "Reassign the ticket to group"
+msgstr "Destek kaydını bir gruba ata"
+
+#: inc/config.class.php:50
+msgid "Remove old assign group on new group assign"
+msgstr "Eski atanmış grubu yeni atanacak grup üzerine taşı"
+
+#: inc/config.class.php:232
 msgid "Remove requester(s) on escalation"
 msgstr "İstekte bulunanları yetki yükseltmeden çıkar"
 
-#: inc/config.class.php:216
-msgid "Display delete button"
-msgstr "Sil düğmesi görüntülensin"
+#: inc/config.class.php:93
+msgid "Remove technician(s) on escalation"
+msgstr "Teknisyenleri yetki yükseltmeden çıkar"
 
-#: inc/config.class.php:310
-msgid "Don't change"
-msgstr "Değiştirilmesin"
+#: inc/notification.class.php:85
+msgid "Requester user of the task/reminder"
+msgstr "Görev/anımsatıcı isteğinde bulunan kullanıcı"
 
-#: js/cloneandlink_ticket.js.php:13
-msgid "Clone and link"
-msgstr "Kopyala ve ilişkilendir"
+#: inc/notification.class.php:57
+msgid "Requester user of the ticket"
+msgstr "Destek kaydı isteğinde bulunan kullanıcı"
+
+#: inc/ticket.class.php:141
+msgid "Solution provided, back to the group"
+msgstr "Çözüm sağlandı, gruba geri git"
+
+#: inc/ticket.class.php:203
+msgid "Solution rejected, return to the group"
+msgstr "Çözüm reddedildi, gruba geri git"
+
+#: inc/notification.class.php:215
+msgid "Solve date modification"
+msgstr "Tarih değişikliğini çöz"
+
+#: inc/ticket.class.php:723 inc/ticket.class.php:764 inc/ticket.class.php:769
+msgid "This ticket has been cloned from the ticket num"
+msgstr "Bu destek, destek kaydı numarasından"
+
+#: inc/config.class.php:105
+msgid "Ticket status after an escalation"
+msgstr "Yetki yükseltme sonrası destek kaydı durumu"
+
+#: inc/history.class.php:209
+msgid "Tickets to close (climbed)"
+msgstr "Kapatılacak destek kayıtları (çalışılmış)"
+
+#: inc/history.class.php:195
+msgid "Tickets to follow (climbed)"
+msgstr "İzlenecek destek kayıtları (çalışılmış)"
+
+#: inc/config.class.php:177
+msgid "Use the technician's group"
+msgstr "Teknisyenin grubu kullanılsın"
+
+#: inc/history.class.php:148
+msgid "View full history"
+msgstr "Tam geçmişi görüntüle"
+
+#: inc/config.class.php:195
+msgid "a time of creation"
+msgstr "Oluşturulma zamanı"
+
+#: inc/config.class.php:197
+msgid "a time of modification"
+msgstr "Değiştirilme zamanı"
+
+#: inc/ticket.class.php:311
+msgid "escalated to the group"
+msgstr "Yetki grubuna yükseltildi"
+
+#: front/popup_histories.php:33
+msgid "full assignation history"
+msgstr "Tam atama geçmişi"
+
+#: front/climb_group.php:35 ajax/assign_me.php:34
+msgid "missing parameters"
+msgstr "Parametreler eksik"
+
+#: inc/config.class.php:72
+msgid "show group assign history visually"
+msgstr "Grup atama geçmişini görsel olarak görüntüle"
