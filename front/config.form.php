@@ -34,8 +34,7 @@ if (! isset($_GET["id"])) {
    $_GET["id"] = 0;
 }
 
-$plugin = new Plugin();
-if (! $plugin->isInstalled('escalade') || ! $plugin->isActivated('escalade')) {
+if (!Plugin::isPluginActive('escalade')) {
    echo "Plugin not installed or activated";
    return;
 }
