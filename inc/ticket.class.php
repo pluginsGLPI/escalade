@@ -354,8 +354,7 @@ class PluginEscaladeTicket {
       }
 
       //check plugin behaviors (for avoid conflict)
-      $plugin = new Plugin();
-      if ($plugin->isInstalled('behaviors') && $plugin->isActivated('behaviors')) {
+      if (Plugin::isPluginActive('behaviors')) {
          $behavior_config = PluginBehaviorsConfig::getInstance();
          if ($behavior_config->getField('use_assign_user_group') != 0) {
             return false;

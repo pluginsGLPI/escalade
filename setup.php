@@ -48,10 +48,7 @@ function plugin_init_escalade() {
 
    $PLUGIN_HOOKS['csrf_compliant']['escalade'] = true;
 
-   $plugin = new Plugin();
-   if ((isset($_SESSION['glpiID']) || isCommandLine())
-      && $plugin->isInstalled('escalade')
-      && $plugin->isActivated('escalade')) {
+   if ((isset($_SESSION['glpiID']) || isCommandLine()) && Plugin::isPluginActive('escalade')) {
 
       //load config in session
       if ($DB->tableExists("glpi_plugin_escalade_configs")) {

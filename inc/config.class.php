@@ -217,8 +217,7 @@ class PluginEscaladeConfig extends CommonDBTM {
                           $this->fields["use_assign_user_group_modification"], -1, ['rand' => $rand]);
       echo "</td>";
       echo "</tr></table>";
-      $plugin = new Plugin();
-      if ($plugin->isInstalled('behaviors') && $plugin->isActivated('behaviors')) {
+      if (Plugin::isPluginActive('behaviors')) {
          echo "<i>".str_replace('##link##',
             $CFG_GLPI["root_doc"]."/front/config.form.php?forcetab=PluginBehaviorsConfig%241",
             __("Nota: This feature (creation part) is duplicate with the <a href='##link##'>Behavior</a>plugin. This last has priority.",
