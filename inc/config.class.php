@@ -170,6 +170,7 @@ class PluginEscaladeConfig extends CommonDBTM {
             0 => __("No"),
             1 => __('First'),
             2 => __('Last'),
+            3 => __('Default user\'s group', 'escalade')
       ];
 
       $rand = mt_rand();

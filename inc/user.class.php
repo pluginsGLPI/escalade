@@ -107,6 +107,17 @@ class PluginEscaladeUser extends CommonDBTM {
       return self::getUserGroup($entity, $userid, '`is_assign`', $first);
    }
 
+   static function getUserDefaultGroup($users_id) {
+      $groups_id = 0;
+
+      $user = new User();
+      $user->getFromDB($users_id);
+      if ($user->getField('groups_id')) {
+         $groups_id = $user->getField('groups_id');
+      }
+      return $groups_id;
+   }
+   
    function showForm($ID, array $options = []) {
 
       $is_exist = $this->getFromDBByCrit(['users_id' => $ID]);

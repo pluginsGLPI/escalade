@@ -366,31 +366,44 @@ class PluginEscaladeTicket {
             || $_SESSION['plugins']['escalade']['config']['use_assign_user_group_creation'] == 0) {
          return false;
       }
-
+      
       if (isset($ticket->input['_users_id_assign'])
           && $ticket->input['_users_id_assign'] > 0
           && (!isset($ticket->input['_groups_id_assign'])
             || $ticket->input['_groups_id_assign'] <= 0)) {
-         if ($_SESSION['plugins']['escalade']['config']['use_assign_user_group'] == 1) {
-            // First group
-            $ticket->input['_groups_id_assign']
-               = PluginEscaladeUser::getTechnicianGroup($ticket->input['entities_id'],
-                                                         $ticket->input['_users_id_assign'],
-                                                         true);
-            //prevent adding empty group
-            if (empty($ticket->input['_groups_id_assign'])) {
-               unset($ticket->input['_groups_id_assign']);
-            }
-         } else {
-            // All groups
-            $ticket->input['_additional_groups_assigns']
-               = PluginEscaladeUser::getTechnicianGroup($ticket->input['entities_id'],
-                                                         $ticket->input['_users_id_assign'],
-                                                         false);
-            //prevent adding empty group
-            if (empty($ticket->input['_additional_groups_assigns'])) {
-               unset($ticket->input['_additional_groups_assigns']);
-            }
+         switch ($_SESSION['plugins']['escalade']['config']['use_assign_user_group']) {
+            case 1 : 
+               // First group
+               $ticket->input['_groups_id_assign']
+                  = PluginEscaladeUser::getTechnicianGroup($ticket->input['entities_id'],
+                                                            $ticket->input['_users_id_assign'],
+                                                            true);
+               //prevent adding empty group
+               if (empty($ticket->input['_groups_id_assign'])) {
+                  unset($ticket->input['_groups_id_assign']);
+               }
+               break;
+            case 2:
+               // All groups
+               $ticket->input['_additional_groups_assigns']
+                  = PluginEscaladeUser::getTechnicianGroup($ticket->input['entities_id'],
+                                                            $ticket->input['_users_id_assign'],
+                                                            false);
+               //prevent adding empty group
+               if (empty($ticket->input['_additional_groups_assigns'])) {
+                  unset($ticket->input['_additional_groups_assigns']);
+               }
+               break;
+            
+            case 3:
+               $groups_id = PluginEscaladeUser::getUserDefaultGroup($item->fields['users_id']);
+               if (!$groups_id) {
+                  //prevent adding empty group
+                  if (empty($ticket->input['_additional_groups_assigns'])) {
+                     unset($ticket->input['_additional_groups_assigns']);
+                  }
+               }
+               break;
          }
       }
 
@@ -534,16 +547,22 @@ class PluginEscaladeTicket {
          return true;
       }
 
-      if ($_SESSION['plugins']['escalade']['config']['use_assign_user_group'] == 1) {
-         // First group
-         $groups_id = PluginEscaladeUser::getTechnicianGroup($ticket->fields['entities_id'],
-                                                      $item->fields['users_id'],
-                                                      true);
-      } else {
-         // All groups
-         $groups_id = PluginEscaladeUser::getTechnicianGroup($ticket->fields['entities_id'],
-                                                      $item->fields['users_id'],
-                                                      false);
+      switch ($_SESSION['plugins']['escalade']['config']['use_assign_user_group']) {
+         case 1: 
+            // First group
+            $groups_id = PluginEscaladeUser::getTechnicianGroup($ticket->fields['entities_id'],
+                                                         $item->fields['users_id'],
+                                                         true);
+            break;
+         case 2:
+            // All groups
+            $groups_id = PluginEscaladeUser::getTechnicianGroup($ticket->fields['entities_id'],
+                                                         $item->fields['users_id'],
+                                                         false);
+            break;
+         case 3:
+            $groups_id = PluginEscaladeUser::getUserDefaultGroup($item->fields['users_id']);
+            break;
       }
 
       if (!empty($groups_id)) {
