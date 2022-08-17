@@ -112,8 +112,8 @@ class PluginEscaladeUser extends CommonDBTM {
 
       $user = new User();
       $user->getFromDB($users_id);
-      if ($user->getField('groups_id')) {
-         $groups_id = $user->getField('groups_id');
+      if ($user->fields['groups_id']) {
+         $groups_id = $user->fields['groups_id'];
       }
       return $groups_id;
    }

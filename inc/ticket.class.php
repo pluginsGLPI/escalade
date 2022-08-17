@@ -384,7 +384,7 @@ class PluginEscaladeTicket {
                }
                break;
             case 2:
-               // All groups
+               // Last groups
                $ticket->input['_additional_groups_assigns']
                   = PluginEscaladeUser::getTechnicianGroup($ticket->input['entities_id'],
                                                             $ticket->input['_users_id_assign'],
@@ -396,7 +396,9 @@ class PluginEscaladeTicket {
                break;
             
             case 3:
-               $groups_id = PluginEscaladeUser::getUserDefaultGroup($item->fields['users_id']);
+               //User's default group
+               $ticket->input['_additional_groups_assigns'] 
+                  = PluginEscaladeUser::getUserDefaultGroup($item->fields['users_id']);
                if (!$groups_id) {
                   //prevent adding empty group
                   if (empty($ticket->input['_additional_groups_assigns'])) {
