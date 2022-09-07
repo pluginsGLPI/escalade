@@ -399,7 +399,7 @@ class PluginEscaladeTicket {
                //User's default group
                $ticket->input['_additional_groups_assigns'] 
                   = PluginEscaladeUser::getUserDefaultGroup($item->fields['users_id']);
-               if (!$groups_id) {
+               if (empty($ticket->input['_additional_groups_assigns'])) {
                   //prevent adding empty group
                   if (empty($ticket->input['_additional_groups_assigns'])) {
                      unset($ticket->input['_additional_groups_assigns']);
