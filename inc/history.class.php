@@ -269,8 +269,13 @@ class PluginEscaladeHistory extends CommonDBTM {
          $options['criteria'][2]['value']      = 'mygroups';
          $options['criteria'][2]['link']       = 'AND';
 
-         echo "<table class='tab_cadrehov' id='pluginEscaladeCentralList'>";
-         echo "<tr><th colspan='5'>";
+         echo "<div class='grid-item col-xl-6 col-xxl-4'><div class='card'>";
+         echo "<div class='card-body p-0'>";
+         echo "<div class='lazy-widget' data-itemtype='Ticket' data-widget='central_list'>";
+         echo "<div class='table-responsive card-table'>";
+         echo "<table class='table table-borderless table-striped table-hover card-table' id='pluginEscaladeCentralList'>";
+         echo "<thead>";
+         echo "<tr><th colspan='4'>";
          echo "<a href=\"".$CFG_GLPI["root_doc"]."/front/ticket.php?".
                          Toolbox::append_params($options, '&amp;')."\">".
                          Html::makeTitle($title, $number, $numrows)."</a>";
@@ -281,14 +286,18 @@ class PluginEscaladeHistory extends CommonDBTM {
             echo "<th></th>";
             echo "<th>".__('Requester')."</th>";
             echo "<th>".__('Associated element')."</th>";
-            echo "<th>".__('Description')."</th></tr>";
+            echo "<th>".__('Description')."</th></tr><thead>";
             for ($i = 0; $i < $number; $i++) {
                $ID = $DB->result($result, $i, "id");
                Ticket::showVeryShort($ID, 'Ticket$2');
             }
          }
          echo "</table>";
-         echo "<br />";
+         echo "</div>";
+         echo "</div>";
+         echo "</div>";
+         echo "</div>";
+         echo "</div>";
       }
    }
 }
