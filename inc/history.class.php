@@ -286,7 +286,7 @@ class PluginEscaladeHistory extends CommonDBTM {
             echo "<th></th>";
             echo "<th>".__('Requester')."</th>";
             echo "<th>".__('Associated element')."</th>";
-            echo "<th>".__('Description')."</th></tr><thead>";
+            echo "<th>".__('Description')."</th></tr></thead>";
             for ($i = 0; $i < $number; $i++) {
                $ID = $DB->result($result, $i, "id");
                Ticket::showVeryShort($ID, 'Ticket$2');
