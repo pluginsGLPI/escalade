@@ -273,7 +273,7 @@ class PluginEscaladeHistory extends CommonDBTM {
          echo "<div class='card-body p-0'>";
          echo "<div class='lazy-widget' data-itemtype='Ticket' data-widget='central_list'>";
          echo "<div class='table-responsive card-table'>";
-         echo "<table class='table table-borderless table-striped table-hover card-table' id='pluginEscaladeCentralList'>";
+         echo "<table class='table table-borderless table-striped table-hover card-table'>";
          echo "<thead>";
          echo "<tr><th colspan='4'>";
          echo "<a href=\"".$CFG_GLPI["root_doc"]."/front/ticket.php?".

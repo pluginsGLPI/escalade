@@ -51,24 +51,21 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
             }
 
             // get central list for plugin and insert in group tab
-            $(".masonry_grid").each(function(){
-               var masonry_id = $(".masonry_grid").attr('id');
-               var container = $(".masonry_grid");
-               //ajax request
-               $.ajax({ type: "GET",
-                  url: CFG_GLPI.root_doc+"/"+GLPI_PLUGINS_PATH.escalade+'/ajax/central.php',
-                  async: false,
-                  success : function(text)
-                  {
-                     container.append(text);
-                     window.msnry = new Masonry('.masonry_grid', {
-                     "percentPosition": true,
-                     "horizontalOrder": true,
-                  });
-                  }
+            var container = $(".masonry_grid");
+            //ajax request
+            $.ajax({ type: "GET",
+               url: CFG_GLPI.root_doc+"/"+GLPI_PLUGINS_PATH.escalade+'/ajax/central.php',
+               async: false,
+               success : function(text)
+               {
+                  container.append(text);
+                  window.msnry = new Masonry('.masonry_grid', {
+                  "percentPosition": true,
+                  "horizontalOrder": true,
                });
+               }
             });
-          }, 100);
+          }, 10);
       });
    });
 
