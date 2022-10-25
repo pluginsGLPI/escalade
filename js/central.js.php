@@ -49,24 +49,15 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
             if ($('.nav-link.active:contains($locale_group_view)').length == 0) {
                return;
             }
-
-            // get central list for plugin and insert in group tab
-            $(".masonry_grid").each(function(){
-               var masonry_id = $(this).attr('id');
-
-               if (this.innerHTML.indexOf('escalade_block') < 0) {
-                  //prepare a span element to load new elements
-                  $(this).prepend("<div class='grid-item col-xl-6 col-xxl-4'><div class='card' id='escalade_block'></div></div>");
-
-                  //ajax request
-                  $("#escalade_block").load(CFG_GLPI.root_doc+"/"+GLPI_PLUGINS_PATH.escalade+'/ajax/central.php', function() {
-                     if ($("#escalade_block").html() == "") {
-                        $("#escalade_block").closest('.grid-item').remove();
-                     } else {
-                        var msnry = new Masonry('#'+masonry_id);
-                        msnry.layout();
-                     }
-                  });
+            $.ajax({ type: "GET",
+               url: CFG_GLPI.root_doc+"/"+GLPI_PLUGINS_PATH.escalade+'/ajax/central.php',
+               async: false,
+               success : function(text)
+               {
+                  if (text !== "") {
+                     $(".masonry_grid").append(text);
+                     window.msnry = new Masonry('.masonry_grid');
+                  }
                }
             });
           }, 100);
