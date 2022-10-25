@@ -49,14 +49,13 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
             if ($('.nav-link.active:contains($locale_group_view)').length == 0) {
                return;
             }
-            var container = $(".masonry_grid");
             $.ajax({ type: "GET",
                url: CFG_GLPI.root_doc+"/"+GLPI_PLUGINS_PATH.escalade+'/ajax/central.php',
                async: false,
                success : function(text)
                {
-                  if (text.html() !== "") {
-                     container.append(text);
+                  if (text !== "") {
+                     $(".masonry_grid").append(text);
                      window.msnry = new Masonry('.masonry_grid');
                   }
                }
