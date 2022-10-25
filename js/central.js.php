@@ -55,8 +55,10 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
                async: false,
                success : function(text)
                {
-                  container.append(text);
-                  window.msnry = new Masonry('.masonry_grid');
+                  if (text.html() !== "") {
+                     container.append(text);
+                     window.msnry = new Masonry('.masonry_grid');
+                  }
                }
             });
           }, 100);
