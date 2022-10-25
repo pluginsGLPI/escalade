@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-20 12:06+0000\n"
+"POT-Creation-Date: 2022-10-25 09:03+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2015-2016,2018-2021\n"
 "Language-Team: Turkish (Turkey) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/tr_TR/)\n"
@@ -51,48 +51,48 @@ msgstr "Kopyalanmış destek kayıtları aynı zamanda kapatılsın"
 msgid "Configuration Escalade plugin"
 msgstr "Yetki yükseltme uygulama eki yapılandırması"
 
-#: inc/config.class.php:244
+#: inc/config.class.php:243
 msgid "Display delete button"
 msgstr "Sil düğmesi görüntülensin"
 
-#: inc/config.class.php:338
+#: inc/config.class.php:337
 msgid "Don't change"
 msgstr "Değiştirilmesin"
 
-#: hook.php:495 hook.php:513 inc/config.class.php:299
+#: inc/config.class.php:298 hook.php:495 hook.php:513
 msgid "Enable filtering on the groups assignment"
 msgstr "Grup atamaları süzülebilsin"
 
-#: inc/ticket.class.php:748
+#: inc/ticket.class.php:747
 msgid "Error : adding actors (group)"
 msgstr "Hata : Aktör ekleme (grup)"
 
-#: inc/ticket.class.php:739
+#: inc/ticket.class.php:738
 msgid "Error : adding actors (user)"
 msgstr "Hata : Aktör ekleme (kullanıcı)"
 
-#: inc/ticket.class.php:758
+#: inc/ticket.class.php:757
 msgid "Error : adding documents"
 msgstr "Hata : Belge ekleme"
 
-#: inc/ticket.class.php:728
+#: inc/ticket.class.php:727
 msgid "Error : adding followups"
 msgstr "Hata : İzleme ekleme"
 
-#: inc/ticket.class.php:713
+#: inc/ticket.class.php:712
 msgid "Error : adding link between the two tickets"
 msgstr "Hata : İki destek kaydı arasında ilişki ekleme"
 
-#: inc/ticket.class.php:701
+#: inc/ticket.class.php:700
 msgid "Error : adding new ticket"
 msgstr "Hata : Yeni destek kaydı ekleme"
 
-#: inc/ticket.class.php:685
+#: inc/ticket.class.php:684
 msgid "Error : get old ticket"
 msgstr "Hata : Eski destek kaydı alma"
 
-#: front/config.form.php:65 inc/user.class.php:164
-#: inc/group_group.class.php:52 setup.php:174
+#: inc/group_group.class.php:52 inc/user.class.php:164
+#: front/config.form.php:64 setup.php:171
 msgid "Escalation"
 msgstr "Yetki yükseltme"
 
@@ -112,7 +112,7 @@ msgstr "Destek kaydına atanmış grup"
 msgid "Manager of the group escalated in the ticket"
 msgstr "Destek kaydına atanmış kullanıcının yöneticisi"
 
-#: inc/config.class.php:224
+#: inc/config.class.php:223
 msgid ""
 "Nota: This feature (creation part) is duplicate with the <a "
 "href='##link##'>Behavior</a>plugin. This last has priority."
@@ -134,7 +134,7 @@ msgstr "Destek kaydını bir gruba ata"
 msgid "Remove old assign group on new group assign"
 msgstr "Eski atanmış grubu yeni atanacak grup üzerine taşı"
 
-#: inc/config.class.php:232
+#: inc/config.class.php:231
 msgid "Remove requester(s) on escalation"
 msgstr "İstekte bulunanları yetki yükseltmeden çıkar"
 
@@ -162,7 +162,7 @@ msgstr "Çözüm reddedildi, gruba geri git"
 msgid "Solve date modification"
 msgstr "Tarih değişikliğini çöz"
 
-#: inc/ticket.class.php:723 inc/ticket.class.php:764 inc/ticket.class.php:769
+#: inc/ticket.class.php:722 inc/ticket.class.php:763 inc/ticket.class.php:768
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Bu destek, destek kaydı numarasından"
 

@@ -3,11 +3,11 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Arthur Ramos Schaefer <arthur.r.schaefer@gmail.com>, 2017
-# Arthur Ramos Schaefer <arthur.r.schaefer@gmail.com>, 2017
+# Arthur Schaefer <arthur.r.schaefer@gmail.com>, 2017
+# Arthur Schaefer <arthur.r.schaefer@gmail.com>, 2017
 # Joao Carlos Marcelino Lima <joaomarcelino@souunisuam.com.br>, 2019
 # joão Rafael <j.rafael.1847@gmail.com>, 2018
-# Luis José Machado Sousa <luisjosemachado@gmail.com>, 2021
+# Luis José Machado Sousa <luisjosemachado@gmail.com>, 2021-2022
 # Pablo Pierre Ferreira <pablo.terdulino@gmail.com>, 2021
 # Pedro Luís V. Sousa <pedroluisvsousa@gmail.com>, 2017
 # Wanderlei Hüttel <wanderlei.huttel@gmail.com>, 2017
@@ -15,15 +15,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-20 12:06+0000\n"
+"POT-Creation-Date: 2022-10-25 09:03+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
-"Last-Translator: Luis José Machado Sousa <luisjosemachado@gmail.com>, 2021\n"
+"Last-Translator: Luis José Machado Sousa <luisjosemachado@gmail.com>, 2021-2022\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: pt_BR\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #: inc/config.class.php:137
 msgid "Assign the technical group on ticket category change"
@@ -57,48 +57,48 @@ msgstr ""
 msgid "Configuration Escalade plugin"
 msgstr "Configuração do plugin Escalade"
 
-#: inc/config.class.php:244
+#: inc/config.class.php:243
 msgid "Display delete button"
 msgstr "Mostrar botão excluir"
 
-#: inc/config.class.php:338
+#: inc/config.class.php:337
 msgid "Don't change"
 msgstr ""
 
-#: hook.php:495 hook.php:513 inc/config.class.php:299
+#: inc/config.class.php:298 hook.php:495 hook.php:513
 msgid "Enable filtering on the groups assignment"
 msgstr ""
 
-#: inc/ticket.class.php:748
+#: inc/ticket.class.php:747
 msgid "Error : adding actors (group)"
 msgstr "Erro: adicionar autores (grupo)"
 
-#: inc/ticket.class.php:739
+#: inc/ticket.class.php:738
 msgid "Error : adding actors (user)"
 msgstr "Erro: adicionar usuário no chamado (usuário)"
 
-#: inc/ticket.class.php:758
+#: inc/ticket.class.php:757
 msgid "Error : adding documents"
 msgstr "Erro: adicionar documento"
 
-#: inc/ticket.class.php:728
+#: inc/ticket.class.php:727
 msgid "Error : adding followups"
 msgstr ""
 
-#: inc/ticket.class.php:713
+#: inc/ticket.class.php:712
 msgid "Error : adding link between the two tickets"
 msgstr "Erro: relacionar chamados"
 
-#: inc/ticket.class.php:701
+#: inc/ticket.class.php:700
 msgid "Error : adding new ticket"
 msgstr "Erro: adicionar novo chamado"
 
-#: inc/ticket.class.php:685
+#: inc/ticket.class.php:684
 msgid "Error : get old ticket"
 msgstr "Erro: obter chamados antigos"
 
-#: front/config.form.php:65 inc/user.class.php:164
-#: inc/group_group.class.php:52 setup.php:174
+#: inc/group_group.class.php:52 inc/user.class.php:164
+#: front/config.form.php:64 setup.php:171
 msgid "Escalation"
 msgstr "Escalonamento"
 
@@ -118,7 +118,7 @@ msgstr ""
 msgid "Manager of the group escalated in the ticket"
 msgstr ""
 
-#: inc/config.class.php:224
+#: inc/config.class.php:223
 msgid ""
 "Nota: This feature (creation part) is duplicate with the <a "
 "href='##link##'>Behavior</a>plugin. This last has priority."
@@ -140,7 +140,7 @@ msgstr ""
 msgid "Remove old assign group on new group assign"
 msgstr ""
 
-#: inc/config.class.php:232
+#: inc/config.class.php:231
 msgid "Remove requester(s) on escalation"
 msgstr ""
 
@@ -168,7 +168,7 @@ msgstr "Solução rejeitada, volte para o grupo"
 msgid "Solve date modification"
 msgstr ""
 
-#: inc/ticket.class.php:723 inc/ticket.class.php:764 inc/ticket.class.php:769
+#: inc/ticket.class.php:722 inc/ticket.class.php:763 inc/ticket.class.php:768
 msgid "This ticket has been cloned from the ticket num"
 msgstr ""
 
@@ -202,7 +202,7 @@ msgstr "Tempo de modificação"
 
 #: inc/ticket.class.php:311
 msgid "escalated to the group"
-msgstr "Escalone para o grupo"
+msgstr "Escalonado para o grupo"
 
 #: front/popup_histories.php:33
 msgid "full assignation history"

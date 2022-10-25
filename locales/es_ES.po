@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-20 12:06+0000\n"
+"POT-Creation-Date: 2022-10-25 09:03+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Cédric Anne, 2018\n"
 "Language-Team: Spanish (Spain) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/es_ES/)\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: es_ES\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #: inc/config.class.php:137
 msgid "Assign the technical group on ticket category change"
@@ -52,48 +52,48 @@ msgstr "Cerrar tickets clonados al mismo tiempo"
 msgid "Configuration Escalade plugin"
 msgstr "Plugin de configuración de Escalado"
 
-#: inc/config.class.php:244
+#: inc/config.class.php:243
 msgid "Display delete button"
 msgstr ""
 
-#: inc/config.class.php:338
+#: inc/config.class.php:337
 msgid "Don't change"
 msgstr "No cambar"
 
-#: hook.php:495 hook.php:513 inc/config.class.php:299
+#: inc/config.class.php:298 hook.php:495 hook.php:513
 msgid "Enable filtering on the groups assignment"
 msgstr "Habilitar el filtrado en la asignación de los grupos"
 
-#: inc/ticket.class.php:748
+#: inc/ticket.class.php:747
 msgid "Error : adding actors (group)"
 msgstr "Error : agregando actores (grupo)"
 
-#: inc/ticket.class.php:739
+#: inc/ticket.class.php:738
 msgid "Error : adding actors (user)"
 msgstr "Error : agregando actores (usuario)"
 
-#: inc/ticket.class.php:758
+#: inc/ticket.class.php:757
 msgid "Error : adding documents"
 msgstr "Error : agregando documentos"
 
-#: inc/ticket.class.php:728
+#: inc/ticket.class.php:727
 msgid "Error : adding followups"
 msgstr "Error: añadiendo seguimientos"
 
-#: inc/ticket.class.php:713
+#: inc/ticket.class.php:712
 msgid "Error : adding link between the two tickets"
 msgstr "Error :  agregando vinculo entre los dos  tickets"
 
-#: inc/ticket.class.php:701
+#: inc/ticket.class.php:700
 msgid "Error : adding new ticket"
 msgstr "Error: agregando nuevo ticket"
 
-#: inc/ticket.class.php:685
+#: inc/ticket.class.php:684
 msgid "Error : get old ticket"
 msgstr "Error : Al obtener tickets antiguos"
 
-#: front/config.form.php:65 inc/user.class.php:164
-#: inc/group_group.class.php:52 setup.php:174
+#: inc/group_group.class.php:52 inc/user.class.php:164
+#: front/config.form.php:64 setup.php:171
 msgid "Escalation"
 msgstr "Escalado"
 
@@ -113,7 +113,7 @@ msgstr ""
 msgid "Manager of the group escalated in the ticket"
 msgstr ""
 
-#: inc/config.class.php:224
+#: inc/config.class.php:223
 msgid ""
 "Nota: This feature (creation part) is duplicate with the <a "
 "href='##link##'>Behavior</a>plugin. This last has priority."
@@ -135,7 +135,7 @@ msgstr "Reasignar el ticket al grupo"
 msgid "Remove old assign group on new group assign"
 msgstr "Eliminar la asignación antigua del grupo en la nueva asignación"
 
-#: inc/config.class.php:232
+#: inc/config.class.php:231
 msgid "Remove requester(s) on escalation"
 msgstr ""
 
@@ -163,7 +163,7 @@ msgstr "Solución rechazada, regresar al grupo"
 msgid "Solve date modification"
 msgstr ""
 
-#: inc/ticket.class.php:723 inc/ticket.class.php:764 inc/ticket.class.php:769
+#: inc/ticket.class.php:722 inc/ticket.class.php:763 inc/ticket.class.php:768
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Este ticket ha sido desde el ticket numero"
 

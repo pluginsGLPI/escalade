@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-20 12:06+0000\n"
+"POT-Creation-Date: 2022-10-25 09:03+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Andrejs <andrew.k2@gmail.com>, 2016,2018\n"
 "Language-Team: Latvian (Latvia) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/lv_LV/)\n"
@@ -51,48 +51,48 @@ msgstr "Aizvērt klonētus pieteikumus vienlaikus"
 msgid "Configuration Escalade plugin"
 msgstr "Papildspraudņa Escalade iestatījumi"
 
-#: inc/config.class.php:244
+#: inc/config.class.php:243
 msgid "Display delete button"
 msgstr "Parādīt dzēšanas pogu"
 
-#: inc/config.class.php:338
+#: inc/config.class.php:337
 msgid "Don't change"
 msgstr "Nemainīt"
 
-#: hook.php:495 hook.php:513 inc/config.class.php:299
+#: inc/config.class.php:298 hook.php:495 hook.php:513
 msgid "Enable filtering on the groups assignment"
 msgstr "Iespējot filtrēšanu grupu piešķiršanā"
 
-#: inc/ticket.class.php:748
+#: inc/ticket.class.php:747
 msgid "Error : adding actors (group)"
 msgstr "Kļūda : pievienojot dalībniekus (grupas)"
 
-#: inc/ticket.class.php:739
+#: inc/ticket.class.php:738
 msgid "Error : adding actors (user)"
 msgstr "Kļūda : pievienojot dalībniekus (lietotājus)"
 
-#: inc/ticket.class.php:758
+#: inc/ticket.class.php:757
 msgid "Error : adding documents"
 msgstr "Kļūda : pievienojot dokumentus"
 
-#: inc/ticket.class.php:728
+#: inc/ticket.class.php:727
 msgid "Error : adding followups"
 msgstr "Kļūda : pievienojot sekojumus"
 
-#: inc/ticket.class.php:713
+#: inc/ticket.class.php:712
 msgid "Error : adding link between the two tickets"
 msgstr "Kļūda : pievienojot sasaisti starp diviem pieteikumiem"
 
-#: inc/ticket.class.php:701
+#: inc/ticket.class.php:700
 msgid "Error : adding new ticket"
 msgstr "Kļūda : pievienojot jauno pieteikumu"
 
-#: inc/ticket.class.php:685
+#: inc/ticket.class.php:684
 msgid "Error : get old ticket"
 msgstr "Kļūda : iegūt veco pieteikumu"
 
-#: front/config.form.php:65 inc/user.class.php:164
-#: inc/group_group.class.php:52 setup.php:174
+#: inc/group_group.class.php:52 inc/user.class.php:164
+#: front/config.form.php:64 setup.php:171
 msgid "Escalation"
 msgstr "Eskalācija"
 
@@ -112,7 +112,7 @@ msgstr "Grupa eskalēta pieteikumā"
 msgid "Manager of the group escalated in the ticket"
 msgstr "Grupas menedžeris eskalēts pieteikumā"
 
-#: inc/config.class.php:224
+#: inc/config.class.php:223
 msgid ""
 "Nota: This feature (creation part) is duplicate with the <a "
 "href='##link##'>Behavior</a>plugin. This last has priority."
@@ -134,7 +134,7 @@ msgstr "Piešķirt pieteikumu grupai atkārtoti"
 msgid "Remove old assign group on new group assign"
 msgstr "Noņemt iepriekš piešķirto grupu piešķirot jauno grupu"
 
-#: inc/config.class.php:232
+#: inc/config.class.php:231
 msgid "Remove requester(s) on escalation"
 msgstr ""
 
@@ -162,7 +162,7 @@ msgstr "Risinājums noraidīts, atgriezt grupai"
 msgid "Solve date modification"
 msgstr "Risinājuma rediģēšanas datums"
 
-#: inc/ticket.class.php:723 inc/ticket.class.php:764 inc/ticket.class.php:769
+#: inc/ticket.class.php:722 inc/ticket.class.php:763 inc/ticket.class.php:768
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Šīs pieteikums ir no pieteikuma num"
 

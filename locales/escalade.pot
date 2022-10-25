@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-20 12:06+0000\n"
+"POT-Creation-Date: 2022-10-25 09:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,48 +49,48 @@ msgstr ""
 msgid "Configuration Escalade plugin"
 msgstr ""
 
-#: inc/config.class.php:244
+#: inc/config.class.php:243
 msgid "Display delete button"
 msgstr ""
 
-#: inc/config.class.php:338
+#: inc/config.class.php:337
 msgid "Don't change"
 msgstr ""
 
-#: hook.php:495 hook.php:513 inc/config.class.php:299
+#: inc/config.class.php:298 hook.php:495 hook.php:513
 msgid "Enable filtering on the groups assignment"
 msgstr ""
 
-#: inc/ticket.class.php:748
+#: inc/ticket.class.php:747
 msgid "Error : adding actors (group)"
 msgstr ""
 
-#: inc/ticket.class.php:739
+#: inc/ticket.class.php:738
 msgid "Error : adding actors (user)"
 msgstr ""
 
-#: inc/ticket.class.php:758
+#: inc/ticket.class.php:757
 msgid "Error : adding documents"
 msgstr ""
 
-#: inc/ticket.class.php:728
+#: inc/ticket.class.php:727
 msgid "Error : adding followups"
 msgstr ""
 
-#: inc/ticket.class.php:713
+#: inc/ticket.class.php:712
 msgid "Error : adding link between the two tickets"
 msgstr ""
 
-#: inc/ticket.class.php:701
+#: inc/ticket.class.php:700
 msgid "Error : adding new ticket"
 msgstr ""
 
-#: inc/ticket.class.php:685
+#: inc/ticket.class.php:684
 msgid "Error : get old ticket"
 msgstr ""
 
-#: front/config.form.php:65 inc/user.class.php:164 inc/group_group.class.php:52
-#: setup.php:174
+#: inc/group_group.class.php:52 inc/user.class.php:164 front/config.form.php:64
+#: setup.php:171
 msgid "Escalation"
 msgstr ""
 
@@ -110,7 +110,7 @@ msgstr ""
 msgid "Manager of the group escalated in the ticket"
 msgstr ""
 
-#: inc/config.class.php:224
+#: inc/config.class.php:223
 msgid ""
 "Nota: This feature (creation part) is duplicate with the <a "
 "href='##link##'>Behavior</a>plugin. This last has priority."
@@ -132,7 +132,7 @@ msgstr ""
 msgid "Remove old assign group on new group assign"
 msgstr ""
 
-#: inc/config.class.php:232
+#: inc/config.class.php:231
 msgid "Remove requester(s) on escalation"
 msgstr ""
 
@@ -160,7 +160,7 @@ msgstr ""
 msgid "Solve date modification"
 msgstr ""
 
-#: inc/ticket.class.php:723 inc/ticket.class.php:764 inc/ticket.class.php:769
+#: inc/ticket.class.php:722 inc/ticket.class.php:763 inc/ticket.class.php:768
 msgid "This ticket has been cloned from the ticket num"
 msgstr ""
 

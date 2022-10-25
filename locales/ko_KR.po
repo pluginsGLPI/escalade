@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-20 12:06+0000\n"
+"POT-Creation-Date: 2022-10-25 09:03+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: SeongHyeon Cho <jaymz9634@gmail.com>, 2020-2021\n"
 "Language-Team: Korean (Korea) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/ko_KR/)\n"
@@ -50,48 +50,48 @@ msgstr "동시에 복제된 티켓 닫기"
 msgid "Configuration Escalade plugin"
 msgstr "구성 이관 플러그인"
 
-#: inc/config.class.php:244
+#: inc/config.class.php:243
 msgid "Display delete button"
 msgstr "삭제 버튼 표시"
 
-#: inc/config.class.php:338
+#: inc/config.class.php:337
 msgid "Don't change"
 msgstr "변경 안함"
 
-#: hook.php:495 hook.php:513 inc/config.class.php:299
+#: inc/config.class.php:298 hook.php:495 hook.php:513
 msgid "Enable filtering on the groups assignment"
 msgstr "그룹 할당에 필터링 활성화"
 
-#: inc/ticket.class.php:748
+#: inc/ticket.class.php:747
 msgid "Error : adding actors (group)"
 msgstr "오류 : 시행자 추가 (그룹)"
 
-#: inc/ticket.class.php:739
+#: inc/ticket.class.php:738
 msgid "Error : adding actors (user)"
 msgstr "오류 : 시행자 (사용자) 추가"
 
-#: inc/ticket.class.php:758
+#: inc/ticket.class.php:757
 msgid "Error : adding documents"
 msgstr "오류 : 문서 추가"
 
-#: inc/ticket.class.php:728
+#: inc/ticket.class.php:727
 msgid "Error : adding followups"
 msgstr "오류 : 추적 추가"
 
-#: inc/ticket.class.php:713
+#: inc/ticket.class.php:712
 msgid "Error : adding link between the two tickets"
 msgstr "오류 : 두 티켓간의 링크 추가"
 
-#: inc/ticket.class.php:701
+#: inc/ticket.class.php:700
 msgid "Error : adding new ticket"
 msgstr "오류 : 새 티켓 추가"
 
-#: inc/ticket.class.php:685
+#: inc/ticket.class.php:684
 msgid "Error : get old ticket"
 msgstr "오류  : 오래된 티켓 가져오기"
 
-#: front/config.form.php:65 inc/user.class.php:164
-#: inc/group_group.class.php:52 setup.php:174
+#: inc/group_group.class.php:52 inc/user.class.php:164
+#: front/config.form.php:64 setup.php:171
 msgid "Escalation"
 msgstr "이관"
 
@@ -111,7 +111,7 @@ msgstr "티켓에서 그룹으로 이관됨"
 msgid "Manager of the group escalated in the ticket"
 msgstr "티켓에서 그룹의 관리자로 이관됨"
 
-#: inc/config.class.php:224
+#: inc/config.class.php:223
 msgid ""
 "Nota: This feature (creation part) is duplicate with the <a "
 "href='##link##'>Behavior</a>plugin. This last has priority."
@@ -133,7 +133,7 @@ msgstr "그룹에 티켓 재할당"
 msgid "Remove old assign group on new group assign"
 msgstr "새 그룹 할당에 이전 할당 그룹 제거"
 
-#: inc/config.class.php:232
+#: inc/config.class.php:231
 msgid "Remove requester(s) on escalation"
 msgstr "이관 시 요청자(들) 제거"
 
@@ -161,7 +161,7 @@ msgstr "해결책 거부됨, 그룹으로 돌아가기"
 msgid "Solve date modification"
 msgstr "해결 일자 변경"
 
-#: inc/ticket.class.php:723 inc/ticket.class.php:764 inc/ticket.class.php:769
+#: inc/ticket.class.php:722 inc/ticket.class.php:763 inc/ticket.class.php:768
 msgid "This ticket has been cloned from the ticket num"
 msgstr "이 티켓은 그 티켓 번호에서 복제되었습니다"
 

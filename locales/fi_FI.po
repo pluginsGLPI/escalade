@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-20 12:06+0000\n"
+"POT-Creation-Date: 2022-10-25 09:03+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Markku Vepsä, 2018-2019\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/fi_FI/)\n"
@@ -50,48 +50,48 @@ msgstr "Sulje kloonatut tiketit samaan aikaan"
 msgid "Configuration Escalade plugin"
 msgstr "Escalade -liitännäisen asetukset"
 
-#: inc/config.class.php:244
+#: inc/config.class.php:243
 msgid "Display delete button"
 msgstr "Näytä poistopainike"
 
-#: inc/config.class.php:338
+#: inc/config.class.php:337
 msgid "Don't change"
 msgstr "Älä muuta"
 
-#: hook.php:495 hook.php:513 inc/config.class.php:299
+#: inc/config.class.php:298 hook.php:495 hook.php:513
 msgid "Enable filtering on the groups assignment"
 msgstr "Ota suodatus käyttöön ryhmiin osoituksessa"
 
-#: inc/ticket.class.php:748
+#: inc/ticket.class.php:747
 msgid "Error : adding actors (group)"
 msgstr "Virhe : lisättäessä toimijoita (ryhmä)"
 
-#: inc/ticket.class.php:739
+#: inc/ticket.class.php:738
 msgid "Error : adding actors (user)"
 msgstr "Virhe : lisättäessä toimijoita (käyttäjä)"
 
-#: inc/ticket.class.php:758
+#: inc/ticket.class.php:757
 msgid "Error : adding documents"
 msgstr "Virhe : lisättäessä asiakirjoja"
 
-#: inc/ticket.class.php:728
+#: inc/ticket.class.php:727
 msgid "Error : adding followups"
 msgstr "Virhe : lisättäessä seurantaa"
 
-#: inc/ticket.class.php:713
+#: inc/ticket.class.php:712
 msgid "Error : adding link between the two tickets"
 msgstr "Virhe : lisättäessä linkkiä tikettien välille"
 
-#: inc/ticket.class.php:701
+#: inc/ticket.class.php:700
 msgid "Error : adding new ticket"
 msgstr "Virhe : lisättäessä uutta tikettiä"
 
-#: inc/ticket.class.php:685
+#: inc/ticket.class.php:684
 msgid "Error : get old ticket"
 msgstr "Virhe : noudettaessa tikettiä"
 
-#: front/config.form.php:65 inc/user.class.php:164
-#: inc/group_group.class.php:52 setup.php:174
+#: inc/group_group.class.php:52 inc/user.class.php:164
+#: front/config.form.php:64 setup.php:171
 msgid "Escalation"
 msgstr "Eskalaatio"
 
@@ -111,7 +111,7 @@ msgstr "Tiketissä eskaloitu ryhmä"
 msgid "Manager of the group escalated in the ticket"
 msgstr "Tiketissä eskaloidun ryhmän manageri"
 
-#: inc/config.class.php:224
+#: inc/config.class.php:223
 msgid ""
 "Nota: This feature (creation part) is duplicate with the <a "
 "href='##link##'>Behavior</a>plugin. This last has priority."
@@ -133,7 +133,7 @@ msgstr "Uudelleenosoita tiketti ryhmälle"
 msgid "Remove old assign group on new group assign"
 msgstr "Poista vanha ryhmä, jos osoitetaan uudelle ryhmälle "
 
-#: inc/config.class.php:232
+#: inc/config.class.php:231
 msgid "Remove requester(s) on escalation"
 msgstr ""
 
@@ -161,7 +161,7 @@ msgstr "Ratkaisu hylättiin, palautettu ryhmään"
 msgid "Solve date modification"
 msgstr "Ratkaise päivämäärän muutos"
 
-#: inc/ticket.class.php:723 inc/ticket.class.php:764 inc/ticket.class.php:769
+#: inc/ticket.class.php:722 inc/ticket.class.php:763 inc/ticket.class.php:768
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Tiketti kloonattu tiketistä nro"
 
