@@ -269,7 +269,7 @@ class PluginEscaladeHistory extends CommonDBTM {
          $options['criteria'][2]['value']      = 'mygroups';
          $options['criteria'][2]['link']       = 'AND';
 
-         echo "<div class='grid-item col-xl-6 col-xxl-4'><div class='card'>";
+         echo "<div class='grid-item col-xl-6 escalade-appended'><div class='card'>";
          echo "<div class='card-body p-0'>";
          echo "<div class='lazy-widget' data-itemtype='Ticket' data-widget='central_list'>";
          echo "<div class='table-responsive card-table'>";
