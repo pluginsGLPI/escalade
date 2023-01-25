@@ -55,8 +55,9 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
                success : function(text)
                {
                   if (text !== "") {
-                     $(".masonry_grid").append(text);
-                     window.msnry = new Masonry('.masonry_grid');
+                     var target_masnry = $(".masonry_grid:visible");
+                     target_masnry.append(text);
+                     window['msnry_' + target_masnry.prop('id')].appended($(".escalade-appended"));
                   }
                }
             });
