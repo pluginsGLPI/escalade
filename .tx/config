@@ -1,8 +1,8 @@
 [main]
 host = https://www.transifex.com
 
-[glpi-project-plugin-escalade.escalade-pot]
+[o:teclib:p:glpi-project-plugin-escalade:r:escalade-pot]
 file_filter = locales/<lang>.po
 source_file = locales/escalade.pot
 source_lang = en
-type = PO
+type        = PO
