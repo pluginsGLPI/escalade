@@ -49,3 +49,34 @@ a.escalade_history {
 .escalade_config .tab_cadre_fixe > tbody > tr > td:nth-child(3) {
    width: 30%;
 }
+
+.timeline-item.PluginEscaladeTicket .timeline-content, .timeline-item.PluginEscaladeTicket .timeline-content {
+   background-color: #F8CBCBFF;
+   color: #000000;
+   border-color: #ccc;
+   background-repeat: no-repeat;
+}
+
+.timeline-item.PluginEscaladeTicket .timeline-content {
+   background-color: #F8CBCBFF;
+   color: #000000FF;
+   border-color: #E8DCCA;
+   border-left: 1em transparent solid;
+}
+
+.itil-footer .action-escalation {
+   background-color: #F8CBCBFF;
+}
+
+a.dropdown-item.action-escalation.answer-action {
+   background-color: #F8CBCBFF;
+}
+
+.escalation {
+   background-color: white ;
+   color: #000000FF;
+}
+
+.escalation-form {
+   background-color: white ;
+}

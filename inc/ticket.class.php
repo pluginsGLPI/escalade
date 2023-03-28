@@ -28,6 +28,8 @@
  * -------------------------------------------------------------------------
  */
 
+use Glpi\Application\View\TemplateRenderer;
+
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
@@ -299,7 +301,9 @@ class PluginEscaladeTicket {
          unset($_SESSION['plugin_escalade']['solution']);
          return $item;
       }
-      if ($_SESSION['plugins']['escalade']['config']['task_history']) {
+       if ($_SESSION['plugins']['escalade']['config']['task_history']
+           && !($item->input['_plugin_escalade_no_history'] ?? false)) {
+
          $group = new Group();
          $group->getFromDB($groups_id);
 
@@ -308,7 +312,7 @@ class PluginEscaladeTicket {
             'tickets_id' => $tickets_id,
             'is_private' => true,
             'state'      => Planning::INFO,
-            'content'    => Toolbox::addslashes_deep(__("escalated to the group", "escalade") . " " . $group->getName())
+            'content'    => Toolbox::addslashes_deep(sprintf(__("Escalation to the group %s.", "escalade"), $group->getName()))
          ]);
       }
 
@@ -850,5 +854,75 @@ class PluginEscaladeTicket {
         }
 
        return $params;
+    }
+
+    public static function addToTimeline($options)
+    {
+        if (!($options['item'] instanceof Ticket)) {
+            return [];
+        }
+
+        if (
+            !Session::haveRight('ticket', Ticket::READALL)
+            || !Session::haveRight('ticket', Ticket::READASSIGN)
+            || !Session::haveRight('ticket', CREATE)
+        ) {
+            return [];
+        }
+
+        // Groups in the tickets' entity that are not assigned to the current ticket
+        $groups = (new Group())->find([
+            'is_assign' => 1,
+            'NOT' => [
+                // Group currently assigned to the ticket
+                'id' => new QuerySubQuery([
+                    'SELECT' => 'groups_id',
+                    'FROM'   => Group_Ticket::getTable(),
+                    'WHERE'  => [
+                        'tickets_id' => $options['item']->getID(),
+                        'type' => CommonITILActor::ASSIGN,
+                    ]
+                ])
+            ],
+            // Restrict to ticket entity
+            getEntitiesRestrictCriteria(
+                Group::getTable(),
+                '',
+                $options['item']->fields['entities_id']
+            )
+        ]);
+
+        $itemtypes = [];
+        if (!empty($groups)) {
+            $itemtypes['escalation'] = [
+                'type' => 'PluginEscaladeTicket',
+                'class' => 'action-escalation',
+                'icon' => 'ti ti-arrow-up',
+                'label' => __('Escalate', 'escalade'),
+                'item' => new self()
+            ];
+        }
+
+        return $itemtypes;
+    }
+
+    public function showForm($ID, $options = [])
+    {
+        $groups_assign = new Group_Ticket();
+        $groups = $groups_assign->find([
+            'tickets_id' => $options["parent"]->getID(),
+            'type' => CommonITILActor::ASSIGN,
+        ]);
+
+        $assigned_groups = [];
+        foreach ($groups as $grp) {
+            $assigned_groups[$grp['groups_id']] = $grp['groups_id'];
+        }
+
+        TemplateRenderer::getInstance()->display('@escalade/escalade_form.html.twig', [
+            'action'          => PLUGIN_ESCALADE_WEBDIR . '/front/ticket.form.php',
+            'ticket'          => $options['parent'],
+            'assigned_groups' => $assigned_groups,
+        ]);
     }
 }

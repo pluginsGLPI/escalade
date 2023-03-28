@@ -1,0 +1,102 @@
+{#
+ # -------------------------------------------------------------------------
+ # Escalade plugin for GLPI
+ # -------------------------------------------------------------------------
+ #
+ # LICENSE
+ #
+ # This file is part of Escalade.
+ #
+ # Escalade is free software; you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation; either version 2 of the License, or
+ # (at your option) any later version.
+ #
+ # Escalade is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ # GNU General Public License for more details.
+ #
+ # You should have received a copy of the GNU General Public License
+ # along with Escalade. If not, see <http://www.gnu.org/licenses/>.
+ # -------------------------------------------------------------------------
+ # @copyright Copyright (C) 2015-2023 by Escalade plugin team.
+ # @license   GPLv2 https://www.gnu.org/licenses/gpl-2.0.html
+ # @link      https://github.com/pluginsGLPI/escalade
+ # -------------------------------------------------------------------------
+ #}
+
+{% extends 'components/itilobject/timeline/form_timeline_item.html.twig' %}
+{% import 'components/form/fields_macros.html.twig' as fields %}
+
+{% block timeline_card %}
+    <div class="escalation card mt-4 ">
+        <form name="asset_form" class="d-flex flex-column escalation-form bg-white" method="post"
+              action="{{ action }}"
+              enctype="multipart/form-data"
+              data-track-changes="true" data-submit-once>
+
+            <input type="hidden" name="tickets_id" value="{{ ticket.getID() }}" />
+            <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}" />
+
+            <div class="escalation card-header">
+                <h3 class="card-title"> {{ __('Escalate ticket', 'escalade') }}</h3>
+            </div>
+            <div class="escalation card-body">
+                {{ fields.textareaField(
+                    'comment',
+                    '',
+                    __('Comment', 'escalade'),
+                    {
+                        'full_width': true,
+                        'required' : true,
+                        'label': true,
+                        'is_horizontal' : false,
+                        'enable_richtext': true,
+                        'enable_fileupload': false,
+                        'enable_mentions': true,
+                        'rand' : rand,
+                    }
+                ) }}
+                <div class="form-field col-12 mt-2">
+                    {{ fields.dropdownField(
+                        'Group',
+                        'groups_id',
+                        '',
+                        'Group'|itemtype_name,
+                        {
+                            'label_class': 'col-auto',
+                            'input_class': 'col-12',
+                            'field_class': 'col-12 mr-0 ',
+                            'full_width': true,
+                            'required' : true,
+                            'icon_label': true,
+                            'entity': ticket.fields['entities_id'],
+                            'condition': {'is_assign': 1},
+                            'used': assigned_groups,
+                            'rand': rand,
+                        }
+                    ) }}
+                </div>
+                {{ fields.checkboxField(
+                    'is_observer_checkbox',
+                    1,
+                    __('Assign me as an observer', 'escalade'),
+                    {
+                        'field_class': 'col-12',
+                        'label_class': 'col-auto',
+                        'input_class': 'col-auto',
+                    }
+                ) }}
+            </div>
+            <div class="escalation d-flex card-footer justify-content-center">
+                <div class="input-group justify-content-center">
+                    <button class="btn btn-primary me-2" type="submit" name="escalate">
+                        <i class="fas fa-plus"></i>
+                        <span>{{ _x('button', 'Add') }}</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
