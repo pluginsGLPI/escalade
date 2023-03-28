@@ -62,7 +62,7 @@ if (isset($_POST["update"])) {
             if ($config->fields['task_history']) {
                 $group = new Group();
                 $group->getFromDB($input['groups_id']);
-                $content .= sprintf(__("escalation to the group %s", "escalade"), $group->getName()) . "<br>";
+                $content .= sprintf(__("Escalation to the group %s", "escalade"), $group->getName()) . "<br>";
             }
             $content .= "<strong>" . __('User comment', 'escalade') . "</strong><br>";
             $content .= \Glpi\RichText\RichText::getTextFromHtml($input['escalade_comment']);

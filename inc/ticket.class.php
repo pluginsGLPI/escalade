@@ -306,7 +306,7 @@ class PluginEscaladeTicket {
          $group->getFromDB($groups_id);
 
          $task = new TicketTask();
-          $content = __("escalation to the group", "escalade") . " " . $group->getName();
+          $content = __("Escalation to the group", "escalade") . " " . $group->getName();
           if (isset($item) && isset($item->input['escalade_comment'])) {
               $content .= "<br><strong>" . __('User comment', 'escalade') . " :" . "</strong><br>";
               $content .= \Glpi\RichText\RichText::getTextFromHtml($item->input['escalade_comment']);
