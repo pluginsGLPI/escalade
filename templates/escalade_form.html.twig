@@ -1,0 +1,114 @@
+{#
+# ---------------------------------------------------------------------
+#
+# GLPI - Gestionnaire Libre de Parc Informatique
+#
+# http://glpi-project.org
+#
+# @copyright 2015-2022 Teclib' and contributors.
+# @copyright 2003-2014 by the INDEPNET Development Team.
+# @licence   https://www.gnu.org/licenses/gpl-3.0.html
+#
+# ---------------------------------------------------------------------
+#
+# LICENSE
+#
+# This file is part of GLPI.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+# ---------------------------------------------------------------------
+#}
+{% extends 'components/itilobject/timeline/form_timeline_item.html.twig' %}
+{% import 'components/form/fields_macros.html.twig' as fields %}
+
+{% set action = params['action'] ?? [] %}
+{% set subitem = subitem ?? [] %}
+{% set used = used ?? 0 %}
+
+{% block timeline_card %}
+
+    <div class="escalation card mt-4">
+        <form name="asset_form" class="d-flex flex-column" method="post"
+              action="{{ action }}"
+              enctype="multipart/form-data"
+              data-track-changes="true" data-submit-once>
+
+            <input type="hidden" name="tickets_id" value="{{ subitem.getID() }}"/>
+            <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}"/>
+
+            <div class=" escalation card-header">
+                <h3 class="card-title"> {{ __('Climb ticket','escalade') }}</h3>
+            </div>
+            <div class="escalation card-body">
+                {{ fields.textareaField(
+                    'comment',
+                    subitem.fields['comment'],
+                    __('Comment', 'escalade'),
+                    {
+                        'full_width': true,
+                        'required' : true,
+                        'label': true,
+                        'is_horizontal' : false,
+                        'enable_richtext': true,
+                        'enable_fileupload': false,
+                        'enable_mentions': true,
+                        'rand' : rand,
+                    }
+                ) }}
+                {% set label_grp = call('Group::getTypeName',[0]) %}
+                <div class="form-field col-12 mt-2">
+                    {{ fields.dropdownField(
+                        'Group',
+                        'groups_id',
+                        '',
+                        label_grp,
+                        {
+                            label_class :'col-auto',
+                            input_class :'col-12',
+                            field_class : 'col-12 mr-0 ',
+                            'full_width': true,
+                            'required' : true,
+                            'icon_label': true,
+                            'entity': subitem.fields['entities_id'],
+                            'condition': {'is_assign': 1},
+                            'used': used,
+                            'rand': rand,
+                        }
+                    ) }}
+                </div>
+                {{ fields.checkboxField(
+                    'is_observer_checkbox',
+                    1,
+                    __('Assign me as an observer', 'escalade'),
+                    {
+                        field_class :'col-12',
+                        label_class :'col-auto',
+                        input_class : 'col-auto',
+
+                    }
+                ) }}
+            </div>
+            <div class="escalation d-flex card-footer justify-content-center">
+                <div class="input-group justify-content-center">
+                    <button class="btn btn-primary me-2" type="submit" name="update">
+                        <i class="fas fa-plus"></i>
+                        <span>{{ _x('button', 'Add') }}</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

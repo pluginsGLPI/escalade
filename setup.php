@@ -37,6 +37,12 @@ define("PLUGIN_ESCALADE_MIN_GLPI", "10.0.0");
 // Maximum GLPI version, exclusive
 define("PLUGIN_ESCALADE_MAX_GLPI", "10.0.99");
 
+if (!defined("PLUGIN_ESCALADE_DIR")) {
+    define("PLUGIN_ESCALADE_DIR", Plugin::getPhpDir("escalade"));
+    define("PLUGIN_ESCALADE_DIR_NOFULL", Plugin::getPhpDir("escalade", false));
+    define("PLUGIN_ESCALADE_WEBDIR", Plugin::getWebDir("escalade"));
+}
+
 /**
  * Init hooks of the plugin.
  * REQUIRED
@@ -157,6 +163,8 @@ function plugin_init_escalade() {
       $PLUGIN_HOOKS['item_get_events']['escalade'] = [
          'NotificationTargetTicket' =>  ['PluginEscaladeNotification', 'getEvents']
       ];
+       $PLUGIN_HOOKS['timeline_answer_actions']['escalade'] = ['PluginEscaladeTicket',
+           'addToTimeline'];
    }
 }
 
