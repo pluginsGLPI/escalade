@@ -29,7 +29,7 @@
 
 include("../../../inc/includes.php");
 Session::checkLoginUser();
-
+use \Glpi\Toolbox\Sanitizer;
 $groupTicket = new Group_Ticket();
 $ticketUser = new Ticket_User();
 
@@ -51,9 +51,7 @@ if (isset($_POST["update"])) {
             $inputTicketUser['tickets_id'] = $tickets_id;
             $inputTicketUser['users_id'] = Session::getLoginUserID();
             $ticketUser->add($inputTicketUser);
-
         }
-        $groupTicket->add($input);
 
         $config = new PluginEscaladeConfig();
         if (!$config->fields['remove_group']) {
@@ -70,9 +68,10 @@ if (isset($_POST["update"])) {
                 'tickets_id' => $tickets_id,
                 'is_private' => true,
                 'state' => Planning::INFO,
-                'content' => Toolbox::addslashes_deep($content)
+                'content' => Sanitizer::sanitize($content)
             ]);
         }
+        $groupTicket->add($input);
     }
 
 

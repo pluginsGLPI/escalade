@@ -39,7 +39,6 @@ define("PLUGIN_ESCALADE_MAX_GLPI", "10.0.99");
 
 if (!defined("PLUGIN_ESCALADE_DIR")) {
     define("PLUGIN_ESCALADE_DIR", Plugin::getPhpDir("escalade"));
-    define("PLUGIN_ESCALADE_DIR_NOFULL", Plugin::getPhpDir("escalade", false));
     define("PLUGIN_ESCALADE_WEBDIR", Plugin::getWebDir("escalade"));
 }
 

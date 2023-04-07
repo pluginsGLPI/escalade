@@ -29,6 +29,8 @@
  */
 
 use Glpi\Application\View\TemplateRenderer;
+use Glpi\Toolbox\Sanitizer;
+use Glpi\RichText\RichText;
 
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
@@ -309,14 +311,14 @@ class PluginEscaladeTicket {
           $content = __("Escalation to the group", "escalade") . " " . $group->getName();
           if (isset($item) && isset($item->input['escalade_comment'])) {
               $content .= "<br><strong>" . __('User comment', 'escalade') . " :" . "</strong><br>";
-              $content .= \Glpi\RichText\RichText::getTextFromHtml($item->input['escalade_comment']);
+              $content .= RichText::getTextFromHtml($item->input['escalade_comment']);
           }
 
          $task->add([
             'tickets_id' => $tickets_id,
             'is_private' => true,
             'state'      => Planning::INFO,
-            'content'    => Toolbox::addslashes_deep($content)
+            'content'    => Sanitizer::sanitize($content)
          ]);
       }
 
@@ -325,12 +327,12 @@ class PluginEscaladeTicket {
            if (isset($item) && !empty($item->input['escalade_comment'])) {
                $content = '';
                $content = "<br><strong>" . __('User comment', 'escalade') . " :" . "</strong><br>";
-               $content .= \Glpi\RichText\RichText::getTextFromHtml($item->input['escalade_comment']);
+               $content .= RichText::getTextFromHtml($item->input['escalade_comment']);
                $task->add([
                    'tickets_id' => $tickets_id,
                    'is_private' => true,
                    'state' => Planning::INFO,
-                   'content' => Toolbox::addslashes_deep($content)
+                   'content' => Sanitizer::sanitize($content)
                ]);
            }
        }
@@ -856,55 +858,36 @@ class PluginEscaladeTicket {
 
     public static function addToTimeline($options)
     {
-        $item = $options['item'];
-        $group = new Group_Ticket();
-        $groupUsed = $group->find([
-            'tickets_id' => $options['item']->getID(),
-            'type' => CommonITILActor::ASSIGN,
-        ]);
-        if (empty($groupUsed)) {
-            $groupUsed = 0;
-        } else {
-            $temp = $groupUsed;
-            $groupUsed = [];
-            foreach ($temp as $grp) {
-                $groupUsed[] = $grp['groups_id'];
-            }
-        }
-        $entity = $options['item']->fields['entities_id'];
-        $listEntities = getSonsOf(Entity::getTable(), $entity);
-        if (empty($listEntities)) {
-            $listEntities = $entity;
-        }
-        $criteria = [
-            'OR' => [
-                'AND' => [
-
-                    'entities_id' => $listEntities,
-                    'is_recursive' => 1
-                ],
-                ['entities_id' => $entity],
-            ],
+        //Grous in the tickets' entity that are not assigned to the current ticket
+        $groups = (new Group())->find([
             'is_assign' => 1,
-            'AND' => [
-                'NOT' => [
-                    'id' => $groupUsed
-                ]
-            ]
-        ];
-        $groupBis = new Group();
-        $groups = $groupBis->find($criteria);
+            'NOT' => [
+                // Group currently assigned to the ticket
+                'id' => new QuerySubQuery([
+                    'SELECT' => 'groups_id',
+                    'FROM'   => Group_Ticket::getTable(),
+                    'WHERE'  => [
+                        'tickets_id' => $options['item']->getID(),
+                        'type' => CommonITILActor::ASSIGN,
+                    ]
+                ])
+            ],
+            // Restrict to ticket entity
+            getEntitiesRestrictCriteria(
+                Group::getTable(),
+                '',
+                $options['item']->fields['entities_id']
+            )
+        ]);
 
         $itemtypes = [];
-
-        $ticket_task = new PluginEscaladeTicket();
 
         if (!empty($groups) ) {
             $itemtypes['escalation'] = [
                 'type' => 'PluginEscaladeTicket',
                 'class' => 'action-escalation',
-                'icon' => 'fas fa-comments',
-                'label' => __('Climb', 'escalade'),
+                'icon' => 'ti ti-arrow-up',
+                'label' => __('Escalate', 'escalade'),
                 'item' => new self()
             ];
         }
@@ -926,7 +909,8 @@ class PluginEscaladeTicket {
             $used[$grp['groups_id']] = $grp['groups_id'];
 
         }
-        $options['action'] = $CFG_GLPI["root_doc"] . PLUGIN_ESCALADE_DIR_NOFULL . '/front/ticket.form.php';
+
+        $options['action'] = PLUGIN_ESCALADE_WEBDIR . '/front/ticket.form.php';
         TemplateRenderer::getInstance()->display('@escalade/escalade_form.html.twig', [
             'params' => $options,
             'subitem' => $options["parent"],
