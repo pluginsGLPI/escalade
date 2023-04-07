@@ -70,7 +70,16 @@ a.escalade_history {
    background-color: #F8CBCBFF;
 }
 
+a.dropdown-item.action-escalation.answer-action {
+   background-color: #F8CBCBFF;
+}
+
 .escalation {
-   background-color: #F8CBCBFF !important;
+   background-color: white ;
    color: #000000FF;
 }
+
+.escalation-form {
+   background-color: white ;
+}
+

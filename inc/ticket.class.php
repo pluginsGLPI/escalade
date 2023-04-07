@@ -898,10 +898,11 @@ class PluginEscaladeTicket {
         $itemtypes = [];
 
         $ticket_task = new PluginEscaladeTicket();
-        if (!empty($groups)) {
+
+        if (!empty($groups) ) {
             $itemtypes['escalation'] = [
                 'type' => 'PluginEscaladeTicket',
-                'class' => 'action-escalade',
+                'class' => 'action-escalation',
                 'icon' => 'fas fa-comments',
                 'label' => __('Climb', 'escalade'),
                 'item' => new self()
