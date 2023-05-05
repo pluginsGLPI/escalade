@@ -54,24 +54,25 @@ if (isset($_POST["update"])) {
         }
 
         $config = new PluginEscaladeConfig();
-        if (!$config->fields['remove_group']) {
-            $task = new TicketTask();
-            $content = '';
-            if ($config->fields['task_history']) {
-                $group = new Group();
-                $group->getFromDB($input['groups_id']);
-                $content .= sprintf(__("Escalation to the group %s", "escalade"), $group->getName()) . "<br>";
-            }
-            $content .= "<strong>" . __('User comment', 'escalade') . "</strong><br>";
-            $content .= \Glpi\RichText\RichText::getTextFromHtml($input['escalade_comment']);
-            $task->add([
-                'tickets_id' => $tickets_id,
-                'is_private' => true,
-                'state' => Planning::INFO,
-                'content' => Sanitizer::sanitize($content)
-            ]);
-        }
+
+        $task = new TicketTask();
+        $content = '';
+
+        $group = new Group();
+        $group->getFromDB($input['groups_id']);
+        $content .= sprintf(__("Escalation to the group %s", "escalade"), $group->getName()) . "<br>";
+
+        $content .= "<strong>" . __('User comment', 'escalade') . "</strong><br>";
+        $content .= \Glpi\RichText\RichText::getTextFromHtml($input['escalade_comment']);
+        $task->add([
+            'tickets_id' => $tickets_id,
+            'is_private' => true,
+            'state' => Planning::INFO,
+            'content' => Sanitizer::sanitize($content)
+        ]);
         $groupTicket->add($input);
+    } else{
+        Session::addMessageAfterRedirect(__('You must select a group', 'escalade'),false, ERROR);
     }
 
 

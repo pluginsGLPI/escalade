@@ -882,7 +882,7 @@ class PluginEscaladeTicket {
 
         $itemtypes = [];
 
-        if (!empty($groups) ) {
+        if (!empty($groups) && $options['item'] instanceof Ticket) {
             $itemtypes['escalation'] = [
                 'type' => 'PluginEscaladeTicket',
                 'class' => 'action-escalation',
