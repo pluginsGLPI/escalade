@@ -323,7 +323,7 @@ class PluginEscaladeTicket {
       return $item;
    }
 
-   static function processAfterAddGroup(CommonDBTM &$item) {
+   static function processAfterAddGroup(CommonDBTM $item) {
       if ($_SESSION['plugins']['escalade']['config']['remove_group'] == false) {
          return true;
       }
