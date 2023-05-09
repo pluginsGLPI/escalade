@@ -645,44 +645,16 @@ class PluginEscaladeTicket {
 
              //add group to ticket
              $group_ticket->add($group_condition);
-             if ($_SESSION['plugins']['escalade']['config']['remove_group']) {
-                if(isset($item->input['_groups_id_assign'])) {
-                    $actor_fkey = getForeignKeyFieldForItemType(Group::getType());
-
-                    $actors_id_input_key      = sprintf('_%s_%s', $actor_fkey, 'assign');
-                    $get_unique_key = function (array $actor) use ($actors_id_input_key): string {
-                        // Use alternative_email in value key for "email" actors
-                        return sprintf('%s_%s', $actors_id_input_key, $actor['items_id'] ?: $actor['alternative_email'] ?? '');
-                    };
-                    foreach ($item->input['_groups_id_assign'] as $idActor => $actor) {
-
-                            unset($item->input['_groups_id_assign'][$idActor]);
-                            unset($item->input['_groups_id_assign_notif']['use_notification'][$idActor]);
-                            unset($item->input['_groups_id_assign_notif']['alternative_email'][$idActor]);
-                        $group_condition2 = [
-                            'tickets_id' => $item->fields['id'],
-                            'groups_id'  => $actor,
-                            'type'       => CommonITILActor::ASSIGN,
-                        ];
-                            if($group_ticket->getFromDBByCrit($group_condition2)) {
-                                $item->input['_groups_id_assign_deleted'][] = [
-                                    'id' => $group_ticket->getID(),
-                                    'items_id' => $actor,
-                                    'itemtype' => Group::getType(),
-                                ];
-                            }
-
-
-                    }
-                }
-
-             }
-
-             $idAc = "_actors_".$category->fields['groups_id'];
-             $item->input['_groups_id_assign'][$idAc] = $category->fields['groups_id'];
-             $item->input['_groups_id_assign_notif']['use_notification'][$idAc] = 0;
-             $item->input['_groups_id_assign_notif']['alternative_email'][$idAc] = '';
-
+             +            //remove old group if needed
+            if ($_SESSION['plugins']['escalade']['config']['remove_group']) {
+               if(isset($item->input['_groups_id_assign'])) {
+                  foreach ($item->input['_groups_id_assign'] as $idActor => $actor) {
+                     unset($item->input['_groups_id_assign'][$idActor]);
+                     unset($item->input['_groups_id_assign_notif']['use_notification'][$idActor]);
+                     unset($item->input['_groups_id_assign_notif']['alternative_email'][$idActor]);
+                  }
+               }
+            }
          }
 
       }
@@ -704,39 +676,16 @@ class PluginEscaladeTicket {
 
             //add user to ticket
             $ticket_user->add($user_condition);
+             //remove old tech if needed
             if($_SESSION['plugins']['escalade']['config']['remove_tech']) {
-
-                if(isset($item->input['_users_id_assign'])) {
-                    $actor_fkey = getForeignKeyFieldForItemType(User::getType());
-
-                    $actors_id_input_key      = sprintf('_%s_%s', $actor_fkey, 'assign');
-                    $get_unique_key = function (array $actor) use ($actors_id_input_key): string {
-                        // Use alternative_email in value key for "email" actors
-                        return sprintf('%s_%s', $actors_id_input_key, $actor['items_id'] ?: $actor['alternative_email'] ?? '');
-                    };
-                    foreach ($item->input['_users_id_assign'] as $idActor => $actor) {
-
-                        unset($item->input['_users_id_assign'][$idActor]);
-                        unset($item->input['_users_id_assign_notif']['use_notification'][$idActor]);
-                        unset($item->input['_users_id_assign_notif']['alternative_email'][$idActor]);
-                        if($ticket_user->getFromDBByCrit()) {
-                            $item->input['_users_id_assign_deleted'][] = [
-                                'id' => $ticket_user->getID(),
-                                'items_id' => $actor,
-                                'itemtype' => User::getType(),
-                            ];
-                        }
-
-
-                    }
+               if(isset($item->input['_users_id_assign'])) {
+                  foreach ($item->input['_users_id_assign'] as $idActor => $actor) {
+                     unset($item->input['_users_id_assign'][$idActor]);
+                     unset($item->input['_users_id_assign_notif']['use_notification'][$idActor]);
+                     unset($item->input['_users_id_assign_notif']['alternative_email'][$idActor]);
+                  }
                 }
-
             }
-
-             $idAc = "_actors_".$category->fields['users_id'];
-             $item->input['_users_id_assign'][$idAc] = $category->fields['users_id'];
-             $item->input['_users_id_assign_notif']['use_notification'][$idAc] = 0;
-             $item->input['_users_id_assign_notif']['alternative_email'][$idAc] = '';
          }
       }
    }
