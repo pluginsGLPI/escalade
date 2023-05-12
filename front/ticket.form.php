@@ -56,20 +56,24 @@ if (isset($_POST["update"])) {
         $config = new PluginEscaladeConfig();
 
         $task = new TicketTask();
-        $content = '';
 
         $group = new Group();
         $group->getFromDB($input['groups_id']);
+        $content = '';
         $content .= sprintf(__("Escalation to the group %s", "escalade"), $group->getName()) . "<br>";
-
         $content .= "<strong>" . __('User comment', 'escalade') . "</strong><br>";
-        $content .= \Glpi\RichText\RichText::getTextFromHtml($input['escalade_comment']);
+
+        // Sanitize before merging with $input['escalade_comment'] which is already sanitized
+        $content = Sanitizer::sanitize($content);
+        $content .= $input['escalade_comment'];
         $task->add([
             'tickets_id' => $tickets_id,
             'is_private' => true,
             'state' => Planning::INFO,
-            'content' => Sanitizer::sanitize($content)
+            'content' => $content
         ]);
+        // We don't want to trigger another task if the "task_history" setting is enabled.
+        $input['_plugin_escalade_no_history'] = true;
         $groupTicket->add($input);
     } else{
         Session::addMessageAfterRedirect(__('You must select a group', 'escalade'),false, ERROR);

@@ -303,39 +303,29 @@ class PluginEscaladeTicket {
          unset($_SESSION['plugin_escalade']['solution']);
          return $item;
       }
-      if ($_SESSION['plugins']['escalade']['config']['task_history']) {
+       if ($_SESSION['plugins']['escalade']['config']['task_history']
+           && !($item->input['_plugin_escalade_no_history'] ?? false)) {
+
          $group = new Group();
          $group->getFromDB($groups_id);
 
          $task = new TicketTask();
+
           $content = __("Escalation to the group", "escalade") . " " . $group->getName();
           if (isset($item) && isset($item->input['escalade_comment'])) {
               $content .= "<br><strong>" . __('User comment', 'escalade') . " :" . "</strong><br>";
               $content .= RichText::getTextFromHtml($item->input['escalade_comment']);
           }
+          $content = __("Escalation to the group", "escalade") . " " . $group->getName();
 
-         $task->add([
+
+           $task->add([
             'tickets_id' => $tickets_id,
             'is_private' => true,
             'state'      => Planning::INFO,
-            'content'    => Sanitizer::sanitize($content)
+            'content'    => $content
          ]);
       }
-
-       if (!$_SESSION['plugins']['escalade']['config']['task_history']) {
-           $task = new TicketTask();
-           if (isset($item) && !empty($item->input['escalade_comment'])) {
-               $content = '';
-               $content = "<br><strong>" . __('User comment', 'escalade') . " :" . "</strong><br>";
-               $content .= RichText::getTextFromHtml($item->input['escalade_comment']);
-               $task->add([
-                   'tickets_id' => $tickets_id,
-                   'is_private' => true,
-                   'state' => Planning::INFO,
-                   'content' => Sanitizer::sanitize($content)
-               ]);
-           }
-       }
 
       if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] != -1) {
          $ticket = new Ticket();
