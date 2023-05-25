@@ -20,7 +20,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Escalade. If not, see <http://www.gnu.org/licenses/>.
  * -------------------------------------------------------------------------
- * @copyright Copyright (C) 2015-2022 by Escalade plugin team.
+ * @copyright Copyright (C) 2015-2023 by Escalade plugin team.
  * @license   GPLv2 https://www.gnu.org/licenses/gpl-2.0.html
  * @link      https://github.com/pluginsGLPI/escalade
  * -------------------------------------------------------------------------
