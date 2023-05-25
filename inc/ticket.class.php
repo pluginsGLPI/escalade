@@ -645,7 +645,7 @@ class PluginEscaladeTicket {
 
              //add group to ticket
              $group_ticket->add($group_condition);
-             +            //remove old group if needed
+             //remove old group if needed
             if ($_SESSION['plugins']['escalade']['config']['remove_group']) {
                if(isset($item->input['_groups_id_assign'])) {
                   foreach ($item->input['_groups_id_assign'] as $idActor => $actor) {
