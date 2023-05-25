@@ -3,17 +3,17 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Cédric Anne, 2018
+# Cédric Anne, 2018,2023
 # David Stepan <stepand@tiscali.cz>, 2016,2020,2022
 # Pavel Borecki <pavel.borecki@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-25 09:03+0000\n"
+"POT-Creation-Date: 2023-05-25 07:27+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
-"Last-Translator: David Stepan <stepand@tiscali.cz>, 2016,2020,2022\n"
-"Language-Team: Czech (Czech Republic) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/cs_CZ/)\n"
+"Last-Translator: Cédric Anne, 2018,2023\n"
+"Language-Team: Czech (Czech Republic) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/cs_CZ/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -60,35 +60,35 @@ msgstr "Zobrazit tlačítko mazání"
 msgid "Don't change"
 msgstr "Neměnit"
 
-#: inc/config.class.php:298 hook.php:495 hook.php:513
+#: hook.php:495 hook.php:513 inc/config.class.php:298
 msgid "Enable filtering on the groups assignment"
 msgstr "Filtrovat dle přiřazení skupin"
 
-#: inc/ticket.class.php:747
+#: inc/ticket.class.php:768
 msgid "Error : adding actors (group)"
 msgstr "Chyba: přidávání řešitelů (skupina)"
 
-#: inc/ticket.class.php:738
+#: inc/ticket.class.php:759
 msgid "Error : adding actors (user)"
 msgstr "Chyba: přidávání řešitelů (uživatel)"
 
-#: inc/ticket.class.php:757
+#: inc/ticket.class.php:778
 msgid "Error : adding documents"
 msgstr "Chyba: přidávání dokumentů"
 
-#: inc/ticket.class.php:727
+#: inc/ticket.class.php:748
 msgid "Error : adding followups"
 msgstr "Chyba: přidávání doplňující zprávy"
 
-#: inc/ticket.class.php:712
+#: inc/ticket.class.php:733
 msgid "Error : adding link between the two tickets"
 msgstr "Chyba: přidávání propojení mezi dvěma požadavky"
 
-#: inc/ticket.class.php:700
+#: inc/ticket.class.php:721
 msgid "Error : adding new ticket"
 msgstr "Chyba: přidávání nového požadavku"
 
-#: inc/ticket.class.php:684
+#: inc/ticket.class.php:705
 msgid "Error : get old ticket"
 msgstr "Chyba: získání původního požadavku"
 
@@ -163,7 +163,7 @@ msgstr "Řešení odmítnuto, vráceno skupině"
 msgid "Solve date modification"
 msgstr "Změna data vyřešení"
 
-#: inc/ticket.class.php:722 inc/ticket.class.php:763 inc/ticket.class.php:768
+#: inc/ticket.class.php:743 inc/ticket.class.php:784 inc/ticket.class.php:789
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Tento požadavek byl z požadavku č."
 
@@ -172,11 +172,11 @@ msgid "Ticket status after an escalation"
 msgstr "Stav požadavku po eskalaci"
 
 #: inc/history.class.php:209
-msgid "Tickets to close (climbed)"
+msgid "Tickets to close (escalated)"
 msgstr "Požadavky k uzavření (zpracované)"
 
 #: inc/history.class.php:195
-msgid "Tickets to follow (climbed)"
+msgid "Tickets to follow (escalated)"
 msgstr "Požadavky k řešení (zpracované)"
 
 #: inc/config.class.php:177

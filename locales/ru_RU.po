@@ -5,7 +5,7 @@
 # Translators:
 # Alexandre DELAUNAY <adelaunay@teclib.com>, 2013
 # Alexey Petukhov <lexx015@gmail.com>, 2021
-# Cédric Anne, 2018
+# Cédric Anne, 2018,2023
 # Valllium, 2021
 # Obscandoble Beembersdoockle <timur.mamezhanoff@gmail.com>, 2016
 # Pavlo Lacenko <pavelhimik@gmail.com>, 2018
@@ -13,10 +13,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-25 09:03+0000\n"
+"POT-Creation-Date: 2023-05-25 07:27+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
-"Last-Translator: Valllium, 2021\n"
-"Language-Team: Russian (Russia) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/ru_RU/)\n"
+"Last-Translator: Cédric Anne, 2018,2023\n"
+"Language-Team: Russian (Russia) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/ru_RU/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -63,35 +63,35 @@ msgstr "Показывать кнопку удаления"
 msgid "Don't change"
 msgstr "Не изменять"
 
-#: inc/config.class.php:298 hook.php:495 hook.php:513
+#: hook.php:495 hook.php:513 inc/config.class.php:298
 msgid "Enable filtering on the groups assignment"
 msgstr "Разрешить фильтрацию по назначенным группам"
 
-#: inc/ticket.class.php:747
+#: inc/ticket.class.php:768
 msgid "Error : adding actors (group)"
 msgstr "Ошибка добавления группы"
 
-#: inc/ticket.class.php:738
+#: inc/ticket.class.php:759
 msgid "Error : adding actors (user)"
 msgstr "Ошибка добавления пользователя"
 
-#: inc/ticket.class.php:757
+#: inc/ticket.class.php:778
 msgid "Error : adding documents"
 msgstr "Ошибка добавления документа"
 
-#: inc/ticket.class.php:727
+#: inc/ticket.class.php:748
 msgid "Error : adding followups"
 msgstr "Ошибка добавления комментария"
 
-#: inc/ticket.class.php:712
+#: inc/ticket.class.php:733
 msgid "Error : adding link between the two tickets"
 msgstr "Ошибка связывания заявок"
 
-#: inc/ticket.class.php:700
+#: inc/ticket.class.php:721
 msgid "Error : adding new ticket"
 msgstr "Ошибка добавления заявки"
 
-#: inc/ticket.class.php:684
+#: inc/ticket.class.php:705
 msgid "Error : get old ticket"
 msgstr "Ошибка получения данных заявки"
 
@@ -166,7 +166,7 @@ msgstr "Решение отклонено, возврат к группе"
 msgid "Solve date modification"
 msgstr "Изменение даты решения"
 
-#: inc/ticket.class.php:722 inc/ticket.class.php:763 inc/ticket.class.php:768
+#: inc/ticket.class.php:743 inc/ticket.class.php:784 inc/ticket.class.php:789
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Заявка создана из другой, №"
 
@@ -175,11 +175,11 @@ msgid "Ticket status after an escalation"
 msgstr "Статус заявки после переназначения"
 
 #: inc/history.class.php:209
-msgid "Tickets to close (climbed)"
+msgid "Tickets to close (escalated)"
 msgstr "Заявки к закрытию"
 
 #: inc/history.class.php:195
-msgid "Tickets to follow (climbed)"
+msgid "Tickets to follow (escalated)"
 msgstr "Заявки к просмотру"
 
 #: inc/config.class.php:177

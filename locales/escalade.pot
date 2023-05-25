@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-25 09:03+0000\n"
+"POT-Creation-Date: 2023-05-25 07:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,35 +57,35 @@ msgstr ""
 msgid "Don't change"
 msgstr ""
 
-#: inc/config.class.php:298 hook.php:495 hook.php:513
+#: hook.php:495 hook.php:513 inc/config.class.php:298
 msgid "Enable filtering on the groups assignment"
 msgstr ""
 
-#: inc/ticket.class.php:747
+#: inc/ticket.class.php:768
 msgid "Error : adding actors (group)"
 msgstr ""
 
-#: inc/ticket.class.php:738
+#: inc/ticket.class.php:759
 msgid "Error : adding actors (user)"
 msgstr ""
 
-#: inc/ticket.class.php:757
+#: inc/ticket.class.php:778
 msgid "Error : adding documents"
 msgstr ""
 
-#: inc/ticket.class.php:727
+#: inc/ticket.class.php:748
 msgid "Error : adding followups"
 msgstr ""
 
-#: inc/ticket.class.php:712
+#: inc/ticket.class.php:733
 msgid "Error : adding link between the two tickets"
 msgstr ""
 
-#: inc/ticket.class.php:700
+#: inc/ticket.class.php:721
 msgid "Error : adding new ticket"
 msgstr ""
 
-#: inc/ticket.class.php:684
+#: inc/ticket.class.php:705
 msgid "Error : get old ticket"
 msgstr ""
 
@@ -160,7 +160,7 @@ msgstr ""
 msgid "Solve date modification"
 msgstr ""
 
-#: inc/ticket.class.php:722 inc/ticket.class.php:763 inc/ticket.class.php:768
+#: inc/ticket.class.php:743 inc/ticket.class.php:784 inc/ticket.class.php:789
 msgid "This ticket has been cloned from the ticket num"
 msgstr ""
 
@@ -169,11 +169,11 @@ msgid "Ticket status after an escalation"
 msgstr ""
 
 #: inc/history.class.php:209
-msgid "Tickets to close (climbed)"
+msgid "Tickets to close (escalated)"
 msgstr ""
 
 #: inc/history.class.php:195
-msgid "Tickets to follow (climbed)"
+msgid "Tickets to follow (escalated)"
 msgstr ""
 
 #: inc/config.class.php:177

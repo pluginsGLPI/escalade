@@ -8,10 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-25 09:03+0000\n"
+"POT-Creation-Date: 2023-05-25 07:27+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Grzegorz Kaniewski <grzegorzkaniewski@gmail.com>, 2015\n"
-"Language-Team: Polish (Poland) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/pl_PL/)\n"
+"Language-Team: Polish (Poland) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/pl_PL/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -58,35 +58,35 @@ msgstr ""
 msgid "Don't change"
 msgstr "Nie zmieniaj"
 
-#: inc/config.class.php:298 hook.php:495 hook.php:513
+#: hook.php:495 hook.php:513 inc/config.class.php:298
 msgid "Enable filtering on the groups assignment"
 msgstr ""
 
-#: inc/ticket.class.php:747
+#: inc/ticket.class.php:768
 msgid "Error : adding actors (group)"
 msgstr "Błąd: dodając grupę"
 
-#: inc/ticket.class.php:738
+#: inc/ticket.class.php:759
 msgid "Error : adding actors (user)"
 msgstr "Błąd: dodając użytkownika"
 
-#: inc/ticket.class.php:757
+#: inc/ticket.class.php:778
 msgid "Error : adding documents"
 msgstr "Błąd: dodając dokument"
 
-#: inc/ticket.class.php:727
+#: inc/ticket.class.php:748
 msgid "Error : adding followups"
 msgstr ""
 
-#: inc/ticket.class.php:712
+#: inc/ticket.class.php:733
 msgid "Error : adding link between the two tickets"
 msgstr ""
 
-#: inc/ticket.class.php:700
+#: inc/ticket.class.php:721
 msgid "Error : adding new ticket"
 msgstr "Błąd: dodając nowe zgłoszenie"
 
-#: inc/ticket.class.php:684
+#: inc/ticket.class.php:705
 msgid "Error : get old ticket"
 msgstr "Błąd: otwórz stare zgłoszenie"
 
@@ -161,7 +161,7 @@ msgstr ""
 msgid "Solve date modification"
 msgstr ""
 
-#: inc/ticket.class.php:722 inc/ticket.class.php:763 inc/ticket.class.php:768
+#: inc/ticket.class.php:743 inc/ticket.class.php:784 inc/ticket.class.php:789
 msgid "This ticket has been cloned from the ticket num"
 msgstr ""
 
@@ -170,11 +170,11 @@ msgid "Ticket status after an escalation"
 msgstr ""
 
 #: inc/history.class.php:209
-msgid "Tickets to close (climbed)"
+msgid "Tickets to close (escalated)"
 msgstr ""
 
 #: inc/history.class.php:195
-msgid "Tickets to follow (climbed)"
+msgid "Tickets to follow (escalated)"
 msgstr ""
 
 #: inc/config.class.php:177

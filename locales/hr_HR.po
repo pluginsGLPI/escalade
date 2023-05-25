@@ -4,15 +4,15 @@
 # 
 # Translators:
 # Milo Ivir <mail@milotype.de>, 2020
-# Milo Ivir <mail@milotype.de>, 2020,2022
+# Milo Ivir <mail@milotype.de>, 2020,2022-2023
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-25 09:03+0000\n"
+"POT-Creation-Date: 2023-05-25 07:27+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
-"Last-Translator: Milo Ivir <mail@milotype.de>, 2020,2022\n"
-"Language-Team: Croatian (Croatia) (http://www.transifex.com/teclib/glpi-project-plugin-escalade/language/hr_HR/)\n"
+"Last-Translator: Milo Ivir <mail@milotype.de>, 2020,2022-2023\n"
+"Language-Team: Croatian (Croatia) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/hr_HR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -59,35 +59,35 @@ msgstr "Prikaži gumb za brisanje"
 msgid "Don't change"
 msgstr "Ne mijenjaj"
 
-#: inc/config.class.php:298 hook.php:495 hook.php:513
+#: hook.php:495 hook.php:513 inc/config.class.php:298
 msgid "Enable filtering on the groups assignment"
 msgstr "Aktiviraj filtriranje po zadatku grupe"
 
-#: inc/ticket.class.php:747
+#: inc/ticket.class.php:768
 msgid "Error : adding actors (group)"
 msgstr "Greška: dodavanje učesnika (grupa)"
 
-#: inc/ticket.class.php:738
+#: inc/ticket.class.php:759
 msgid "Error : adding actors (user)"
 msgstr "Greška: dodavanje učesnika (korisnik)"
 
-#: inc/ticket.class.php:757
+#: inc/ticket.class.php:778
 msgid "Error : adding documents"
 msgstr "Greška: dodavanje dokumenata"
 
-#: inc/ticket.class.php:727
+#: inc/ticket.class.php:748
 msgid "Error : adding followups"
 msgstr "Greška: dodavanje priopćenja"
 
-#: inc/ticket.class.php:712
+#: inc/ticket.class.php:733
 msgid "Error : adding link between the two tickets"
 msgstr "Greška: dodavanje veze između ta dva naloga"
 
-#: inc/ticket.class.php:700
+#: inc/ticket.class.php:721
 msgid "Error : adding new ticket"
 msgstr "Greška: dodavanje novog naloga"
 
-#: inc/ticket.class.php:684
+#: inc/ticket.class.php:705
 msgid "Error : get old ticket"
 msgstr "Greška: nabavi stari nalog"
 
@@ -162,7 +162,7 @@ msgstr "Rješenje odbijeno, vrati grupi"
 msgid "Solve date modification"
 msgstr "Riješi promjenu datuma"
 
-#: inc/ticket.class.php:722 inc/ticket.class.php:763 inc/ticket.class.php:768
+#: inc/ticket.class.php:743 inc/ticket.class.php:784 inc/ticket.class.php:789
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Nalog je kloniran iz naloga broj"
 
@@ -171,11 +171,11 @@ msgid "Ticket status after an escalation"
 msgstr "Stanje naloga nakon eskalacije"
 
 #: inc/history.class.php:209
-msgid "Tickets to close (climbed)"
+msgid "Tickets to close (escalated)"
 msgstr "Nalozi za zatvaranje (eskalirani)"
 
 #: inc/history.class.php:195
-msgid "Tickets to follow (climbed)"
+msgid "Tickets to follow (escalated)"
 msgstr "Nalozi za praćenje (eskalirani)"
 
 #: inc/config.class.php:177
