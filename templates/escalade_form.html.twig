@@ -33,10 +33,6 @@
 {% extends 'components/itilobject/timeline/form_timeline_item.html.twig' %}
 {% import 'components/form/fields_macros.html.twig' as fields %}
 
-{% set action = params['action'] ?? [] %}
-{% set subitem = subitem ?? [] %}
-{% set used = used ?? 0 %}
-
 {% block timeline_card %}
 
     <div class="escalation card mt-4 ">
@@ -67,7 +63,7 @@
                         'rand' : rand,
                     }
                 ) }}
-                {% set label_grp = call('Group::getTypeName',[0]) %}
+                {% set label_grp = 'Group'|itemtype_name %}
                 <div class="form-field col-12 mt-2">
                     {{ fields.dropdownField(
                         'Group',

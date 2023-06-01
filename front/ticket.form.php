@@ -52,9 +52,6 @@ if (isset($_POST["update"])) {
             $inputTicketUser['users_id'] = Session::getLoginUserID();
             $ticketUser->add($inputTicketUser);
         }
-
-        $config = new PluginEscaladeConfig();
-
         $task = new TicketTask();
 
         $group = new Group();

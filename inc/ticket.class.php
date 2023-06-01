@@ -316,8 +316,6 @@ class PluginEscaladeTicket {
               $content .= "<br><strong>" . __('User comment', 'escalade') . " :" . "</strong><br>";
               $content .= RichText::getTextFromHtml($item->input['escalade_comment']);
           }
-          $content = __("Escalation to the group", "escalade") . " " . $group->getName();
-
 
            $task->add([
             'tickets_id' => $tickets_id,
@@ -848,7 +846,11 @@ class PluginEscaladeTicket {
 
     public static function addToTimeline($options)
     {
-        //Grous in the tickets' entity that are not assigned to the current ticket
+        if (!($options['item'] instanceof Ticket)) {
+            return [];
+        }
+
+        //Groups in the tickets' entity that are not assigned to the current ticket
         $groups = (new Group())->find([
             'is_assign' => 1,
             'NOT' => [
@@ -872,7 +874,7 @@ class PluginEscaladeTicket {
 
         $itemtypes = [];
 
-        if (!empty($groups) && $options['item'] instanceof Ticket) {
+        if (!empty($groups)) {
             $itemtypes['escalation'] = [
                 'type' => 'PluginEscaladeTicket',
                 'class' => 'action-escalation',
@@ -900,9 +902,8 @@ class PluginEscaladeTicket {
 
         }
 
-        $options['action'] = PLUGIN_ESCALADE_WEBDIR . '/front/ticket.form.php';
         TemplateRenderer::getInstance()->display('@escalade/escalade_form.html.twig', [
-            'params' => $options,
+            'action' => PLUGIN_ESCALADE_WEBDIR . '/front/ticket.form.php',
             'subitem' => $options["parent"],
             'used' => $used
         ]);

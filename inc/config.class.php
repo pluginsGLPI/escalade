@@ -31,10 +31,7 @@
 class PluginEscaladeConfig extends CommonDBTM {
    static $rightname  = 'config';
 
-   public function __construct()
-   {
-       $this->getFromDB(1);
-   }
+
 
     static function getTypeName($nb = 0) {
       return __("Configuration Escalade plugin", "escalade");
