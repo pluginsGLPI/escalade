@@ -873,16 +873,19 @@ class PluginEscaladeTicket {
         ]);
 
         $itemtypes = [];
-
-        if (!empty($groups)) {
-            $itemtypes['escalation'] = [
-                'type' => 'PluginEscaladeTicket',
-                'class' => 'action-escalation',
-                'icon' => 'ti ti-arrow-up',
-                'label' => __('Escalate', 'escalade'),
-                'item' => new self()
-            ];
+        if (Session::haveRight('ticket', Ticket::READALL) && Session::haveRight('ticket', Ticket::READASSIGN)
+            && Session::haveRight('ticket', CREATE)) {
+            if (!empty($groups)) {
+                $itemtypes['escalation'] = [
+                    'type' => 'PluginEscaladeTicket',
+                    'class' => 'action-escalation',
+                    'icon' => 'ti ti-arrow-up',
+                    'label' => __('Escalate', 'escalade'),
+                    'item' => new self()
+                ];
+            }
         }
+
 
         return $itemtypes;
     }
