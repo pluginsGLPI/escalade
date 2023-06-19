@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-25 07:27+0000\n"
+"POT-Creation-Date: 2023-06-19 13:25+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2015-2016,2018-2021,2023\n"
 "Language-Team: Turkish (Turkey) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/tr_TR/)\n"
@@ -18,6 +18,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: tr_TR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: templates/escalade_form.html.twig
+msgid "Assign me as an observer"
+msgstr ""
 
 #: inc/config.class.php:137
 msgid "Assign the technical group on ticket category change"
@@ -47,6 +51,10 @@ msgstr "Destek kayıtlarını kopyala"
 msgid "Close cloned tickets at the same time"
 msgstr "Kopyalanmış destek kayıtları aynı zamanda kapatılsın"
 
+#: templates/escalade_form.html.twig
+msgid "Comment"
+msgstr ""
+
 #: inc/config.class.php:35
 msgid "Configuration Escalade plugin"
 msgstr "Üste aktarma uygulama eki yapılandırması"
@@ -63,42 +71,55 @@ msgstr "Değiştirilmesin"
 msgid "Enable filtering on the groups assignment"
 msgstr "Grup atamaları süzülebilsin"
 
-#: inc/ticket.class.php:768
+#: inc/ticket.class.php:772
 msgid "Error : adding actors (group)"
 msgstr "Hata : Aktör ekleme (grup)"
 
-#: inc/ticket.class.php:759
+#: inc/ticket.class.php:763
 msgid "Error : adding actors (user)"
 msgstr "Hata : Aktör ekleme (kullanıcı)"
 
-#: inc/ticket.class.php:778
+#: inc/ticket.class.php:782
 msgid "Error : adding documents"
 msgstr "Hata : Belge ekleme"
 
-#: inc/ticket.class.php:748
+#: inc/ticket.class.php:752
 msgid "Error : adding followups"
 msgstr "Hata : İzleme ekleme"
 
-#: inc/ticket.class.php:733
+#: inc/ticket.class.php:737
 msgid "Error : adding link between the two tickets"
 msgstr "Hata : İki destek kaydı arasında ilişki ekleme"
 
-#: inc/ticket.class.php:721
+#: inc/ticket.class.php:725
 msgid "Error : adding new ticket"
 msgstr "Hata : Yeni destek kaydı ekleme"
 
-#: inc/ticket.class.php:705
+#: inc/ticket.class.php:709
 msgid "Error : get old ticket"
 msgstr "Hata : Eski destek kaydı alma"
 
+#: inc/ticket.class.php:901
+msgid "Escalate"
+msgstr ""
+
+#: templates/escalade_form.html.twig
+msgid "Escalate ticket"
+msgstr ""
+
 #: inc/group_group.class.php:52 inc/user.class.php:164
-#: front/config.form.php:64 setup.php:171
+#: front/config.form.php:64 setup.php:177
 msgid "Escalation"
 msgstr "Üste aktarma"
 
 #: inc/config.class.php:84
 msgid "Escalation history in tasks"
 msgstr "Görevlere göre üste aktarma geçmişi"
+
+#: inc/ticket.class.php:315 front/ticket.form.php:63
+#, php-format
+msgid "Escalation to the group %s."
+msgstr ""
 
 #: hook.php:450
 msgid "Group concerned by the escalation"
@@ -150,11 +171,11 @@ msgstr "Görev/anımsatıcı isteğinde bulunan kullanıcı"
 msgid "Requester user of the ticket"
 msgstr "Destek kaydı isteğinde bulunan kullanıcı"
 
-#: inc/ticket.class.php:141
+#: inc/ticket.class.php:143
 msgid "Solution provided, back to the group"
 msgstr "Çözüm sağlandı, gruba geri git"
 
-#: inc/ticket.class.php:203
+#: inc/ticket.class.php:205
 msgid "Solution rejected, return to the group"
 msgstr "Çözüm reddedildi, gruba geri git"
 
@@ -162,7 +183,7 @@ msgstr "Çözüm reddedildi, gruba geri git"
 msgid "Solve date modification"
 msgstr "Tarih değişikliğini çöz"
 
-#: inc/ticket.class.php:743 inc/ticket.class.php:784 inc/ticket.class.php:789
+#: inc/ticket.class.php:747 inc/ticket.class.php:788 inc/ticket.class.php:793
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Bu destek, destek kaydı numarasından"
 
@@ -186,6 +207,10 @@ msgstr "Teknisyenin grubu kullanılsın"
 msgid "View full history"
 msgstr "Tam geçmişi görüntüle"
 
+#: front/ticket.form.php:44
+msgid "You must select a group."
+msgstr ""
+
 #: inc/config.class.php:195
 msgid "a time of creation"
 msgstr "Oluşturulma zamanı"
@@ -193,10 +218,6 @@ msgstr "Oluşturulma zamanı"
 #: inc/config.class.php:197
 msgid "a time of modification"
 msgstr "Değiştirilme zamanı"
-
-#: inc/ticket.class.php:311
-msgid "escalated to the group"
-msgstr "gruba üste aktarıldı"
 
 #: front/popup_histories.php:33
 msgid "full assignation history"

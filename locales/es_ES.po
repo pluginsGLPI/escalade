@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-25 07:27+0000\n"
+"POT-Creation-Date: 2023-06-19 13:25+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Cédric Anne, 2018\n"
 "Language-Team: Spanish (Spain) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/es_ES/)\n"
@@ -19,6 +19,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: es_ES\n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#: templates/escalade_form.html.twig
+msgid "Assign me as an observer"
+msgstr ""
 
 #: inc/config.class.php:137
 msgid "Assign the technical group on ticket category change"
@@ -48,6 +52,10 @@ msgstr "Clonar tickets"
 msgid "Close cloned tickets at the same time"
 msgstr "Cerrar tickets clonados al mismo tiempo"
 
+#: templates/escalade_form.html.twig
+msgid "Comment"
+msgstr ""
+
 #: inc/config.class.php:35
 msgid "Configuration Escalade plugin"
 msgstr "Plugin de configuración de Escalado"
@@ -64,42 +72,55 @@ msgstr "No cambar"
 msgid "Enable filtering on the groups assignment"
 msgstr "Habilitar el filtrado en la asignación de los grupos"
 
-#: inc/ticket.class.php:768
+#: inc/ticket.class.php:772
 msgid "Error : adding actors (group)"
 msgstr "Error : agregando actores (grupo)"
 
-#: inc/ticket.class.php:759
+#: inc/ticket.class.php:763
 msgid "Error : adding actors (user)"
 msgstr "Error : agregando actores (usuario)"
 
-#: inc/ticket.class.php:778
+#: inc/ticket.class.php:782
 msgid "Error : adding documents"
 msgstr "Error : agregando documentos"
 
-#: inc/ticket.class.php:748
+#: inc/ticket.class.php:752
 msgid "Error : adding followups"
 msgstr "Error: añadiendo seguimientos"
 
-#: inc/ticket.class.php:733
+#: inc/ticket.class.php:737
 msgid "Error : adding link between the two tickets"
 msgstr "Error :  agregando vinculo entre los dos  tickets"
 
-#: inc/ticket.class.php:721
+#: inc/ticket.class.php:725
 msgid "Error : adding new ticket"
 msgstr "Error: agregando nuevo ticket"
 
-#: inc/ticket.class.php:705
+#: inc/ticket.class.php:709
 msgid "Error : get old ticket"
 msgstr "Error : Al obtener tickets antiguos"
 
+#: inc/ticket.class.php:901
+msgid "Escalate"
+msgstr ""
+
+#: templates/escalade_form.html.twig
+msgid "Escalate ticket"
+msgstr ""
+
 #: inc/group_group.class.php:52 inc/user.class.php:164
-#: front/config.form.php:64 setup.php:171
+#: front/config.form.php:64 setup.php:177
 msgid "Escalation"
 msgstr "Escalado"
 
 #: inc/config.class.php:84
 msgid "Escalation history in tasks"
 msgstr "Historia del escalado en las tareas"
+
+#: inc/ticket.class.php:315 front/ticket.form.php:63
+#, php-format
+msgid "Escalation to the group %s."
+msgstr ""
 
 #: hook.php:450
 msgid "Group concerned by the escalation"
@@ -151,11 +172,11 @@ msgstr ""
 msgid "Requester user of the ticket"
 msgstr ""
 
-#: inc/ticket.class.php:141
+#: inc/ticket.class.php:143
 msgid "Solution provided, back to the group"
 msgstr "Solución proveida, atras al grupo"
 
-#: inc/ticket.class.php:203
+#: inc/ticket.class.php:205
 msgid "Solution rejected, return to the group"
 msgstr "Solución rechazada, regresar al grupo"
 
@@ -163,7 +184,7 @@ msgstr "Solución rechazada, regresar al grupo"
 msgid "Solve date modification"
 msgstr ""
 
-#: inc/ticket.class.php:743 inc/ticket.class.php:784 inc/ticket.class.php:789
+#: inc/ticket.class.php:747 inc/ticket.class.php:788 inc/ticket.class.php:793
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Este ticket ha sido desde el ticket numero"
 
@@ -187,6 +208,10 @@ msgstr "Utilice el grupo de técnicos"
 msgid "View full history"
 msgstr "Ver la historia completa"
 
+#: front/ticket.form.php:44
+msgid "You must select a group."
+msgstr ""
+
 #: inc/config.class.php:195
 msgid "a time of creation"
 msgstr "a la hora de crear"
@@ -194,10 +219,6 @@ msgstr "a la hora de crear"
 #: inc/config.class.php:197
 msgid "a time of modification"
 msgstr "a la hora de modificar"
-
-#: inc/ticket.class.php:311
-msgid "escalated to the group"
-msgstr "escalado para el grupo"
 
 #: front/popup_histories.php:33
 msgid "full assignation history"

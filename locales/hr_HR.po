@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-25 07:27+0000\n"
+"POT-Creation-Date: 2023-06-19 13:25+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>, 2020,2022-2023\n"
 "Language-Team: Croatian (Croatia) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/hr_HR/)\n"
@@ -18,6 +18,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: hr_HR\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#: templates/escalade_form.html.twig
+msgid "Assign me as an observer"
+msgstr ""
 
 #: inc/config.class.php:137
 msgid "Assign the technical group on ticket category change"
@@ -47,6 +51,10 @@ msgstr "Kloniraj nalog"
 msgid "Close cloned tickets at the same time"
 msgstr "Istovremeno zatvori klonirane naloge"
 
+#: templates/escalade_form.html.twig
+msgid "Comment"
+msgstr ""
+
 #: inc/config.class.php:35
 msgid "Configuration Escalade plugin"
 msgstr "Konfiguracija dodatka Escalade"
@@ -63,42 +71,55 @@ msgstr "Ne mijenjaj"
 msgid "Enable filtering on the groups assignment"
 msgstr "Aktiviraj filtriranje po zadatku grupe"
 
-#: inc/ticket.class.php:768
+#: inc/ticket.class.php:772
 msgid "Error : adding actors (group)"
 msgstr "Greška: dodavanje učesnika (grupa)"
 
-#: inc/ticket.class.php:759
+#: inc/ticket.class.php:763
 msgid "Error : adding actors (user)"
 msgstr "Greška: dodavanje učesnika (korisnik)"
 
-#: inc/ticket.class.php:778
+#: inc/ticket.class.php:782
 msgid "Error : adding documents"
 msgstr "Greška: dodavanje dokumenata"
 
-#: inc/ticket.class.php:748
+#: inc/ticket.class.php:752
 msgid "Error : adding followups"
 msgstr "Greška: dodavanje priopćenja"
 
-#: inc/ticket.class.php:733
+#: inc/ticket.class.php:737
 msgid "Error : adding link between the two tickets"
 msgstr "Greška: dodavanje veze između ta dva naloga"
 
-#: inc/ticket.class.php:721
+#: inc/ticket.class.php:725
 msgid "Error : adding new ticket"
 msgstr "Greška: dodavanje novog naloga"
 
-#: inc/ticket.class.php:705
+#: inc/ticket.class.php:709
 msgid "Error : get old ticket"
 msgstr "Greška: nabavi stari nalog"
 
+#: inc/ticket.class.php:901
+msgid "Escalate"
+msgstr ""
+
+#: templates/escalade_form.html.twig
+msgid "Escalate ticket"
+msgstr ""
+
 #: inc/group_group.class.php:52 inc/user.class.php:164
-#: front/config.form.php:64 setup.php:171
+#: front/config.form.php:64 setup.php:177
 msgid "Escalation"
 msgstr "Eskalacija"
 
 #: inc/config.class.php:84
 msgid "Escalation history in tasks"
 msgstr "Povijest eskalacija u zadacima"
+
+#: inc/ticket.class.php:315 front/ticket.form.php:63
+#, php-format
+msgid "Escalation to the group %s."
+msgstr ""
 
 #: hook.php:450
 msgid "Group concerned by the escalation"
@@ -150,11 +171,11 @@ msgstr "Podnositelj zadatka/podsjetnika"
 msgid "Requester user of the ticket"
 msgstr "Podnositelj naloga"
 
-#: inc/ticket.class.php:141
+#: inc/ticket.class.php:143
 msgid "Solution provided, back to the group"
 msgstr "Rješenje predloženo, vrati grupi"
 
-#: inc/ticket.class.php:203
+#: inc/ticket.class.php:205
 msgid "Solution rejected, return to the group"
 msgstr "Rješenje odbijeno, vrati grupi"
 
@@ -162,7 +183,7 @@ msgstr "Rješenje odbijeno, vrati grupi"
 msgid "Solve date modification"
 msgstr "Riješi promjenu datuma"
 
-#: inc/ticket.class.php:743 inc/ticket.class.php:784 inc/ticket.class.php:789
+#: inc/ticket.class.php:747 inc/ticket.class.php:788 inc/ticket.class.php:793
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Nalog je kloniran iz naloga broj"
 
@@ -186,6 +207,10 @@ msgstr "Koristi grupu tehničara"
 msgid "View full history"
 msgstr "Prikaži cijelu povijest"
 
+#: front/ticket.form.php:44
+msgid "You must select a group."
+msgstr ""
+
 #: inc/config.class.php:195
 msgid "a time of creation"
 msgstr "vrijeme stvaranja"
@@ -193,10 +218,6 @@ msgstr "vrijeme stvaranja"
 #: inc/config.class.php:197
 msgid "a time of modification"
 msgstr "vrijeme mijenjanja"
-
-#: inc/ticket.class.php:311
-msgid "escalated to the group"
-msgstr "eskalirano u grupu"
 
 #: front/popup_histories.php:33
 msgid "full assignation history"

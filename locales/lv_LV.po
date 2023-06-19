@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-25 07:27+0000\n"
+"POT-Creation-Date: 2023-06-19 13:25+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Cédric Anne, 2018,2023\n"
 "Language-Team: Latvian (Latvia) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/lv_LV/)\n"
@@ -18,6 +18,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: lv_LV\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
+
+#: templates/escalade_form.html.twig
+msgid "Assign me as an observer"
+msgstr ""
 
 #: inc/config.class.php:137
 msgid "Assign the technical group on ticket category change"
@@ -47,6 +51,10 @@ msgstr "Klonēt pieteikumus"
 msgid "Close cloned tickets at the same time"
 msgstr "Aizvērt klonētus pieteikumus vienlaikus"
 
+#: templates/escalade_form.html.twig
+msgid "Comment"
+msgstr ""
+
 #: inc/config.class.php:35
 msgid "Configuration Escalade plugin"
 msgstr "Papildspraudņa Escalade iestatījumi"
@@ -63,42 +71,55 @@ msgstr "Nemainīt"
 msgid "Enable filtering on the groups assignment"
 msgstr "Iespējot filtrēšanu grupu piešķiršanā"
 
-#: inc/ticket.class.php:768
+#: inc/ticket.class.php:772
 msgid "Error : adding actors (group)"
 msgstr "Kļūda : pievienojot dalībniekus (grupas)"
 
-#: inc/ticket.class.php:759
+#: inc/ticket.class.php:763
 msgid "Error : adding actors (user)"
 msgstr "Kļūda : pievienojot dalībniekus (lietotājus)"
 
-#: inc/ticket.class.php:778
+#: inc/ticket.class.php:782
 msgid "Error : adding documents"
 msgstr "Kļūda : pievienojot dokumentus"
 
-#: inc/ticket.class.php:748
+#: inc/ticket.class.php:752
 msgid "Error : adding followups"
 msgstr "Kļūda : pievienojot sekojumus"
 
-#: inc/ticket.class.php:733
+#: inc/ticket.class.php:737
 msgid "Error : adding link between the two tickets"
 msgstr "Kļūda : pievienojot sasaisti starp diviem pieteikumiem"
 
-#: inc/ticket.class.php:721
+#: inc/ticket.class.php:725
 msgid "Error : adding new ticket"
 msgstr "Kļūda : pievienojot jauno pieteikumu"
 
-#: inc/ticket.class.php:705
+#: inc/ticket.class.php:709
 msgid "Error : get old ticket"
 msgstr "Kļūda : iegūt veco pieteikumu"
 
+#: inc/ticket.class.php:901
+msgid "Escalate"
+msgstr ""
+
+#: templates/escalade_form.html.twig
+msgid "Escalate ticket"
+msgstr ""
+
 #: inc/group_group.class.php:52 inc/user.class.php:164
-#: front/config.form.php:64 setup.php:171
+#: front/config.form.php:64 setup.php:177
 msgid "Escalation"
 msgstr "Eskalācija"
 
 #: inc/config.class.php:84
 msgid "Escalation history in tasks"
 msgstr "Eskalācijas vēsture uzdevumos"
+
+#: inc/ticket.class.php:315 front/ticket.form.php:63
+#, php-format
+msgid "Escalation to the group %s."
+msgstr ""
 
 #: hook.php:450
 msgid "Group concerned by the escalation"
@@ -150,11 +171,11 @@ msgstr "Pieteikuma/atgādinājuma pieteicējs"
 msgid "Requester user of the ticket"
 msgstr "Pieteikuma pieteicējs"
 
-#: inc/ticket.class.php:141
+#: inc/ticket.class.php:143
 msgid "Solution provided, back to the group"
 msgstr "Atrisināts, atpakaļ pie grupas"
 
-#: inc/ticket.class.php:203
+#: inc/ticket.class.php:205
 msgid "Solution rejected, return to the group"
 msgstr "Risinājums noraidīts, atgriezt grupai"
 
@@ -162,7 +183,7 @@ msgstr "Risinājums noraidīts, atgriezt grupai"
 msgid "Solve date modification"
 msgstr "Risinājuma rediģēšanas datums"
 
-#: inc/ticket.class.php:743 inc/ticket.class.php:784 inc/ticket.class.php:789
+#: inc/ticket.class.php:747 inc/ticket.class.php:788 inc/ticket.class.php:793
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Šīs pieteikums ir no pieteikuma num"
 
@@ -186,6 +207,10 @@ msgstr "Izmantot tehniķu grupu"
 msgid "View full history"
 msgstr "Parādīt pilno vēsturi"
 
+#: front/ticket.form.php:44
+msgid "You must select a group."
+msgstr ""
+
 #: inc/config.class.php:195
 msgid "a time of creation"
 msgstr "izveidošanas laiks"
@@ -193,10 +218,6 @@ msgstr "izveidošanas laiks"
 #: inc/config.class.php:197
 msgid "a time of modification"
 msgstr "rediģēšanas laiks"
-
-#: inc/ticket.class.php:311
-msgid "escalated to the group"
-msgstr "nodots grupai"
 
 #: front/popup_histories.php:33
 msgid "full assignation history"

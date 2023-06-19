@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-25 07:27+0000\n"
-"PO-Revision-Date: 2023-05-25 07:27+0000\n"
+"POT-Creation-Date: 2023-06-19 13:25+0000\n"
+"PO-Revision-Date: 2023-06-19 13:25+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en_GB\n"
@@ -16,6 +16,10 @@ msgstr ""
 "Content-Type: text/plain; charset=ASCII\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: templates/escalade_form.html.twig
+msgid "Assign me as an observer"
+msgstr "Assign me as an observer"
 
 #: inc/config.class.php:137
 msgid "Assign the technical group on ticket category change"
@@ -45,6 +49,10 @@ msgstr "Clone tickets"
 msgid "Close cloned tickets at the same time"
 msgstr "Close cloned tickets at the same time"
 
+#: templates/escalade_form.html.twig
+msgid "Comment"
+msgstr "Comment"
+
 #: inc/config.class.php:35
 msgid "Configuration Escalade plugin"
 msgstr "Configuration Escalade plugin"
@@ -61,42 +69,55 @@ msgstr "Don't change"
 msgid "Enable filtering on the groups assignment"
 msgstr "Enable filtering on the groups assignment"
 
-#: inc/ticket.class.php:768
+#: inc/ticket.class.php:772
 msgid "Error : adding actors (group)"
 msgstr "Error : adding actors (group)"
 
-#: inc/ticket.class.php:759
+#: inc/ticket.class.php:763
 msgid "Error : adding actors (user)"
 msgstr "Error : adding actors (user)"
 
-#: inc/ticket.class.php:778
+#: inc/ticket.class.php:782
 msgid "Error : adding documents"
 msgstr "Error : adding documents"
 
-#: inc/ticket.class.php:748
+#: inc/ticket.class.php:752
 msgid "Error : adding followups"
 msgstr "Error : adding followups"
 
-#: inc/ticket.class.php:733
+#: inc/ticket.class.php:737
 msgid "Error : adding link between the two tickets"
 msgstr "Error : adding link between the two tickets"
 
-#: inc/ticket.class.php:721
+#: inc/ticket.class.php:725
 msgid "Error : adding new ticket"
 msgstr "Error : adding new ticket"
 
-#: inc/ticket.class.php:705
+#: inc/ticket.class.php:709
 msgid "Error : get old ticket"
 msgstr "Error : get old ticket"
 
+#: inc/ticket.class.php:901
+msgid "Escalate"
+msgstr "Escalate"
+
+#: templates/escalade_form.html.twig
+msgid "Escalate ticket"
+msgstr "Escalate ticket"
+
 #: inc/group_group.class.php:52 inc/user.class.php:164 front/config.form.php:64
-#: setup.php:171
+#: setup.php:177
 msgid "Escalation"
 msgstr "Escalation"
 
 #: inc/config.class.php:84
 msgid "Escalation history in tasks"
 msgstr "Escalation history in tasks"
+
+#: inc/ticket.class.php:315 front/ticket.form.php:63
+#, php-format
+msgid "Escalation to the group %s."
+msgstr "Escalation to the group %s."
 
 #: hook.php:450
 msgid "Group concerned by the escalation"
@@ -150,11 +171,11 @@ msgstr "Requester user of the task/reminder"
 msgid "Requester user of the ticket"
 msgstr "Requester user of the ticket"
 
-#: inc/ticket.class.php:141
+#: inc/ticket.class.php:143
 msgid "Solution provided, back to the group"
 msgstr "Solution provided, back to the group"
 
-#: inc/ticket.class.php:203
+#: inc/ticket.class.php:205
 msgid "Solution rejected, return to the group"
 msgstr "Solution rejected, return to the group"
 
@@ -162,7 +183,7 @@ msgstr "Solution rejected, return to the group"
 msgid "Solve date modification"
 msgstr "Solve date modification"
 
-#: inc/ticket.class.php:743 inc/ticket.class.php:784 inc/ticket.class.php:789
+#: inc/ticket.class.php:747 inc/ticket.class.php:788 inc/ticket.class.php:793
 msgid "This ticket has been cloned from the ticket num"
 msgstr "This ticket has been cloned from the ticket num"
 
@@ -186,6 +207,10 @@ msgstr "Use the technician's group"
 msgid "View full history"
 msgstr "View full history"
 
+#: front/ticket.form.php:44
+msgid "You must select a group."
+msgstr "You must select a group."
+
 #: inc/config.class.php:195
 msgid "a time of creation"
 msgstr "a time of creation"
@@ -193,10 +218,6 @@ msgstr "a time of creation"
 #: inc/config.class.php:197
 msgid "a time of modification"
 msgstr "a time of modification"
-
-#: inc/ticket.class.php:311
-msgid "escalated to the group"
-msgstr "escalated to the group"
 
 #: front/popup_histories.php:33
 msgid "full assignation history"

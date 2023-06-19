@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-25 07:27+0000\n"
+"POT-Creation-Date: 2023-06-19 13:25+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Cédric Anne, 2018,2023\n"
 "Language-Team: Italian (Italy) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/it_IT/)\n"
@@ -18,6 +18,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: it_IT\n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#: templates/escalade_form.html.twig
+msgid "Assign me as an observer"
+msgstr ""
 
 #: inc/config.class.php:137
 msgid "Assign the technical group on ticket category change"
@@ -47,6 +51,10 @@ msgstr "Clona la chiamata"
 msgid "Close cloned tickets at the same time"
 msgstr "Chiudi le chiamate clonate allo stesso momento"
 
+#: templates/escalade_form.html.twig
+msgid "Comment"
+msgstr ""
+
 #: inc/config.class.php:35
 msgid "Configuration Escalade plugin"
 msgstr "Configurazione del plugin di Escalation"
@@ -63,42 +71,55 @@ msgstr "Non cambiare"
 msgid "Enable filtering on the groups assignment"
 msgstr "Abilitare il filtro per gruppi di assegnazione"
 
-#: inc/ticket.class.php:768
+#: inc/ticket.class.php:772
 msgid "Error : adding actors (group)"
 msgstr "Errore: durante l'aggiunta di attori (gruppi)"
 
-#: inc/ticket.class.php:759
+#: inc/ticket.class.php:763
 msgid "Error : adding actors (user)"
 msgstr "Errore: durante l'aggiunta di attori (utenti)"
 
-#: inc/ticket.class.php:778
+#: inc/ticket.class.php:782
 msgid "Error : adding documents"
 msgstr "Errore aggiungendo documenti"
 
-#: inc/ticket.class.php:748
+#: inc/ticket.class.php:752
 msgid "Error : adding followups"
 msgstr "Error: durante l'aggiunta di un commento"
 
-#: inc/ticket.class.php:733
+#: inc/ticket.class.php:737
 msgid "Error : adding link between the two tickets"
 msgstr "Errore: durante il collegamento tra due chiamate"
 
-#: inc/ticket.class.php:721
+#: inc/ticket.class.php:725
 msgid "Error : adding new ticket"
 msgstr "Errore: aggiungi nuove chiamate"
 
-#: inc/ticket.class.php:705
+#: inc/ticket.class.php:709
 msgid "Error : get old ticket"
 msgstr "Errore: recupera le chiamate vecchie"
 
+#: inc/ticket.class.php:901
+msgid "Escalate"
+msgstr ""
+
+#: templates/escalade_form.html.twig
+msgid "Escalate ticket"
+msgstr ""
+
 #: inc/group_group.class.php:52 inc/user.class.php:164
-#: front/config.form.php:64 setup.php:171
+#: front/config.form.php:64 setup.php:177
 msgid "Escalation"
 msgstr "Escalation"
 
 #: inc/config.class.php:84
 msgid "Escalation history in tasks"
 msgstr "Cronologia delle escalation nelle attività"
+
+#: inc/ticket.class.php:315 front/ticket.form.php:63
+#, php-format
+msgid "Escalation to the group %s."
+msgstr ""
 
 #: hook.php:450
 msgid "Group concerned by the escalation"
@@ -150,11 +171,11 @@ msgstr "Utente richiedente nel compito/promemoria"
 msgid "Requester user of the ticket"
 msgstr "Utente richiedente nel ticket"
 
-#: inc/ticket.class.php:141
+#: inc/ticket.class.php:143
 msgid "Solution provided, back to the group"
 msgstr "Soluzione fornita, rimandata al gruppo"
 
-#: inc/ticket.class.php:203
+#: inc/ticket.class.php:205
 msgid "Solution rejected, return to the group"
 msgstr "Soluzione rifiutata, rimandata al gruppo"
 
@@ -162,7 +183,7 @@ msgstr "Soluzione rifiutata, rimandata al gruppo"
 msgid "Solve date modification"
 msgstr "Modifica data di risoluzione"
 
-#: inc/ticket.class.php:743 inc/ticket.class.php:784 inc/ticket.class.php:789
+#: inc/ticket.class.php:747 inc/ticket.class.php:788 inc/ticket.class.php:793
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Questa chiamata deriva dalla chiamata numero"
 
@@ -186,6 +207,10 @@ msgstr "Usa il gruppo tecnici"
 msgid "View full history"
 msgstr "Vedere la cronologia completa"
 
+#: front/ticket.form.php:44
+msgid "You must select a group."
+msgstr ""
+
 #: inc/config.class.php:195
 msgid "a time of creation"
 msgstr "data di creazione"
@@ -193,10 +218,6 @@ msgstr "data di creazione"
 #: inc/config.class.php:197
 msgid "a time of modification"
 msgstr "data di modifica"
-
-#: inc/ticket.class.php:311
-msgid "escalated to the group"
-msgstr "Escalation al gruppo"
 
 #: front/popup_histories.php:33
 msgid "full assignation history"
