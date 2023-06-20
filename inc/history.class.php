@@ -187,57 +187,71 @@ class PluginEscaladeHistory extends CommonDBTM {
          return false;
       }
 
-      $groups     = implode("','", $_SESSION['glpigroups']);
-      $numrows    = 0;
-      $is_deleted = " `glpi_tickets`.`is_deleted` = 0 ";
+      $criteria = [
+         'SELECT' => ['glpi_tickets.id'],
+         'DISTINCT' => true,
+         'FROM' => 'glpi_tickets',
+         'LEFT JOIN' => [
+            'glpi_tickets_users' => [
+               'ON' => [
+                  'glpi_tickets' => 'id',
+                  'glpi_tickets_users' => 'tickets_id'
+               ]
+            ]
+         ],
+         'WHERE' => [
+            'glpi_tickets.is_deleted' => 0,
+         ],
+         'ORDER' => ['glpi_tickets.date_mod DESC']
+      ];
 
       if ($type == "notold") {
          $title = __("Tickets to follow (escalated)", "escalade");
          $status = CommonITILObject::INCOMING.", ".CommonITILObject::PLANNED.", ".
                    CommonITILObject::ASSIGNED.", ".CommonITILObject::WAITING;
 
-         $search_assign = " `glpi_plugin_escalade_histories`.`groups_id` IN ('$groups')
-            AND (`glpi_groups_tickets`.`groups_id` NOT IN ('$groups')
-            OR `glpi_groups_tickets`.`groups_id` IS NULL)";
+         $criteria['WHERE']['glpi_plugin_escalade_histories.groups_id'] = $_SESSION['glpigroups'];
+         $criteria['WHERE'][] = [
+            'OR' => [
+               'NOT' => ['glpi_groups_tickets.groups_id' => $_SESSION['glpigroups']],
+               'glpi_groups_tickets.groups_id' => null
+            ]
+         ];
 
-         $query_join = "LEFT JOIN `glpi_plugin_escalade_histories`
-            ON (`glpi_tickets`.`id` = `glpi_plugin_escalade_histories`.`tickets_id`)
-         LEFT JOIN `glpi_groups_tickets`
-            ON (`glpi_tickets`.`id` = `glpi_groups_tickets`.`tickets_id`
-               AND `glpi_groups_tickets`.`type`=2)";
+         $criteria['LEFT JOIN']['glpi_plugin_escalade_histories'] = [
+            'ON' => [
+               'glpi_tickets' => 'id',
+               'glpi_plugin_escalade_histories' => 'tickets_id'
+            ]
+         ];
       } else {
          $title = __("Tickets to close (escalated)", "escalade");
          $status = CommonITILObject::SOLVED;
 
-         $search_assign = " (`glpi_groups_tickets`.`groups_id` IN ('$groups'))";
-
-         $query_join = "LEFT JOIN `glpi_groups_tickets`
-            ON (`glpi_tickets`.`id` = `glpi_groups_tickets`.`tickets_id`
-               AND `glpi_groups_tickets`.`type`=2)";
+         $criteria['WHERE']['glpi_groups_tickets.groups_id'] = $_SESSION['glpigroups'];
       }
+      $criteria['LEFT JOIN']['glpi_groups_tickets'] = [
+         'ON' => [
+            'glpi_tickets' => 'id',
+            'glpi_groups_tickets' => 'tickets_id',
+             [
+                 'AND' => ['glpi_groups_tickets.type' => 2]
+             ]
+         ]
+      ];
+      $criteria['WHERE']['status'] = $status;
+      $criteria['WHERE'][] = getEntitiesRestrictCriteria('glpi_tickets');
 
-      $query = "SELECT DISTINCT `glpi_tickets`.`id`
-                FROM `glpi_tickets`
-                LEFT JOIN `glpi_tickets_users`
-                  ON (`glpi_tickets`.`id` = `glpi_tickets_users`.`tickets_id`)";
-
-      $query .= $query_join;
-
-      $query .= "WHERE $is_deleted AND ( $search_assign )
-                  AND (`status` IN ($status))".
-                  getEntitiesRestrictRequest("AND", "glpi_tickets");
-
-      $query  .= " ORDER BY glpi_tickets.date_mod DESC";
-
-      $result  = $DB->query($query);
-      $numrows = $DB->numrows($result);
+      $result  = $DB->request($criteria);
+      $numrows = count($result);
       if (!$numrows) {
          return;
       }
 
-      $query .= " LIMIT 0, 5";
-      $result = $DB->query($query);
-      $number = $DB->numrows($result);
+      $criteria['START'] = 0;
+      $criteria['LIMIT'] = 5;
+      $result = $DB->request($criteria);
+      $number = count($result);
 
       //show central list
       if ($numrows > 0) {
@@ -287,9 +301,8 @@ class PluginEscaladeHistory extends CommonDBTM {
             echo "<th>".__('Requester')."</th>";
             echo "<th>".__('Associated element')."</th>";
             echo "<th>".__('Description')."</th></tr></thead>";
-            for ($i = 0; $i < $number; $i++) {
-               $ID = $DB->result($result, $i, "id");
-               Ticket::showVeryShort($ID, 'Ticket$2');
+            foreach ($result as $data) {
+               Ticket::showVeryShort($data['id'], 'Ticket$2');
             }
          }
          echo "</table>";
