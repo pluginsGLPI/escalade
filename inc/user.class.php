@@ -65,7 +65,7 @@ class PluginEscaladeUser extends CommonDBTM {
                   if ($escalade_user->update($escalade_user->fields)) {
                      $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_OK);
                   } else {
-                     $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
+                     $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_KO);
                   }
                }
             }
