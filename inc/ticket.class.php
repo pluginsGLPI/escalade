@@ -139,6 +139,7 @@ class PluginEscaladeTicket {
             $task->add([
                'tickets_id' => $tickets_id,
                'is_private' => true,
+               '_no_reopen' => true, //prevent reopening ticket
                'state'      => Planning::INFO,
                'content'    => __("Solution provided, back to the group", "escalade")." ".
                                $group->getName()
