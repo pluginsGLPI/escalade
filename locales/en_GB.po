@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-19 13:25+0000\n"
-"PO-Revision-Date: 2023-06-19 13:25+0000\n"
+"POT-Creation-Date: 2023-07-12 14:48+0000\n"
+"PO-Revision-Date: 2023-07-12 14:48+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en_GB\n"
@@ -69,35 +69,35 @@ msgstr "Don't change"
 msgid "Enable filtering on the groups assignment"
 msgstr "Enable filtering on the groups assignment"
 
-#: inc/ticket.class.php:772
+#: inc/ticket.class.php:773
 msgid "Error : adding actors (group)"
 msgstr "Error : adding actors (group)"
 
-#: inc/ticket.class.php:763
+#: inc/ticket.class.php:764
 msgid "Error : adding actors (user)"
 msgstr "Error : adding actors (user)"
 
-#: inc/ticket.class.php:782
+#: inc/ticket.class.php:783
 msgid "Error : adding documents"
 msgstr "Error : adding documents"
 
-#: inc/ticket.class.php:752
+#: inc/ticket.class.php:753
 msgid "Error : adding followups"
 msgstr "Error : adding followups"
 
-#: inc/ticket.class.php:737
+#: inc/ticket.class.php:738
 msgid "Error : adding link between the two tickets"
 msgstr "Error : adding link between the two tickets"
 
-#: inc/ticket.class.php:725
+#: inc/ticket.class.php:726
 msgid "Error : adding new ticket"
 msgstr "Error : adding new ticket"
 
-#: inc/ticket.class.php:709
+#: inc/ticket.class.php:710
 msgid "Error : get old ticket"
 msgstr "Error : get old ticket"
 
-#: inc/ticket.class.php:901
+#: inc/ticket.class.php:902
 msgid "Escalate"
 msgstr "Escalate"
 
@@ -114,7 +114,7 @@ msgstr "Escalation"
 msgid "Escalation history in tasks"
 msgstr "Escalation history in tasks"
 
-#: inc/ticket.class.php:315 front/ticket.form.php:63
+#: inc/ticket.class.php:316 front/ticket.form.php:65
 #, php-format
 msgid "Escalation to the group %s."
 msgstr "Escalation to the group %s."
@@ -171,11 +171,11 @@ msgstr "Requester user of the task/reminder"
 msgid "Requester user of the ticket"
 msgstr "Requester user of the ticket"
 
-#: inc/ticket.class.php:143
+#: inc/ticket.class.php:144
 msgid "Solution provided, back to the group"
 msgstr "Solution provided, back to the group"
 
-#: inc/ticket.class.php:205
+#: inc/ticket.class.php:206
 msgid "Solution rejected, return to the group"
 msgstr "Solution rejected, return to the group"
 
@@ -183,7 +183,7 @@ msgstr "Solution rejected, return to the group"
 msgid "Solve date modification"
 msgstr "Solve date modification"
 
-#: inc/ticket.class.php:747 inc/ticket.class.php:788 inc/ticket.class.php:793
+#: inc/ticket.class.php:748 inc/ticket.class.php:789 inc/ticket.class.php:794
 msgid "This ticket has been cloned from the ticket num"
 msgstr "This ticket has been cloned from the ticket num"
 
@@ -207,7 +207,7 @@ msgstr "Use the technician's group"
 msgid "View full history"
 msgstr "View full history"
 
-#: front/ticket.form.php:44
+#: front/ticket.form.php:46
 msgid "You must select a group."
 msgstr "You must select a group."
 

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-19 13:25+0000\n"
+"POT-Creation-Date: 2023-07-12 14:48+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Cédric Anne, 2018,2023\n"
 "Language-Team: Italian (Italy) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/it_IT/)\n"
@@ -71,35 +71,35 @@ msgstr "Non cambiare"
 msgid "Enable filtering on the groups assignment"
 msgstr "Abilitare il filtro per gruppi di assegnazione"
 
-#: inc/ticket.class.php:772
+#: inc/ticket.class.php:773
 msgid "Error : adding actors (group)"
 msgstr "Errore: durante l'aggiunta di attori (gruppi)"
 
-#: inc/ticket.class.php:763
+#: inc/ticket.class.php:764
 msgid "Error : adding actors (user)"
 msgstr "Errore: durante l'aggiunta di attori (utenti)"
 
-#: inc/ticket.class.php:782
+#: inc/ticket.class.php:783
 msgid "Error : adding documents"
 msgstr "Errore aggiungendo documenti"
 
-#: inc/ticket.class.php:752
+#: inc/ticket.class.php:753
 msgid "Error : adding followups"
 msgstr "Error: durante l'aggiunta di un commento"
 
-#: inc/ticket.class.php:737
+#: inc/ticket.class.php:738
 msgid "Error : adding link between the two tickets"
 msgstr "Errore: durante il collegamento tra due chiamate"
 
-#: inc/ticket.class.php:725
+#: inc/ticket.class.php:726
 msgid "Error : adding new ticket"
 msgstr "Errore: aggiungi nuove chiamate"
 
-#: inc/ticket.class.php:709
+#: inc/ticket.class.php:710
 msgid "Error : get old ticket"
 msgstr "Errore: recupera le chiamate vecchie"
 
-#: inc/ticket.class.php:901
+#: inc/ticket.class.php:902
 msgid "Escalate"
 msgstr ""
 
@@ -116,7 +116,7 @@ msgstr "Escalation"
 msgid "Escalation history in tasks"
 msgstr "Cronologia delle escalation nelle attività"
 
-#: inc/ticket.class.php:315 front/ticket.form.php:63
+#: inc/ticket.class.php:316 front/ticket.form.php:65
 #, php-format
 msgid "Escalation to the group %s."
 msgstr ""
@@ -171,11 +171,11 @@ msgstr "Utente richiedente nel compito/promemoria"
 msgid "Requester user of the ticket"
 msgstr "Utente richiedente nel ticket"
 
-#: inc/ticket.class.php:143
+#: inc/ticket.class.php:144
 msgid "Solution provided, back to the group"
 msgstr "Soluzione fornita, rimandata al gruppo"
 
-#: inc/ticket.class.php:205
+#: inc/ticket.class.php:206
 msgid "Solution rejected, return to the group"
 msgstr "Soluzione rifiutata, rimandata al gruppo"
 
@@ -183,7 +183,7 @@ msgstr "Soluzione rifiutata, rimandata al gruppo"
 msgid "Solve date modification"
 msgstr "Modifica data di risoluzione"
 
-#: inc/ticket.class.php:747 inc/ticket.class.php:788 inc/ticket.class.php:793
+#: inc/ticket.class.php:748 inc/ticket.class.php:789 inc/ticket.class.php:794
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Questa chiamata deriva dalla chiamata numero"
 
@@ -207,7 +207,7 @@ msgstr "Usa il gruppo tecnici"
 msgid "View full history"
 msgstr "Vedere la cronologia completa"
 
-#: front/ticket.form.php:44
+#: front/ticket.form.php:46
 msgid "You must select a group."
 msgstr ""
 

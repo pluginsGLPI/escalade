@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-19 13:25+0000\n"
+"POT-Creation-Date: 2023-07-12 14:48+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Cédric Anne, 2023\n"
 "Language-Team: Portuguese (Portugal) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/pt_PT/)\n"
@@ -70,35 +70,35 @@ msgstr "Não alterar"
 msgid "Enable filtering on the groups assignment"
 msgstr "Ativar filtragem na atribuição de grupos"
 
-#: inc/ticket.class.php:772
+#: inc/ticket.class.php:773
 msgid "Error : adding actors (group)"
 msgstr "Erro: adição de atores (grupo)"
 
-#: inc/ticket.class.php:763
+#: inc/ticket.class.php:764
 msgid "Error : adding actors (user)"
 msgstr "Erro: adição de atores (usuário)"
 
-#: inc/ticket.class.php:782
+#: inc/ticket.class.php:783
 msgid "Error : adding documents"
 msgstr "Erro: adição documentos"
 
-#: inc/ticket.class.php:752
+#: inc/ticket.class.php:753
 msgid "Error : adding followups"
 msgstr "Erro: adicionando followups"
 
-#: inc/ticket.class.php:737
+#: inc/ticket.class.php:738
 msgid "Error : adding link between the two tickets"
 msgstr "Erro: adição de ligação entre os dois ingressos"
 
-#: inc/ticket.class.php:725
+#: inc/ticket.class.php:726
 msgid "Error : adding new ticket"
 msgstr "Erro: adicionando novo ticket"
 
-#: inc/ticket.class.php:709
+#: inc/ticket.class.php:710
 msgid "Error : get old ticket"
 msgstr "Erro: comprar passagem velha"
 
-#: inc/ticket.class.php:901
+#: inc/ticket.class.php:902
 msgid "Escalate"
 msgstr ""
 
@@ -115,7 +115,7 @@ msgstr "Escalação"
 msgid "Escalation history in tasks"
 msgstr "Histórico de escalonamento em tarefas"
 
-#: inc/ticket.class.php:315 front/ticket.form.php:63
+#: inc/ticket.class.php:316 front/ticket.form.php:65
 #, php-format
 msgid "Escalation to the group %s."
 msgstr ""
@@ -170,11 +170,11 @@ msgstr "Solicitar usuário da tarefa / lembrete"
 msgid "Requester user of the ticket"
 msgstr "Solicitante usuário do bilhete"
 
-#: inc/ticket.class.php:143
+#: inc/ticket.class.php:144
 msgid "Solution provided, back to the group"
 msgstr "Solução fornecida, volta para o grupo"
 
-#: inc/ticket.class.php:205
+#: inc/ticket.class.php:206
 msgid "Solution rejected, return to the group"
 msgstr "Solução rejeitada, retorno ao grupo"
 
@@ -182,7 +182,7 @@ msgstr "Solução rejeitada, retorno ao grupo"
 msgid "Solve date modification"
 msgstr "Resolver modificação de data"
 
-#: inc/ticket.class.php:747 inc/ticket.class.php:788 inc/ticket.class.php:793
+#: inc/ticket.class.php:748 inc/ticket.class.php:789 inc/ticket.class.php:794
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Este bilhete foi clonado do bilhete num"
 
@@ -206,7 +206,7 @@ msgstr "Use o grupo do técnico"
 msgid "View full history"
 msgstr "Ver histórico completo"
 
-#: front/ticket.form.php:44
+#: front/ticket.form.php:46
 msgid "You must select a group."
 msgstr ""
 

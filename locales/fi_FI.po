@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-19 13:25+0000\n"
+"POT-Creation-Date: 2023-07-12 14:48+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Cédric Anne, 2023\n"
 "Language-Team: Finnish (Finland) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/fi_FI/)\n"
@@ -71,35 +71,35 @@ msgstr "Älä muuta"
 msgid "Enable filtering on the groups assignment"
 msgstr "Ota suodatus käyttöön ryhmiin osoituksessa"
 
-#: inc/ticket.class.php:772
+#: inc/ticket.class.php:773
 msgid "Error : adding actors (group)"
 msgstr "Virhe : lisättäessä toimijoita (ryhmä)"
 
-#: inc/ticket.class.php:763
+#: inc/ticket.class.php:764
 msgid "Error : adding actors (user)"
 msgstr "Virhe : lisättäessä toimijoita (käyttäjä)"
 
-#: inc/ticket.class.php:782
+#: inc/ticket.class.php:783
 msgid "Error : adding documents"
 msgstr "Virhe : lisättäessä asiakirjoja"
 
-#: inc/ticket.class.php:752
+#: inc/ticket.class.php:753
 msgid "Error : adding followups"
 msgstr "Virhe : lisättäessä seurantaa"
 
-#: inc/ticket.class.php:737
+#: inc/ticket.class.php:738
 msgid "Error : adding link between the two tickets"
 msgstr "Virhe : lisättäessä linkkiä tikettien välille"
 
-#: inc/ticket.class.php:725
+#: inc/ticket.class.php:726
 msgid "Error : adding new ticket"
 msgstr "Virhe : lisättäessä uutta tikettiä"
 
-#: inc/ticket.class.php:709
+#: inc/ticket.class.php:710
 msgid "Error : get old ticket"
 msgstr "Virhe : noudettaessa tikettiä"
 
-#: inc/ticket.class.php:901
+#: inc/ticket.class.php:902
 msgid "Escalate"
 msgstr ""
 
@@ -116,7 +116,7 @@ msgstr "Eskalaatio"
 msgid "Escalation history in tasks"
 msgstr "Eskaloitumishistoria tehtävissä"
 
-#: inc/ticket.class.php:315 front/ticket.form.php:63
+#: inc/ticket.class.php:316 front/ticket.form.php:65
 #, php-format
 msgid "Escalation to the group %s."
 msgstr ""
@@ -171,11 +171,11 @@ msgstr "Toimeksiantajan tehtävästä/muistutuksesta"
 msgid "Requester user of the ticket"
 msgstr "Tiketin toimeksiantaja"
 
-#: inc/ticket.class.php:143
+#: inc/ticket.class.php:144
 msgid "Solution provided, back to the group"
 msgstr "Ratkaisu tarjottu, takaisin ryhmälle"
 
-#: inc/ticket.class.php:205
+#: inc/ticket.class.php:206
 msgid "Solution rejected, return to the group"
 msgstr "Ratkaisu hylättiin, palautettu ryhmään"
 
@@ -183,7 +183,7 @@ msgstr "Ratkaisu hylättiin, palautettu ryhmään"
 msgid "Solve date modification"
 msgstr "Ratkaise päivämäärän muutos"
 
-#: inc/ticket.class.php:747 inc/ticket.class.php:788 inc/ticket.class.php:793
+#: inc/ticket.class.php:748 inc/ticket.class.php:789 inc/ticket.class.php:794
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Tiketti kloonattu tiketistä nro"
 
@@ -207,7 +207,7 @@ msgstr "Käytä teknikko -ryhmää"
 msgid "View full history"
 msgstr "Näytä koko historia"
 
-#: front/ticket.form.php:44
+#: front/ticket.form.php:46
 msgid "You must select a group."
 msgstr ""
 
