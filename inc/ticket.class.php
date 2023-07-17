@@ -888,7 +888,8 @@ class PluginEscaladeTicket {
             getEntitiesRestrictCriteria(
                 Group::getTable(),
                 '',
-                $options['item']->fields['entities_id']
+                $options['item']->fields['entities_id'],
+                true
             )
         ]);
 
