@@ -32,10 +32,7 @@ use \Glpi\Toolbox\Sanitizer;
 
 include('../../../inc/includes.php');
 
-// Same right check as in PluginEscaladeTicket::addToTimeline()
-Session::checkRight(Ticket::$rightname, Ticket::READALL)
-    && Session::checkRight(Ticket::$rightname, Ticket::READASSIGN)
-    && Session::checkRight(Ticket::$rightname, Ticket::CREATE);
+Session::checkLoginUser();
 
 if (isset($_POST['escalate'])) {
     $group_id = (int)$_POST['groups_id'];

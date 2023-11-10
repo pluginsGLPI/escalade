@@ -865,8 +865,8 @@ class PluginEscaladeTicket {
 
         if (
             !Session::haveRight('ticket', Ticket::READALL)
-            || !Session::haveRight('ticket', Ticket::READASSIGN)
-            || !Session::haveRight('ticket', CREATE)
+            && !Session::haveRight('ticket', Ticket::READASSIGN)
+            && !Session::haveRight('ticket', CREATE)
         ) {
             return [];
         }
