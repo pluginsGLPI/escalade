@@ -67,12 +67,28 @@ if (isset($_POST['escalate'])) {
         ]);
 
         $group_ticket = new Group_Ticket();
+
+        $group_ticket_additional_data = [];
+
+        $a = (new Ticket())->getById($tickets_id);
+
+
+        // If 'ticket_last_status' is -1 (Do not modify) or Incoming, force the ticket not to update the status
+        if (
+            in_array(
+                $_SESSION['plugins']['escalade']['config']['ticket_last_status'],
+                [-1, CommonITILObject::INCOMING]
+            )
+        ) {
+            $group_ticket_additional_data['_from_object'] = true;
+        }
+
         $group_ticket->add([
             'type'       => CommonITILActor::ASSIGN,
             'groups_id'  => $group_id,
             'tickets_id' => $tickets_id,
             '_plugin_escalade_no_history' => true, // Prevent a duplicated task to be added
-        ]);
+        ] + $group_ticket_additional_data);
     }
 }
 
