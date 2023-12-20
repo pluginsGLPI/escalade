@@ -901,6 +901,7 @@ class PluginEscaladeTicket {
                 'class' => 'action-escalation',
                 'icon' => 'ti ti-arrow-up',
                 'label' => __('Escalate', 'escalade'),
+                'short_label' => __('Escalate', 'escalade'),
                 'item' => new self()
             ];
         }
