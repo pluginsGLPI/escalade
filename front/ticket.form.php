@@ -43,7 +43,7 @@ if (isset($_POST['escalate'])) {
 
     $group = new Group();
     if ($group_id === 0 || $group->getFromDB($group_id) === false) {
-        Session::addMessageAfterRedirect(__('You must select a group.', 'escalade'),false, ERROR);
+        Session::addMessageAfterRedirect(__('You must select a group.', 'escalade'), false, ERROR);
     } else if (!empty($_POST['comment']) && !empty($tickets_id)) {
 
         if ((bool)$_POST['is_observer_checkbox']) {
@@ -68,19 +68,9 @@ if (isset($_POST['escalate'])) {
 
         $group_ticket = new Group_Ticket();
 
-        $group_ticket_additional_data = [];
-
-        $a = (new Ticket())->getById($tickets_id);
-
-
-        // If 'ticket_last_status' is -1 (Do not modify) or Incoming, force the ticket not to update the status
-        if (
-            in_array(
-                $_SESSION['plugins']['escalade']['config']['ticket_last_status'],
-                [-1, CommonITILObject::INCOMING]
-            )
-        ) {
-            $group_ticket_additional_data['_from_object'] = true;
+        // retrieve the current status of the ticket
+        if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] == -1) {
+            $previous_ticket_status = (new Ticket())->getById($tickets_id)->fields['status'];
         }
 
         $group_ticket->add([
@@ -88,7 +78,24 @@ if (isset($_POST['escalate'])) {
             'groups_id'  => $group_id,
             'tickets_id' => $tickets_id,
             '_plugin_escalade_no_history' => true, // Prevent a duplicated task to be added
-        ] + $group_ticket_additional_data);
+        ]);
+
+        $ticket = new Ticket();
+        $ticket->update([
+            'id' => $tickets_id,
+            '_itil_assign' => [
+                '_type'     => "group",
+                'groups_id' => $groups_id
+            ]
+        ]);
+
+        // restore the previous status of the ticket
+        if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] != 0) {
+            $ticket->update([
+                'id' => $tickets_id,
+                'status' => $previous_ticket_status ?? $_SESSION['plugins']['escalade']['config']['ticket_last_status']
+            ]);
+        }
     }
 }
 

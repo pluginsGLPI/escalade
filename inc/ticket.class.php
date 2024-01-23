@@ -36,24 +36,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginEscaladeTicket {
 
-   public static function pre_item_update(CommonDBTM $item) {
-      // If forcing INCOMING status on group change, prevent it from being
-      // dropped by take into account autocomputation
-      if (
-         in_array(
-            $_SESSION['plugins']['escalade']['config']['ticket_last_status'],
-            [-1, CommonITILObject::INCOMING]
-         )
-         && $item->input['status'] == CommonITILObject::INCOMING
-         && !empty(array_filter(
-            $item->input['_actors']['assign'] ?? [],
-            fn ($actor) => $actor['itemtype'] == 'Group'
-         ))
-      ) {
-         $item->input['_do_not_compute_status'] = true;
-      }
-   }
-
    /**
     * Provide a redirection to other functions
     * @param  CommonDBTM $item
@@ -96,6 +78,26 @@ class PluginEscaladeTicket {
       if (in_array('solvedate', $item->updates)) {
          NotificationEvent::raiseEvent('update_solvedate', $item);
       }
+
+      // update the ticket status if the ticket is escalated and we want to alter the status
+      if (
+         $_SESSION['plugins']['escalade']['config']['ticket_last_status'] != 0
+         && !empty(array_filter(
+            $item->input['_actors']['assign'] ?? [],
+            fn ($actor) => $actor['itemtype'] == 'Group'
+         ))
+      ) {
+         // retrieve the previous status of the ticket
+         if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] == -1) {
+            $previous_ticket_status = $item->updates['status'];
+        }
+
+        // update the ticket status
+         $item->update([
+             'id' => $item->getID(),
+             'status' => $previous_ticket_status ?? $_SESSION['plugins']['escalade']['config']['ticket_last_status']
+         ]);
+     }
    }
 
 
@@ -425,6 +427,10 @@ class PluginEscaladeTicket {
          'type'       => CommonITILActor::ASSIGN
       ];
       if (! $group_ticket->find($condition)) {
+         // retrieve the last status of the ticket
+         if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] == -1) {
+            $previous_ticket_status = (new Ticket())->getById($tickets_id)->fields['status'];
+         }
 
          // add group to ticket
          $ticket = new Ticket();
@@ -435,6 +441,14 @@ class PluginEscaladeTicket {
                'groups_id' => $groups_id
             ]
          ]);
+
+        // update the ticket status if we want to alter the status
+         if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] != 0) {
+            $ticket->update([
+               'id' => $tickets_id,
+               'status' => $previous_ticket_status ?? $_SESSION['plugins']['escalade']['config']['ticket_last_status']
+            ]);
+         }
       }
 
       if (! $full_history) {

@@ -346,6 +346,7 @@ class PluginEscaladeConfig extends CommonDBTM {
          'value' => $value,
          'width' => '80%',
          'rand' => $rand,
+         'display_emptychoice' => true,
       ]);
    }
 }
