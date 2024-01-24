@@ -70,7 +70,7 @@ if (isset($_POST['escalate'])) {
 
         // retrieve the current status of the ticket
         if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] == -1) {
-            $previous_ticket_status = (new Ticket())->getById($tickets_id)->fields['status'];
+            $previous_ticket_status = Ticket::getById($tickets_id)->fields['status'];
         }
 
         $group_ticket->add([
