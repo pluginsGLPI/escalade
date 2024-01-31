@@ -314,6 +314,13 @@ function plugin_escalade_install() {
       $migration->migrationOneTable('glpi_plugin_escalade_configs');
    }
 
+   // add new fields
+   if (!$DB->fieldExists('glpi_plugin_escalade_configs', 'limit_filter_assign_group')) {
+      $migration->addField('glpi_plugin_escalade_configs', 'limit_filter_assign_group',
+                           'integer', ['after' => 'use_filter_assign_group']);
+      $migration->migrationOneTable('glpi_plugin_escalade_configs');
+   }
+
    return true;
 }
 

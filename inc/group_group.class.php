@@ -128,13 +128,20 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
    }
 
    function getGroups($ticket_id, $removeAlreadyAssigned = true) {
+      $config = new PluginEscaladeConfig();
+      $config->getFromDB(1);
       $groups = $user_groups = $ticket_groups = [];
 
       // get groups for user connected
       $tmp_user_groups  = Group_User::getUserGroups($_SESSION['glpiID']);
       foreach ($tmp_user_groups as $current_group) {
          $user_groups[$current_group['id']] = $current_group['id'];
-         $groups[$current_group['id']] = $current_group['id'];
+
+         // if we don't limit the list of groups to assign
+         // we add all groups of the user
+         if (!$config->fields['limit_filter_assign_group']) {
+            $groups[$current_group['id']] = $current_group['id'];
+         }
       }
 
       // get groups already assigned in the ticket
@@ -143,6 +150,12 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
          $ticket->getFromDB($ticket_id);
          foreach ($ticket->getGroups(CommonITILActor::ASSIGN) as $current_group) {
             $ticket_groups[$current_group['groups_id']] = $current_group['groups_id'];
+
+            // if we limit the list of groups to assign
+            // we add only groups already assigned to the ticket
+            if ($config->fields['limit_filter_assign_group']) {
+               $groups[$current_group['groups_id']] = $current_group['groups_id'];
+            }
          }
       }
 

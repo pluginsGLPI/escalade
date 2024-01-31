@@ -302,7 +302,15 @@ class PluginEscaladeConfig extends CommonDBTM {
          'rand' => $rand,
       ]);
       echo "</td>";
-      echo "<td colspan='2'></td>";
+      echo "<td><label for='dropdown_limit_filter_assign_group$rand'>";
+      echo __("Limit filtering to the allowed groups by assigned groups", "escalade") . "</td>";
+      echo "<td>";
+      Dropdown::showYesNo("limit_filter_assign_group", $this->fields["limit_filter_assign_group"], -1, [
+         'width' => '100%',
+         'rand' => $rand,
+         'disabled' => $this->fields["use_filter_assign_group"] ?? 0 ? false : true,
+      ]);
+      echo "</td>";
       echo "</tr>";
 
       $options['candel']       = false;
