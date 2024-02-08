@@ -3,7 +3,7 @@
    <name>Escalade </name>
    <key>escalade</key>
    <state>stable</state>
-   <logo>https://raw.githubusercontent.com/pluginsGLPI/escalade/master/escalade.png</logo>
+   <logo>https://raw.githubusercontent.com/pluginsGLPI/escalade/main/escalade.png</logo>
    <description>
       <short>
          <cs><![CDATA[Tento zásuvný modul zjednodušuje eskalaci požadavku na jiné skupiny]]></cs>
@@ -255,8 +255,8 @@ Elle ajoute les fonctionnalités suivantes :
          </fr>
    </tags>
    <screenshots>
-      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/escalade/master/screenshots/escalade_config.png</screenshot>
-      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/escalade/master/screenshots/escalade_history.png</screenshot>
-      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/escalade/master/screenshots/escalade_history2.png</screenshot>
+      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/escalade/main/screenshots/escalade_config.png</screenshot>
+      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/escalade/main/screenshots/escalade_history.png</screenshot>
+      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/escalade/main/screenshots/escalade_history2.png</screenshot>
    </screenshots>
 </root>
