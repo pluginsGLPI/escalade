@@ -44,7 +44,7 @@ class PluginEscaladeTicket {
       )) && $item->input['_from_assignment']
       ){
          //handle status behavior
-         if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] != -1){ // no change
+         if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] != -1){
             $item->input['status'] = $_SESSION['plugins']['escalade']['config']['ticket_last_status'];
          }
       }
