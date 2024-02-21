@@ -44,16 +44,12 @@ class PluginEscaladeTicket {
       )) && $item->input['_from_assignment']
       ){
          //handle status behavior
-         if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] == -1){ // no change
-            $item->input['status'] = $item->fields['status']; //force current status
-         } else {
+         if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] != -1){ // no change
             $item->input['status'] = $_SESSION['plugins']['escalade']['config']['ticket_last_status'];
          }
       }
 
       $item->input['_do_not_compute_status'] = true;
-
-      Toolbox::logDebug($item->input['status']);
    }
 
    /**
