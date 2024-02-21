@@ -79,11 +79,7 @@ if (isset($_POST['escalate'])) {
         ];
 
         //handle status behavior
-        if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] == -1){ // no change
-            $ticket = new Ticket();
-            $ticket->getFromDB($tickets_id);
-            $group_ticket_input['_from_object']['status'] = $ticket->fields['status']; //force current status
-        } else {
+        if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] != -1){ // no change
             $group_ticket_input['_from_object']['status'] = $_SESSION['plugins']['escalade']['config']['ticket_last_status'];
         }
         $group_ticket_input['_from_object']['_do_not_compute_status'] = true;
