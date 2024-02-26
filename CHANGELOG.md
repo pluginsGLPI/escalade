@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix group filtering (empty group list) when no group is assigned to the ticket
 
 ## [2.9.3] - 2024-02-21
 
