@@ -184,6 +184,11 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
          $groupname = $group_obj->fields['name'];
       }
 
+      //if empty retun user groups
+      if (empty($groups)) {
+         return Group_User::getUserGroups($_SESSION['glpiID']);
+      }
+
       //sort by group name (and keep associative index)
       asort($groups);
 
