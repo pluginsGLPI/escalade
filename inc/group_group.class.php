@@ -184,8 +184,8 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
          $groupname = $group_obj->fields['name'];
       }
 
-      //if empty retun user groups
-      if (empty($groups)) {
+      //if empty new tickets return user groups
+      if (empty($groups) && CommonDBTM::isNewID($ticket_id)) {
          return Group_User::getUserGroups($_SESSION['glpiID']);
       }
 
