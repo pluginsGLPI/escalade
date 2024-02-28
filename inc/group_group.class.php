@@ -128,13 +128,13 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
    }
 
    function getGroups($ticket_id, $removeAlreadyAssigned = true) {
-      $groups = $user_groups = [];
+      $groups = $user_groups = $assign_user_groups = [];
       // get groups for user connected
       $tmp_user_groups  = Group_User::getUserGroups($_SESSION['glpiID']);
       foreach ($tmp_user_groups as $current_group) {
          $user_groups[$current_group['id']] = $current_group['id'];
           if ($current_group['is_assign']) {
-              $groups[$current_group['id']] = $current_group['id'];
+              $assign_user_groups[$current_group['id']] = $current_group['id'];
           }
 //         if (!$_SESSION['plugins']['escalade']['config']['use_filter_assign_group']) {
 //            $groups[$current_group['id']] = $current_group['id'];
@@ -149,6 +149,10 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
          foreach ($ticket->getGroups(CommonITILActor::ASSIGN) as $current_group) {
              $ticket_groups[$current_group['groups_id']] = $current_group['groups_id'];
          }
+          //No group assigned to the ticket, list user assign group
+          if (count($ticket_groups) == 0) {
+              $groups = $assign_user_groups;
+          }
       }
 
       // To do an escalation, the user must be in a group currently assigned to the ticket
