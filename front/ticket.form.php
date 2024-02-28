@@ -32,14 +32,19 @@ use \Glpi\Toolbox\Sanitizer;
 
 include('../../../inc/includes.php');
 
-// Same right check as in PluginEscaladeTicket::addToTimeline()
-Session::checkRight(Ticket::$rightname, Ticket::READALL)
-    && Session::checkRight(Ticket::$rightname, Ticket::READASSIGN)
-    && Session::checkRight(Ticket::$rightname, Ticket::CREATE);
-
 if (isset($_POST['escalate'])) {
     $group_id = (int)$_POST['groups_id'];
     $tickets_id = (int)$_POST['tickets_id'];
+
+    $ticket = new Ticket();
+    if (!$ticket->getFromDB($tickets_id)) {
+        Html::displayNotFoundError();
+    }
+
+    // Same right check as in PluginEscaladeTicket::addToTimeline()
+    if (!$ticket->canAssign()) {
+        Html::displayRightError();
+    }
 
     $group = new Group();
     if ($group_id === 0 || $group->getFromDB($group_id) === false) {

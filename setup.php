@@ -30,7 +30,7 @@
 
 use Glpi\Plugin\Hooks;
 
-define ('PLUGIN_ESCALADE_VERSION', '2.9.2');
+define ('PLUGIN_ESCALADE_VERSION', '2.9.3');
 
 // Minimal GLPI version, inclusive
 define("PLUGIN_ESCALADE_MIN_GLPI", "10.0.0");
@@ -138,12 +138,10 @@ function plugin_init_escalade() {
       ];
       $PLUGIN_HOOKS['item_add']['escalade']['User'] = 'plugin_escalade_item_add_user';
 
-       //filter group feature
-       if ($escalade_config['use_filter_assign_group']) {
-          $PLUGIN_HOOKS[Hooks::FILTER_ACTORS]['escalade'] = [
-             'PluginEscaladeTicket', 'filter_actors',
-          ];
-       }
+      //filter group feature
+      $PLUGIN_HOOKS[Hooks::FILTER_ACTORS]['escalade'] = [
+         'PluginEscaladeTicket', 'filter_actors',
+      ];
 
       // == Interface links ==
       if (Session::haveRight('config', UPDATE)) {

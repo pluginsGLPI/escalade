@@ -863,11 +863,7 @@ class PluginEscaladeTicket {
             return [];
         }
 
-        if (
-            !Session::haveRight('ticket', Ticket::READALL)
-            || !Session::haveRight('ticket', Ticket::READASSIGN)
-            || !Session::haveRight('ticket', CREATE)
-        ) {
+        if (!$options['item']->canAssign()) {
             return [];
         }
 

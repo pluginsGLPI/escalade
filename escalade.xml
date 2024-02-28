@@ -3,7 +3,7 @@
    <name>Escalade </name>
    <key>escalade</key>
    <state>stable</state>
-   <logo>https://raw.githubusercontent.com/pluginsGLPI/escalade/master/escalade.png</logo>
+   <logo>https://raw.githubusercontent.com/pluginsGLPI/escalade/main/escalade.png</logo>
    <description>
       <short>
          <cs><![CDATA[Tento zásuvný modul zjednodušuje eskalaci požadavku na jiné skupiny]]></cs>
@@ -61,6 +61,11 @@ Elle ajoute les fonctionnalités suivantes :
       <author>Teclib'</author>
    </authors>
    <versions>
+      <version>
+         <num>2.9.3</num>
+         <compatibility>~10.0.0</compatibility>
+         <download_url>https://github.com/pluginsGLPI/escalade/releases/download/2.9.3/glpi-escalade-2.9.3.tar.bz2</download_url>
+      </version>
       <version>
          <num>2.9.2</num>
          <compatibility>~10.0.0</compatibility>
@@ -255,8 +260,8 @@ Elle ajoute les fonctionnalités suivantes :
          </fr>
    </tags>
    <screenshots>
-      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/escalade/master/screenshots/escalade_config.png</screenshot>
-      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/escalade/master/screenshots/escalade_history.png</screenshot>
-      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/escalade/master/screenshots/escalade_history2.png</screenshot>
+      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/escalade/main/screenshots/escalade_config.png</screenshot>
+      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/escalade/main/screenshots/escalade_history.png</screenshot>
+      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/escalade/main/screenshots/escalade_history2.png</screenshot>
    </screenshots>
 </root>
