@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix behavior for ```Ticket status after an escalation``` option
 
 ## [2.9.3] - 2024-02-21
 
