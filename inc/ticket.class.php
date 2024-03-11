@@ -37,14 +37,19 @@ if (!defined('GLPI_ROOT')) {
 class PluginEscaladeTicket {
 
    public static function pre_item_update(CommonDBTM $item) {
-      // If forcing INCOMING status on group change, prevent it from being
-      // dropped by take into account autocomputation
-      if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] == CommonITILObject::INCOMING
-         && $item->fields['status'] == CommonITILObject::INCOMING
-         && ($item->input['_itil_assign']['groups_id'] ?? 0) > 0
-      ) {
-         $item->input['_do_not_compute_status'] = true;
+      //only if update is related to Group assign operation and _from_assignment
+      if (!empty(array_filter(
+         $item->input['_actors']['assign'] ?? [],
+         fn ($actor) => $actor['itemtype'] == 'Group'
+      )) && $item->input['_from_assignment']
+      ){
+         //handle status behavior
+         if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] != -1){
+            $item->input['status'] = $_SESSION['plugins']['escalade']['config']['ticket_last_status'];
+         }
       }
+
+      $item->input['_do_not_compute_status'] = true;
    }
 
    /**
@@ -313,7 +318,7 @@ class PluginEscaladeTicket {
             'tickets_id' => $tickets_id,
             'is_private' => true,
             'state'      => Planning::INFO,
-            'content'    => Toolbox::addslashes_deep(sprintf(__("Escalation to the group %s.", "escalade"), $group->getName()))
+            'content'    => Toolbox::addslashes_deep(sprintf(__("Escalation to the group %s.", "escalade"), $group->getName())),
          ]);
       }
 
@@ -420,14 +425,22 @@ class PluginEscaladeTicket {
       if (! $group_ticket->find($condition)) {
 
          // add group to ticket
-         $ticket = new Ticket();
-         $ticket->update([
-            'id' => $tickets_id,
-            '_itil_assign' => [
-               '_type'     => "group",
-               'groups_id' => $groups_id
-            ]
-         ]);
+         $group_ticket_input = [
+            'type'       => CommonITILActor::ASSIGN,
+            'groups_id'  => $groups_id,
+            'tickets_id' => $tickets_id,
+            '_plugin_escalade_no_history' => true, // Prevent a duplicated task to be added
+         ];
+
+         //handle status behavior
+         if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] != -1){
+            $group_ticket_input['_from_object']['status'] = $_SESSION['plugins']['escalade']['config']['ticket_last_status'];
+         }
+
+         $group_ticket_input['_from_object']['_do_not_compute_status'] = true;
+
+         $group_ticket = new Group_Ticket();
+         $group_ticket->add($group_ticket_input);
       }
 
       if (! $full_history) {

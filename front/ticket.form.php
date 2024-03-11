@@ -71,13 +71,21 @@ if (isset($_POST['escalate'])) {
             ) . $_POST['comment']
         ]);
 
-        $group_ticket = new Group_Ticket();
-        $group_ticket->add([
+        $group_ticket_input = [
             'type'       => CommonITILActor::ASSIGN,
             'groups_id'  => $group_id,
             'tickets_id' => $tickets_id,
             '_plugin_escalade_no_history' => true, // Prevent a duplicated task to be added
-        ]);
+        ];
+
+        //handle status behavior
+        if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] != -1){
+            $group_ticket_input['_from_object']['status'] = $_SESSION['plugins']['escalade']['config']['ticket_last_status'];
+        }
+        $group_ticket_input['_from_object']['_do_not_compute_status'] = true;
+
+        $group_ticket = new Group_Ticket();
+        $group_ticket->add($group_ticket_input);
     }
 }
 
