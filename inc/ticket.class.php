@@ -47,9 +47,13 @@ class PluginEscaladeTicket {
          if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] != -1){
             $item->input['status'] = $_SESSION['plugins']['escalade']['config']['ticket_last_status'];
          }
+
       }
 
-      $item->input['_do_not_compute_status'] = true;
+      if (isset($input['_itil_assign'])) {
+         $item->input['_do_not_compute_status'] = true;
+      }
+
    }
 
    /**
