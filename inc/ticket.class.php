@@ -267,10 +267,14 @@ class PluginEscaladeTicket {
       $history = new PluginEscaladeHistory();
 
       $group_ticket       = new Group_Ticket();
-      $group_ticket->getFromDBByRequest(['ORDER'   => 'id DESC',
-                                                 'LIMIT'      => 1,
-                                                 'tickets_id' => $tickets_id,
-                                                 'type'       => 2]);
+      $group_ticket->getFromDBByRequest([
+         'WHERE' => [
+            'tickets_id' => $tickets_id,
+            'type'       => 2
+         ],
+         'ORDER' => 'id DESC',
+         'LIMIT' => 1
+      ]);
 
       $previous_groups_id = 0;
       $counter            = 0;
@@ -773,30 +777,56 @@ class PluginEscaladeTicket {
 
       //add actors to the new ticket (without assign)
       //users
-      $query_users = "INSERT INTO glpi_tickets_users
-      SELECT '' AS id, $newID as tickets_id, users_id, type, use_notification, alternative_email
-      FROM glpi_tickets_users
-      WHERE tickets_id = $tickets_id AND type != 2";
-      if (!$res = $DB->query($query_users)) {
+      $res = $DB->insert('glpi_tickets_user', new QuerySubQuery([
+         'SELECT' => [
+            new QueryExpression("'' AS " . $DB::quoteName('id')),
+            new QueryExpression($DB::quoteValue($newID) . " AS " . $DB::quoteName('tickets_id')),
+            'users_id', 'type', 'use_notification', 'alternative_email'
+         ],
+         'FROM' => 'glpi_tickets_users',
+         'WHERE' => [
+            'tickets_id' => $tickets_id,
+            'type' => ['!=', 2]
+         ]
+      ]));
+      if (!$res) {
          echo "{\"success\":false, \"message\":\"".__("Error : adding actors (user)", "escalade")."\"}";
          exit;
       }
       //groups
-      $query_groups = "INSERT INTO glpi_groups_tickets
-      SELECT '' AS id, $newID as tickets_id, groups_id, type
-      FROM glpi_groups_tickets
-      WHERE tickets_id = $tickets_id AND type != 2";
-      if (!$res = $DB->query($query_groups)) {
+      $res = $DB->insert('glpi_tickets_user', new QuerySubQuery([
+         'SELECT' => [
+            new QueryExpression("'' AS " . $DB::quoteName('id')),
+            new QueryExpression($DB::quoteValue($newID) . " AS " . $DB::quoteName('tickets_id')),
+               'groups_id', 'type'
+         ],
+         'FROM' => 'glpi_groups_tickets',
+         'WHERE' => [
+            'tickets_id' => $tickets_id,
+            'type' => ['!=', 2]
+         ]
+      ]));
+      if (!$res) {
          echo "{\"success\":false, \"message\":\"".__("Error : adding actors (group)", "escalade")."\"}";
          exit;
       }
 
       //add documents
-      $query_docs = "INSERT INTO glpi_documents_items (documents_id, items_id, itemtype, entities_id, is_recursive, date_mod)
-      SELECT documents_id, $newID, 'Ticket', entities_id, is_recursive, date_mod
-      FROM glpi_documents_items
-      WHERE items_id = $tickets_id AND itemtype = 'Ticket'";
-      if (! $res = $DB->query($query_docs)) {
+      $res = $DB->insert('glpi_documents_items', new QuerySubQuery([
+         'SELECT' => [
+            new QueryExpression("'' AS " . $DB::quoteName('id')),
+            'documents_id',
+            new QueryExpression($DB::quoteValue($newID) . " AS " . $DB::quoteName('items_id')),
+            new QueryExpression($DB::quoteValue('Ticket') . " AS " . $DB::quoteName('itemtype')),
+            'entities_id', 'is_recursive', 'date_mod'
+         ],
+         'FROM' => 'glpi_documents_items',
+         'WHERE' => [
+            'items_id' => $tickets_id,
+            'itemtype' => 'Ticket'
+         ]
+         ]));
+      if (!$res) {
          echo "{\"success\":false, \"message\":\"".__("Error : adding documents", "escalade")."\"}";
          exit;
       }

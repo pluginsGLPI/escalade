@@ -86,9 +86,30 @@ function plugin_escalade_install() {
       ) ENGINE=InnoDB DEFAULT CHARSET={$default_charset} COLLATE={$default_collation} ROW_FORMAT=DYNAMIC;";
       $DB->query($query);
 
-      $query = "INSERT INTO glpi_plugin_escalade_configs
-      VALUES (NULL, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, '".Ticket::WAITING."',0)";
-      $DB->query($query);
+      $DB->insert('glpi_plugin_escalade_configs', [
+         'remove_group' => 1,
+         'show_history' => 1,
+         'task_history' => 1,
+         'remove_tech' => 1,
+         'solve_return_group' => 1,
+         'reassign_group_from_cat' => 0,
+         'reassign_tech_from_cat' => 0,
+         'cloneandlink_ticket' => 1,
+         'close_linkedtickets' => 1,
+         'use_assign_user_group' => 0,
+         'use_assign_user_group_creation' => 0,
+         'use_assign_user_group_modification' => 0,
+         'remove_delete_requester_user_btn' => 1,
+         'remove_delete_watcher_user_btn' => 1,
+         'remove_delete_assign_user_btn' => 0,
+         'remove_delete_requester_group_btn' => 1,
+         'remove_delete_watcher_group_btn' => 1,
+         'remove_delete_assign_group_btn' => 0,
+         'remove_delete_assign_supplier_btn' => 1,
+         'use_filter_assign_group' => 1,
+         'ticket_last_status' => Ticket::WAITING,
+         'remove_requester' => 0
+      ]);
    }
 
    // == Update to 1.2 ==
@@ -167,10 +188,11 @@ function plugin_escalade_install() {
                $status = -1;
                break;
          }
-         $query = "UPDATE `glpi_plugin_escalade_configs`
-                   SET `ticket_last_status` = '".$status."'
-                   WHERE `id` = '".$data['id']."'";
-         $DB->query($query);
+         $DB->update('glpi_plugin_escalade_configs', [
+            'ticket_last_status' => $status
+         ], [
+            'id' => $data['id']
+         ]);
       }
 
       $query = "ALTER TABLE `glpi_plugin_escalade_configs` MODIFY `ticket_last_status` INT;";
@@ -204,9 +226,10 @@ function plugin_escalade_install() {
 
       $user = new User();
       foreach ($user->find() as $data) {
-         $query = "INSERT INTO glpi_plugin_escalade_users (`users_id`, `use_filter_assign_group`)
-                     VALUES (".$data['id'].", $default_value)";
-         $DB->query($query);
+         $DB->insert('glpi_plugin_escalade_users', [
+            'users_id' => $data['id'],
+            'use_filter_assign_group' => $default_value
+         ]);
       }
    }
 
@@ -343,7 +366,7 @@ function plugin_escalade_item_purge($item) {
    global $DB;
 
    if ($item instanceof User) {
-      $DB->query("DELETE FROM glpi_plugin_escalade_users WHERE users_id = ".$item->getID());
+      $DB->delete('glpi_plugin_escalade_users', ['users_id' => $item->getID()]);
    }
 
    if ($item instanceof Ticket) {
@@ -377,9 +400,10 @@ function plugin_escalade_item_add_user($item) {
       $config->getFromDB(1);
       $default_value = $config->fields["use_filter_assign_group"];
 
-      $query = "INSERT INTO glpi_plugin_escalade_users (`users_id`, `use_filter_assign_group`)
-                  VALUES (".$item->getID().", $default_value)";
-      $DB->query($query);
+      $DB->insert('glpi_plugin_escalade_users', [
+         'users_id' => $item->getID(),
+         'use_filter_assign_group' => $default_value
+      ]);
    }
 
    if ($item instanceof Ticket_User) {
