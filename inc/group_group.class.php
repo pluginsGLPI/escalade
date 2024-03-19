@@ -136,11 +136,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation {
           if ($current_group['is_assign']) {
               $assign_user_groups[$current_group['id']] = $current_group['id'];
           }
-//         if (!$_SESSION['plugins']['escalade']['config']['use_filter_assign_group']) {
-//            $groups[$current_group['id']] = $current_group['id'];
-//         }
       }
-
       // get groups already assigned in the ticket
       if ($ticket_id > 0) {
          $ticket = new Ticket();
