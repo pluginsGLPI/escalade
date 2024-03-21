@@ -724,7 +724,7 @@ class PluginEscaladeTicket {
       //get old ticket
       $ticket = new Ticket();
       if (!$ticket->getFromDB($tickets_id)) {
-         echo "{\"success\":false, \"message\":\"".__("Error : get old ticket", "escalade")."\"}";
+         Session::addMessageAfterRedirect(__('Error : get old ticket', 'escalade'),false, ERROR);
          exit;
       }
 
@@ -740,7 +740,7 @@ class PluginEscaladeTicket {
 
       //create new ticket (duplicate from previous)
       if (! $newID = $ticket->add($fields)) {
-         echo "{\"success\":false, \"message\":\"".__("Error : adding new ticket", "escalade")."\"}";
+         Session::addMessageAfterRedirect(__('Error : adding new ticket', 'escalade'),false, ERROR);
          exit;
       }
 
@@ -751,8 +751,7 @@ class PluginEscaladeTicket {
          'tickets_id_2' => $newID,
          'link'         => Ticket_Ticket::LINK_TO
       ])) {
-         echo "{\"success\":false, \"message\":\"".
-               __("Error : adding link between the two tickets", "escalade")."\"}";
+         Session::addMessageAfterRedirect(__('Error : adding link between the two tickets', 'escalade'),false, ERROR);
          exit;
       }
 
@@ -767,27 +766,27 @@ class PluginEscaladeTicket {
          'is_private'      => true,
          'requesttypes_id' => 6 //other
       ])) {
-         echo "{\"success\":false, \"message\":\"".__("Error : adding followups", "escalade")."\"}";
+         Session::addMessageAfterRedirect(__('Error : adding followups', 'escalade'),false, ERROR);
          exit;
       }
 
       //add actors to the new ticket (without assign)
       //users
       $query_users = "INSERT INTO glpi_tickets_users
-      SELECT '' AS id, $newID as tickets_id, users_id, type, use_notification, alternative_email
+      SELECT null AS id, $newID as tickets_id, users_id, type, use_notification, alternative_email
       FROM glpi_tickets_users
       WHERE tickets_id = $tickets_id AND type != 2";
       if (!$res = $DB->query($query_users)) {
-         echo "{\"success\":false, \"message\":\"".__("Error : adding actors (user)", "escalade")."\"}";
+         Session::addMessageAfterRedirect(__('Error : adding actors (user)', 'escalade'),false, ERROR);
          exit;
       }
       //groups
       $query_groups = "INSERT INTO glpi_groups_tickets
-      SELECT '' AS id, $newID as tickets_id, groups_id, type
+      SELECT null AS id, $newID as tickets_id, groups_id, type
       FROM glpi_groups_tickets
       WHERE tickets_id = $tickets_id AND type != 2";
       if (!$res = $DB->query($query_groups)) {
-         echo "{\"success\":false, \"message\":\"".__("Error : adding actors (group)", "escalade")."\"}";
+         Session::addMessageAfterRedirect(__('Error : adding actors (group)', "escalade"),false, ERROR);
          exit;
       }
 
@@ -797,7 +796,7 @@ class PluginEscaladeTicket {
       FROM glpi_documents_items
       WHERE items_id = $tickets_id AND itemtype = 'Ticket'";
       if (! $res = $DB->query($query_docs)) {
-         echo "{\"success\":false, \"message\":\"".__("Error : adding documents", "escalade")."\"}";
+         Session::addMessageAfterRedirect(__('Error : adding documents', 'escalade'),false, ERROR);
          exit;
       }
 
