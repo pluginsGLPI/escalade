@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 
+### Fixed
+- Fix group filtering
+
+
 ## [2.9.3] - 2024-02-21
 
 ### Added
