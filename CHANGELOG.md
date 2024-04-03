@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix behavior for ```Ticket status after an escalation``` option
 - Fix cloning error display
 
+### Fixed
+- Fix group filtering
+
+
 ## [2.9.3] - 2024-02-21
 
 ### Added
