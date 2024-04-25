@@ -13,8 +13,6 @@
         <exclude name="PSR1.Methods.CamelCapsMethodName.NotCamelCaps" />
         <exclude name="Generic.Files.LineLength" />
         <exclude name="PSR1.Classes.ClassDeclaration.MissingNamespace" />
-        <!-- exclude PascalCase format -->
-        <exclude name="PSR1.Classes.ClassDeclaration.notPascalCase" />
     </rule>
     <rule ref="Generic.Arrays.ArrayIndent"></rule>
 </ruleset>
