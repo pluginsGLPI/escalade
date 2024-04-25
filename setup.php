@@ -33,7 +33,7 @@ use Glpi\Plugin\Hooks;
 define('PLUGIN_ESCALADE_VERSION', '2.9.4');
 
 // Minimal GLPI version, inclusive
-define("PLUGIN_ESCALADE_MIN_GLPI", "10.0.0");
+define("PLUGIN_ESCALADE_MIN_GLPI", "10.0.11");
 // Maximum GLPI version, exclusive
 define("PLUGIN_ESCALADE_MAX_GLPI", "10.0.99");
 
@@ -50,6 +50,8 @@ if (!defined("PLUGIN_ESCALADE_DIR")) {
  */
 function plugin_init_escalade()
 {
+    /** @var DBmysql $DB */
+    /** @var array $PLUGIN_HOOKS */
     global $PLUGIN_HOOKS, $DB;
 
     $PLUGIN_HOOKS['csrf_compliant']['escalade'] = true;

@@ -70,6 +70,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation
 
     function manageGroup($groups_id)
     {
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         $group = new Group();

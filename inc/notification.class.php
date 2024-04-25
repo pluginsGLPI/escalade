@@ -203,7 +203,7 @@ class PluginEscaladeNotification
     * @param integer            $manager    0 all users, 1 only supervisors, 2 all users without supervisors
     * @param integer            $group_type @see CommonITILActor
     *
-    * @return  nothing
+    * @return void
     */
     static function addGroupsOfTicket(
         NotificationTarget $target,
@@ -227,7 +227,7 @@ class PluginEscaladeNotification
     * @param integer            $tickets_id The ticket's identifier
     * @param integer            $user_type  @see CommonITILActor
     *
-    * @return  nothing
+    * @return void
     */
     static function addUsersOfTicket(
         NotificationTarget $target,

@@ -76,6 +76,7 @@ class PluginEscaladeUser extends CommonDBTM
 
     private static function getUserGroup($entity, $userid, $filter = '', $first = true)
     {
+        /** @var DBmysql $DB */
         global $DB;
 
         $query = "SELECT glpi_groups.id
@@ -112,6 +113,13 @@ class PluginEscaladeUser extends CommonDBTM
         return self::getUserGroup($entity, $userid, '`is_assign`', $first);
     }
 
+
+    /**
+     * @param $ID
+     * @param array $options
+     * 
+     * @return void
+     */
     function showForm($ID, array $options = [])
     {
 

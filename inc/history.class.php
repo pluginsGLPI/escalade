@@ -81,6 +81,7 @@ class PluginEscaladeHistory extends CommonDBTM
 
     static function getHistory($tickets_id, $full_history = false)
     {
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         $filter_groups_id = [];
@@ -185,6 +186,8 @@ class PluginEscaladeHistory extends CommonDBTM
 
     static function showCentralSpecificList($type)
     {
+        /** @var array $CFG_GLPI */
+        /** @var DBmysql $DB */
         global $CFG_GLPI, $DB;
 
         if (
@@ -239,14 +242,14 @@ class PluginEscaladeHistory extends CommonDBTM
 
         $query  .= " ORDER BY glpi_tickets.date_mod DESC";
 
-        $result  = $DB->query($query);
+        $result  = $DB->doQuery($query);
         $numrows = $DB->numrows($result);
         if (!$numrows) {
             return;
         }
 
         $query .= " LIMIT 0, 5";
-        $result = $DB->query($query);
+        $result = $DB->doQuery($query);
         $number = $DB->numrows($result);
 
        //show central list
