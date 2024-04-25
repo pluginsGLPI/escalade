@@ -36,7 +36,7 @@ class PluginEscaladeHistory extends CommonDBTM
 {
     const HISTORY_LIMIT = 4;
 
-    static function getFirstLineForTicket($tickets_id)
+    public static function getFirstLineForTicket($tickets_id)
     {
         $found = self::getFullHistory($tickets_id);
         if (count($found) == 0) {
@@ -46,7 +46,7 @@ class PluginEscaladeHistory extends CommonDBTM
         }
     }
 
-    static function getlastLineForTicket($tickets_id)
+    public static function getlastLineForTicket($tickets_id)
     {
         $found = self::getFullHistory($tickets_id);
         if (count($found) == 0) {
@@ -56,7 +56,7 @@ class PluginEscaladeHistory extends CommonDBTM
         }
     }
 
-    static function getLastHistoryForTicketAndGroup($tickets_id, $groups_id, $previous_groups_id)
+    public static function getLastHistoryForTicketAndGroup($tickets_id, $groups_id, $previous_groups_id)
     {
         $history = new self();
         $history->getFromDBByRequest(['ORDER'   => 'date_mod DESC',
@@ -72,14 +72,14 @@ class PluginEscaladeHistory extends CommonDBTM
         return $history;
     }
 
-    static function getFullHistory($tickets_id)
+    public static function getFullHistory($tickets_id)
     {
         $history = new self();
         return $history->find(['tickets_id' => $tickets_id], "date_mod DESC");
     }
 
 
-    static function getHistory($tickets_id, $full_history = false)
+    public static function getHistory($tickets_id, $full_history = false)
     {
         /** @var array $CFG_GLPI */
         global $CFG_GLPI;
@@ -158,7 +158,7 @@ class PluginEscaladeHistory extends CommonDBTM
         echo "</div>";
     }
 
-    static function showGroupLink($group, $full_history = false)
+    private static function showGroupLink($group, $full_history = false)
     {
 
         if (!$group->can($group->fields['id'], READ)) {
@@ -178,13 +178,13 @@ class PluginEscaladeHistory extends CommonDBTM
         echo ">" . $group->getNameID(true) . "</a>";
     }
 
-    static function showCentralList()
+    public static function showCentralList()
     {
         self::showCentralSpecificList("solved");
         self::showCentralSpecificList("notold");
     }
 
-    static function showCentralSpecificList($type)
+    private static function showCentralSpecificList($type)
     {
         /** @var array $CFG_GLPI */
         /** @var DBmysql $DB */

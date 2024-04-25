@@ -35,7 +35,7 @@ class PluginEscaladeUser extends CommonDBTM
     *
     * @see CommonDBTM::showMassiveActionsSubForm()
    **/
-    static function showMassiveActionsSubForm(MassiveAction $ma)
+    public static function showMassiveActionsSubForm(MassiveAction $ma)
     {
         switch ($ma->getAction()) {
             case "use_filter_assign_group":
@@ -54,7 +54,7 @@ class PluginEscaladeUser extends CommonDBTM
     *
     * @see CommonDBTM::processMassiveActionsForOneItemtype()
     **/
-    static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item, array $ids)
+    public static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item, array $ids)
     {
         switch ($ma->getAction()) {
             case "use_filter_assign_group":
@@ -101,13 +101,13 @@ class PluginEscaladeUser extends CommonDBTM
         return ($first ? 0 : array_pop($rep));
     }
 
-    static function getRequesterGroup($entity, $userid, $first = true)
+    public static function getRequesterGroup($entity, $userid, $first = true)
     {
 
         return self::getUserGroup($entity, $userid, '`is_requester`', $first);
     }
 
-    static function getTechnicianGroup($entity, $userid, $first = true)
+    public static function getTechnicianGroup($entity, $userid, $first = true)
     {
 
         return self::getUserGroup($entity, $userid, '`is_assign`', $first);
@@ -117,10 +117,10 @@ class PluginEscaladeUser extends CommonDBTM
     /**
      * @param $ID
      * @param array $options
-     * 
+     *
      * @return void
      */
-    function showForm($ID, array $options = [])
+    public function showForm($ID, array $options = [])
     {
 
         $is_exist = $this->getFromDBByCrit(['users_id' => $ID]);
@@ -161,7 +161,7 @@ class PluginEscaladeUser extends CommonDBTM
         Html::closeForm();
     }
 
-    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         switch ($item->getType()) {
             case 'User':
@@ -173,7 +173,7 @@ class PluginEscaladeUser extends CommonDBTM
         return true;
     }
 
-    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
+    public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         switch ($item->getType()) {
             case 'User':

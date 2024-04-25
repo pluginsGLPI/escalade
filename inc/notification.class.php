@@ -50,7 +50,7 @@ class PluginEscaladeNotification
     * @param NotificationTarget $target the current NotificationTarget.
     *                                   we compute (atm) only NotificationTargetPlanningRecall
     */
-    static function addTargets(NotificationTarget $target)
+    public static function addTargets(NotificationTarget $target)
     {
        // only for Planning recall
         if ($target instanceof NotificationTargetPlanningRecall) {
@@ -119,7 +119,7 @@ class PluginEscaladeNotification
     * @param NotificationTarget $target the current NotificationTarget.
     *                                   we compute (atm) only NotificationTargetPlanningRecall
     */
-    static function getActionTargets(NotificationTarget $target)
+    public static function getActionTargets(NotificationTarget $target)
     {
         if ($target instanceof NotificationTargetPlanningRecall) {
             $item = new $target->obj->fields['itemtype']();
@@ -130,9 +130,9 @@ class PluginEscaladeNotification
 
                 switch ($target->data['items_id']) {
                    // group's users
-                    case self::NTRGT_TICKET_REQUESTER_GROUP:
+                    case self::NTRGT_TICKET_REQUESTER_GROUP: // phpcs:ignore
                         $group_type = CommonITILActor::REQUESTER;
-                    case self::NTRGT_TICKET_WATCH_GROUP:
+                    case self::NTRGT_TICKET_WATCH_GROUP: // phpcs:ignore
                         if (!isset($group_type)) {
                             $group_type = CommonITILActor::OBSERVER;
                         }
@@ -140,11 +140,11 @@ class PluginEscaladeNotification
                         $manager = 0;
 
                       // manager of group's users
-                    case self::NTRGT_TICKET_REQUESTER_GROUP_MANAGER:
+                    case self::NTRGT_TICKET_REQUESTER_GROUP_MANAGER: // phpcs:ignore
                         if (!isset($group_type)) {
                             $group_type = CommonITILActor::REQUESTER;
                         }
-                    case self::NTRGT_TICKET_WATCH_GROUP_MANAGER:
+                    case self::NTRGT_TICKET_WATCH_GROUP_MANAGER: // phpcs:ignore
                         if (!isset($group_type)) {
                             $group_type = CommonITILActor::OBSERVER;
                         }
@@ -160,9 +160,9 @@ class PluginEscaladeNotification
                         break;
 
                  // users
-                    case self::NTRGT_TICKET_REQUESTER_USER:
+                    case self::NTRGT_TICKET_REQUESTER_USER: // phpcs:ignore
                         $user_type = CommonITILActor::REQUESTER;
-                    case self::NTRGT_TICKET_WATCH_USER:
+                    case self::NTRGT_TICKET_WATCH_USER: // phpcs:ignore
                         if (!isset($user_type)) {
                             $user_type = CommonITILActor::OBSERVER;
                         }
@@ -179,7 +179,7 @@ class PluginEscaladeNotification
                         break;
 
                // escalation groups
-                    case self::NTRGT_TICKET_ESCALADE_GROUP:
+                    case self::NTRGT_TICKET_ESCALADE_GROUP: // phpcs:ignore
                         $manager = 0;
                     case self::NTRGT_TICKET_ESCALADE_GROUP_MANAGER:
                         if (!isset($manager)) {
@@ -205,7 +205,7 @@ class PluginEscaladeNotification
     *
     * @return void
     */
-    static function addGroupsOfTicket(
+    public static function addGroupsOfTicket(
         NotificationTarget $target,
         $tickets_id = 0,
         $manager = 0,
@@ -229,7 +229,7 @@ class PluginEscaladeNotification
     *
     * @return void
     */
-    static function addUsersOfTicket(
+    public static function addUsersOfTicket(
         NotificationTarget $target,
         $tickets_id = 0,
         $user_type = CommonITILActor::REQUESTER
@@ -249,7 +249,7 @@ class PluginEscaladeNotification
         }
     }
 
-    static function getEvents(NotificationTarget $target)
+    public static function getEvents(NotificationTarget $target)
     {
         if ($target instanceof NotificationTargetTicket) {
             $target->events['update_solvedate'] = __('Solve date modification', 'escalade');

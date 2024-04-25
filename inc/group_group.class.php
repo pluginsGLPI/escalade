@@ -32,6 +32,7 @@ if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
+// phpcs:ignore
 class PluginEscaladeGroup_Group extends CommonDBRelation
 {
    // From CommonDBRelation
@@ -41,7 +42,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation
     public static $itemtype_2   = 'Group';
     public static $items_id_2   = 'groups_id_destination';
 
-    function getForbiddenStandardMassiveAction()
+    public function getForbiddenStandardMassiveAction()
     {
         $forbidden   = parent::getForbiddenStandardMassiveAction();
         $forbidden[] = 'update';
@@ -49,7 +50,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation
     }
 
 
-    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
+    public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         if ($item instanceof Group) {
             return __("Escalation", "escalade");
@@ -58,7 +59,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation
     }
 
 
-    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         if ($item instanceof Group) {
             $PluginEscaladeGroup_Group = new PluginEscaladeGroup_Group();
@@ -68,7 +69,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation
     }
 
 
-    function manageGroup($groups_id)
+    public function manageGroup($groups_id)
     {
         /** @var array $CFG_GLPI */
         global $CFG_GLPI;
@@ -134,7 +135,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation
         }
     }
 
-    function getGroups($ticket_id, $removeAlreadyAssigned = true)
+    public function getGroups($ticket_id, $removeAlreadyAssigned = true)
     {
         $groups = $user_groups = $ticket_groups = [];
 

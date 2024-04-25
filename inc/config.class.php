@@ -30,9 +30,9 @@
 
 class PluginEscaladeConfig extends CommonDBTM
 {
-    static $rightname  = 'config';
+    public static $rightname  = 'config';
 
-    static function getTypeName($nb = 0)
+    public static function getTypeName($nb = 0)
     {
         return __("Configuration Escalade plugin", "escalade");
     }
@@ -43,7 +43,7 @@ class PluginEscaladeConfig extends CommonDBTM
      * @param mixed $options
      * @return void
      */
-    function showForm($ID, $options = [])
+    public function showForm($ID, $options = [])
     {
         /** @var array $CFG_GLPI */
         global $CFG_GLPI;
@@ -65,7 +65,7 @@ class PluginEscaladeConfig extends CommonDBTM
             'rand' => $rand,
         ]);
         echo Html::scriptBlock("
-         function hide_show_history(val) {
+         public function hide_show_history(val) {
             var display = (val == 0) ? 'none' : '';
             document.getElementById('show_history_td1').style.display = display;
             document.getElementById('show_history_td2').style.display = display;
@@ -212,7 +212,7 @@ class PluginEscaladeConfig extends CommonDBTM
         echo "</tr>";
         echo "<tr><td>";
         echo Html::scriptBlock("
-         function hide_technician_group(val) {
+         public function hide_technician_group(val) {
             var display = (val == 0) ? 'none' : '';
             document.getElementById('use_technican_group_details').style.display = display;
          }
@@ -350,7 +350,7 @@ class PluginEscaladeConfig extends CommonDBTM
         echo "</div>";
     }
 
-    static function loadInSession()
+    public static function loadInSession()
     {
         $config = new self();
         $config->getFromDB(1);
@@ -373,7 +373,7 @@ class PluginEscaladeConfig extends CommonDBTM
         $_SESSION['plugins']['escalade']['config'] = $config->fields;
     }
 
-    static function dropdownGenericStatus($itemtype, $name, $rand, $value = CommonITILObject::INCOMING)
+    private static function dropdownGenericStatus($itemtype, $name, $rand, $value = CommonITILObject::INCOMING)
     {
         $item = new $itemtype();
 

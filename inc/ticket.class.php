@@ -61,7 +61,7 @@ class PluginEscaladeTicket
     * @param  CommonDBTM $item
     * @return void
     */
-    static function item_update(CommonDBTM $item)
+    public static function item_update(CommonDBTM $item)
     {
 
         if ($_SESSION['plugins']['escalade']['config']['remove_group']) {
@@ -109,7 +109,7 @@ class PluginEscaladeTicket
     * When a ticket is solved, if group histories exists, assign the first group on the ticket
     * @param CommonDBTM $item the ticket object
     */
-    static function AssignFirstGroupOnSolve(CommonDBTM $item)
+    public static function AssignFirstGroupOnSolve(CommonDBTM $item)
     {
         if (
             $_SESSION['plugins']['escalade']['config']['remove_group']
@@ -169,7 +169,7 @@ class PluginEscaladeTicket
     * assign the last group on the ticket
     * @param CommonDBTM $item the ticket object
     */
-    static function AssignLastGroupOnRejectedSolution(CommonDBTM $item)
+    public static function AssignLastGroupOnRejectedSolution(CommonDBTM $item)
     {
         if (!isset($_POST['add_reopen'])) {
             return;
@@ -241,7 +241,7 @@ class PluginEscaladeTicket
     *  called by "pre_item_add" hook on Group_Ticket object
     * @param CommonDBTM $item the ticket object
     */
-    static function addHistoryOnAddGroup(CommonDBTM $item)
+    public static function addHistoryOnAddGroup(CommonDBTM $item)
     {
         /** @var DBmysql $DB */
         global $DB;
@@ -350,7 +350,7 @@ class PluginEscaladeTicket
         return $item;
     }
 
-    static function processAfterAddGroup(CommonDBTM $item)
+    public static function processAfterAddGroup(CommonDBTM $item)
     {
         if ($_SESSION['plugins']['escalade']['config']['remove_group'] == false) {
             return true;
@@ -375,7 +375,7 @@ class PluginEscaladeTicket
    * @param Ticket $ticket
    * @return bool
    */
-    static function assignUserGroup(Ticket $ticket)
+    public static function assignUserGroup(Ticket $ticket)
     {
         if (!is_array($ticket->input) || !count($ticket->input)) {
            // Already cancel by another plugin
@@ -441,7 +441,7 @@ class PluginEscaladeTicket
     * @param  int $groups_id  the group to assign
     * @return void
     */
-    static function climb_group($tickets_id, $groups_id, $full_history = false)
+    public static function climb_group($tickets_id, $groups_id, $full_history = false)
     {
        //don't add group if already exist for this ticket
         $group_ticket = new Group_Ticket();
@@ -489,7 +489,7 @@ class PluginEscaladeTicket
     * @param  int $tickets_id
     * @return void
     */
-    static function removeAssignGroups($tickets_id, $keep_groups_id = false)
+    public static function removeAssignGroups($tickets_id, $keep_groups_id = false)
     {
         $where_keep = [
             'tickets_id' => $tickets_id,
@@ -515,7 +515,7 @@ class PluginEscaladeTicket
     * @param  int $tickets_id
     * @return void
     */
-    static function removeAssignUsers($tickets_id, $keep_users_id = false, $type = CommonITILActor::ASSIGN)
+    public static function removeAssignUsers($tickets_id, $keep_users_id = false, $type = CommonITILActor::ASSIGN)
     {
         if (
             $_SESSION['plugins']['escalade']['config']['remove_tech'] == false
@@ -568,7 +568,7 @@ class PluginEscaladeTicket
     * @param  Ticket_User $item Ticket_User object
     * @return void
     */
-    static function item_add_user(Ticket_User $item, $type = CommonITILActor::ASSIGN)
+    public static function item_add_user(Ticket_User $item, $type = CommonITILActor::ASSIGN)
     {
         $users_id   = $item->input['users_id'];
         $tickets_id = $item->input['tickets_id'];
@@ -644,7 +644,7 @@ class PluginEscaladeTicket
     * @param  CommonDBTM $item the ticket object
     * @return void
     */
-    static function linkedTickets(CommonDBTM $ticket, $status = CommonITILObject::SOLVED)
+    public static function linkedTickets(CommonDBTM $ticket, $status = CommonITILObject::SOLVED)
     {
         if ($_SESSION['plugins']['escalade']['config']['close_linkedtickets']) {
             $input = [
@@ -673,7 +673,7 @@ class PluginEscaladeTicket
     * @param  CommonDBTM $item
     * @return void
     */
-    static function qualification(CommonDBTM $item)
+    private static function qualification(CommonDBTM $item)
     {
         /** @var DBmysql $DB */
         global $DB;
@@ -755,7 +755,7 @@ class PluginEscaladeTicket
     * @param  integer $tickets_id id of the ticket to clone
     * @return void print a json response (return nothing)
     */
-    static function cloneAndLink($tickets_id)
+    public static function cloneAndLink($tickets_id)
     {
         /** @var DBmysql $DB */
         global $DB;
@@ -858,7 +858,7 @@ class PluginEscaladeTicket
     }
 
 
-    static function assign_me($tickets_id)
+    public static function assign_me($tickets_id)
     {
 
         $tu = new Ticket_User();
@@ -879,7 +879,7 @@ class PluginEscaladeTicket
         }
     }
 
-    static function filter_actors(array $params = []): array
+    public static function filter_actors(array $params = []): array
     {
         $itemtype = $params['params']['itemtype'];
         $items_id = $params['params']['items_id'];
