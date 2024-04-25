@@ -158,7 +158,7 @@ class PluginEscaladeHistory extends CommonDBTM
         echo "</div>";
     }
 
-    private static function showGroupLink($group, $full_history = false)
+    public static function showGroupLink($group, $full_history = false)
     {
 
         if (!$group->can($group->fields['id'], READ)) {
@@ -184,7 +184,7 @@ class PluginEscaladeHistory extends CommonDBTM
         self::showCentralSpecificList("notold");
     }
 
-    private static function showCentralSpecificList($type)
+    public static function showCentralSpecificList($type)
     {
         /** @var array $CFG_GLPI */
         /** @var DBmysql $DB */

@@ -74,7 +74,7 @@ class PluginEscaladeUser extends CommonDBTM
         }
     }
 
-    private static function getUserGroup($entity, $userid, $filter = '', $first = true)
+    public static function getUserGroup($entity, $userid, $filter = '', $first = true)
     {
         /** @var DBmysql $DB */
         global $DB;

@@ -65,7 +65,7 @@ class PluginEscaladeConfig extends CommonDBTM
             'rand' => $rand,
         ]);
         echo Html::scriptBlock("
-         public function hide_show_history(val) {
+         function hide_show_history(val) {
             var display = (val == 0) ? 'none' : '';
             document.getElementById('show_history_td1').style.display = display;
             document.getElementById('show_history_td2').style.display = display;
@@ -212,7 +212,7 @@ class PluginEscaladeConfig extends CommonDBTM
         echo "</tr>";
         echo "<tr><td>";
         echo Html::scriptBlock("
-         public function hide_technician_group(val) {
+         function hide_technician_group(val) {
             var display = (val == 0) ? 'none' : '';
             document.getElementById('use_technican_group_details').style.display = display;
          }
@@ -373,7 +373,7 @@ class PluginEscaladeConfig extends CommonDBTM
         $_SESSION['plugins']['escalade']['config'] = $config->fields;
     }
 
-    private static function dropdownGenericStatus($itemtype, $name, $rand, $value = CommonITILObject::INCOMING)
+    public static function dropdownGenericStatus($itemtype, $name, $rand, $value = CommonITILObject::INCOMING)
     {
         $item = new $itemtype();
 

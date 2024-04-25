@@ -673,7 +673,7 @@ class PluginEscaladeTicket
     * @param  CommonDBTM $item
     * @return void
     */
-    private static function qualification(CommonDBTM $item)
+    public static function qualification(CommonDBTM $item)
     {
         /** @var DBmysql $DB */
         global $DB;
