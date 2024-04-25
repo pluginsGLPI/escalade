@@ -28,7 +28,7 @@
  * -------------------------------------------------------------------------
  */
 
-use \Glpi\Toolbox\Sanitizer;
+use Glpi\Toolbox\Sanitizer;
 
 include('../../../inc/includes.php');
 
@@ -48,9 +48,8 @@ if (isset($_POST['escalate'])) {
 
     $group = new Group();
     if ($group_id === 0 || $group->getFromDB($group_id) === false) {
-        Session::addMessageAfterRedirect(__('You must select a group.', 'escalade'),false, ERROR);
+        Session::addMessageAfterRedirect(__('You must select a group.', 'escalade'), false, ERROR);
     } else if (!empty($_POST['comment']) && !empty($tickets_id)) {
-
         if ((bool)$_POST['is_observer_checkbox']) {
             $ticket_user = new Ticket_User();
             $ticket_user->add([
@@ -79,7 +78,7 @@ if (isset($_POST['escalate'])) {
         ];
 
         //handle status behavior
-        if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] != -1){
+        if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] != -1) {
             $group_ticket_input['_from_object']['status'] = $_SESSION['plugins']['escalade']['config']['ticket_last_status'];
         }
         $group_ticket_input['_from_object']['_do_not_compute_status'] = true;
