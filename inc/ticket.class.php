@@ -819,7 +819,8 @@ class PluginEscaladeTicket
       SELECT null AS id, $newID as tickets_id, users_id, type, use_notification, alternative_email
       FROM glpi_tickets_users
       WHERE tickets_id = $tickets_id AND type != 2";
-        if (!$res = $DB->doQuery($query_users)) {
+        // @phpstan-ignore-next-line
+        if (!$res = $DB->query($query_users)) {
             Session::addMessageAfterRedirect(__('Error : adding actors (user)', 'escalade'), false, ERROR);
             exit;
         }
@@ -828,7 +829,8 @@ class PluginEscaladeTicket
       SELECT null AS id, $newID as tickets_id, groups_id, type
       FROM glpi_groups_tickets
       WHERE tickets_id = $tickets_id AND type != 2";
-        if (!$res = $DB->doQuery($query_groups)) {
+        // @phpstan-ignore-next-line
+        if (!$res = $DB->query($query_groups)) {
             Session::addMessageAfterRedirect(__('Error : adding actors (group)', "escalade"), false, ERROR);
             exit;
         }
@@ -838,7 +840,8 @@ class PluginEscaladeTicket
       SELECT documents_id, $newID, 'Ticket', entities_id, is_recursive, date_mod
       FROM glpi_documents_items
       WHERE items_id = $tickets_id AND itemtype = 'Ticket'";
-        if (! $res = $DB->doQuery($query_docs)) {
+        // @phpstan-ignore-next-line
+        if (! $res = $DB->query($query_docs)) {
             Session::addMessageAfterRedirect(__('Error : adding documents', 'escalade'), false, ERROR);
             exit;
         }
