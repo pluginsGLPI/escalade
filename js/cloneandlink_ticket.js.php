@@ -28,21 +28,21 @@
  * -------------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
+include("../../../inc/includes.php");
 
 //change mimetype
 header("Content-type: application/javascript");
 
 //not executed in self-service interface & right verification
-if ($_SESSION['glpiactiveprofile']['interface'] == "central"
-   && Session::haveRight("ticket", CREATE)
-   && Session::haveRight("ticket", UPDATE)
-   ) {
+if (
+    $_SESSION['glpiactiveprofile']['interface'] == "central"
+    && Session::haveRight("ticket", CREATE)
+    && Session::haveRight("ticket", UPDATE)
+) {
+    $locale_cloneandlink  = __("Clone and link", "escalade");
+    $locale_linkedtickets = _n('Linked ticket', 'Linked tickets', 2);
 
-   $locale_cloneandlink  = __("Clone and link", "escalade");
-   $locale_linkedtickets = _n('Linked ticket', 'Linked tickets', 2);
-
-   $JS = <<<JAVASCRIPT
+    $JS = <<<JAVASCRIPT
    var plugin_url = CFG_GLPI.root_doc+"/"+GLPI_PLUGINS_PATH.escalade;
 
    addCloneLink = function() {
@@ -95,5 +95,5 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
    });
 
 JAVASCRIPT;
-   echo $JS;
+    echo $JS;
 }

@@ -28,19 +28,20 @@
  * -------------------------------------------------------------------------
  */
 
-include ("../../../inc/includes.php");
+include("../../../inc/includes.php");
 
 //change mimetype
 header("Content-type: application/javascript");
 
 //not executed in self-service interface & right verification
-if ($_SESSION['glpiactiveprofile']['interface'] == "central"
-   && (Session::haveRight("ticket", CREATE)
-      || Session::haveRight("ticket", UPDATE))) {
+if (
+    $_SESSION['glpiactiveprofile']['interface'] == "central"
+    && (Session::haveRight("ticket", CREATE)
+      || Session::haveRight("ticket", UPDATE))
+) {
+    $locale_group_view = __('Group View');
 
-   $locale_group_view = __('Group View');
-
-   $JS = <<<JAVASCRIPT
+    $JS = <<<JAVASCRIPT
 
    $(document).ready(function() {
       // intercept tabs changes
@@ -66,5 +67,5 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central"
    });
 
 JAVASCRIPT;
-   echo $JS;
+    echo $JS;
 }
