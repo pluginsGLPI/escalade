@@ -352,17 +352,15 @@ class PluginEscaladeTicket
 
     public static function processAfterAddGroup(CommonDBTM $item)
     {
-        if ($_SESSION['plugins']['escalade']['config']['remove_group'] == false) {
-            return true;
+        $tickets_id = $item->fields['tickets_id'];
+        $groups_id = $item->fields['groups_id'];
+
+        //remove old groups (keep last assigned)
+        if ($_SESSION['plugins']['escalade']['config']['remove_group'] == true) {
+            self::removeAssignGroups($tickets_id, $groups_id);
         }
 
-        $tickets_id = $item->fields['tickets_id'];
-        $groups_id  = $item->fields['groups_id'];
-
-       //remove old groups (keep last assigned)
-        self::removeAssignGroups($tickets_id, $groups_id);
-
-       //notified only the last group assigned
+        //notified only the last group assigned
         $ticket = new Ticket();
         $ticket->getFromDB($tickets_id);
 
