@@ -43,7 +43,11 @@ class PluginEscaladeTicket
             !empty(array_filter(
                 $item->input['_actors']['assign'] ?? [],
                 fn ($actor) => $actor['itemtype'] == 'Group'
-            )) && $item->input['_from_assignment']
+            ))
+            && (
+                isset($item->input['_from_assignment'])
+                && $item->input['_from_assignment']
+            )
         ) {
            //handle status behavior
             if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] != -1) {
@@ -53,6 +57,60 @@ class PluginEscaladeTicket
 
         if (isset($input['_itil_assign'])) {
             $item->input['_do_not_compute_status'] = true;
+        }
+
+        $config = $_SESSION['plugins']['escalade']['config'];
+
+        // Get actual actors for the ticket
+        if ($item instanceof Ticket) {
+            $actorTypes = [CommonITILActor::REQUESTER, CommonITILActor::OBSERVER, CommonITILActor::ASSIGN];
+            $ticket_actors = array_reduce(
+                $actorTypes,
+                function ($carry, $type) use ($item) {
+                    $carry[$item->getActorFieldNameType($type)] = $item->getActorsForType($type);
+                    return $carry;
+                },
+                []
+            );
+
+            // Get updated actors
+            $actors_update = $item->input['_actors'] ?? [];
+
+            // Get deletion rights for each type of actor
+            $deletion_rights = [
+                User::getType() => [
+                    'requester' => $config['remove_delete_requester_user_btn'],
+                    'observer' => $config['remove_delete_watcher_user_btn'],
+                    'assign' => $config['remove_delete_assign_user_btn'],
+                ],
+                Group::getType() => [
+                    'requester' => $config['remove_delete_requester_group_btn'],
+                    'observer' => $config['remove_delete_watcher_group_btn'],
+                    'assign' => $config['remove_delete_assign_group_btn'],
+                ],
+                Supplier::getType() => [
+                    'assign' => $config['remove_delete_assign_supplier_btn'],
+                ],
+            ];
+
+            // Iteration through actor types and verification of deletion rights
+            foreach ($ticket_actors as $type => $actors) {
+                $updatedActors = array_map(
+                    function ($a) {
+                        return [$a['items_id'], $a['itemtype']];
+                    },
+                    $actors_update[$type] ?? []
+                );
+
+                foreach ($actors as $actor) {
+                    $actorKey = [$actor['items_id'], $actor['itemtype']];
+
+                    // If the actor has been deleted and deletion is forbidden, it is readjusted to simulate a non-deletion
+                    if (!in_array($actorKey, $updatedActors) && empty($deletion_rights[$actor['itemtype']][$type])) {
+                        $item->input['_actors'][$type][] = $actor;
+                    }
+                }
+            }
         }
     }
 
