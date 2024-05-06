@@ -5,7 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.9.4] - 20204-04-03
+## [2.9.5] - 2024-05-06
+
+### Fixed
+
+- Fix unsended notifications while `Delete old groups when adding a new one` is set to `No`
+
+## [2.9.4] - 2024-04-03
 
 ### Fixed
 
