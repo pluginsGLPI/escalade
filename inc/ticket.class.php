@@ -95,18 +95,9 @@ class PluginEscaladeTicket
 
             // Iteration through actor types and verification of deletion rights
             foreach ($ticket_actors as $type => $actors) {
-                $updatedActors = array_map(
-                    function ($a) {
-                        return [$a['items_id'], $a['itemtype']];
-                    },
-                    $actors_update[$type] ?? []
-                );
-
                 foreach ($actors as $actor) {
-                    $actorKey = [$actor['items_id'], $actor['itemtype']];
-
                     // If the actor has been deleted and deletion is forbidden, it is readjusted to simulate a non-deletion
-                    if (!in_array($actorKey, $updatedActors) && empty($deletion_rights[$actor['itemtype']][$type])) {
+                    if (empty($deletion_rights[$actor['itemtype']][$type])) {
                         $item->input['_actors'][$type][] = $actor;
                     }
                 }
