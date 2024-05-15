@@ -73,9 +73,6 @@ class PluginEscaladeTicket
                 []
             );
 
-            // Get updated actors
-            $actors_update = $item->input['_actors'] ?? [];
-
             // Get deletion rights for each type of actor
             $deletion_rights = [
                 User::getType() => [
@@ -93,12 +90,16 @@ class PluginEscaladeTicket
                 ],
             ];
 
-            // Iteration through actor types and verification of deletion rights
-            foreach ($ticket_actors as $type => $actors) {
-                foreach ($actors as $actor) {
-                    // If the actor has been deleted and deletion is forbidden, it is readjusted to simulate a non-deletion
-                    if (empty($deletion_rights[$actor['itemtype']][$type])) {
-                        $item->input['_actors'][$type][] = $actor;
+            if (!isset($item->input['_actors'])) {
+                $item->input['_actors'] = $item->fields['_actors'];
+            } else {
+                // Iteration through actor types and verification of deletion rights
+                foreach ($ticket_actors as $type => $actors) {
+                    foreach ($actors as $actor) {
+                        // If the actor has been deleted and deletion is forbidden, it is readjusted to simulate a non-deletion
+                        if ($deletion_rights[$actor['itemtype']][$type] == 0) {
+                            $item->input['_actors'][$type][] = $actor;
+                        }
                     }
                 }
             }
