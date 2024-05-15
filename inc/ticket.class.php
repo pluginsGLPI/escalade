@@ -43,11 +43,7 @@ class PluginEscaladeTicket
             !empty(array_filter(
                 $item->input['_actors']['assign'] ?? [],
                 fn ($actor) => $actor['itemtype'] == 'Group'
-            ))
-            && (
-                isset($item->input['_from_assignment'])
-                && $item->input['_from_assignment']
-            )
+            )) && $item->input['_from_assignment']
         ) {
            //handle status behavior
             if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] != -1) {
@@ -58,6 +54,7 @@ class PluginEscaladeTicket
         if (isset($input['_itil_assign'])) {
             $item->input['_do_not_compute_status'] = true;
         }
+<<<<<<< HEAD
 
         $config = $_SESSION['plugins']['escalade']['config'];
 
@@ -104,6 +101,8 @@ class PluginEscaladeTicket
                 }
             }
         }
+=======
+>>>>>>> 363c042 (Prevent unselection of players who cannot be removed)
     }
 
    /**

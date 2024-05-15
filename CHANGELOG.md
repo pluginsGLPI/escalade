@@ -5,12 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.9.5] - 2024-05-06
+## [2.9.5] - 2024-05-17
 
 ### Fixed
 
-- Fix unauthorized deletion of ticket actors according to plugin configuration
-- Fix unsended notifications while `Delete old groups when adding a new one` is set to `No`
+- Prevent unselection of actors who cannot be removed
 
 ## [2.9.4] - 2024-04-03
 
