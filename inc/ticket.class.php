@@ -54,8 +54,6 @@ class PluginEscaladeTicket
         if (isset($input['_itil_assign'])) {
             $item->input['_do_not_compute_status'] = true;
         }
-<<<<<<< HEAD
-
         $config = $_SESSION['plugins']['escalade']['config'];
 
         // Get actual actors for the ticket
@@ -101,8 +99,6 @@ class PluginEscaladeTicket
                 }
             }
         }
-=======
->>>>>>> 363c042 (Prevent unselection of players who cannot be removed)
     }
 
    /**
