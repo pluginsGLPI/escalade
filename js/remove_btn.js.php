@@ -203,8 +203,6 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
          || location.pathname.indexOf('problem.form.php') > 0
          || location.pathname.indexOf('change.form.php') > 0) {
          $(document).on('glpi.tab.loaded', function() {
-            // requester_form.on('select2:select', handleEvent);
-            // requester_form.on('select2:unselect', handleEvent);
             let buttons_to_delete = {
                Group: {
                   requester: {$remove_delete_requester_group_btn},
