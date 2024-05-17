@@ -115,6 +115,60 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
       return true;
    }
 
+   let getActorsAlreadyPresent = function(buttons_to_delete) {
+      let actors = [];
+      for (const [itemtype, actortypes] of Object.entries(buttons_to_delete)) {
+         for (const [actortype, to_delete] of Object.entries(actortypes)) {
+               if (to_delete) {
+                  let requester_form = $('.form-select.select2-hidden-accessible[data-actor-type='+actortype+']');
+                  let select2_input = requester_form.next('.select2-container').find('.select2-selection.select2-selection--multiple.actor-field');
+                  let select2_choices = select2_input.find('span.actor_entry');
+                  if (!actors[actortype]) {
+                     actors[actortype] = [];
+                  }
+                  select2_choices.each(function() {
+                     let item_id = $(this).data('items-id');
+                     let itemtype = $(this).data('itemtype');
+                     let exists = actors[actortype].some(el => el.item_id === item_id && el.itemtype === itemtype);
+
+                     if (!exists) {
+                           actors[actortype].push({
+                              item_id: item_id,
+                              itemtype: itemtype
+                           });
+                     }
+                  });
+               }
+         }
+      }
+      return actors;
+   }
+
+   var removeDeleteButtonForPreviousActors = function(actorslist) {
+      for (const actortype of actorslist) {
+         var requester_form = $(".form-select.select2-hidden-accessible[data-actor-type="+actortype+"]");
+         requester_form.on('select2:selecting', handleEvent);
+         requester_form.on('select2:open', handleEvent);
+         function handleEvent() {
+            for(const [item_id, itemtype] of actortype) {
+               setTimeout(function() {
+                  removeDeleteButtonForOne(itemtype, item_id, actortype, requester_form);
+               }, 50);
+            }
+         }
+      }
+   }
+
+   var removeDeleteButtonForOne = function(itemtype, item_id, actortype, form) {
+      var select2_container = form.next('.select2-container');
+      var select2_choice = select2_container.find(".select2-selection.select2-selection--multiple.actor-field span.actor_entry[data-itemtype="+itemtype+"][data-items-id="+item_id+"][data-actortype="+actortype+"]").first();
+      // Remove "x" from select2 tag
+      select2_choice.prev('.select2-selection__choice__remove').remove();
+
+      // Data is loaded
+      return true;
+   }
+
    var removeAllDeleteButtons = function(buttons_to_delete) {
       // Iterate on all itemtype + actortype combinations
       for (const [itemtype, actortypes] of Object.entries(buttons_to_delete)) {
@@ -127,6 +181,20 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
       }
 
       return buttons_to_delete;
+   }
+
+   var actorCanBeRemoved = function(actortype, data, actors) {
+      if (actors === undefined || actors === null || data.id === undefined || data.id === null) {
+         return false;
+      }
+      var parts = data.id.split("_");
+      var item_id = parts[1];
+      var itemtype = parts[0];
+      var actorValues = Object.values(actors);
+      var exists = actorValues.some(function(el) {
+         return el.item_id == item_id && el.itemtype == itemtype;
+      });
+      return exists;
    }
 
    $(document).ready(function() {
@@ -150,6 +218,36 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
                   assign: {$remove_delete_assign_supplier_btn},
                }
             };
+
+            var actors = getActorsAlreadyPresent(buttons_to_delete);
+            function handleRemoveDeletebuttonForOne(actortype_key, form) {
+               return function() {
+                  if (actors[actortype_key] === null || actors[actortype_key] === undefined ) {
+                     return false;
+                  }
+                  for(const [item_key, item_value] of Object.entries(actors[actortype_key])) {
+                     setTimeout(function() {
+                        removeDeleteButtonForOne(item_value['itemtype'], item_value['item_id'], actortype_key, form);
+                     }, 50);
+                  }
+               }
+            }
+
+            var actortypes = ['assign', 'requester', 'observer'];
+            for (var i = 0; i < actortypes.length; i++) {
+               let form = $(".form-select.select2-hidden-accessible[data-actor-type='" + actortypes[i] + "']");
+
+               form.on('select2:select', handleRemoveDeletebuttonForOne(actortypes[i], form));
+               form.on('select2:open', handleRemoveDeletebuttonForOne(actortypes[i], form));
+               form.on('select2:unselecting', function(e) {
+                  let data = e.params.args.data;
+                  let actortype = form.data('actor-type');
+                  if (actorCanBeRemoved(actortype, data, actors[actortype])) {
+                     e.preventDefault();
+                  }
+               });
+               form.on('select2:unselect', handleRemoveDeletebuttonForOne(actortypes[i], form));
+            }
             buttons_to_delete = removeAllDeleteButtons(buttons_to_delete);
 
             // as the ticket loading may be long, try to remove until 10s pass
