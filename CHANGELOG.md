@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-- Prevent unselection of actors who cannot be removed
+- Fix ```Display delete button``` option
 
 ## [2.9.5] - 2024-05-06
 
