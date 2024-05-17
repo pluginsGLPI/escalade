@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
+## [2.9.6] - 2024-05-17
+
 ### Fixed
 
 - Fix ```Display delete button``` option
