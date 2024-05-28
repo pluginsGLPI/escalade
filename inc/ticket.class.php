@@ -89,7 +89,7 @@ class PluginEscaladeTicket
             ];
 
             if (!isset($item->input['_actors'])) {
-                $item->input['_actors'] = $item->fields['_actors'];
+                $item->input['_actors'] = $item->fields['_actors'] ?? [];
             } else {
                 // Iteration through actor types and verification of deletion rights
                 foreach ($ticket_actors as $type => $actors) {
@@ -1072,9 +1072,21 @@ class PluginEscaladeTicket
             'items_id' => $group_id,
         ];
 
-        $_actors['assign'] = ($ticket_actors['User']['assign'] ?? []) + ($ticket_actors['Group']['assign'] ?? []) + ($ticket_actors['Supplier']['assign'] ?? []);
-        $_actors['observer'] = ($ticket_actors['User']['observer'] ?? []) + ($ticket_actors['Group']['observer'] ?? []) + ($ticket_actors['Supplier']['observer'] ?? []);
-        $_actors['requester'] = ($ticket_actors['User']['requester'] ?? []) + ($ticket_actors['Group']['requester'] ?? []) + ($ticket_actors['Supplier']['requester'] ?? []);
+        $_actors['assign'] = array_merge(
+            $ticket_actors['User']['assign'] ?? [],
+            $ticket_actors['Group']['assign'] ?? [],
+            $ticket_actors['Supplier']['assign'] ?? []
+        );
+        $_actors['observer'] = array_merge(
+            $ticket_actors['User']['observer'] ?? [],
+            $ticket_actors['Group']['observer'] ?? [],
+            $ticket_actors['Supplier']['observer'] ?? []
+        );
+        $_actors['requester'] = array_merge(
+            $ticket_actors['User']['requester'] ?? [],
+            $ticket_actors['Group']['requester'] ?? [],
+            $ticket_actors['Supplier']['requester'] ?? []
+        );
 
         return $_actors;
     }
