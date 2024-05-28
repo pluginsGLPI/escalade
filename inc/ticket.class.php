@@ -507,7 +507,6 @@ class PluginEscaladeTicket
             'type'       => CommonITILActor::ASSIGN
         ];
         if (!$group_ticket->find($condition)) {
-
             $ticket = new Ticket();
             $ticket->getFromDB($tickets_id);
 
