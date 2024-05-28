@@ -119,16 +119,17 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
       let actors = [];
       for (const [itemtype, actortypes] of Object.entries(buttons_to_delete)) {
          for (const [actortype, to_delete] of Object.entries(actortypes)) {
-               if (to_delete) {
-                  let requester_form = $('.form-select.select2-hidden-accessible[data-actor-type='+actortype+']');
-                  let select2_input = requester_form.next('.select2-container').find('.select2-selection.select2-selection--multiple.actor-field');
-                  let select2_choices = select2_input.find('span.actor_entry');
-                  if (!actors[actortype]) {
-                     actors[actortype] = [];
-                  }
-                  select2_choices.each(function() {
-                     let item_id = $(this).data('items-id');
-                     let itemtype = $(this).data('itemtype');
+            if (to_delete) {
+               let requester_form = $('.form-select.select2-hidden-accessible[data-actor-type='+actortype+']');
+               let select2_input = requester_form.next('.select2-container').find('.select2-selection.select2-selection--multiple.actor-field');
+               let select2_choices = select2_input.find('span.actor_entry');
+               if (!actors[actortype]) {
+                  actors[actortype] = [];
+               }
+               select2_choices.each(function() {
+                  let item_id = $(this).data('items-id');
+                  let itemtype = $(this).data('itemtype');
+                  if (buttons_to_delete[itemtype][actortype]){
                      let exists = actors[actortype].some(el => el.item_id === item_id && el.itemtype === itemtype);
 
                      if (!exists) {
@@ -137,8 +138,9 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
                               itemtype: itemtype
                            });
                      }
-                  });
-               }
+                  }
+               });
+            }
          }
       }
       return actors;

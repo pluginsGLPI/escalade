@@ -89,7 +89,7 @@ class PluginEscaladeTicket
             ];
 
             if (!isset($item->input['_actors'])) {
-                $item->input['_actors'] = $item->fields['_actors'];
+                $item->input['_actors'] = $item->fields['_actors'] ?? [];
             } else {
                 // Iteration through actor types and verification of deletion rights
                 foreach ($ticket_actors as $type => $actors) {
