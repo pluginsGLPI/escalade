@@ -102,6 +102,15 @@ class PluginEscaladeTicket
                 }
             }
         }
+        if (
+            isset($item->input['actortype'])
+            && $item->input['actortype'] == CommonITILActor::ASSIGN
+        ) {
+            //disable notification to prevent notification for old AND new group
+            $item->input['_disablenotif'] = true;
+            return PluginEscaladeTicket::addHistoryOnAddGroup($item);
+        }
+        return $item;
     }
 
     /**
@@ -299,11 +308,11 @@ class PluginEscaladeTicket
         }
 
         //if group sent is not an assign group, return
-        if ($item->input['type'] != CommonITILActor::ASSIGN) {
+        if ($item->input['actortype'] != CommonITILActor::ASSIGN) {
             return;
         }
 
-        $tickets_id = $item->input['tickets_id'];
+        $tickets_id = $item->input['id'];
         $groups_id  = $item->input['groups_id'];
 
         //if group already assigned, return
@@ -498,23 +507,25 @@ class PluginEscaladeTicket
             'type'       => CommonITILActor::ASSIGN
         ];
         if (!$group_ticket->find($condition)) {
-            // add group to ticket
-            $group_ticket_input = [
-                'type'       => CommonITILActor::ASSIGN,
-                'groups_id'  => $groups_id,
-                'tickets_id' => $tickets_id,
-                '_plugin_escalade_no_history' => true, // Prevent a duplicated task to be added
+
+            $ticket = new Ticket();
+            $ticket->getFromDB($tickets_id);
+
+            // Update the ticket with actor data in order to execute the necessary rules
+            $_form_object = [
+                '_do_not_compute_status' => true,
             ];
-
-            //handle status behavior
             if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] != -1) {
-                $group_ticket_input['_from_object']['status'] = $_SESSION['plugins']['escalade']['config']['ticket_last_status'];
+                $_form_object['status'] = $_SESSION['plugins']['escalade']['config']['ticket_last_status'];
             }
-
-            $group_ticket_input['_from_object']['_do_not_compute_status'] = true;
-
-            $group_ticket = new Group_Ticket();
-            $group_ticket->add($group_ticket_input);
+            $updates_ticket = new Ticket();
+            $updates_ticket->update($_POST['ticket_details'] + [
+                '_actors' => PluginEscaladeTicket::getTicketFieldsWithActors($tickets_id, $groups_id),
+                '_plugin_escalade_no_history' => true, // Prevent a duplicated task to be added
+                'actortype' => CommonITILActor::ASSIGN,
+                'groups_id' => $groups_id,
+                '_form_object' => $_form_object,
+            ]);
         }
 
         if (!$full_history) {
@@ -1016,6 +1027,57 @@ class PluginEscaladeTicket
         }
 
         return $itemtypes;
+    }
+
+    /**
+     * Get ticket field with actors inputs
+     *
+     * @param int $tickets_id
+     * @param int $group_id
+     *
+     * @return array
+     */
+    public static function getTicketFieldsWithActors($tickets_id, $group_id)
+    {
+        $ticket = new Ticket();
+        $link_class = [
+            'User' => new $ticket->userlinkclass(),
+            'Group' => new $ticket->grouplinkclass(),
+            'Supplier' => new $ticket->supplierlinkclass(),
+        ];
+        $ticket_actors = [];
+        $actor_types = [
+            CommonITILActor::ASSIGN => 'assign',
+            CommonITILActor::OBSERVER => 'observer',
+            CommonITILActor::REQUESTER => 'requester',
+        ];
+
+        foreach ($link_class as $itemtype => $class) {
+            $ticket_actor = $class->getActors($tickets_id);
+            foreach ($ticket_actor as $type => $value) {
+                $actors_input = [];
+                foreach ($value as $val) {
+                    $actors_input[] = [
+                        'itemtype' => $itemtype,
+                        'items_id' => $val[strtolower($itemtype . 's_id')],
+                    ];
+                }
+                $actortype = $actor_types[$type] ?? '';
+                if ($actortype) {
+                    $ticket_actors[$itemtype][$actortype] = $actors_input;
+                }
+            }
+        }
+        $ticket_actors['Group']['assign'][] = [
+            'itemtype' => 'Group',
+            'items_id' => $group_id,
+        ];
+
+        $_actors['assign'] = ($ticket_actors['User']['assign'] ?? []) + ($ticket_actors['Group']['assign'] ?? []) + ($ticket_actors['Supplier']['assign'] ?? []);
+        $_actors['observer'] = ($ticket_actors['User']['observer'] ?? []) + ($ticket_actors['Group']['observer'] ?? []) + ($ticket_actors['Supplier']['observer'] ?? []);
+        $_actors['requester'] = ($ticket_actors['User']['requester'] ?? []) + ($ticket_actors['Group']['requester'] ?? []) + ($ticket_actors['Supplier']['requester'] ?? []);
+
+        return $_actors;
     }
 
     public function showForm($ID, $options = [])
