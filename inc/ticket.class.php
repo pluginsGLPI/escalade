@@ -102,9 +102,18 @@ class PluginEscaladeTicket
                 }
             }
         }
+        if (!isset($item->input['actortype'])) {
+            $groups = new Group_Ticket();
+            $groups = $groups->find(['tickets_id' => $item->getID(), 'type' => CommonITILActor::ASSIGN]);
+            foreach ($item->input['_actors']['assign'] as $actors) {
+                if ($actors['itemtype'] == 'Group' && !in_array($actors['items_id'], $groups)) {
+                    $item->input['groups_id'] = $actors['items_id'];
+                    $item->input['actortype'] = CommonITILActor::ASSIGN;
+                }
+            }
+        }
         if (
-            isset($item->input['actortype'])
-            && $item->input['actortype'] == CommonITILActor::ASSIGN
+            (isset($item->input['actortype']) && $item->input['actortype'] == CommonITILActor::ASSIGN)
         ) {
             //disable notification to prevent notification for old AND new group
             $item->input['_disablenotif'] = true;
@@ -314,18 +323,6 @@ class PluginEscaladeTicket
 
         $tickets_id = $item->input['id'];
         $groups_id  = $item->input['groups_id'];
-
-        //if group already assigned, return
-        $group_ticket = new Group_Ticket();
-        $condition = [
-            'tickets_id' => $tickets_id,
-            'groups_id'  => $groups_id,
-            'type'       => CommonITILActor::ASSIGN
-        ];
-        if ($group_ticket->find($condition)) {
-            unset($_SESSION['plugin_escalade']['keep_users']);
-            return;
-        }
 
         $item->fields['status'] = CommonITILObject::ASSIGNED;
 

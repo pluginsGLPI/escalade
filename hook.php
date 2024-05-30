@@ -436,7 +436,6 @@ function plugin_escalade_item_update($item)
     return true;
 }
 
-
 /**
  * Summary of plugin_escalade_item_add_user
  * @param mixed $item
