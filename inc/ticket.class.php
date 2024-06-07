@@ -1045,6 +1045,7 @@ class PluginEscaladeTicket
         TemplateRenderer::getInstance()->display('@escalade/escalade_form.html.twig', [
             'action'          => PLUGIN_ESCALADE_WEBDIR . '/front/ticket.form.php',
             'ticket'          => $options['parent'],
+            'assign_me_as_observer' => $config->fields['assign_me_as_observer'],
             'assigned_groups' => $assigned_groups,
             'condition'     => $condition,
         ]);
