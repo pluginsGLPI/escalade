@@ -370,6 +370,18 @@ function plugin_escalade_install()
         $migration->migrationOneTable('glpi_plugin_escalade_configs');
     }
 
+    //Update to 2.9.7
+    // add new fields
+    if (!$DB->fieldExists('glpi_plugin_escalade_configs', 'assign_me_as_observer')) {
+        $migration->addField(
+            'glpi_plugin_escalade_configs',
+            'assign_me_as_observer',
+            'integer',
+            ['after' => 'close_linkedtickets']
+        );
+        $migration->migrationOneTable('glpi_plugin_escalade_configs');
+    }
+
     return true;
 }
 
