@@ -192,7 +192,6 @@ class PluginEscaladeConfig extends CommonDBTM
         echo __("Assign me as observer by default", "escalade") . "</label></td>";
         echo "<td>";
         Dropdown::showYesNo("assign_me_as_observer", $this->fields["assign_me_as_observer"], -1, [
-            'on_change' => 'hide_show_history(this.value)',
             'width' => '25%',
             'rand' => $rand,
         ]);
