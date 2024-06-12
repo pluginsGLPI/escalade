@@ -59,6 +59,22 @@ if (isset($_POST['escalate'])) {
             ]);
         }
 
+        // Update the ticket with actor data in order to execute the necessary rules
+        $_form_object = [
+            '_do_not_compute_status' => true,
+        ];
+        if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] != -1) {
+            $_form_object['status'] = $_SESSION['plugins']['escalade']['config']['ticket_last_status'];
+        }
+        $updates_ticket = new Ticket();
+        $updates_ticket->update($_POST['ticket_details'] + [
+            '_actors' => PluginEscaladeTicket::getTicketFieldsWithActors($tickets_id, $group_id),
+            '_plugin_escalade_no_history' => true, // Prevent a duplicated task to be added
+            'actortype' => CommonITILActor::ASSIGN,
+            'groups_id' => $group_id,
+            '_form_object' => $_form_object,
+        ]);
+
         $task = new TicketTask();
         $task->add([
             'tickets_id' => $tickets_id,
@@ -69,22 +85,6 @@ if (isset($_POST['escalate'])) {
                 '<p><i>' . sprintf(__('Escalation to the group %s.', 'escalade'), Sanitizer::unsanitize($group->getName())) . '</i></p><hr />'
             ) . $_POST['comment']
         ]);
-
-        $group_ticket_input = [
-            'type'       => CommonITILActor::ASSIGN,
-            'groups_id'  => $group_id,
-            'tickets_id' => $tickets_id,
-            '_plugin_escalade_no_history' => true, // Prevent a duplicated task to be added
-        ];
-
-        //handle status behavior
-        if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] != -1) {
-            $group_ticket_input['_from_object']['status'] = $_SESSION['plugins']['escalade']['config']['ticket_last_status'];
-        }
-        $group_ticket_input['_from_object']['_do_not_compute_status'] = true;
-
-        $group_ticket = new Group_Ticket();
-        $group_ticket->add($group_ticket_input);
     }
 }
 

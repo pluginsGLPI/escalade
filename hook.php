@@ -449,7 +449,6 @@ function plugin_escalade_item_update($item)
     return true;
 }
 
-
 /**
  * Summary of plugin_escalade_item_add_user
  * @param mixed $item
@@ -504,19 +503,6 @@ function plugin_escalade_item_add_ticket($item)
         unset($_SESSION['plugin_escalade']['skip_hook_add_user']);
         unset($_SESSION['plugin_escalade']['keep_users']);
     }
-}
-
-function plugin_escalade_pre_item_add_group_ticket($item)
-{
-    if (
-        $item instanceof Group_Ticket
-        && $item->input['type'] == CommonITILActor::ASSIGN
-    ) {
-         //disable notification to prevent notification for old AND new group
-         $item->input['_disablenotif'] = true;
-        return PluginEscaladeTicket::addHistoryOnAddGroup($item);
-    }
-    return $item;
 }
 
 function plugin_escalade_item_add_group_ticket($item)
