@@ -216,11 +216,11 @@ msgstr "Vous devez sélectionner un groupe."
 
 #: inc/config.class.php:195
 msgid "a time of creation"
-msgstr "une date de création"
+msgstr "à la création"
 
 #: inc/config.class.php:197
 msgid "a time of modification"
-msgstr "une date de modification"
+msgstr "à la modification"
 
 #: front/popup_histories.php:33
 msgid "full assignation history"
