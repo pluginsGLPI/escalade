@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [unrelease] -
+
+### Fixed
+
+- Fix ```use technician group``` option
+
 ## [2.9.6] - 2024-05-17
 
 ### Fixed
