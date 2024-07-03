@@ -215,9 +215,9 @@ class PluginEscaladeConfig extends CommonDBTM
         echo "<tr>";
         echo "<td></td>";
         echo "<td><label for='dropdown_use_assign_user_group_creation$rand'>";
-        echo __("a time of creation", "escalade") . "</label></td>";
+        echo __("at creation time", "escalade") . "</label></td>";
         echo "<td><label for='dropdown_use_assign_user_group_modification$rand'>";
-        echo __("a time of modification", "escalade") . "</label></td>";
+        echo __("at modification time", "escalade") . "</label></td>";
         echo "</tr>";
         echo "<tr><td>";
         echo Html::scriptBlock("
