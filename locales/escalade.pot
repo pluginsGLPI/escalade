@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-12 14:48+0000\n"
+"POT-Creation-Date: 2024-07-03 11:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,19 +21,23 @@ msgstr ""
 msgid "Assign me as an observer"
 msgstr ""
 
-#: inc/config.class.php:137
+#: inc/config.class.php:192
+msgid "Assign me as observer by default"
+msgstr ""
+
+#: inc/config.class.php:151
 msgid "Assign the technical group on ticket category change"
 msgstr ""
 
-#: inc/config.class.php:126
+#: inc/config.class.php:140
 msgid "Assign the technical manager on ticket category change"
 msgstr ""
 
-#: inc/config.class.php:113
+#: inc/config.class.php:127
 msgid "Assign ticket to initial group on solve ticket"
 msgstr ""
 
-#: inc/user.class.php:125
+#: inc/user.class.php:139
 msgid "Bypass filtering on the groups assignment"
 msgstr ""
 
@@ -41,11 +45,11 @@ msgstr ""
 msgid "Clone and link"
 msgstr ""
 
-#: inc/config.class.php:149
+#: inc/config.class.php:163
 msgid "Clone tickets"
 msgstr ""
 
-#: inc/config.class.php:159
+#: inc/config.class.php:173
 msgid "Close cloned tickets at the same time"
 msgstr ""
 
@@ -53,51 +57,51 @@ msgstr ""
 msgid "Comment"
 msgstr ""
 
-#: inc/config.class.php:35
+#: inc/config.class.php:37
 msgid "Configuration Escalade plugin"
 msgstr ""
 
-#: inc/config.class.php:243
+#: inc/config.class.php:278
 msgid "Display delete button"
 msgstr ""
 
-#: inc/config.class.php:337
+#: inc/config.class.php:389
 msgid "Don't change"
 msgstr ""
 
-#: hook.php:495 hook.php:513 inc/config.class.php:298
+#: inc/config.class.php:347 hook.php:595 hook.php:614
 msgid "Enable filtering on the groups assignment"
 msgstr ""
 
-#: inc/ticket.class.php:773
+#: inc/ticket.class.php:882
 msgid "Error : adding actors (group)"
 msgstr ""
 
-#: inc/ticket.class.php:764
+#: inc/ticket.class.php:872
 msgid "Error : adding actors (user)"
 msgstr ""
 
-#: inc/ticket.class.php:783
+#: inc/ticket.class.php:893
 msgid "Error : adding documents"
 msgstr ""
 
-#: inc/ticket.class.php:753
+#: inc/ticket.class.php:860
 msgid "Error : adding followups"
 msgstr ""
 
-#: inc/ticket.class.php:738
+#: inc/ticket.class.php:843
 msgid "Error : adding link between the two tickets"
 msgstr ""
 
-#: inc/ticket.class.php:726
+#: inc/ticket.class.php:830
 msgid "Error : adding new ticket"
 msgstr ""
 
-#: inc/ticket.class.php:710
+#: inc/ticket.class.php:814
 msgid "Error : get old ticket"
 msgstr ""
 
-#: inc/ticket.class.php:902
+#: inc/ticket.class.php:1012 inc/ticket.class.php:1013
 msgid "Escalate"
 msgstr ""
 
@@ -105,126 +109,126 @@ msgstr ""
 msgid "Escalate ticket"
 msgstr ""
 
-#: inc/group_group.class.php:52 inc/user.class.php:164 front/config.form.php:64
-#: setup.php:177
+#: inc/group_group.class.php:56 inc/user.class.php:180 front/config.form.php:57
+#: setup.php:184
 msgid "Escalation"
 msgstr ""
 
-#: inc/config.class.php:84
+#: inc/config.class.php:94
 msgid "Escalation history in tasks"
 msgstr ""
 
-#: inc/ticket.class.php:316 front/ticket.form.php:65
+#: inc/ticket.class.php:387 front/ticket.form.php:69
 #, php-format
 msgid "Escalation to the group %s."
 msgstr ""
 
-#: hook.php:450
+#: hook.php:550
 msgid "Group concerned by the escalation"
 msgstr ""
 
-#: inc/notification.class.php:79
+#: inc/notification.class.php:102
 msgid "Group escalated in the ticket"
 msgstr ""
 
-#: inc/notification.class.php:81
+#: inc/notification.class.php:106
 msgid "Manager of the group escalated in the ticket"
 msgstr ""
 
-#: inc/config.class.php:223
+#: inc/config.class.php:256
 msgid ""
 "Nota: This feature (creation part) is duplicate with the <a "
 "href='##link##'>Behavior</a>plugin. This last has priority."
 msgstr ""
 
-#: hook.php:468
+#: hook.php:568
 msgid "Number of escalations"
 msgstr ""
 
-#: hook.php:482
+#: hook.php:582
 msgid "Number of escalations between two groups"
 msgstr ""
 
-#: inc/history.class.php:124
+#: inc/history.class.php:131
 msgid "Reassign the ticket to group"
 msgstr ""
 
-#: inc/config.class.php:50
+#: inc/config.class.php:60
 msgid "Remove old assign group on new group assign"
 msgstr ""
 
-#: inc/config.class.php:231
+#: inc/config.class.php:266
 msgid "Remove requester(s) on escalation"
 msgstr ""
 
-#: inc/config.class.php:93
+#: inc/config.class.php:103
 msgid "Remove technician(s) on escalation"
 msgstr ""
 
-#: inc/notification.class.php:85
+#: inc/notification.class.php:112
 msgid "Requester user of the task/reminder"
 msgstr ""
 
-#: inc/notification.class.php:57
+#: inc/notification.class.php:60
 msgid "Requester user of the ticket"
 msgstr ""
 
-#: inc/ticket.class.php:144
+#: inc/ticket.class.php:207
 msgid "Solution provided, back to the group"
 msgstr ""
 
-#: inc/ticket.class.php:206
+#: inc/ticket.class.php:271
 msgid "Solution rejected, return to the group"
 msgstr ""
 
-#: inc/notification.class.php:215
+#: inc/notification.class.php:255
 msgid "Solve date modification"
 msgstr ""
 
-#: inc/ticket.class.php:748 inc/ticket.class.php:789 inc/ticket.class.php:794
+#: inc/ticket.class.php:854 inc/ticket.class.php:899 inc/ticket.class.php:904
 msgid "This ticket has been cloned from the ticket num"
 msgstr ""
 
-#: inc/config.class.php:105
+#: inc/config.class.php:115
 msgid "Ticket status after an escalation"
 msgstr ""
 
-#: inc/history.class.php:209
+#: inc/history.class.php:222
 msgid "Tickets to close (escalated)"
 msgstr ""
 
-#: inc/history.class.php:195
+#: inc/history.class.php:208
 msgid "Tickets to follow (escalated)"
 msgstr ""
 
-#: inc/config.class.php:177
+#: inc/config.class.php:200
 msgid "Use the technician's group"
 msgstr ""
 
-#: inc/history.class.php:148
+#: inc/history.class.php:155
 msgid "View full history"
 msgstr ""
 
-#: front/ticket.form.php:46
+#: front/ticket.form.php:51
 msgid "You must select a group."
 msgstr ""
 
-#: inc/config.class.php:195
-msgid "a time of creation"
+#: inc/config.class.php:218
+msgid "at creation time"
 msgstr ""
 
-#: inc/config.class.php:197
-msgid "a time of modification"
+#: inc/config.class.php:220
+msgid "at modification time"
 msgstr ""
 
 #: front/popup_histories.php:33
 msgid "full assignation history"
 msgstr ""
 
-#: front/climb_group.php:35 ajax/assign_me.php:34
+#: front/climb_group.php:37 ajax/assign_me.php:34
 msgid "missing parameters"
 msgstr ""
 
-#: inc/config.class.php:72
+#: inc/config.class.php:82
 msgid "show group assign history visually"
 msgstr ""
