@@ -71,6 +71,7 @@ function plugin_escalade_install()
          `reassign_tech_from_cat`                  INT NOT NULL,
          `cloneandlink_ticket`                     INT NOT NULL,
          `close_linkedtickets`                     INT NOT NULL,
+         `assign_me_as_observer`                   INT NOT NULL,
          `use_assign_user_group`                   INT NOT NULL,
          `use_assign_user_group_creation`          INT NOT NULL,
          `use_assign_user_group_modification`      INT NOT NULL,
@@ -89,7 +90,7 @@ function plugin_escalade_install()
         $DB->doQuery($query);
 
         $query = "INSERT INTO glpi_plugin_escalade_configs
-      VALUES (NULL, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, '" . Ticket::WAITING . "',0)";
+      VALUES (NULL, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, '" . Ticket::WAITING . "',0)";
         $DB->doQuery($query);
     }
 
@@ -365,6 +366,18 @@ function plugin_escalade_install()
             'remove_requester',
             'integer',
             ['after' => 'ticket_last_status']
+        );
+        $migration->migrationOneTable('glpi_plugin_escalade_configs');
+    }
+
+    //Update to 2.9.7
+    // add new fields
+    if (!$DB->fieldExists('glpi_plugin_escalade_configs', 'assign_me_as_observer')) {
+        $migration->addField(
+            'glpi_plugin_escalade_configs',
+            'assign_me_as_observer',
+            'integer',
+            ['after' => 'close_linkedtickets']
         );
         $migration->migrationOneTable('glpi_plugin_escalade_configs');
     }

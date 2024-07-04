@@ -188,6 +188,15 @@ class PluginEscaladeConfig extends CommonDBTM
 
         $rand = mt_rand();
         echo "<tr class='tab_bg_1'>";
+        echo "<td><label for='dropdown_assign_me_as_observer$rand'>";
+        echo __("Assign me as observer by default", "escalade") . "</label></td>";
+        echo "<td>";
+        Dropdown::showYesNo("assign_me_as_observer", $this->fields["assign_me_as_observer"], -1, [
+            'width' => '25%',
+            'rand' => $rand,
+        ]);
+
+        $rand = mt_rand();
         echo "<td><label for='dropdown_use_assign_user_group$rand'>" . __("Use the technician's group", "escalade") . "</label></td>";
         echo "<td>";
         Dropdown::showFromArray('use_assign_user_group', $yesnoall, [
@@ -206,9 +215,9 @@ class PluginEscaladeConfig extends CommonDBTM
         echo "<tr>";
         echo "<td></td>";
         echo "<td><label for='dropdown_use_assign_user_group_creation$rand'>";
-        echo __("a time of creation", "escalade") . "</label></td>";
+        echo __("at creation time", "escalade") . "</label></td>";
         echo "<td><label for='dropdown_use_assign_user_group_modification$rand'>";
-        echo __("a time of modification", "escalade") . "</label></td>";
+        echo __("at modification time", "escalade") . "</label></td>";
         echo "</tr>";
         echo "<tr><td>";
         echo Html::scriptBlock("
