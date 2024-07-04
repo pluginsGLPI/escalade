@@ -450,14 +450,14 @@ class PluginEscaladeTicket
             isset($ticket->input['_users_id_assign'])
             && $ticket->input['_users_id_assign'] > 0
             && (!isset($ticket->input['_groups_id_assign'])
-                || $ticket->input['_groups_id_assign'] <= 0)
+                || empty($ticket->input['_groups_id_assign']))
         ) {
             if ($_SESSION['plugins']['escalade']['config']['use_assign_user_group'] == 1) {
                 // First group
                 $ticket->input['_groups_id_assign']
                     = PluginEscaladeUser::getTechnicianGroup(
                         $ticket->input['entities_id'],
-                        $ticket->input['_users_id_assign'],
+                        current($ticket->input['_users_id_assign']),
                         true
                     );
                 //prevent adding empty group
