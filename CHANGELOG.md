@@ -7,8 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unrelease] -
 
+### Added
+
+- Add config option for default assignation
+
 ### Fixed
 
+- Fix rules execution before escalation
+- Set assign as observer unchecked by default
+- Fixed ```blocking of user deletion```
 - Fix ```use technician group``` option
 
 ## [2.9.6] - 2024-05-17
