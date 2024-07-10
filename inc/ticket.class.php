@@ -497,7 +497,7 @@ class PluginEscaladeTicket
      * @param  int $groups_id  the group to assign
      * @return void
      */
-    public static function climb_group($tickets_id, $groups_id, $full_history = false)
+    public static function climb_group($tickets_id, $groups_id)
     {
         //don't add group if already exist for this ticket
         $group_ticket = new Group_Ticket();
@@ -517,8 +517,9 @@ class PluginEscaladeTicket
             if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] != -1) {
                 $_form_object['status'] = $_SESSION['plugins']['escalade']['config']['ticket_last_status'];
             }
+            $ticket_details = $_POST['ticket_details'] ?? $_GET['ticket_details'] ?? [];
             $updates_ticket = new Ticket();
-            $updates_ticket->update($_POST['ticket_details'] + [
+            $updates_ticket->update($ticket_details + [
                 '_actors' => PluginEscaladeTicket::getTicketFieldsWithActors($tickets_id, $groups_id),
                 '_plugin_escalade_no_history' => true, // Prevent a duplicated task to be added
                 'actortype' => CommonITILActor::ASSIGN,
@@ -527,17 +528,7 @@ class PluginEscaladeTicket
             ]);
         }
 
-        if (!$full_history) {
-            Html::back();
-        } else {
-            //reload parent window and close popup
-            echo "<script type='text/javascript'>
-            if (window.opener && !window.opener.closed) {
-               window.opener.location.reload();
-            }
-            window.close();
-         </script>";
-        }
+        Html::back();
     }
 
 
