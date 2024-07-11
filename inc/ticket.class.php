@@ -111,15 +111,16 @@ class PluginEscaladeTicket
                     $item->input['actortype'] = CommonITILActor::ASSIGN;
                 }
             }
+        } else {
+            if (
+                (isset($item->input['actortype']) && $item->input['actortype'] == CommonITILActor::ASSIGN)
+            ) {
+                //disable notification to prevent notification for old AND new group
+                $item->input['_disablenotif'] = true;
+                return PluginEscaladeTicket::addHistoryOnAddGroup($item);
+            }
+            return $item;
         }
-        if (
-            (isset($item->input['actortype']) && $item->input['actortype'] == CommonITILActor::ASSIGN)
-        ) {
-            //disable notification to prevent notification for old AND new group
-            $item->input['_disablenotif'] = true;
-            return PluginEscaladeTicket::addHistoryOnAddGroup($item);
-        }
-        return $item;
     }
 
     /**
