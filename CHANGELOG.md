@@ -7,9 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unrelease] -
 
+## [2.9.8] - 2024-07-15
+
 ### Fixed
 
-- Trigger escalation for ticket updates not related to the plugin
+- Prevent an escalation when a ticket is updated
 
 ## [2.9.7] - 2024-07-04
 
