@@ -196,7 +196,7 @@ class PluginEscaladeTicket
             }
 
             self::removeAssignGroups($tickets_id, $first_history['groups_id']);
-            self::removeAssignUsers($tickets_id);
+            self::removeAssignUsers($item);
 
             //set session var to prevent double task message
             $_SESSION['plugin_escalade']['solution'] = true;
@@ -371,7 +371,7 @@ class PluginEscaladeTicket
         }
 
         //remove old user(s) (pass if user added by new ticket)
-        self::removeAssignUsers($tickets_id);
+        self::removeAssignUsers($item);
 
         //add a task to inform the escalation (pass if solution)
         if (isset($_SESSION['plugin_escalade']['solution'])) {
@@ -566,10 +566,10 @@ class PluginEscaladeTicket
 
     /**
      * Clean all assigned users for the ticket
-     * @param  int $tickets_id
+     * @param  CommonDBTM $item the ticket object
      * @return void
      */
-    public static function removeAssignUsers($tickets_id, $keep_users_id = false, $type = CommonITILActor::ASSIGN)
+    public static function removeAssignUsers($item, $keep_users_id = false, $type = CommonITILActor::ASSIGN)
     {
         if (
             $_SESSION['plugins']['escalade']['config']['remove_tech'] == false
@@ -584,6 +584,8 @@ class PluginEscaladeTicket
             return true;
         }
 
+        $tickets_id = $item->input['id'];
+
         $where_keep = [
             'tickets_id' => $tickets_id,
             'type' => $type
@@ -591,6 +593,11 @@ class PluginEscaladeTicket
         if ($keep_users_id !== false) {
             $where_keep[] = ['NOT' => ['users_id' => $keep_users_id]];
         }
+
+        $types = [
+            CommonITILActor::ASSIGN => 'assign',
+            CommonITILActor::REQUESTER => 'requester'
+        ];
 
         $ticket_user = new Ticket_User();
         $found = $ticket_user->find($where_keep);
@@ -606,6 +613,17 @@ class PluginEscaladeTicket
 
             //delete user
             $ticket_user->delete(['id' => $id]);
+
+            if (isset($item->input['_actors'])) {
+                foreach ($item->input['_actors'][$types[$type]] as $key => $actor) {
+                    if (
+                        $actor['items_id'] == $tu['users_id']
+                        && $actor['itemtype'] == User::class
+                    ) {
+                        unset($item->input['_actors'][$types[$type]][$key]);
+                    }
+                }
+            }
         }
 
         //clean session var (to prevent users be keeped post to this ticket update)
@@ -630,7 +648,7 @@ class PluginEscaladeTicket
         $ticket->getFromDB($tickets_id);
         $groups_id = [];
 
-        self::removeAssignUsers($tickets_id, $users_id, $type);
+        self::removeAssignUsers($ticket, $users_id, $type);
 
         // == Add user groups on modification ==
         //check this plugin config
