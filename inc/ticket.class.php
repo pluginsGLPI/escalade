@@ -105,10 +105,12 @@ class PluginEscaladeTicket
         if (!isset($item->input['actortype'])) {
             $groups = new Group_Ticket();
             $groups = $groups->find(['tickets_id' => $item->getID(), 'type' => CommonITILActor::ASSIGN]);
-            foreach ($item->input['_actors']['assign'] as $actors) {
-                if ($actors['itemtype'] == 'Group' && !in_array($actors['items_id'], $groups)) {
-                    $item->input['groups_id'] = $actors['items_id'];
-                    $item->input['actortype'] = CommonITILActor::ASSIGN;
+            if (!empty($item->input['_actors'])) {
+                foreach ($item->input['_actors']['assign'] as $actors) {
+                    if ($actors['itemtype'] == 'Group' && !in_array($actors['items_id'], $groups)) {
+                        $item->input['groups_id'] = $actors['items_id'];
+                        $item->input['actortype'] = CommonITILActor::ASSIGN;
+                    }
                 }
             }
         }
