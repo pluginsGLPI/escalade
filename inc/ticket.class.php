@@ -58,6 +58,7 @@ class PluginEscaladeTicket
             $item->input['_do_not_compute_status'] = true;
         }
         $config = $_SESSION['plugins']['escalade']['config'];
+        $actors_count = 0;
 
         // Get actual actors for the ticket
         if ($item instanceof Ticket) {
@@ -70,6 +71,10 @@ class PluginEscaladeTicket
                 },
                 []
             );
+
+            $actors_count = count(array_filter($ticket_actors['assign'], function ($actor) {
+                return isset($actor['itemtype']) && $actor['itemtype'] === 'Group';
+            }));
 
             // Get deletion rights for each type of actor
             $deletion_rights = [
@@ -113,9 +118,16 @@ class PluginEscaladeTicket
                     }
                 }
             }
-        } else {
+        }
+        if (
+            isset($item->input['_actors']['assign'])
+        ) {
+            $input_actors_count = count(array_filter($item->input['_actors']['assign'], function ($actor) {
+                return isset($actor['itemtype']) && $actor['itemtype'] === 'Group';
+            }));
             if (
-                (isset($item->input['actortype']) && $item->input['actortype'] == CommonITILActor::ASSIGN)
+                (isset($item->input['actortype']) && $item->input['actortype'] == CommonITILActor::ASSIGN) &&
+                $actors_count < $input_actors_count
             ) {
                 //disable notification to prevent notification for old AND new group
                 $item->input['_disablenotif'] = true;
