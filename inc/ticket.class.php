@@ -137,13 +137,11 @@ class PluginEscaladeTicket
             } else if (count($old_actors) == count($new_actors)) {
                 $old_actor_names = [];
                 foreach ($old_actors as $old_actor) {
-                    $old_actor_names[$old_actor['text']] = true;
+                    $old_actor_names[$old_actor['items_id']] = true;
                 }
 
-                // Parcourir les nouveaux acteurs et vérifier si leur nom existe dans le tableau associatif
                 foreach ($new_actors as $new_actor) {
-                    $name = Group::getFriendlyNameById($new_actor['items_id']);
-                    if (!isset($old_actor_names[$name])) {
+                    if (!isset($old_actor_names[$new_actor['items_id']])) {
                         $item->input['_disablenotif'] = true;
                         return PluginEscaladeTicket::addHistoryOnAddGroup($item);
                     }
