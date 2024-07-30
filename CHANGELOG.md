@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Prevent an escalation when a ticket is updated
+- Fix climbing with history
+
+### Changed
+
+- Full history window (now is a modal)
 
 ## [2.9.7] - 2024-07-04
 

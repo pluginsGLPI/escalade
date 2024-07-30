@@ -93,7 +93,7 @@ class PluginEscaladeHistory extends CommonDBTM
             $use_filter_assign_group = false;
         }
 
-        $plugin_dir = ($full_history) ? ".." : Plugin::getWebDir('escalade');
+        $plugin_dir = Plugin::getWebDir('escalade');
 
        //get all line for this ticket
         $group = new Group();
@@ -122,18 +122,36 @@ class PluginEscaladeHistory extends CommonDBTM
             echo "<div class='escalade_history'>";
 
             if (! $use_filter_assign_group || isset($filter_groups_id[$hline['groups_id']])) {
-                //up link and image
-                echo "<a href='$plugin_dir/front/climb_group.php?tickets_id="
-                . $tickets_id . "&groups_id=" . $hline['groups_id'];
-                if ($full_history) {
-                    echo "&full_history=true";
-                }
-                echo "' title='" . __("Reassign the ticket to group", "escalade") . "' class='btn btn-icon btn-sm btn-ghost-secondary'><i class='ti ti-arrow-up'></i></a>";
+                $rand = mt_rand();
+                // Remplacement du lien par un formulaire
+                echo "<form action='$plugin_dir/front/climb_group.php' method='GET' id='history-form-$rand'>";
+                echo "<input type='hidden' name='tickets_id' value='" . $tickets_id . "'>";
+                echo "<input type='hidden' name='groups_id' value='" . $hline['groups_id'] . "'>";
+                echo "<button type='submit' title='" . __("Reassign the ticket to group", "escalade") . "' class='btn btn-icon btn-sm btn-ghost-secondary'>
+                    <i class='ti ti-arrow-up'></i>
+                </button>";
+                echo "</form>";
+
+                echo "<script>
+                    $(document).ready(function () {
+                        var form = $('#itil-form');
+                        var inputs = form.serializeArray();
+                        var asset_form = $('#history-form-$rand');
+
+                        if (asset_form.length > 0) {
+                            $.each(inputs, function(i, input) {
+                                if (input.name != '_actors') {
+                                    asset_form.append('<input type=\"hidden\" name=\"ticket_details[' + input.name + ']\" value=\"' + input.value + '\">');
+                                }
+                            });
+                        }
+                    });
+                </script>";
             } else {
                 echo "&nbsp;&nbsp;&nbsp;";
             }
 
-           //group link
+            //group link
             echo "&nbsp;<i class='ti ti-users'></i>&nbsp;";
             if ($group->getFromDB($hline['groups_id'])) {
                 echo self::showGroupLink($group, $full_history);
@@ -148,11 +166,15 @@ class PluginEscaladeHistory extends CommonDBTM
         }
 
        //In case there are more than 10 group changes, a popup can display historical
-        if ($nb_histories - 1 > self::HISTORY_LIMIT && ! $full_history) {
-            echo "<a href='#' onclick='var w=window.open(\""
-            . $plugin_dir . "/front/popup_histories.php?tickets_id=" . $tickets_id
-            . "\" ,\"\", \"height=500, width=250, top=100, left=100, scrollbars=yes\" ); "
-            . "w.focus();' title='" . __("View full history", "escalade") . "'>...</a>";
+        if ($nb_histories - 1 > self::HISTORY_LIMIT && !$full_history) {
+            echo Ajax::createModalWindow(
+                'full_history',
+                $plugin_dir . "/front/popup_histories.php?tickets_id=" . $tickets_id,
+                [
+                    'title' => __("full assignation history", "escalade")
+                ]
+            );
+            echo "<a href='#' onclick='full_history.show();' title='" . __("View full history", "escalade") . "'>...</a>";
         }
 
         echo "</div>";
