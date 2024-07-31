@@ -58,6 +58,7 @@ class PluginEscaladeTicket
             $item->input['_do_not_compute_status'] = true;
         }
         $config = $_SESSION['plugins']['escalade']['config'];
+        $old_groups = [];
 
         // Get actual actors for the ticket
         if ($item instanceof Ticket) {
@@ -70,6 +71,10 @@ class PluginEscaladeTicket
                 },
                 []
             );
+
+            $old_groups = array_filter($ticket_actors['assign'], function ($actor) {
+                return isset($actor['itemtype']) && $actor['itemtype'] === 'Group';
+            });
 
             // Get deletion rights for each type of actor
             $deletion_rights = [
@@ -113,13 +118,34 @@ class PluginEscaladeTicket
                     }
                 }
             }
-        } else {
+        }
+        if (
+            isset($item->input['_actors']['assign'])
+        ) {
+            $new_groups = array_filter($item->input['_actors']['assign'], function ($actor) {
+                return isset($actor['itemtype']) && $actor['itemtype'] === 'Group';
+            });
             if (
-                (isset($item->input['actortype']) && $item->input['actortype'] == CommonITILActor::ASSIGN)
+                (isset($item->input['actortype']) && $item->input['actortype'] == CommonITILActor::ASSIGN) &&
+                (
+                    count($old_groups) < count($new_groups)
+                )
             ) {
                 //disable notification to prevent notification for old AND new group
                 $item->input['_disablenotif'] = true;
                 return PluginEscaladeTicket::addHistoryOnAddGroup($item);
+            } else if (count($old_groups) == count($new_groups)) {
+                $old_group_ids = [];
+                foreach ($old_groups as $old_group) {
+                    $old_group_ids[$old_group['items_id']] = true;
+                }
+
+                foreach ($new_groups as $new_group) {
+                    if (!isset($old_group_ids[$new_group['items_id']])) {
+                        $item->input['_disablenotif'] = true;
+                        return PluginEscaladeTicket::addHistoryOnAddGroup($item);
+                    }
+                }
             }
             return $item;
         }
