@@ -92,20 +92,6 @@ class PluginEscaladeTicket
                     'assign' => $config['remove_delete_assign_supplier_btn'],
                 ],
             ];
-
-            if (!isset($item->input['_actors'])) {
-                $item->input['_actors'] = $item->fields['_actors'] ?? [];
-            } else {
-                // Iteration through actor types and verification of deletion rights
-                foreach ($ticket_actors as $type => $actors) {
-                    foreach ($actors as $actor) {
-                        // If the actor has been deleted and deletion is forbidden, it is readjusted to simulate a non-deletion
-                        if ($deletion_rights[$actor['itemtype']][$type] == 0) {
-                            $item->input['_actors'][$type][] = $actor;
-                        }
-                    }
-                }
-            }
         }
         if (!isset($item->input['actortype'])) {
             $groups = new Group_Ticket();
