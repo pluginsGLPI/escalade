@@ -51,6 +51,10 @@ define(
 define('TU_USER', '_test_user');
 define('TU_PASS', 'PhpUnit_4');
 
+/**
+ * @var array $CFG_GLPI
+ * @var \Psr\SimpleCache\CacheInterface $GLPI_CACHE
+ */
 global $CFG_GLPI, $GLPI_CACHE;
 
 include(GLPI_ROOT . "/inc/based_config.php");
