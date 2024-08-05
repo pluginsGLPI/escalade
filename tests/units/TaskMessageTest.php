@@ -30,7 +30,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-class TaskMessage extends TestCase
+class TaskMessageTest extends TestCase
 {
     protected function dataTestEscalationTaskGroup(): array
     {
