@@ -34,6 +34,7 @@ use GlpiPlugin\Escalade\Tests\EscaladeTestCase;
 use Group_Ticket;
 use Plugin;
 use PluginEscaladeConfig;
+use Ticket_User;
 use TicketTask;
 
 final class TaskMessageTest extends EscaladeTestCase
@@ -49,22 +50,6 @@ final class TaskMessageTest extends EscaladeTestCase
     }
     protected function dataTestEscalationTaskGroup(): array
     {
-        $ticket = new \Ticket();
-        $ticket->add([
-            'name' => 'Escalation Test',
-            'content' => '',
-        ]);
-
-        $group_test = new \Group();
-        $group_test->add([
-            'name' => 'Test Group',
-        ]);
-
-        $group_test_2 = new \Group();
-        $group_test_2->add([
-            'name' => 'Test Group 2',
-        ]);
-
         return [
             [
                 'expected' => [
@@ -125,26 +110,143 @@ final class TaskMessageTest extends EscaladeTestCase
         ];
     }
 
-    /**
-     * @dataProvider dataTestEscalationTaskGroup
-     */
-    public function testEscalationTaskGroup($expected, $inputs)
+    public function testGroupEscalation()
     {
         $ticket = new \Ticket();
-        $ticket->getFromDB($expected['ticket_id']);
+        $ticket->add([
+            'name' => 'Escalation Test',
+            'content' => '',
+        ]);
 
-        $this->assertTrue($ticket->update($inputs));
+        $user_test = new \User();
+        $user_test->add([
+            'name' => 'Escalation Technician',
+        ]);
 
+        $group_test = new \Group();
+        $group_test->add([
+            'name' => 'Escalation Group',
+        ]);
+
+        // Update ticket with a technician
+        $this->assertTrue($ticket->update(
+            [
+                'id' => $ticket->getID(),
+                '_actors' => [
+                    'assign' => [
+                        [
+                            'items_id' => $user_test->getID(),
+                            'itemtype' => $user_test->getType()
+                        ],
+                    ],
+                ],
+            ]
+        ));
+
+        // Check that the group linked to this ticket is "Test group 1" and that the technician has disappeared.
+        $ticket_user = new Ticket_User();
+        $ticket_user->getFromDBByCrit(['tickets_id' => $ticket->getID()]);
+        $this->assertEquals($ticket_user->fields['users_id'], $user_test->getID());
+
+        // Update ticket with a group
+        $this->assertTrue($ticket->update(
+            [
+                'id' => $ticket->getID(),
+                '_actors' => [
+                    'assign' => [
+                        [
+                            'items_id' => $user_test->getID(),
+                            'itemtype' => $user_test->getType()
+                        ],
+                        [
+                            'items_id' => $group_test->getID(),
+                            'itemtype' => 'Group'
+                        ]
+                    ],
+                ],
+            ]
+        ));
+
+        // Check that the group linked to this ticket is "Test group 1" and that the technician has disappeared.
+        $ticket_user = new Ticket_User();
+        $t_users = $ticket_user->find(['tickets_id' => $ticket->getID()]);
+        $this->assertEquals(count($t_users), 0);
+
+        // Check that the group linked to this ticket is "Test group 1" and that the technician has disappeared.
         $ticket_group = new Group_Ticket();
-        $t_groups = $ticket_group->find(['tickets_id' => $expected['ticket_id']]);
-        $t_groups = end($t_groups);
-        $this->assertEquals($t_groups['groups_id'] ?? null, $expected['group_id']);
+        $ticket_group->getFromDBByCrit(['tickets_id' => $ticket->getID()]);
+        $this->assertEquals($ticket_group->fields['groups_id'], $group_test->getID());
+    }
 
+    public function testTaskGroupEscalation()
+    {
+        $ticket = new \Ticket();
+        $ticket->add([
+            'name' => 'Task Group Escalation Test',
+            'content' => '',
+        ]);
+
+        $group_test = new \Group();
+        $group_test->add([
+            'name' => 'Task Group 1',
+        ]);
+
+        $group_test_2 = new \Group();
+        $group_test_2->add([
+            'name' => 'Task Group 2',
+        ]);
+
+        // Update ticket with just one group
+        $this->assertTrue($ticket->update(
+            [
+                'id' => $ticket->getID(),
+                '_actors' => [
+                    'assign' => [
+                        [
+                            'items_id' => $group_test->getID(),
+                            'itemtype' => 'Group'
+                        ],
+                    ],
+                ],
+            ]
+        ));
+
+        // Check the correct task content
         $ticket_task = new TicketTask();
-        $t_tasks = $ticket_task->find(['tickets_id' => $expected['ticket_id']]);
+        $t_tasks = $ticket_task->find(['tickets_id' => $ticket->getID()]);
         $last_task = end($t_tasks);
-        if ($last_task) {
-            $this->assertStringContainsString($expected['group_name'], $last_task['content']);
-        }
+        $this->assertStringContainsString('Task Group 1', $last_task['content']);
+
+        $this->assertTrue($ticket->update(
+            [
+                'id' => $ticket->getID(),
+                '_actors' => [
+                    'assign' => [
+                        [
+                            'items_id' => $group_test->getID(),
+                            'itemtype' => 'Group'
+                        ],
+                        [
+                            'items_id' => $group_test_2->getID(),
+                            'itemtype' => 'Group'
+                        ],
+                    ],
+                ],
+            ]
+        ));
+
+        // Check the correct order of tasks and content
+        $ticket_task = new TicketTask();
+        $t_tasks = $ticket_task->find(['tickets_id' => $ticket->getID()]);
+        $first_task = reset($t_tasks);
+        $this->assertStringContainsString('Task Group 1', $first_task['content']);
+        $last_task = end($t_tasks);
+        $this->assertStringContainsString('Task Group 2', $last_task['content']);
+
+        // Check that the group linked to this ticket is "Test group 2".
+        $ticket_group = new Group_Ticket();
+        $t_groups = $ticket_group->find(['tickets_id' => $ticket->getID()]);
+        $t_groups = end($t_groups);
+        $this->assertEquals($t_groups['groups_id'], $group_test_2->getID());
     }
 }
