@@ -48,67 +48,6 @@ final class TaskMessageTest extends EscaladeTestCase
         $plugins->getFromDBbyDir('escalade');
         $this->assertTrue(Plugin::isPluginActive('escalade'));
     }
-    protected function dataTestEscalationTaskGroup(): array
-    {
-        return [
-            [
-                'expected' => [
-                    'group_name' => null,
-                    'ticket_id' => $ticket->getID(),
-                    'group_id' => null,
-                ],
-                'inputs' => [
-                    'id' => $ticket->getID(),
-                    'name' => 'Escalation Test 1',
-                    'update' => true,
-                ],
-            ],
-            [
-                'expected' => [
-                    'group_name' => $group_test->getName(),
-                    'ticket_id' => $ticket->getID(),
-                    'group_id' => $group_test->getID(),
-                ],
-                'inputs' => [
-                    'id' => $ticket->getID(),
-                    'name' => 'Escalation Test 2',
-                    '_actors' => [
-                        'assign' => [
-                            [
-                                'items_id' => $group_test->getID(),
-                                'itemtype' => 'Group'
-                            ],
-                        ],
-                    ],
-                    'update' => true,
-                ],
-            ],
-            [
-                'expected' => [
-                    'group_name' => $group_test_2->getName(),
-                    'ticket_id' => $ticket->getID(),
-                    'group_id' => $group_test_2->getID(),
-                ],
-                'inputs' => [
-                    'id' => $ticket->getID(),
-                    'name' => 'Escalation Test 3',
-                    '_actors' => [
-                        'assign' => [
-                            [
-                                'items_id' => $group_test->getID(),
-                                'itemtype' => 'Group'
-                            ],
-                            [
-                                'items_id' => $group_test_2->getID(),
-                                'itemtype' => 'Group'
-                            ],
-                        ],
-                    ],
-                    'update' => true,
-                ],
-            ],
-        ];
-    }
 
     public function testGroupEscalation()
     {
