@@ -20,5 +20,10 @@
         "allow-plugins": {
             "phpstan/extension-installer": true
         }
+    },
+    "autoload": {
+        "psr-4": {
+            "GlpiPlugin\\Escalade\\Tests\\": "tests"
+        }
     }
 }

@@ -75,23 +75,6 @@ class PluginEscaladeTicket
             $old_groups = array_filter($ticket_actors['assign'], function ($actor) {
                 return isset($actor['itemtype']) && $actor['itemtype'] === 'Group';
             });
-
-            // Get deletion rights for each type of actor
-            $deletion_rights = [
-                User::getType() => [
-                    'requester' => $config['remove_delete_requester_user_btn'],
-                    'observer' => $config['remove_delete_watcher_user_btn'],
-                    'assign' => $config['remove_delete_assign_user_btn'],
-                ],
-                Group::getType() => [
-                    'requester' => $config['remove_delete_requester_group_btn'],
-                    'observer' => $config['remove_delete_watcher_group_btn'],
-                    'assign' => $config['remove_delete_assign_group_btn'],
-                ],
-                Supplier::getType() => [
-                    'assign' => $config['remove_delete_assign_supplier_btn'],
-                ],
-            ];
         }
         if (!isset($item->input['actortype'])) {
             $groups = new Group_Ticket();

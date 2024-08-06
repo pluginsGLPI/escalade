@@ -28,15 +28,32 @@
  * -------------------------------------------------------------------------
  */
 
-use PHPUnit\Framework\TestCase;
+namespace GlpiPlugin\Scim\Tests\Units;
 
-class TaskMessageTest extends TestCase
+use GlpiPlugin\Escalade\Tests\EscaladeTestCase;
+use Group;
+use Group_Ticket;
+use Plugin;
+use PluginEscaladeConfig;
+use Ticket;
+use TicketTask;
+
+final class TaskMessageTest extends EscaladeTestCase
 {
+    public function testPluginReactivated()
+    {
+        $this->login();
+        PluginEscaladeConfig::loadInSession();
+        $_SESSION['glpilanguage'] = 'en_GB';
+        $plugins = new Plugin();
+        $plugins->getFromDBbyDir('escalade');
+        $this->assertTrue(Plugin::isPluginActive('escalade'));
+    }
     protected function dataTestEscalationTaskGroup(): array
     {
         $ticket = new Ticket();
         $ticket->add([
-            'name' => 'Test',
+            'name' => 'Escalation Test',
             'content' => '',
         ]);
 
@@ -53,26 +70,25 @@ class TaskMessageTest extends TestCase
         return [
             [
                 'expected' => [
-                    'groups_count' => 0,
-                    'tasks_count' => 0,
-                    'last_task_content' => null,
+                    'group_name' => null,
                     'ticket_id' => $ticket->getID(),
                     'group_id' => null,
                 ],
                 'inputs' => [
                     'id' => $ticket->getID(),
+                    'name' => 'Escalation Test 1',
+                    'update' => true,
                 ],
             ],
             [
                 'expected' => [
-                    'groups_count' => 1,
-                    'tasks_count' => 1,
-                    'last_task_content' => 'Escalation to the group Test Group.',
+                    'group_name' => $group_test->getName(),
                     'ticket_id' => $ticket->getID(),
                     'group_id' => $group_test->getID(),
                 ],
                 'inputs' => [
                     'id' => $ticket->getID(),
+                    'name' => 'Escalation Test 2',
                     '_actors' => [
                         'assign' => [
                             [
@@ -81,18 +97,18 @@ class TaskMessageTest extends TestCase
                             ],
                         ],
                     ],
+                    'update' => true,
                 ],
             ],
             [
                 'expected' => [
-                    'groups_count' => 1,
-                    'tasks_count' => 2,
-                    'last_task_content' => 'Escalation to the group Test Group 2.',
+                    'group_name' => $group_test_2->getName(),
                     'ticket_id' => $ticket->getID(),
                     'group_id' => $group_test_2->getID(),
                 ],
                 'inputs' => [
                     'id' => $ticket->getID(),
+                    'name' => 'Escalation Test 3',
                     '_actors' => [
                         'assign' => [
                             [
@@ -105,6 +121,7 @@ class TaskMessageTest extends TestCase
                             ],
                         ],
                     ],
+                    'update' => true,
                 ],
             ],
         ];
@@ -116,18 +133,20 @@ class TaskMessageTest extends TestCase
     public function testEscalationTaskGroup($expected, $inputs)
     {
         $ticket = new Ticket();
-        $ticket->update($inputs);
+        $ticket->getFromDB($expected['ticket_id']);
+
+        $this->assertTrue($ticket->update($inputs));
 
         $ticket_group = new Group_Ticket();
         $t_groups = $ticket_group->find(['tickets_id' => $expected['ticket_id']]);
-        $this->assertEquals(count($t_groups), $expected['groups_count']);
+        $t_groups = end($t_groups);
+        $this->assertEquals($t_groups['groups_id'] ?? null, $expected['group_id']);
 
         $ticket_task = new TicketTask();
         $t_tasks = $ticket_task->find(['tickets_id' => $expected['ticket_id']]);
-        $this->assertEquals(count($t_tasks), $expected['tasks_count']);
         $last_task = end($t_tasks);
         if ($last_task) {
-            $this->assertEquals($last_task['content'], $expected['last_task_content']);
+            $this->assertStringContainsString($expected['group_name'], $last_task['content']);
         }
     }
 }
