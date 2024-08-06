@@ -28,7 +28,7 @@
  * -------------------------------------------------------------------------
  */
 
-global $CFG_GLPI, $PLUGIN_HOOKS;
+global $CFG_GLPI;
 
 define('GLPI_ROOT', __DIR__ . '/../../../');
 define('GLPI_LOG_DIR', __DIR__ . '/files/_logs');
