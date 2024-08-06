@@ -28,7 +28,7 @@
  * -------------------------------------------------------------------------
  */
 
-namespace GlpiPlugin\Scim\Tests\Units;
+namespace GlpiPlugin\Escalade\Tests\Units;
 
 use GlpiPlugin\Escalade\Tests\EscaladeTestCase;
 use Group_Ticket;
