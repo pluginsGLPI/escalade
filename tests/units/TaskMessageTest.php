@@ -31,11 +31,9 @@
 namespace GlpiPlugin\Scim\Tests\Units;
 
 use GlpiPlugin\Escalade\Tests\EscaladeTestCase;
-use Group;
 use Group_Ticket;
 use Plugin;
 use PluginEscaladeConfig;
-use Ticket;
 use TicketTask;
 
 final class TaskMessageTest extends EscaladeTestCase
@@ -51,18 +49,18 @@ final class TaskMessageTest extends EscaladeTestCase
     }
     protected function dataTestEscalationTaskGroup(): array
     {
-        $ticket = new Ticket();
+        $ticket = new \Ticket();
         $ticket->add([
             'name' => 'Escalation Test',
             'content' => '',
         ]);
 
-        $group_test = new Group();
+        $group_test = new \Group();
         $group_test->add([
             'name' => 'Test Group',
         ]);
 
-        $group_test_2 = new Group();
+        $group_test_2 = new \Group();
         $group_test_2->add([
             'name' => 'Test Group 2',
         ]);
@@ -132,7 +130,7 @@ final class TaskMessageTest extends EscaladeTestCase
      */
     public function testEscalationTaskGroup($expected, $inputs)
     {
-        $ticket = new Ticket();
+        $ticket = new \Ticket();
         $ticket->getFromDB($expected['ticket_id']);
 
         $this->assertTrue($ticket->update($inputs));
