@@ -30,7 +30,7 @@
 
 global $CFG_GLPI, $PLUGIN_HOOKS;
 
-define('GLPI_ROOT', __DIR__ . '/../../../');
+define('GLPI_ROOT', dirname(__DIR__, 3));
 define('GLPI_LOG_DIR', GLPI_ROOT . '/files/_logs');
 
 define('TU_USER', 'glpi');
