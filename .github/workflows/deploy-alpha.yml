@@ -1,8 +1,5 @@
 name: "Transifex"
 
-env:
-  module_app: app
-
 on:
   push:
     branches:
