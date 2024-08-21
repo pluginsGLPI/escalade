@@ -1,4 +1,4 @@
-name: Escalade Deploy Alpha
+name: "Transifex"
 
 env:
   module_app: app
