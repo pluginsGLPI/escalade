@@ -1,0 +1,17 @@
+name: "Transifex Push / Pull"
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  transifex_push_pull:
+    permissions:
+      contents: "write"
+      pull-requests: "write"
+    name: "Transifex Push / Pull"
+    uses: "glpi-project/plugin-translation-workflows/.github/workflows/transifex_push_pull.yml@v1"
+    with:
+      branch: "main"
+    secrets:
+      tx_token: "${{ secrets.TRANSIFEX_TOKEN }}"
