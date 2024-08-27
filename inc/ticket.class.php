@@ -547,7 +547,7 @@ class PluginEscaladeTicket
             $updates_ticket = new Ticket();
             $updates_ticket->update($ticket_details + [
                 '_actors' => PluginEscaladeTicket::getTicketFieldsWithActors($tickets_id, $groups_id),
-                '_plugin_escalade_no_history' => true, // Prevent a duplicated task to be added
+                '_plugin_escalade_no_history' => false,
                 'actortype' => CommonITILActor::ASSIGN,
                 'groups_id' => $groups_id,
                 '_form_object' => $_form_object,
