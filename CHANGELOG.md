@@ -12,8 +12,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Prevent an escalation when a ticket is updated
-- Fix climbing with history
-- Fix task not added when climbing with history
+- Fix escalating with history
+- Fix task not added when escalating with history
 
 ### Changed
 
