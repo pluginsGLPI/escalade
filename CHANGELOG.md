@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unrelease] -
 
+### Fixed
+
+- Correction of the task message generated during escalation
+
+### Added
+
+- Configuring transiflex as a CI
+
 ## [2.9.8] - 2024-07-15
 
 ### Fixed
