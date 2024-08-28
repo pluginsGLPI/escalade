@@ -75,37 +75,6 @@ class PluginEscaladeTicket
             $old_groups = array_filter($ticket_actors['assign'], function ($actor) {
                 return isset($actor['itemtype']) && $actor['itemtype'] === 'Group';
             });
-
-            // Get deletion rights for each type of actor
-            $deletion_rights = [
-                User::getType() => [
-                    'requester' => $config['remove_delete_requester_user_btn'],
-                    'observer' => $config['remove_delete_watcher_user_btn'],
-                    'assign' => $config['remove_delete_assign_user_btn'],
-                ],
-                Group::getType() => [
-                    'requester' => $config['remove_delete_requester_group_btn'],
-                    'observer' => $config['remove_delete_watcher_group_btn'],
-                    'assign' => $config['remove_delete_assign_group_btn'],
-                ],
-                Supplier::getType() => [
-                    'assign' => $config['remove_delete_assign_supplier_btn'],
-                ],
-            ];
-
-            if (!isset($item->input['_actors'])) {
-                $item->input['_actors'] = $item->fields['_actors'] ?? [];
-            } else {
-                // Iteration through actor types and verification of deletion rights
-                foreach ($ticket_actors as $type => $actors) {
-                    foreach ($actors as $actor) {
-                        // If the actor has been deleted and deletion is forbidden, it is readjusted to simulate a non-deletion
-                        if ($deletion_rights[$actor['itemtype']][$type] == 0) {
-                            $item->input['_actors'][$type][] = $actor;
-                        }
-                    }
-                }
-            }
         }
         if (!isset($item->input['actortype'])) {
             $groups = new Group_Ticket();
@@ -604,7 +573,7 @@ class PluginEscaladeTicket
             return true;
         }
 
-        $tickets_id = $item->input['id'];
+        $tickets_id = $item->input['id'] ?? $item->fields['id'];
 
         $where_keep = [
             'tickets_id' => $tickets_id,
