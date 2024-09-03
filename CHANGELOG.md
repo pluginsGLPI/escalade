@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Correction of the task message generated during escalation
+- Fix ```status``` after escalation
 
 ## [2.9.8] - 2024-07-15
 
