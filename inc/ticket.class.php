@@ -38,22 +38,6 @@ class PluginEscaladeTicket
 {
     public static function pre_item_update(CommonDBTM $item)
     {
-        //only if update is related to Group assign operation and _from_assignment
-        if (
-            !empty(array_filter(
-                $item->input['_actors']['assign'] ?? [],
-                fn ($actor) => $actor['itemtype'] == 'Group'
-            )) && (
-                isset($item->input['_from_assignment'])
-                && $item->input['_from_assignment']
-            )
-        ) {
-            //handle status behavior
-            if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] != -1) {
-                $item->input['status'] = $_SESSION['plugins']['escalade']['config']['ticket_last_status'];
-            }
-        }
-
         if (isset($input['_itil_assign'])) {
             $item->input['_do_not_compute_status'] = true;
         }
@@ -102,6 +86,10 @@ class PluginEscaladeTicket
             ) {
                 //disable notification to prevent notification for old AND new group
                 $item->input['_disablenotif'] = true;
+                if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] != -1) {
+                    $item->input['_do_not_compute_status'] = true;
+                    $item->input['status'] = $_SESSION['plugins']['escalade']['config']['ticket_last_status'];
+                }
                 return PluginEscaladeTicket::addHistoryOnAddGroup($item);
             } else if (count($old_groups) == count($new_groups)) {
                 $old_group_ids = [];
@@ -112,6 +100,10 @@ class PluginEscaladeTicket
                 foreach ($new_groups as $new_group) {
                     if (!isset($old_group_ids[$new_group['items_id']])) {
                         $item->input['_disablenotif'] = true;
+                        if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] != -1) {
+                            $item->input['_do_not_compute_status'] = true;
+                            $item->input['status'] = $_SESSION['plugins']['escalade']['config']['ticket_last_status'];
+                        }
                         return PluginEscaladeTicket::addHistoryOnAddGroup($item);
                     }
                 }

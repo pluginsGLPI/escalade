@@ -10,14 +10,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Correction of the task message generated during escalation
+- Fix task not added when escalating with history
+- Fix escalating with history
+- Fix ```status``` after escalation
 
 ## [2.9.8] - 2024-07-15
 
 ### Fixed
 
 - Prevent an escalation when a ticket is updated
-- Fix escalating with history
-- Fix task not added when escalating with history
 
 ### Changed
 
