@@ -87,6 +87,7 @@ class PluginEscaladeTicket
                 //disable notification to prevent notification for old AND new group
                 $item->input['_disablenotif'] = true;
                 if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] != -1) {
+                    $item->input['_do_not_compute_status'] = true;
                     $item->input['status'] = $_SESSION['plugins']['escalade']['config']['ticket_last_status'];
                 }
                 return PluginEscaladeTicket::addHistoryOnAddGroup($item);
@@ -100,6 +101,7 @@ class PluginEscaladeTicket
                     if (!isset($old_group_ids[$new_group['items_id']])) {
                         $item->input['_disablenotif'] = true;
                         if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] != -1) {
+                            $item->input['_do_not_compute_status'] = true;
                             $item->input['status'] = $_SESSION['plugins']['escalade']['config']['ticket_last_status'];
                         }
                         return PluginEscaladeTicket::addHistoryOnAddGroup($item);
