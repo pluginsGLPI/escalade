@@ -16,6 +16,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  changelog_check:
+    name: "Check changelog change"
+    uses: "stonebuzz/plugin-ci-workflows/.github/workflows/changelog.yml@check_changelog"
   generate-ci-matrix:
     name: "Generate CI matrix"
     uses: "glpi-project/plugin-ci-workflows/.github/workflows/generate-ci-matrix.yml@v1"
