@@ -3,25 +3,24 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Cédric Anne, 2023
-# 조성현 (jaymz9634) <jaymz9634@gmail.com>, 2020-2021
+# feonsu <feonsu@gmail.com>, 2019,2023
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-04 07:32+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
-"Last-Translator: Cédric Anne, 2023\n"
-"Language-Team: Korean (Korea) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/ko_KR/)\n"
+"Last-Translator: feonsu <feonsu@gmail.com>, 2019,2023\n"
+"Language-Team: Slovak (Slovakia) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/sk_SK/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ko_KR\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: sk_SK\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);\n"
 
 #: templates/escalade_form.html.twig
 msgid "Assign me as an observer"
-msgstr ""
+msgstr "Priradiť mňa ako pozorovateľa"
 
 #: inc/config.class.php:192
 msgid "Assign me as observer by default"
@@ -29,191 +28,191 @@ msgstr ""
 
 #: inc/config.class.php:151
 msgid "Assign the technical group on ticket category change"
-msgstr "티켓 분류 변경에 기술적 그룹 할당"
+msgstr "Priradiť skupinu technikov pri zmene kategórie požiadavky"
 
 #: inc/config.class.php:140
 msgid "Assign the technical manager on ticket category change"
-msgstr "티켓 분류 변경에 기술적 관리자 할당"
+msgstr "Priradiť manažéra technikov pri zmene kategórie požiadavky"
 
 #: inc/config.class.php:127
 msgid "Assign ticket to initial group on solve ticket"
-msgstr "해결 티켓에서 초기 그룹에 티켓 할당"
+msgstr "Priradiť požiadavku počiatočnej skupine pri riešení požiadavky"
 
 #: inc/user.class.php:139
 msgid "Bypass filtering on the groups assignment"
-msgstr "그룹 할당에 대한 필터링 우회"
+msgstr "Vynechať filtrovanie pri priraďovaní skupín"
 
 #: js/cloneandlink_ticket.js.php:42
 msgid "Clone and link"
-msgstr "복제와 링크"
+msgstr "Klonovať a prepojiť"
 
 #: inc/config.class.php:163
 msgid "Clone tickets"
-msgstr "티켓 복제"
+msgstr "Klonovať požiadavky"
 
 #: inc/config.class.php:173
 msgid "Close cloned tickets at the same time"
-msgstr "동시에 복제된 티켓 닫기"
+msgstr "Súčasne uzavrieť aj klonované požiadavky"
 
 #: templates/escalade_form.html.twig
 msgid "Comment"
-msgstr ""
+msgstr "Komentár"
 
 #: inc/config.class.php:37
 msgid "Configuration Escalade plugin"
-msgstr "구성 이관 플러그인"
+msgstr "Konfigurácia pluginu Eskalácie"
 
 #: inc/config.class.php:278
 msgid "Display delete button"
-msgstr "삭제 버튼 표시"
+msgstr "Zobraziť tlačidlo mazania"
 
 #: inc/config.class.php:389
 msgid "Don't change"
-msgstr "변경 안함"
+msgstr "Nemeniť"
 
 #: inc/config.class.php:347 hook.php:581 hook.php:600
 msgid "Enable filtering on the groups assignment"
-msgstr "그룹 할당에 필터링 활성화"
+msgstr "Povoliť filtrovanie pri priraďovaní skupín"
 
 #: inc/ticket.class.php:888
 msgid "Error : adding actors (group)"
-msgstr "오류 : 시행자 추가 (그룹)"
+msgstr "Chyba: pridávanie riešiteľov (skupina)"
 
 #: inc/ticket.class.php:878
 msgid "Error : adding actors (user)"
-msgstr "오류 : 시행자 (사용자) 추가"
+msgstr "Chyba: pridávanie riešiteľov (používateľ)"
 
 #: inc/ticket.class.php:899
 msgid "Error : adding documents"
-msgstr "오류 : 문서 추가"
+msgstr "Chyba: pridávanie dokumentov"
 
 #: inc/ticket.class.php:866
 msgid "Error : adding followups"
-msgstr "오류 : 추적 추가"
+msgstr "Chyba: pridávanie reakcií"
 
 #: inc/ticket.class.php:849
 msgid "Error : adding link between the two tickets"
-msgstr "오류 : 두 티켓간의 링크 추가"
+msgstr "Chyba: pridávanie prepojení medzi dvoma požiadavkami"
 
 #: inc/ticket.class.php:836
 msgid "Error : adding new ticket"
-msgstr "오류 : 새 티켓 추가"
+msgstr "Chyba: pridávanie novej požiadavky"
 
 #: inc/ticket.class.php:820
 msgid "Error : get old ticket"
-msgstr "오류  : 오래된 티켓 가져오기"
+msgstr "Chyba: získavanie starej požiadavky"
 
 #: inc/ticket.class.php:1018 inc/ticket.class.php:1019
 msgid "Escalate"
-msgstr ""
+msgstr "Eskalovať"
 
 #: templates/escalade_form.html.twig
 msgid "Escalate ticket"
-msgstr ""
+msgstr "Eskalovať požiadavku"
 
 #: inc/user.class.php:180 inc/group_group.class.php:56 setup.php:184
 #: front/config.form.php:57
 msgid "Escalation"
-msgstr "이관"
+msgstr "Eskalácie"
 
 #: inc/config.class.php:94
 msgid "Escalation history in tasks"
-msgstr "업무에 이력 이관"
+msgstr "História eskalácií v úlohách"
 
 #: inc/ticket.class.php:383 front/ticket.form.php:85
 #, php-format
 msgid "Escalation to the group %s."
-msgstr ""
+msgstr "Eskalácia na skupinu %s."
 
 #: hook.php:536
 msgid "Group concerned by the escalation"
-msgstr "이관에 관련된 그룹"
+msgstr "Skupina, ktorej sa týkajú eskalácie"
 
 #: inc/notification.class.php:102
 msgid "Group escalated in the ticket"
-msgstr "티켓에서 그룹으로 이관됨"
+msgstr "Skupina eskalovaná v požiadavke"
 
 #: inc/notification.class.php:106
 msgid "Manager of the group escalated in the ticket"
-msgstr "티켓에서 그룹의 관리자로 이관됨"
+msgstr "Manažér skupiny eskalovanej v požiadavke"
 
 #: inc/config.class.php:256
 msgid ""
 "Nota: This feature (creation part) is duplicate with the <a "
 "href='##link##'>Behavior</a>plugin. This last has priority."
-msgstr "참고: 이 기능 (부분 생성)은 <a href='##link##'>Behavior</a>플러그인과 중복됩니다. 이 최근이 우선됩니다."
+msgstr "Poznámka: Táto funkcia (časť vytvorenia) je duplicitná s pluginom <a href='##link##'>Behavior</a>. Táto posledná má prioritu."
 
 #: hook.php:554
 msgid "Number of escalations"
-msgstr "이관 수"
+msgstr "Počet eskalácií"
 
 #: hook.php:568
 msgid "Number of escalations between two groups"
-msgstr "두 그룹간의 이관 수"
+msgstr "Počet eskalácií medzi dvoma skupinami"
 
 #: inc/history.class.php:130
 msgid "Reassign the ticket to group"
-msgstr "그룹에 티켓 재할당"
+msgstr "Znovu priradiť požiadavku skupine"
 
 #: inc/config.class.php:60
 msgid "Remove old assign group on new group assign"
-msgstr "새 그룹 할당에 이전 할당 그룹 제거"
+msgstr "Vymazať starú priradenú skupinu pri priradení novej skupiny"
 
 #: inc/config.class.php:266
 msgid "Remove requester(s) on escalation"
-msgstr "이관 시 요청자(들) 제거"
+msgstr "Odstrániť žiadateľov pri eskalácii"
 
 #: inc/config.class.php:103
 msgid "Remove technician(s) on escalation"
-msgstr "이관에 기술자(들) 제거"
+msgstr "Odstrániť technikov pri eskalácii"
 
 #: inc/notification.class.php:112
 msgid "Requester user of the task/reminder"
-msgstr "작업/알림의 요청 사용자"
+msgstr "Používateľ-žiadateľ úlohy/pripomienky"
 
 #: inc/notification.class.php:60
 msgid "Requester user of the ticket"
-msgstr "티켓 요청 사용자"
+msgstr "Používateľ-žiadateľ požiadavky"
 
 #: inc/ticket.class.php:215
 msgid "Solution provided, back to the group"
-msgstr "해결책 제공됨, 그룹으로 돌아가기"
+msgstr "Riešenie poskytnuté, späť k skupine"
 
 #: inc/ticket.class.php:279
 msgid "Solution rejected, return to the group"
-msgstr "해결책 거부됨, 그룹으로 돌아가기"
+msgstr "Riešenie odmietnuté, návrat k skupine"
 
 #: inc/notification.class.php:255
 msgid "Solve date modification"
-msgstr "해결 일자 변경"
+msgstr "Zmena dátumu vyriešenia"
 
 #: inc/ticket.class.php:860 inc/ticket.class.php:905 inc/ticket.class.php:910
 msgid "This ticket has been cloned from the ticket num"
-msgstr "이 티켓은 그 티켓 번호에서 복제되었습니다"
+msgstr "Táto požiadavka bola klonovaná z požiadavky č."
 
 #: inc/config.class.php:115
 msgid "Ticket status after an escalation"
-msgstr "이관 후 티켓 상태"
+msgstr "Stav požiadavky po eskalácii"
 
 #: inc/history.class.php:244
 msgid "Tickets to close (escalated)"
-msgstr "종료할 티켓 (상승됨)"
+msgstr "Požiadavky na uzavretie (eskalované)"
 
 #: inc/history.class.php:230
 msgid "Tickets to follow (escalated)"
-msgstr "추적할 티켓 (상승됨)"
+msgstr "Požiadavky na sledovanie (eskalované)"
 
 #: inc/config.class.php:200
 msgid "Use the technician's group"
-msgstr "기술자 그룹 사용"
+msgstr "Použiť skupinu technika"
 
 #: inc/history.class.php:177
 msgid "View full history"
-msgstr "전체 이력 보기"
+msgstr "Zobraziť úplnú históriu"
 
 #: front/ticket.form.php:51
 msgid "You must select a group."
-msgstr ""
+msgstr "Musíte vybrať skupinu."
 
 #: inc/config.class.php:218
 msgid "at creation time"
@@ -225,12 +224,12 @@ msgstr ""
 
 #: inc/history.class.php:174
 msgid "full assignation history"
-msgstr "전체 배치 이력"
+msgstr "úplná história priradenia"
 
 #: ajax/assign_me.php:34 front/climb_group.php:37
 msgid "missing parameters"
-msgstr "누락된 매개변수"
+msgstr "chýbajúce parametre"
 
 #: inc/config.class.php:82
 msgid "show group assign history visually"
-msgstr "시각적 그룹 할당 이력 표시"
+msgstr "Vizuálne zobraziť históriu priradenia skupín"
