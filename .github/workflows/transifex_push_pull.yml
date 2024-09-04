@@ -3,6 +3,7 @@ name: "Transifex Push / Pull"
 on:
   schedule:
     - cron: "0 0 * * *"
+  workflow_dispatch:
 
 jobs:
   transifex_push_pull:
@@ -12,6 +13,6 @@ jobs:
     name: "Transifex Push / Pull"
     uses: "glpi-project/plugin-translation-workflows/.github/workflows/transifex_push_pull.yml@v1"
     with:
-      branch: "main"
+      branch: "add_transifex_ci"
     secrets:
       tx_token: "${{ secrets.TRANSIFEX_TOKEN }}"
