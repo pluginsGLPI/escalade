@@ -15,4 +15,4 @@ jobs:
     with:
       branch: "add_transifex_ci"
     secrets:
-      tx_token: "${{ secrets.TRANSIFEX_TOKEN }}"
+      tx_token: "${{ secrets.TRANSLATE_TOKEN }}"
