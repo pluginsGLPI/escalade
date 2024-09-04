@@ -11,7 +11,7 @@ jobs:
       contents: "write"
       pull-requests: "write"
     name: "Transifex Push / Pull"
-    uses: "glpi-project/plugin-translation-workflows/.github/workflows/transifex_push_pull.yml@v1"
+    uses: "stonebuzz/plugin-translation-workflows/.github/workflows/transifex_push_pull.yml@v1"
     with:
       branch: "add_transifex_ci"
     secrets:
