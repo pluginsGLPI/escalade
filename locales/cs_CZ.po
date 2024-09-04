@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-12 14:48+0000\n"
+"POT-Creation-Date: 2024-09-04 07:32+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Cédric Anne, 2018,2023\n"
 "Language-Team: Czech (Czech Republic) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/cs_CZ/)\n"
@@ -24,19 +24,23 @@ msgstr ""
 msgid "Assign me as an observer"
 msgstr ""
 
-#: inc/config.class.php:137
+#: inc/config.class.php:192
+msgid "Assign me as observer by default"
+msgstr ""
+
+#: inc/config.class.php:151
 msgid "Assign the technical group on ticket category change"
 msgstr "Přiřadit skupinu techniků při změně kategorie požadavku"
 
-#: inc/config.class.php:126
+#: inc/config.class.php:140
 msgid "Assign the technical manager on ticket category change"
 msgstr "Přiřadit vedoucího technika kategorii při změně kategorie požadavku"
 
-#: inc/config.class.php:113
+#: inc/config.class.php:127
 msgid "Assign ticket to initial group on solve ticket"
 msgstr "Při řešení požadavku ho přiřadit prvotní skupině"
 
-#: inc/user.class.php:125
+#: inc/user.class.php:139
 msgid "Bypass filtering on the groups assignment"
 msgstr "Vynechat filtrování přiřazení skupin"
 
@@ -44,11 +48,11 @@ msgstr "Vynechat filtrování přiřazení skupin"
 msgid "Clone and link"
 msgstr "Kopírovat a přiřadit"
 
-#: inc/config.class.php:149
+#: inc/config.class.php:163
 msgid "Clone tickets"
 msgstr "Kopírovat požadavky"
 
-#: inc/config.class.php:159
+#: inc/config.class.php:173
 msgid "Close cloned tickets at the same time"
 msgstr "Současně uzavřít i požadavky-klony"
 
@@ -56,51 +60,51 @@ msgstr "Současně uzavřít i požadavky-klony"
 msgid "Comment"
 msgstr ""
 
-#: inc/config.class.php:35
+#: inc/config.class.php:37
 msgid "Configuration Escalade plugin"
 msgstr "Nastavení zásuvného modulu Escalade"
 
-#: inc/config.class.php:243
+#: inc/config.class.php:278
 msgid "Display delete button"
 msgstr "Zobrazit tlačítko mazání"
 
-#: inc/config.class.php:337
+#: inc/config.class.php:389
 msgid "Don't change"
 msgstr "Neměnit"
 
-#: hook.php:495 hook.php:513 inc/config.class.php:298
+#: inc/config.class.php:347 hook.php:581 hook.php:600
 msgid "Enable filtering on the groups assignment"
 msgstr "Filtrovat dle přiřazení skupin"
 
-#: inc/ticket.class.php:773
+#: inc/ticket.class.php:888
 msgid "Error : adding actors (group)"
 msgstr "Chyba: přidávání řešitelů (skupina)"
 
-#: inc/ticket.class.php:764
+#: inc/ticket.class.php:878
 msgid "Error : adding actors (user)"
 msgstr "Chyba: přidávání řešitelů (uživatel)"
 
-#: inc/ticket.class.php:783
+#: inc/ticket.class.php:899
 msgid "Error : adding documents"
 msgstr "Chyba: přidávání dokumentů"
 
-#: inc/ticket.class.php:753
+#: inc/ticket.class.php:866
 msgid "Error : adding followups"
 msgstr "Chyba: přidávání doplňující zprávy"
 
-#: inc/ticket.class.php:738
+#: inc/ticket.class.php:849
 msgid "Error : adding link between the two tickets"
 msgstr "Chyba: přidávání propojení mezi dvěma požadavky"
 
-#: inc/ticket.class.php:726
+#: inc/ticket.class.php:836
 msgid "Error : adding new ticket"
 msgstr "Chyba: přidávání nového požadavku"
 
-#: inc/ticket.class.php:710
+#: inc/ticket.class.php:820
 msgid "Error : get old ticket"
 msgstr "Chyba: získání původního požadavku"
 
-#: inc/ticket.class.php:902
+#: inc/ticket.class.php:1018 inc/ticket.class.php:1019
 msgid "Escalate"
 msgstr ""
 
@@ -108,126 +112,126 @@ msgstr ""
 msgid "Escalate ticket"
 msgstr ""
 
-#: inc/group_group.class.php:52 inc/user.class.php:164
-#: front/config.form.php:64 setup.php:177
+#: inc/user.class.php:180 inc/group_group.class.php:56 setup.php:184
+#: front/config.form.php:57
 msgid "Escalation"
 msgstr "Eskalace"
 
-#: inc/config.class.php:84
+#: inc/config.class.php:94
 msgid "Escalation history in tasks"
 msgstr "Historie eskalace v úkolech"
 
-#: inc/ticket.class.php:316 front/ticket.form.php:65
+#: inc/ticket.class.php:383 front/ticket.form.php:85
 #, php-format
 msgid "Escalation to the group %s."
 msgstr ""
 
-#: hook.php:450
+#: hook.php:536
 msgid "Group concerned by the escalation"
 msgstr "Skupina které se eskalace týká"
 
-#: inc/notification.class.php:79
+#: inc/notification.class.php:102
 msgid "Group escalated in the ticket"
 msgstr "Skupina eskalovaná v požadavku"
 
-#: inc/notification.class.php:81
+#: inc/notification.class.php:106
 msgid "Manager of the group escalated in the ticket"
 msgstr "Vedoucí skupiny eskalované v požadavku"
 
-#: inc/config.class.php:223
+#: inc/config.class.php:256
 msgid ""
 "Nota: This feature (creation part) is duplicate with the <a "
 "href='##link##'>Behavior</a>plugin. This last has priority."
 msgstr "Pozn.: Tato funkce (část vytvoření) je duplicitní k zásuvnému modulu <a href='##link##'> Behavior </a>. Tato druhá má přednost."
 
-#: hook.php:468
+#: hook.php:554
 msgid "Number of escalations"
 msgstr "Počet eskalací"
 
-#: hook.php:482
+#: hook.php:568
 msgid "Number of escalations between two groups"
 msgstr "Počet eskalací mezi dvěma skupinami"
 
-#: inc/history.class.php:124
+#: inc/history.class.php:130
 msgid "Reassign the ticket to group"
 msgstr "Změnit přiřazení požadavku na skupinu"
 
-#: inc/config.class.php:50
+#: inc/config.class.php:60
 msgid "Remove old assign group on new group assign"
 msgstr "Při přiřazení nové skupiny odebrat tu původní"
 
-#: inc/config.class.php:231
+#: inc/config.class.php:266
 msgid "Remove requester(s) on escalation"
 msgstr "Odebrat žadatele() při eskalaci"
 
-#: inc/config.class.php:93
+#: inc/config.class.php:103
 msgid "Remove technician(s) on escalation"
 msgstr "Odebrat techniky při eskalaci"
 
-#: inc/notification.class.php:85
+#: inc/notification.class.php:112
 msgid "Requester user of the task/reminder"
 msgstr "Uživatel-žadatel úkolu/připomínky"
 
-#: inc/notification.class.php:57
+#: inc/notification.class.php:60
 msgid "Requester user of the ticket"
 msgstr "Uživatel-žadatel požadavku"
 
-#: inc/ticket.class.php:144
+#: inc/ticket.class.php:215
 msgid "Solution provided, back to the group"
 msgstr "Řešení poskytnuto, zpět ke skupině"
 
-#: inc/ticket.class.php:206
+#: inc/ticket.class.php:279
 msgid "Solution rejected, return to the group"
 msgstr "Řešení odmítnuto, vráceno skupině"
 
-#: inc/notification.class.php:215
+#: inc/notification.class.php:255
 msgid "Solve date modification"
 msgstr "Změna data vyřešení"
 
-#: inc/ticket.class.php:748 inc/ticket.class.php:789 inc/ticket.class.php:794
+#: inc/ticket.class.php:860 inc/ticket.class.php:905 inc/ticket.class.php:910
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Tento požadavek byl z požadavku č."
 
-#: inc/config.class.php:105
+#: inc/config.class.php:115
 msgid "Ticket status after an escalation"
 msgstr "Stav požadavku po eskalaci"
 
-#: inc/history.class.php:209
+#: inc/history.class.php:244
 msgid "Tickets to close (escalated)"
 msgstr "Požadavky k uzavření (zpracované)"
 
-#: inc/history.class.php:195
+#: inc/history.class.php:230
 msgid "Tickets to follow (escalated)"
 msgstr "Požadavky k řešení (zpracované)"
 
-#: inc/config.class.php:177
+#: inc/config.class.php:200
 msgid "Use the technician's group"
 msgstr "Použít skupinu technika"
 
-#: inc/history.class.php:148
+#: inc/history.class.php:177
 msgid "View full history"
 msgstr "Zobrazit úplnou historii"
 
-#: front/ticket.form.php:46
+#: front/ticket.form.php:51
 msgid "You must select a group."
 msgstr ""
 
-#: inc/config.class.php:195
-msgid "a time of creation"
-msgstr "čas vytvoření"
+#: inc/config.class.php:218
+msgid "at creation time"
+msgstr ""
 
-#: inc/config.class.php:197
-msgid "a time of modification"
-msgstr "čas změny"
+#: inc/config.class.php:220
+msgid "at modification time"
+msgstr ""
 
-#: front/popup_histories.php:33
+#: inc/history.class.php:174
 msgid "full assignation history"
 msgstr "úplná historie přiřazení"
 
-#: front/climb_group.php:35 ajax/assign_me.php:34
+#: ajax/assign_me.php:34 front/climb_group.php:37
 msgid "missing parameters"
 msgstr "chybějící parametry"
 
-#: inc/config.class.php:72
+#: inc/config.class.php:82
 msgid "show group assign history visually"
 msgstr "zobrazit historii přiřazení skupiny vizuálně"
