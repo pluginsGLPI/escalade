@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-12 14:48+0000\n"
+"POT-Creation-Date: 2024-09-06 09:48+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Cédric Anne, 2023\n"
 "Language-Team: Korean (Korea) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/ko_KR/)\n"
@@ -23,19 +23,23 @@ msgstr ""
 msgid "Assign me as an observer"
 msgstr ""
 
-#: inc/config.class.php:137
+#: inc/config.class.php:192
+msgid "Assign me as observer by default"
+msgstr ""
+
+#: inc/config.class.php:151
 msgid "Assign the technical group on ticket category change"
 msgstr "티켓 분류 변경에 기술적 그룹 할당"
 
-#: inc/config.class.php:126
+#: inc/config.class.php:140
 msgid "Assign the technical manager on ticket category change"
 msgstr "티켓 분류 변경에 기술적 관리자 할당"
 
-#: inc/config.class.php:113
+#: inc/config.class.php:127
 msgid "Assign ticket to initial group on solve ticket"
 msgstr "해결 티켓에서 초기 그룹에 티켓 할당"
 
-#: inc/user.class.php:125
+#: inc/user.class.php:139
 msgid "Bypass filtering on the groups assignment"
 msgstr "그룹 할당에 대한 필터링 우회"
 
@@ -43,11 +47,11 @@ msgstr "그룹 할당에 대한 필터링 우회"
 msgid "Clone and link"
 msgstr "복제와 링크"
 
-#: inc/config.class.php:149
+#: inc/config.class.php:163
 msgid "Clone tickets"
 msgstr "티켓 복제"
 
-#: inc/config.class.php:159
+#: inc/config.class.php:173
 msgid "Close cloned tickets at the same time"
 msgstr "동시에 복제된 티켓 닫기"
 
@@ -55,51 +59,51 @@ msgstr "동시에 복제된 티켓 닫기"
 msgid "Comment"
 msgstr ""
 
-#: inc/config.class.php:35
+#: inc/config.class.php:37
 msgid "Configuration Escalade plugin"
 msgstr "구성 이관 플러그인"
 
-#: inc/config.class.php:243
+#: inc/config.class.php:278
 msgid "Display delete button"
 msgstr "삭제 버튼 표시"
 
-#: inc/config.class.php:337
+#: inc/config.class.php:389
 msgid "Don't change"
 msgstr "변경 안함"
 
-#: hook.php:495 hook.php:513 inc/config.class.php:298
+#: hook.php:581 hook.php:600 inc/config.class.php:347
 msgid "Enable filtering on the groups assignment"
 msgstr "그룹 할당에 필터링 활성화"
 
-#: inc/ticket.class.php:773
+#: inc/ticket.class.php:888
 msgid "Error : adding actors (group)"
 msgstr "오류 : 시행자 추가 (그룹)"
 
-#: inc/ticket.class.php:764
+#: inc/ticket.class.php:878
 msgid "Error : adding actors (user)"
 msgstr "오류 : 시행자 (사용자) 추가"
 
-#: inc/ticket.class.php:783
+#: inc/ticket.class.php:899
 msgid "Error : adding documents"
 msgstr "오류 : 문서 추가"
 
-#: inc/ticket.class.php:753
+#: inc/ticket.class.php:866
 msgid "Error : adding followups"
 msgstr "오류 : 추적 추가"
 
-#: inc/ticket.class.php:738
+#: inc/ticket.class.php:849
 msgid "Error : adding link between the two tickets"
 msgstr "오류 : 두 티켓간의 링크 추가"
 
-#: inc/ticket.class.php:726
+#: inc/ticket.class.php:836
 msgid "Error : adding new ticket"
 msgstr "오류 : 새 티켓 추가"
 
-#: inc/ticket.class.php:710
+#: inc/ticket.class.php:820
 msgid "Error : get old ticket"
 msgstr "오류  : 오래된 티켓 가져오기"
 
-#: inc/ticket.class.php:902
+#: inc/ticket.class.php:1018 inc/ticket.class.php:1019
 msgid "Escalate"
 msgstr ""
 
@@ -107,126 +111,126 @@ msgstr ""
 msgid "Escalate ticket"
 msgstr ""
 
-#: inc/group_group.class.php:52 inc/user.class.php:164
-#: front/config.form.php:64 setup.php:177
+#: inc/user.class.php:180 inc/group_group.class.php:56 setup.php:184
+#: front/config.form.php:57
 msgid "Escalation"
 msgstr "이관"
 
-#: inc/config.class.php:84
+#: inc/config.class.php:94
 msgid "Escalation history in tasks"
 msgstr "업무에 이력 이관"
 
-#: inc/ticket.class.php:316 front/ticket.form.php:65
+#: inc/ticket.class.php:383 front/ticket.form.php:85
 #, php-format
 msgid "Escalation to the group %s."
 msgstr ""
 
-#: hook.php:450
+#: hook.php:536
 msgid "Group concerned by the escalation"
 msgstr "이관에 관련된 그룹"
 
-#: inc/notification.class.php:79
+#: inc/notification.class.php:102
 msgid "Group escalated in the ticket"
 msgstr "티켓에서 그룹으로 이관됨"
 
-#: inc/notification.class.php:81
+#: inc/notification.class.php:106
 msgid "Manager of the group escalated in the ticket"
 msgstr "티켓에서 그룹의 관리자로 이관됨"
 
-#: inc/config.class.php:223
+#: inc/config.class.php:256
 msgid ""
 "Nota: This feature (creation part) is duplicate with the <a "
 "href='##link##'>Behavior</a>plugin. This last has priority."
 msgstr "참고: 이 기능 (부분 생성)은 <a href='##link##'>Behavior</a>플러그인과 중복됩니다. 이 최근이 우선됩니다."
 
-#: hook.php:468
+#: hook.php:554
 msgid "Number of escalations"
 msgstr "이관 수"
 
-#: hook.php:482
+#: hook.php:568
 msgid "Number of escalations between two groups"
 msgstr "두 그룹간의 이관 수"
 
-#: inc/history.class.php:124
+#: inc/history.class.php:130
 msgid "Reassign the ticket to group"
 msgstr "그룹에 티켓 재할당"
 
-#: inc/config.class.php:50
+#: inc/config.class.php:60
 msgid "Remove old assign group on new group assign"
 msgstr "새 그룹 할당에 이전 할당 그룹 제거"
 
-#: inc/config.class.php:231
+#: inc/config.class.php:266
 msgid "Remove requester(s) on escalation"
 msgstr "이관 시 요청자(들) 제거"
 
-#: inc/config.class.php:93
+#: inc/config.class.php:103
 msgid "Remove technician(s) on escalation"
 msgstr "이관에 기술자(들) 제거"
 
-#: inc/notification.class.php:85
+#: inc/notification.class.php:112
 msgid "Requester user of the task/reminder"
 msgstr "작업/알림의 요청 사용자"
 
-#: inc/notification.class.php:57
+#: inc/notification.class.php:60
 msgid "Requester user of the ticket"
 msgstr "티켓 요청 사용자"
 
-#: inc/ticket.class.php:144
+#: inc/ticket.class.php:215
 msgid "Solution provided, back to the group"
 msgstr "해결책 제공됨, 그룹으로 돌아가기"
 
-#: inc/ticket.class.php:206
+#: inc/ticket.class.php:279
 msgid "Solution rejected, return to the group"
 msgstr "해결책 거부됨, 그룹으로 돌아가기"
 
-#: inc/notification.class.php:215
+#: inc/notification.class.php:255
 msgid "Solve date modification"
 msgstr "해결 일자 변경"
 
-#: inc/ticket.class.php:748 inc/ticket.class.php:789 inc/ticket.class.php:794
+#: inc/ticket.class.php:860 inc/ticket.class.php:905 inc/ticket.class.php:910
 msgid "This ticket has been cloned from the ticket num"
 msgstr "이 티켓은 그 티켓 번호에서 복제되었습니다"
 
-#: inc/config.class.php:105
+#: inc/config.class.php:115
 msgid "Ticket status after an escalation"
 msgstr "이관 후 티켓 상태"
 
-#: inc/history.class.php:209
+#: inc/history.class.php:244
 msgid "Tickets to close (escalated)"
 msgstr "종료할 티켓 (상승됨)"
 
-#: inc/history.class.php:195
+#: inc/history.class.php:230
 msgid "Tickets to follow (escalated)"
 msgstr "추적할 티켓 (상승됨)"
 
-#: inc/config.class.php:177
+#: inc/config.class.php:200
 msgid "Use the technician's group"
 msgstr "기술자 그룹 사용"
 
-#: inc/history.class.php:148
+#: inc/history.class.php:177
 msgid "View full history"
 msgstr "전체 이력 보기"
 
-#: front/ticket.form.php:46
+#: front/ticket.form.php:51
 msgid "You must select a group."
 msgstr ""
 
-#: inc/config.class.php:195
-msgid "a time of creation"
-msgstr "생성 시간"
+#: inc/config.class.php:218
+msgid "at creation time"
+msgstr ""
 
-#: inc/config.class.php:197
-msgid "a time of modification"
-msgstr "변경 시간"
+#: inc/config.class.php:220
+msgid "at modification time"
+msgstr ""
 
-#: front/popup_histories.php:33
+#: inc/history.class.php:174
 msgid "full assignation history"
 msgstr "전체 배치 이력"
 
-#: front/climb_group.php:35 ajax/assign_me.php:34
+#: ajax/assign_me.php:34 front/climb_group.php:37
 msgid "missing parameters"
 msgstr "누락된 매개변수"
 
-#: inc/config.class.php:72
+#: inc/config.class.php:82
 msgid "show group assign history visually"
 msgstr "시각적 그룹 할당 이력 표시"
