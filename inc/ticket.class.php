@@ -1055,6 +1055,7 @@ class PluginEscaladeTicket
                     $actors_input[] = [
                         'itemtype' => $itemtype,
                         'items_id' => $val[strtolower($itemtype . 's_id')],
+                        'alternative_email' => $val['alternative_email'] ?? '',
                     ];
                 }
                 $actortype = $actor_types[$type] ?? '';

@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix task not added when escalating with history
 - Fix escalating with history
 - Fix ```status``` after escalation
+- Prevent anonymous user to be deleted during escalation
 
 ## [2.9.8] - 2024-07-15
 
