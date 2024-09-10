@@ -62,6 +62,11 @@ Elle ajoute les fonctionnalités suivantes :
    </authors>
    <versions>
       <version>
+         <num>2.9.9</num>
+         <compatibility>~10.0.11</compatibility>
+         <download_url>https://github.com/pluginsGLPI/escalade/releases/download/2.9.9/glpi-escalade-2.9.9.tar.bz2</download_url>
+      </version>
+      <version>
          <num>2.9.8</num>
          <compatibility>~10.0.11</compatibility>
          <download_url>https://github.com/pluginsGLPI/escalade/releases/download/2.9.8/glpi-escalade-2.9.8.tar.bz2</download_url>
