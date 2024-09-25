@@ -89,14 +89,6 @@ if (isset($_POST['escalate'])) {
     }
 }
 
-if ($track->can($_POST["tickets_id"], READ)) {
-    $toadd = '';
-   // Copy solution to KB redirect to KB
-    if (isset($_POST['_sol_to_kb']) && $_POST['_sol_to_kb']) {
-        $toadd = "&_sol_to_kb=1";
-    }
-    Html::redirect(Ticket::getFormURLWithID($_POST["tickets_id"]) . $toadd);
-}
 Session::addMessageAfterRedirect(
     __('You have been redirected because you no longer have access to this ticket'),
     true,
