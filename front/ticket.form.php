@@ -32,7 +32,6 @@ use Glpi\Toolbox\Sanitizer;
 
 include('../../../inc/includes.php');
 
-$track = new Ticket();
 if (isset($_POST['escalate'])) {
     $group_id = (int)$_POST['groups_id'];
     $tickets_id = (int)$_POST['tickets_id'];
