@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unrelease] -
 
+### Fixed
+
+- Correction of the read no right message ticket and redirection
+
 ## [2.9.9] - 2024-09-10
 
 ### Fixed
