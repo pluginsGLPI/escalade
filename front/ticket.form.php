@@ -86,6 +86,15 @@ if (isset($_POST['escalate'])) {
             ) . $_POST['comment']
         ]);
     }
+
+    if (!$track->can($_POST["tickets_id"], READ)) {
+        Session::addMessageAfterRedirect(
+            __('You have been redirected because you no longer have access to this ticket'),
+            true,
+            ERROR
+        );
+        Html::redirect($CFG_GLPI["root_doc"] . "/front/ticket.php");
+    }
 }
 
 Html::back();
