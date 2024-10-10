@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-06 09:52+0000\n"
+"POT-Creation-Date: 2024-10-10 00:40+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -69,7 +69,7 @@ msgstr ""
 msgid "Don't change"
 msgstr ""
 
-#: hook.php:581 hook.php:600 inc/config.class.php:347
+#: inc/config.class.php:347 hook.php:581 hook.php:600
 msgid "Enable filtering on the groups assignment"
 msgstr ""
 
@@ -109,8 +109,8 @@ msgstr ""
 msgid "Escalate ticket"
 msgstr ""
 
-#: inc/user.class.php:180 inc/group_group.class.php:56 setup.php:184
-#: front/config.form.php:57
+#: setup.php:184 front/config.form.php:57 inc/user.class.php:180
+#: inc/group_group.class.php:56
 msgid "Escalation"
 msgstr ""
 
@@ -118,7 +118,7 @@ msgstr ""
 msgid "Escalation history in tasks"
 msgstr ""
 
-#: inc/ticket.class.php:383 front/ticket.form.php:85
+#: front/ticket.form.php:85 inc/ticket.class.php:383
 #, php-format
 msgid "Escalation to the group %s."
 msgstr ""
@@ -225,7 +225,7 @@ msgstr ""
 msgid "full assignation history"
 msgstr ""
 
-#: ajax/assign_me.php:34 front/climb_group.php:37
+#: front/climb_group.php:37 ajax/assign_me.php:34
 msgid "missing parameters"
 msgstr ""
 

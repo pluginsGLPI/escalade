@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-06 09:48+0000\n"
+"POT-Creation-Date: 2024-10-10 00:40+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Soporte Infraestructura Standby, 2023\n"
 "Language-Team: Spanish (Ecuador) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/es_EC/)\n"
@@ -70,7 +70,7 @@ msgstr "Mostrar botón de eliminación"
 msgid "Don't change"
 msgstr "No cambiar"
 
-#: hook.php:581 hook.php:600 inc/config.class.php:347
+#: inc/config.class.php:347 hook.php:581 hook.php:600
 msgid "Enable filtering on the groups assignment"
 msgstr "Activar el filtrado en la asignación de grupos"
 
@@ -110,8 +110,8 @@ msgstr "Escalar"
 msgid "Escalate ticket"
 msgstr "Escalar ticket"
 
-#: inc/user.class.php:180 inc/group_group.class.php:56 setup.php:184
-#: front/config.form.php:57
+#: setup.php:184 front/config.form.php:57 inc/user.class.php:180
+#: inc/group_group.class.php:56
 msgid "Escalation"
 msgstr "Escalada"
 
@@ -119,7 +119,7 @@ msgstr "Escalada"
 msgid "Escalation history in tasks"
 msgstr "Historial de escalamiento en tareas"
 
-#: inc/ticket.class.php:383 front/ticket.form.php:85
+#: front/ticket.form.php:85 inc/ticket.class.php:383
 #, php-format
 msgid "Escalation to the group %s."
 msgstr "Escalamiento al grupo %s"
@@ -226,7 +226,7 @@ msgstr ""
 msgid "full assignation history"
 msgstr "historial completo de asignaciones"
 
-#: ajax/assign_me.php:34 front/climb_group.php:37
+#: front/climb_group.php:37 ajax/assign_me.php:34
 msgid "missing parameters"
 msgstr "Parámetros que faltan"
 

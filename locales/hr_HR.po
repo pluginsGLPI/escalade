@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-06 09:48+0000\n"
+"POT-Creation-Date: 2024-10-10 00:40+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>, 2020,2022-2023\n"
 "Language-Team: Croatian (Croatia) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/hr_HR/)\n"
@@ -71,7 +71,7 @@ msgstr "Prikaži gumb za brisanje"
 msgid "Don't change"
 msgstr "Ne mijenjaj"
 
-#: hook.php:581 hook.php:600 inc/config.class.php:347
+#: inc/config.class.php:347 hook.php:581 hook.php:600
 msgid "Enable filtering on the groups assignment"
 msgstr "Aktiviraj filtriranje po zadatku grupe"
 
@@ -111,8 +111,8 @@ msgstr "Eskaliraj"
 msgid "Escalate ticket"
 msgstr "Eskaliraj nalog"
 
-#: inc/user.class.php:180 inc/group_group.class.php:56 setup.php:184
-#: front/config.form.php:57
+#: setup.php:184 front/config.form.php:57 inc/user.class.php:180
+#: inc/group_group.class.php:56
 msgid "Escalation"
 msgstr "Eskalacija"
 
@@ -120,7 +120,7 @@ msgstr "Eskalacija"
 msgid "Escalation history in tasks"
 msgstr "Povijest eskalacija u zadacima"
 
-#: inc/ticket.class.php:383 front/ticket.form.php:85
+#: front/ticket.form.php:85 inc/ticket.class.php:383
 #, php-format
 msgid "Escalation to the group %s."
 msgstr "Eskalirano u grupu %s."
@@ -227,7 +227,7 @@ msgstr ""
 msgid "full assignation history"
 msgstr "cijela povijest dodijeljivanja zadataka"
 
-#: ajax/assign_me.php:34 front/climb_group.php:37
+#: front/climb_group.php:37 ajax/assign_me.php:34
 msgid "missing parameters"
 msgstr "nedostaju parametri"
 
