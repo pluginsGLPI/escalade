@@ -67,24 +67,28 @@ if (isset($_POST['escalate'])) {
             $_form_object['status'] = $_SESSION['plugins']['escalade']['config']['ticket_last_status'];
         }
         $updates_ticket = new Ticket();
-        $updates_ticket->update($_POST['ticket_details'] + [
-            '_actors' => PluginEscaladeTicket::getTicketFieldsWithActors($tickets_id, $group_id),
-            '_plugin_escalade_no_history' => true, // Prevent a duplicated task to be added
-            'actortype' => CommonITILActor::ASSIGN,
-            'groups_id' => $group_id,
-            '_form_object' => $_form_object,
-        ]);
-
-        $task = new TicketTask();
-        $task->add([
-            'tickets_id' => $tickets_id,
-            'is_private' => true,
-            'state'      => Planning::INFO,
-            // Sanitize before merging with $_POST['comment'] which is already sanitized
-            'content'    => Sanitizer::sanitize(
-                '<p><i>' . sprintf(__('Escalation to the group %s.', 'escalade'), Sanitizer::unsanitize($group->getName())) . '</i></p><hr />'
-            ) . $_POST['comment']
-        ]);
+        if (
+            $updates_ticket->update(
+                $_POST['ticket_details'] + [
+                    '_actors' => PluginEscaladeTicket::getTicketFieldsWithActors($tickets_id, $group_id),
+                    '_plugin_escalade_no_history' => true, // Prevent a duplicated task to be added
+                    'actortype' => CommonITILActor::ASSIGN,
+                    'groups_id' => $group_id,
+                    '_form_object' => $_form_object,
+                ]
+            )
+        ) {
+            $task = new TicketTask();
+            $task->add([
+                'tickets_id' => $tickets_id,
+                'is_private' => true,
+                'state'      => Planning::INFO,
+                // Sanitize before merging with $_POST['comment'] which is already sanitized
+                'content'    => Sanitizer::sanitize(
+                    '<p><i>' . sprintf(__('Escalation to the group %s.', 'escalade'), Sanitizer::unsanitize($group->getName())) . '</i></p><hr />'
+                ) . $_POST['comment']
+            ]);
+        }
     }
 }
 
