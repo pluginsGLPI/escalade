@@ -404,13 +404,6 @@ class PluginEscaladeTicket
         if ($_SESSION['plugins']['escalade']['config']['remove_group'] == true) {
             self::removeAssignGroups($tickets_id, $groups_id);
         }
-
-        //notified only the last group assigned
-        $ticket = new Ticket();
-        $ticket->getFromDB($tickets_id);
-
-        $event = "assign_group";
-        NotificationEvent::raiseEvent($event, $ticket);
     }
 
 
