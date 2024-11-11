@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-10 00:40+0000\n"
+"POT-Creation-Date: 2024-11-11 00:41+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>, 2020,2022-2023\n"
 "Language-Team: Croatian (Croatia) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/hr_HR/)\n"
@@ -75,35 +75,35 @@ msgstr "Ne mijenjaj"
 msgid "Enable filtering on the groups assignment"
 msgstr "Aktiviraj filtriranje po zadatku grupe"
 
-#: inc/ticket.class.php:888
+#: inc/ticket.class.php:881
 msgid "Error : adding actors (group)"
 msgstr "Greška: dodavanje učesnika (grupa)"
 
-#: inc/ticket.class.php:878
+#: inc/ticket.class.php:871
 msgid "Error : adding actors (user)"
 msgstr "Greška: dodavanje učesnika (korisnik)"
 
-#: inc/ticket.class.php:899
+#: inc/ticket.class.php:892
 msgid "Error : adding documents"
 msgstr "Greška: dodavanje dokumenata"
 
-#: inc/ticket.class.php:866
+#: inc/ticket.class.php:859
 msgid "Error : adding followups"
 msgstr "Greška: dodavanje priopćenja"
 
-#: inc/ticket.class.php:849
+#: inc/ticket.class.php:842
 msgid "Error : adding link between the two tickets"
 msgstr "Greška: dodavanje veze između ta dva naloga"
 
-#: inc/ticket.class.php:836
+#: inc/ticket.class.php:829
 msgid "Error : adding new ticket"
 msgstr "Greška: dodavanje novog naloga"
 
-#: inc/ticket.class.php:820
+#: inc/ticket.class.php:813
 msgid "Error : get old ticket"
 msgstr "Greška: nabavi stari nalog"
 
-#: inc/ticket.class.php:1018 inc/ticket.class.php:1019
+#: inc/ticket.class.php:1011 inc/ticket.class.php:1012
 msgid "Escalate"
 msgstr "Eskaliraj"
 
@@ -187,7 +187,7 @@ msgstr "Rješenje odbijeno, vrati grupi"
 msgid "Solve date modification"
 msgstr "Riješi promjenu datuma"
 
-#: inc/ticket.class.php:860 inc/ticket.class.php:905 inc/ticket.class.php:910
+#: inc/ticket.class.php:853 inc/ticket.class.php:898 inc/ticket.class.php:903
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Nalog je kloniran iz naloga broj"
 
