@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-10 00:40+0000\n"
+"POT-Creation-Date: 2024-11-12 00:40+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: feonsu <feonsu@gmail.com>, 2019,2023-2024\n"
 "Language-Team: Slovak (Slovakia) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/sk_SK/)\n"
@@ -74,35 +74,35 @@ msgstr "Nemeniť"
 msgid "Enable filtering on the groups assignment"
 msgstr "Povoliť filtrovanie pri priraďovaní skupín"
 
-#: inc/ticket.class.php:888
+#: inc/ticket.class.php:881
 msgid "Error : adding actors (group)"
 msgstr "Chyba: pridávanie riešiteľov (skupina)"
 
-#: inc/ticket.class.php:878
+#: inc/ticket.class.php:871
 msgid "Error : adding actors (user)"
 msgstr "Chyba: pridávanie riešiteľov (používateľ)"
 
-#: inc/ticket.class.php:899
+#: inc/ticket.class.php:892
 msgid "Error : adding documents"
 msgstr "Chyba: pridávanie dokumentov"
 
-#: inc/ticket.class.php:866
+#: inc/ticket.class.php:859
 msgid "Error : adding followups"
 msgstr "Chyba: pridávanie reakcií"
 
-#: inc/ticket.class.php:849
+#: inc/ticket.class.php:842
 msgid "Error : adding link between the two tickets"
 msgstr "Chyba: pridávanie prepojení medzi dvoma požiadavkami"
 
-#: inc/ticket.class.php:836
+#: inc/ticket.class.php:829
 msgid "Error : adding new ticket"
 msgstr "Chyba: pridávanie novej požiadavky"
 
-#: inc/ticket.class.php:820
+#: inc/ticket.class.php:813
 msgid "Error : get old ticket"
 msgstr "Chyba: získavanie starej požiadavky"
 
-#: inc/ticket.class.php:1018 inc/ticket.class.php:1019
+#: inc/ticket.class.php:1011 inc/ticket.class.php:1012
 msgid "Escalate"
 msgstr "Eskalovať"
 
@@ -186,7 +186,7 @@ msgstr "Riešenie odmietnuté, návrat k skupine"
 msgid "Solve date modification"
 msgstr "Zmena dátumu vyriešenia"
 
-#: inc/ticket.class.php:860 inc/ticket.class.php:905 inc/ticket.class.php:910
+#: inc/ticket.class.php:853 inc/ticket.class.php:898 inc/ticket.class.php:903
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Táto požiadavka bola klonovaná z požiadavky č."
 
