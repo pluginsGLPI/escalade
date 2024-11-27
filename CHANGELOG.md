@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unrelease] -
 
+## [2.9.10] - 2024-11-27
+
+### Fixed
+
+- Remove redundant notifications
+
 ## [2.9.9] - 2024-09-10
 
 ### Fixed
