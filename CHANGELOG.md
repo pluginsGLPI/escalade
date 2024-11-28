@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-- Redirect user after escalation if he has no rights to the ticket
+- Redirect users without ticket rights after escalation.
 
 ## [2.9.10] - 2024-11-27
 
