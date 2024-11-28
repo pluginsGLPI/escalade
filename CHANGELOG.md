@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unrelease] -
 
+### Fixed
+
+- Redirect users without ticket rights after escalation.
+
 ## [2.9.10] - 2024-11-27
 
 ### Fixed
