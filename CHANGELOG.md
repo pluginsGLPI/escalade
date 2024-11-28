@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Redirect user after escalation if he has no rights to the ticket
 
+## [2.9.10] - 2024-11-27
+
+### Fixed
+
+- Remove redundant notifications
+
 ## [2.9.9] - 2024-09-10
 
 ### Fixed
