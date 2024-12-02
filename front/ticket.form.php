@@ -32,6 +32,7 @@ use Glpi\Toolbox\Sanitizer;
 
 include('../../../inc/includes.php');
 
+/** @var array $CFG_GLPI */
 global $CFG_GLPI;
 
 if (isset($_POST['escalate'])) {
