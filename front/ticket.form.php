@@ -32,6 +32,9 @@ use Glpi\Toolbox\Sanitizer;
 
 include('../../../inc/includes.php');
 
+/** @var array $CFG_GLPI */
+global $CFG_GLPI;
+
 if (isset($_POST['escalate'])) {
     $group_id = (int)$_POST['groups_id'];
     $tickets_id = (int)$_POST['tickets_id'];
@@ -86,6 +89,8 @@ if (isset($_POST['escalate'])) {
             ) . $_POST['comment']
         ]);
     }
+
+    $track = new Ticket();
 
     if (!$track->can($_POST["tickets_id"], READ)) {
         Session::addMessageAfterRedirect(
