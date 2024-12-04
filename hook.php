@@ -502,6 +502,26 @@ function plugin_escalade_item_add_ticket($item)
     if ($item instanceof Ticket) {
         unset($_SESSION['plugin_escalade']['skip_hook_add_user']);
         unset($_SESSION['plugin_escalade']['keep_users']);
+        // add first group in history
+        if ($_SESSION['plugins']['escalade']['config']['remove_group']) {
+            if (isset($item->input['_groups_id_assign']) && $item->input['_groups_id_assign']) {
+                $groups = $item->input['_groups_id_assign'];
+                if (is_array($groups)) {
+                    $groups = array_values($groups);
+                    $groups_id = $groups[count($groups) - 1];
+                } else {
+                    $groups_id = $groups;
+                }
+                $group_ticket = new Group_Ticket();
+                $group_ticket->input = [
+                    'id' => $item->getID(),
+                    'groups_id' => $groups_id,
+                    'actortype' => CommonITILActor::ASSIGN,
+                    '_disablenotif' => true
+                ];
+                PluginEscaladeTicket::addHistoryOnAddGroup($group_ticket);
+            }
+        }
     }
 }
 
