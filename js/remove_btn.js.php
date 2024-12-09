@@ -201,9 +201,7 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
 
    $(document).ready(function() {
       // only in ticket form
-      if (location.pathname.indexOf('ticket.form.php') > 0
-         || location.pathname.indexOf('problem.form.php') > 0
-         || location.pathname.indexOf('change.form.php') > 0) {
+      if (location.pathname.indexOf('ticket.form.php')) {
          $(document).on('glpi.tab.loaded', function() {
             let buttons_to_delete = {
                Group: {

@@ -77,9 +77,7 @@ function plugin_init_escalade()
 
                 // on ticket page (in edition)
                 if (
-                    (strpos($_SERVER['REQUEST_URI'] ?? '', "ticket.form.php") !== false
-                    || strpos($_SERVER['REQUEST_URI'] ?? '', "problem.form.php") !== false
-                    || strpos($_SERVER['REQUEST_URI'] ?? '', "change.form.php") !== false) && isset($_GET['id'])
+                    (strpos($_SERVER['REQUEST_URI'] ?? '', "ticket.form.php") !== false) && isset($_GET['id'])
                 ) {
                     if (
                         !$escalade_config['remove_delete_requester_user_btn']
