@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Redirect users without ticket rights after escalation.
+- Fixed the "delete button" feature : only affects tickets and not the changes / problems
 
 ## [2.9.10] - 2024-11-27
 
