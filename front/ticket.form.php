@@ -86,7 +86,8 @@ if (isset($_POST['escalate'])) {
             // Sanitize before merging with $_POST['comment'] which is already sanitized
             'content'    => Sanitizer::sanitize(
                 '<p><i>' . sprintf(__('Escalation to the group %s.', 'escalade'), Sanitizer::unsanitize($group->getName())) . '</i></p><hr />'
-            ) . $_POST['comment']
+            ) . $_POST['comment'],
+            '_do_not_compute_takeintoaccount' => true
         ]);
     }
 

@@ -213,7 +213,8 @@ class PluginEscaladeTicket
                     '_no_reopen' => true, //prevent reopening ticket
                     'state'      => Planning::INFO,
                     'content'    => __("Solution provided, back to the group", "escalade") . " " .
-                        $group->getName()
+                        $group->getName(),
+                    '_do_not_compute_takeintoaccount' => true
                 ]);
             }
         }
@@ -277,7 +278,8 @@ class PluginEscaladeTicket
                     'is_private' => true,
                     'state'      => Planning::INFO,
                     'content'    => __("Solution rejected, return to the group", "escalade") . " " .
-                        $group->getName()
+                        $group->getName(),
+                    '_do_not_compute_takeintoaccount' => true
                 ]);
             }
 
@@ -381,6 +383,7 @@ class PluginEscaladeTicket
                 'is_private' => true,
                 'state'      => Planning::INFO,
                 'content'    => Toolbox::addslashes_deep(sprintf(__("Escalation to the group %s.", "escalade"), $group->getName())),
+                '_do_not_compute_takeintoaccount' => true
             ]);
         }
 
