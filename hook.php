@@ -85,12 +85,13 @@ function plugin_escalade_install()
          `use_filter_assign_group`                 INT NOT NULL,
          `ticket_last_status`                      INT NOT NULL,
          `remove_requester`                        INT NOT NULL,
+         `do_not_compute_takeintoaccount`          TINYINT NOT NULL DEFAULT 0,
          PRIMARY KEY (`id`)
       ) ENGINE=InnoDB DEFAULT CHARSET={$default_charset} COLLATE={$default_collation} ROW_FORMAT=DYNAMIC;";
         $DB->doQuery($query);
 
         $query = "INSERT INTO glpi_plugin_escalade_configs
-      VALUES (NULL, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, '" . Ticket::WAITING . "',0)";
+      VALUES (NULL, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, '" . Ticket::WAITING . "', 0, 0)";
         $DB->doQuery($query);
     }
 
@@ -378,6 +379,18 @@ function plugin_escalade_install()
             'assign_me_as_observer',
             'integer',
             ['after' => 'close_linkedtickets']
+        );
+        $migration->migrationOneTable('glpi_plugin_escalade_configs');
+    }
+
+    //Update to 2.9.11
+    // add new fields
+    if (!$DB->fieldExists('glpi_plugin_escalade_configs', 'do_not_compute_takeintoaccount')) {
+        $migration->addField(
+            'glpi_plugin_escalade_configs',
+            'do_not_compute_takeintoaccount',
+            'bool',
+            ['value' => 0]
         );
         $migration->migrationOneTable('glpi_plugin_escalade_configs');
     }

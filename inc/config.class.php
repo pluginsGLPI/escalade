@@ -351,7 +351,14 @@ class PluginEscaladeConfig extends CommonDBTM
             'rand' => $rand,
         ]);
         echo "</td>";
-        echo "<td colspan='2'></td>";
+        echo "<td><label for='dropdown_do_not_compute_takeintoaccount$rand'>";
+        echo __("Do not take into account time spent in care", "escalade") . "</td>";
+        echo "<td>";
+        Dropdown::showYesNo("do_not_compute_takeintoaccount", $this->fields["do_not_compute_takeintoaccount"], -1, [
+            'width' => '100%',
+            'rand' => $rand,
+        ]);
+        echo "</td>";
         echo "</tr>";
 
         $options['candel']       = false;

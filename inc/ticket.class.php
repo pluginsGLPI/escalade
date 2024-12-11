@@ -214,7 +214,7 @@ class PluginEscaladeTicket
                     'state'      => Planning::INFO,
                     'content'    => __("Solution provided, back to the group", "escalade") . " " .
                         $group->getName(),
-                    '_do_not_compute_takeintoaccount' => true
+                    '_do_not_compute_takeintoaccount' => $_SESSION['plugins']['escalade']['config']['do_not_compute_takeintoaccount']
                 ]);
             }
         }
@@ -279,7 +279,7 @@ class PluginEscaladeTicket
                     'state'      => Planning::INFO,
                     'content'    => __("Solution rejected, return to the group", "escalade") . " " .
                         $group->getName(),
-                    '_do_not_compute_takeintoaccount' => true
+                    '_do_not_compute_takeintoaccount' => $_SESSION['plugins']['escalade']['config']['do_not_compute_takeintoaccount']
                 ]);
             }
 
@@ -383,7 +383,7 @@ class PluginEscaladeTicket
                 'is_private' => true,
                 'state'      => Planning::INFO,
                 'content'    => Toolbox::addslashes_deep(sprintf(__("Escalation to the group %s.", "escalade"), $group->getName())),
-                '_do_not_compute_takeintoaccount' => true
+                '_do_not_compute_takeintoaccount' => $_SESSION['plugins']['escalade']['config']['do_not_compute_takeintoaccount']
             ]);
         }
 

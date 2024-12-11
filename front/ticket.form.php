@@ -87,7 +87,7 @@ if (isset($_POST['escalate'])) {
             'content'    => Sanitizer::sanitize(
                 '<p><i>' . sprintf(__('Escalation to the group %s.', 'escalade'), Sanitizer::unsanitize($group->getName())) . '</i></p><hr />'
             ) . $_POST['comment'],
-            '_do_not_compute_takeintoaccount' => true
+            '_do_not_compute_takeintoaccount' => $_SESSION['plugins']['escalade']['config']['do_not_compute_takeintoaccount']
         ]);
     }
 
