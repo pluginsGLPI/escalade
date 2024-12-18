@@ -622,7 +622,6 @@ class PluginEscaladeTicket
         $ticket->getFromDB($tickets_id);
         $groups_id = [];
 
-        self::removeAssignUsers($ticket, $users_id, $type);
 
         // == Add user groups on modification ==
         //check this plugin config
