@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+- Fix accidental deletion of new users when adding to a ticket
 - Redirect users without ticket rights after escalation.
 
 ## [2.9.10] - 2024-11-27
