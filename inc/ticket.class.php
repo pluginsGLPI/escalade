@@ -108,6 +108,8 @@ class PluginEscaladeTicket
                     }
                 }
             }
+
+            self::removeAssignUsers($item);
             return $item;
         }
     }
