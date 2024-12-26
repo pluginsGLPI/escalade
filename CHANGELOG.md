@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Redirect users without ticket rights after escalation.
+- Fix private task added when ticket mandatory fields are not filled
 
 ## [2.9.10] - 2024-11-27
 
