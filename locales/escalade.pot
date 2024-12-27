@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-02 00:46+0000\n"
+"POT-Creation-Date: 2024-12-27 00:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -118,7 +118,7 @@ msgstr ""
 msgid "Escalation history in tasks"
 msgstr ""
 
-#: front/ticket.form.php:85 inc/ticket.class.php:383
+#: front/ticket.form.php:91 inc/ticket.class.php:383
 #, php-format
 msgid "Escalation to the group %s."
 msgstr ""
@@ -209,7 +209,7 @@ msgstr ""
 msgid "View full history"
 msgstr ""
 
-#: front/ticket.form.php:51
+#: front/ticket.form.php:54
 msgid "You must select a group."
 msgstr ""
 
