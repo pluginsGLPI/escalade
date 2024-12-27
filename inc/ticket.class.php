@@ -491,13 +491,17 @@ class PluginEscaladeTicket
         ];
         if (!$group_ticket->find($condition)) {
             $ticket_group = new Group_Ticket();
-            if ($ticket_group->add([
-                'tickets_id'                    => $tickets_id,
-                'groups_id'                     => $groups_id,
-                'type'                          => CommonITILActor::ASSIGN,
-                '_disablenotif'                 => true,
-                '_plugin_escalade_no_history'   => true,
-            ])) {
+            if (
+                $ticket_group->add(
+                    [
+                        'tickets_id'                    => $tickets_id,
+                        'groups_id'                     => $groups_id,
+                        'type'                          => CommonITILActor::ASSIGN,
+                        '_disablenotif'                 => true,
+                        '_plugin_escalade_no_history'   => true,
+                    ]
+                )
+            ) {
 
                 if ($_SESSION['plugins']['escalade']['config']['task_history']) {
                     $task = new TicketTask();
