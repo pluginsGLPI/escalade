@@ -502,7 +502,6 @@ class PluginEscaladeTicket
                     ]
                 )
             ) {
-
                 if ($_SESSION['plugins']['escalade']['config']['task_history']) {
                     $task = new TicketTask();
                     $task->add([
