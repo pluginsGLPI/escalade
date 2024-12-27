@@ -491,31 +491,34 @@ class PluginEscaladeTicket
         ];
         if (!$group_ticket->find($condition)) {
             $ticket_group = new Group_Ticket();
-            $ticket_group->add([
+            if ($ticket_group->add([
                 'tickets_id'                    => $tickets_id,
                 'groups_id'                     => $groups_id,
                 'type'                          => CommonITILActor::ASSIGN,
                 '_disablenotif'                 => true,
                 '_plugin_escalade_no_history'   => true,
-            ]);
+            ])) {
 
-            $task = new TicketTask();
-            $task->add([
-                'tickets_id' => $tickets_id,
-                'is_private' => true,
-                'state'      => Planning::INFO,
-                // Sanitize before merging with $_POST['comment'] which is already sanitized
-                'content'    => Sanitizer::sanitize(
-                    '<p><i>' . sprintf(__('Escalation to the group %s.', 'escalade'), Sanitizer::unsanitize($group->getName())) . '</i></p><hr />'
-                ) . $_POST['comment']
-            ]);
+                if ($_SESSION['plugins']['escalade']['config']['task_history']) {
+                    $task = new TicketTask();
+                    $task->add([
+                        'tickets_id' => $tickets_id,
+                        'is_private' => true,
+                        'state'      => Planning::INFO,
+                        // Sanitize before merging with $_POST['comment'] which is already sanitized
+                        'content'    => Sanitizer::sanitize(
+                            '<p><i>' . sprintf(__('Escalation to the group %s.', 'escalade'), Sanitizer::unsanitize($group->getName())) . '</i></p><hr />'
+                        ) . $_POST['comment']
+                    ]);
+                }
 
-            //notified only the last group assigned
-            $ticket = new Ticket();
-            $ticket->getFromDB($tickets_id);
+                //notified only the last group assigned
+                $ticket = new Ticket();
+                $ticket->getFromDB($tickets_id);
 
-            $event = "assign_group";
-            NotificationEvent::raiseEvent($event, $ticket);
+                $event = "assign_group";
+                NotificationEvent::raiseEvent($event, $ticket);
+            }
         }
 
         Html::back();
