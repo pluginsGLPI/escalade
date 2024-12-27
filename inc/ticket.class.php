@@ -29,6 +29,7 @@
  */
 
 use Glpi\Application\View\TemplateRenderer;
+use Glpi\Toolbox\Sanitizer;
 
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
@@ -480,6 +481,8 @@ class PluginEscaladeTicket
     public static function climb_group($tickets_id, $groups_id)
     {
         //don't add group if already exist for this ticket
+        $group = new Group();
+        $group->getFromDB($groups_id);
         $group_ticket = new Group_Ticket();
         $condition = [
             'tickets_id' => $tickets_id,
@@ -487,25 +490,38 @@ class PluginEscaladeTicket
             'type'       => CommonITILActor::ASSIGN
         ];
         if (!$group_ticket->find($condition)) {
-            $ticket = new Ticket();
-            $ticket->getFromDB($tickets_id);
+            $ticket_group = new Group_Ticket();
+            if (
+                $ticket_group->add(
+                    [
+                        'tickets_id'                    => $tickets_id,
+                        'groups_id'                     => $groups_id,
+                        'type'                          => CommonITILActor::ASSIGN,
+                        '_disablenotif'                 => true,
+                        '_plugin_escalade_no_history'   => true,
+                    ]
+                )
+            ) {
+                if ($_SESSION['plugins']['escalade']['config']['task_history']) {
+                    $task = new TicketTask();
+                    $task->add([
+                        'tickets_id' => $tickets_id,
+                        'is_private' => true,
+                        'state'      => Planning::INFO,
+                        // Sanitize before merging with $_POST['comment'] which is already sanitized
+                        'content'    => Sanitizer::sanitize(
+                            '<p><i>' . sprintf(__('Escalation to the group %s.', 'escalade'), Sanitizer::unsanitize($group->getName())) . '</i></p><hr />'
+                        ) . $_POST['comment']
+                    ]);
+                }
 
-            // Update the ticket with actor data in order to execute the necessary rules
-            $_form_object = [
-                '_do_not_compute_status' => true,
-            ];
-            if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] != -1) {
-                $_form_object['status'] = $_SESSION['plugins']['escalade']['config']['ticket_last_status'];
+                //notified only the last group assigned
+                $ticket = new Ticket();
+                $ticket->getFromDB($tickets_id);
+
+                $event = "assign_group";
+                NotificationEvent::raiseEvent($event, $ticket);
             }
-            $ticket_details = $_POST['ticket_details'] ?? $_GET['ticket_details'] ?? [];
-            $updates_ticket = new Ticket();
-            $updates_ticket->update($ticket_details + [
-                '_actors' => PluginEscaladeTicket::getTicketFieldsWithActors($tickets_id, $groups_id),
-                '_plugin_escalade_no_history' => false,
-                'actortype' => CommonITILActor::ASSIGN,
-                'groups_id' => $groups_id,
-                '_form_object' => $_form_object,
-            ]);
         }
 
         Html::back();
