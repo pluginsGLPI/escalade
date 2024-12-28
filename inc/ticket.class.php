@@ -330,7 +330,20 @@ class PluginEscaladeTicket
         $previous_groups_id = 0;
         $counter            = 0;
 
-        if (count($group_ticket->fields) > 0) {
+        // check if group assignment is made during ticket creation
+        $in_add = false;
+        $backtraces   = debug_backtrace();
+        foreach ($backtraces as $backtrace) {
+            if (
+                $backtrace['function'] == "add"
+                && ($backtrace['object'] instanceof CommonITILObject)
+            ) {
+                $in_add = true;
+                break;
+            }
+        }
+
+        if (count($group_ticket->fields) > 0 && !$in_add) {
             $previous_groups_id = $group_ticket->fields['groups_id'];
 
             $last_history_groups = PluginEscaladeHistory::getLastHistoryForTicketAndGroup($tickets_id, $groups_id, $previous_groups_id);
@@ -347,17 +360,9 @@ class PluginEscaladeTicket
             'counter'            => $counter
         ]);
 
-        // check if group assignment is made during ticket creation
         // in this case, skip following steps as it cannot be considered as a group escalation
-        $backtraces   = debug_backtrace();
-        foreach ($backtraces as $backtrace) {
-            if (
-                $backtrace['function'] == "add"
-                && ($backtrace['object'] instanceof CommonITILObject)
-            ) {
-                return;
-                break;
-            }
+        if ($in_add) {
+            return;
         }
 
         //remove old user(s) (pass if user added by new ticket)
