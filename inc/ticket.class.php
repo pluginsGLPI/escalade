@@ -29,6 +29,7 @@
  */
 
 use Glpi\Application\View\TemplateRenderer;
+use Symfony\Component\VarDumper\VarDumper;
 
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
@@ -589,7 +590,6 @@ class PluginEscaladeTicket
 
             //delete user
             $ticket_user->delete(['id' => $id]);
-
             if (isset($item->input['_actors'])) {
                 foreach ($item->input['_actors'][$types[$type]] as $key => $actor) {
                     if (

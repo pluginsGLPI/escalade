@@ -35,21 +35,25 @@ use PluginEscaladeConfig;
 
 final class UserEscalationTest extends EscaladeTestCase
 {
-    public function testTaskGroupEscalation()
+    public function testUserEscalationRemoveTech()
     {
         $this->login();
 
         $config = new PluginEscaladeConfig();
-        $conf = reset($config->find());
+        $conf = $config->find();
+        $conf = reset($conf);
         $config->getFromDB($conf['id']);
         $this->assertGreaterThan(0, $conf['id']);
         $this->assertTrue($config->update([
             'remove_tech' => 1
         ] + $conf));
 
-        $user1 = $user2 = new \User();
+        PluginEscaladeConfig::loadInSession();
+
+        $user1 = new \User();
         $user1->getFromDBbyName('glpi');
         $this->assertGreaterThan(0, $user1->getID());
+        $user2 = new \User();
         $user2->getFromDBbyName('tech');
         $this->assertGreaterThan(0, $user2->getID());
 
@@ -91,6 +95,33 @@ final class UserEscalationTest extends EscaladeTestCase
 
         $ticket_user = new \Ticket_User();
         $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $t_id, 'type' => \CommonITILActor::ASSIGN])));
-        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $t_id, 'type' => \CommonITILActor::ASSIGN, 'users_id' => $user1->getID()])));
+        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $t_id, 'type' => \CommonITILActor::ASSIGN, 'users_id' => $user2->getID()])));
+
+        $this->assertTrue($config->update([
+            'remove_tech' => 0
+        ] + $conf));
+
+        PluginEscaladeConfig::loadInSession();
+
+        $this->assertTrue($ticket->update(
+            [
+                'id' => $t_id,
+                '_actors' => [
+                    'assign' => [
+                        [
+                            'items_id' => $user1->getID(),
+                            'itemtype' => 'User'
+                        ],
+                        [
+                            'items_id' => $user2->getID(),
+                            'itemtype' => 'User'
+                        ]
+                    ],
+                ],
+            ]
+        ));
+
+        $ticket_user2 = new \Ticket_User();
+        $this->assertEquals(2, count($ticket_user2->find(['tickets_id' => $t_id, 'type' => \CommonITILActor::ASSIGN])));
     }
 }
