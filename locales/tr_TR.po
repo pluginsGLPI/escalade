@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-27 00:41+0000\n"
+"POT-Creation-Date: 2024-12-30 00:43+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2015-2016,2018-2021,2023-2024\n"
 "Language-Team: Turkish (Turkey) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/tr_TR/)\n"
@@ -61,7 +61,7 @@ msgstr "Açıklama"
 
 #: inc/config.class.php:37
 msgid "Configuration Escalade plugin"
-msgstr "Üste aktarma uygulama eki yapılandırması"
+msgstr "Üste aktarma eklentisi yapılandırması"
 
 #: inc/config.class.php:278
 msgid "Display delete button"
@@ -141,7 +141,7 @@ msgstr "Destek kaydında üste aktarılmış grubun yöneticisi"
 msgid ""
 "Nota: This feature (creation part) is duplicate with the <a "
 "href='##link##'>Behavior</a>plugin. This last has priority."
-msgstr "Not: Bu özellik (oluşturulma kısmı) <a href='##link##'>Davranış</a> uygulama eki ile çifttir. Bu sonuncusunun önceliği vardır."
+msgstr "Not: Bu özellik (oluşturulma kısmı) <a href='##link##'>Davranış</a> eklentisi ile çifttir. Bu sonuncusunun önceliği vardır."
 
 #: hook.php:554
 msgid "Number of escalations"
