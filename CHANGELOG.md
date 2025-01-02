@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+- Fix accidental deletion of new users when adding to a ticket
 - Redirect users without ticket rights after escalation.
 - Fix private task added when ticket mandatory fields are not filled
 
