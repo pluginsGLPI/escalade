@@ -285,7 +285,7 @@ class PluginEscaladeTicket
             }
 
             //update status
-            if (PluginEscaladeConfig::getConfig('ticket_last_status')) {
+            if (PluginEscaladeConfig::getConfig('ticket_last_status') != -1) {
                 $item->update([
                     'id' => $tickets_id,
                     'status' => PluginEscaladeConfig::getConfig('ticket_last_status')
