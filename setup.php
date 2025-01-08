@@ -59,11 +59,10 @@ function plugin_init_escalade()
     if ((isset($_SESSION['glpiID']) || isCommandLine()) && Plugin::isPluginActive('escalade')) {
        //load config in session
         if ($DB->tableExists("glpi_plugin_escalade_configs")) {
-            PluginEscaladeConfig::loadInSession();
 
            // == Load js scripts ==
-            if (isset($_SESSION['plugins']['escalade']['config'])) {
-                $escalade_config = $_SESSION['plugins']['escalade']['config'];
+            if (is_array(PluginEscaladeConfig::getConfig())) {
+                $escalade_config = PluginEscaladeConfig::getConfig();
 
                 $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/function.js';
 
