@@ -380,7 +380,7 @@ class PluginEscaladeConfig extends CommonDBTM
             }
         }
 
-        $_SESSION['plugins']['escalade']['config'] = $config->fields;
+        $_SESSION['glpi_plugins']['escalade']['config'] = $config->fields;
     }
 
     public static function dropdownGenericStatus($itemtype, $name, $rand, $value = CommonITILObject::INCOMING)
@@ -400,31 +400,5 @@ class PluginEscaladeConfig extends CommonDBTM
             'width' => '80%',
             'rand' => $rand,
         ]);
-    }
-
-    public static function getConfig($field = false)
-    {
-        $config = new self();
-        $config->getFromDB(1);
-        unset($config->fields['id']);
-
-        if (
-            isset($_SESSION['glpiID'])
-            && isset($config->fields['use_filter_assign_group'])
-            && $config->fields['use_filter_assign_group']
-        ) {
-            $user = new PluginEscaladeUser();
-            if ($user->getFromDBByCrit(['users_id' => $_SESSION['glpiID']])) {
-               //if a bypass is defined for user
-                if ($user->fields['use_filter_assign_group']) {
-                    $config->fields['use_filter_assign_group'] = 0;
-                }
-            }
-        }
-
-        if ($field === false) {
-            return $config->fields;
-        }
-        return $config->fields[$field];
     }
 }
