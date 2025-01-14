@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-- Fix accidental deletion of new users when adding to a ticket
+- Ensure that when several technicians are assigned, they are treated correctly during the escalation.
 - Redirect users without ticket rights after escalation.
 
 ## [2.9.10] - 2024-11-27
