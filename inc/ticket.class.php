@@ -38,7 +38,7 @@ class PluginEscaladeTicket
 {
     public static function pre_item_update(CommonDBTM $item)
     {
-        if (isset($input['_itil_assign'])) {
+        if (isset($item->input['_itil_assign'])) {
             $item->input['_do_not_compute_status'] = true;
         }
         $config = $_SESSION['plugins']['escalade']['config'];
@@ -356,7 +356,6 @@ class PluginEscaladeTicket
                 && ($backtrace['object'] instanceof CommonITILObject)
             ) {
                 return;
-                break;
             }
         }
 
@@ -413,7 +412,7 @@ class PluginEscaladeTicket
      */
     public static function assignUserGroup(Ticket $ticket)
     {
-        if (!is_array($ticket->input) || !count($ticket->input)) {
+        if (!count($ticket->input)) {
             // Already cancel by another plugin
             return false;
         }
@@ -549,13 +548,13 @@ class PluginEscaladeTicket
             $_SESSION['plugins']['escalade']['config']['remove_tech'] == false
             && $_SESSION['plugins']['escalade']['config']['remove_requester'] == false
         ) {
-            return true;
+            return;
         }
         if ($type == CommonITILActor::ASSIGN && !$_SESSION['plugins']['escalade']['config']['remove_tech']) {
-            return true;
+            return;
         }
         if ($type == CommonITILActor::REQUESTER && !$_SESSION['plugins']['escalade']['config']['remove_requester']) {
-            return true;
+            return;
         }
 
         $tickets_id = $item->input['id'] ?? $item->fields['id'];
@@ -612,7 +611,7 @@ class PluginEscaladeTicket
      * Update ticket status when user added.
      * Trigger also adding user groups if feature enabled
      * @param  Ticket_User $item Ticket_User object
-     * @return void
+     * @return bool
      */
     public static function item_add_user(Ticket_User $item, $type = CommonITILActor::ASSIGN)
     {
@@ -659,7 +658,7 @@ class PluginEscaladeTicket
                 'type'       => CommonITILActor::ASSIGN
             ]);
             if (!empty($found)) {
-                return;
+                return false;
             }
 
             //prevent user removal
@@ -679,7 +678,7 @@ class PluginEscaladeTicket
         }
 
         //fix ticket status
-        $ticket->update([
+        return $ticket->update([
             'id'     => $tickets_id,
             'status' => CommonITILObject::ASSIGNED
         ]);
@@ -688,7 +687,9 @@ class PluginEscaladeTicket
 
     /**
      * Close linked tickets when ticket passed in parameter is closed
-     * @param  CommonDBTM $item the ticket object
+     * @param  CommonDBTM $ticket the ticket object
+     * @param  int $status
+     *
      * @return void
      */
     public static function linkedTickets(CommonDBTM $ticket, $status = CommonITILObject::SOLVED)
@@ -728,7 +729,7 @@ class PluginEscaladeTicket
         //get auto-assign mode (config in entity)
         $auto_assign_mode = Entity::getUsedConfig('auto_assign_mode', $_SESSION['glpiactive_entity']);
         if ($auto_assign_mode == Entity::CONFIG_NEVER) {
-            return true;
+            return;
         }
 
         //get category
@@ -866,8 +867,7 @@ class PluginEscaladeTicket
       SELECT null AS id, $newID as tickets_id, users_id, type, use_notification, alternative_email
       FROM glpi_tickets_users
       WHERE tickets_id = $tickets_id AND type != 2";
-        // @phpstan-ignore-next-line
-        if (!$res = $DB->query($query_users)) {
+        if (!$res = $DB->doQuery($query_users)) {
             Session::addMessageAfterRedirect(__('Error : adding actors (user)', 'escalade'), false, ERROR);
             exit;
         }
@@ -876,8 +876,7 @@ class PluginEscaladeTicket
       SELECT null AS id, $newID as tickets_id, groups_id, type
       FROM glpi_groups_tickets
       WHERE tickets_id = $tickets_id AND type != 2";
-        // @phpstan-ignore-next-line
-        if (!$res = $DB->query($query_groups)) {
+        if (!$res = $DB->doQuery($query_groups)) {
             Session::addMessageAfterRedirect(__('Error : adding actors (group)', "escalade"), false, ERROR);
             exit;
         }
@@ -887,8 +886,7 @@ class PluginEscaladeTicket
       SELECT documents_id, $newID, 'Ticket', entities_id, is_recursive, date_mod
       FROM glpi_documents_items
       WHERE items_id = $tickets_id AND itemtype = 'Ticket'";
-        // @phpstan-ignore-next-line
-        if (!$res = $DB->query($query_docs)) {
+        if (!$res = $DB->doQuery($query_docs)) {
             Session::addMessageAfterRedirect(__('Error : adding documents', 'escalade'), false, ERROR);
             exit;
         }
@@ -1064,7 +1062,7 @@ class PluginEscaladeTicket
 
         $_actors['assign'] = array_merge(
             $ticket_actors['User']['assign'] ?? [],
-            $ticket_actors['Group']['assign'] ?? [],
+            $ticket_actors['Group']['assign'],
             $ticket_actors['Supplier']['assign'] ?? []
         );
         $_actors['observer'] = array_merge(
