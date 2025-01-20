@@ -30,6 +30,7 @@
 
 namespace GlpiPlugin\Escalade\Tests\Units;
 
+use CommonITILActor;
 use GlpiPlugin\Escalade\Tests\EscaladeTestCase;
 use Group_User;
 use PluginEscaladeConfig;
@@ -45,6 +46,8 @@ final class GroupEscalationTest extends EscaladeTestCase
         $conf = reset($conf);
         $config->getFromDB($conf['id']);
         $this->assertGreaterThan(0, $conf['id']);
+
+        // Update escalade config
         $this->assertTrue($config->update([
             'use_assign_user_group'              => 1,
             'use_assign_user_group_creation'     => 1,
@@ -83,6 +86,7 @@ final class GroupEscalationTest extends EscaladeTestCase
         ]);
         $this->assertGreaterThan(0, $user_group2->getID());
 
+        // Create ticket without technician
         $ticket = new \Ticket();
         $t_id = $ticket->add([
             'name' => 'Assign Group Escalation Test',
@@ -97,9 +101,11 @@ final class GroupEscalationTest extends EscaladeTestCase
             ]
         ]);
 
+        // Check no group linked to the ticket
         $ticket_group = new \Group_Ticket();
         $this->assertEquals(0, count($ticket_group->find(['tickets_id' => $t_id])));
 
+        // Update ticket with a technician
         $this->assertTrue($ticket->update(
             [
                 'id' => $t_id,
@@ -121,11 +127,23 @@ final class GroupEscalationTest extends EscaladeTestCase
         ));
 
         $ticket_group2 = new \Group_Ticket();
+        // Check only one groupe linked to the ticket
         $this->assertEquals(1, count($ticket_group2->find(['tickets_id' => $t_id])));
 
         $ticket_group2->getFromDBByCrit([
             'tickets_id' => $t_id,
         ]);
+        // Check group assigned to the ticket
         $this->assertEquals($group2_id, $ticket_group2->fields['groups_id']);
+
+        $ticket_user = new \Ticket_User();
+        // Check user assigned to the ticket
+        $this->assertEquals(2, count($ticket_user->find(['tickets_id' => $t_id])));
+
+        // Check requester
+        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $t_id, 'users_id' => $user1->getID(), 'type' => CommonITILActor::REQUESTER])));
+
+        // Check assign
+        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $t_id, 'users_id' => $user2->getID(), 'type' => CommonITILActor::ASSIGN])));
     }
 }
