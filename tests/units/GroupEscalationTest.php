@@ -57,9 +57,31 @@ final class GroupEscalationTest extends EscaladeTestCase
         $user1->getFromDBbyName('glpi');
         $this->assertGreaterThan(0, $user1->getID());
 
+        $group1 = new \Group();
+        $group1_id = $group1->add(['name' => 'Group_1']);
+        $this->assertGreaterThan(0, $group1_id);
+
+        $user_group1 = new \Group_User();
+        $user_group1->add([
+            'users_id' => $user1->getID(),
+            'groups_id' => $group1->getID()
+        ]);
+        $this->assertGreaterThan(0, $user_group1->getID());
+
         $user2 = new \User();
         $user2->getFromDBbyName('tech');
         $this->assertGreaterThan(0, $user2->getID());
+
+        $group2 = new \Group();
+        $group2_id = $group2->add(['name' => 'Group_2']);
+        $this->assertGreaterThan(0, $group2_id);
+
+        $user_group2 = new \Group_User();
+        $user_group2->add([
+            'users_id' => $user2->getID(),
+            'groups_id' => $group2->getID()
+        ]);
+        $this->assertGreaterThan(0, $user_group2->getID());
 
         $ticket = new \Ticket();
         $t_id = $ticket->add([
@@ -104,6 +126,6 @@ final class GroupEscalationTest extends EscaladeTestCase
         $ticket_group2->getFromDBByCrit([
             'tickets_id' => $t_id,
         ]);
-        $this->assertEquals(2, $ticket_group2->fields['groups_id']);
+        $this->assertEquals($group2_id, $ticket_group2->fields['groups_id']);
     }
 }
