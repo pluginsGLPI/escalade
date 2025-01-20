@@ -644,6 +644,7 @@ class PluginEscaladeTicket
         if (
             $_SESSION['plugins']['escalade']['config']['use_assign_user_group'] == 0
             || $_SESSION['plugins']['escalade']['config']['use_assign_user_group_modification'] == 0
+            || $type != CommonITILActor::ASSIGN
         ) {
             return true;
         }
