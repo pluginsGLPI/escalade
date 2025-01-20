@@ -109,6 +109,8 @@ class PluginEscaladeTicket
                     }
                 }
             }
+
+            self::removeAssignUsers($item);
             return $item;
         }
     }
@@ -602,7 +604,6 @@ class PluginEscaladeTicket
 
             //delete user
             $ticket_user->delete(['id' => $id]);
-
             if (isset($item->input['_actors'])) {
                 foreach ($item->input['_actors'][$types[$type]] as $key => $actor) {
                     if (
@@ -637,7 +638,6 @@ class PluginEscaladeTicket
         $ticket->getFromDB($tickets_id);
         $groups_id = [];
 
-        self::removeAssignUsers($ticket, $users_id, $type);
 
         // == Add user groups on modification ==
         //check this plugin config
