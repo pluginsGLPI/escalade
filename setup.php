@@ -145,7 +145,7 @@ function plugin_init_escalade()
         $PLUGIN_HOOKS['item_add']['escalade']['User'] = 'plugin_escalade_item_add_user';
 
        //filter group feature
-        if ($escalade_config['use_filter_assign_group']) {
+        if ($escalade_config['use_filter_assign_group'] ?? false) {
             $PLUGIN_HOOKS[Hooks::FILTER_ACTORS]['escalade'] = [
                 'PluginEscaladeTicket', 'filter_actors',
             ];

@@ -41,7 +41,7 @@ class PluginEscaladeConfig extends CommonDBTM
      * Summary of showForm
      * @param mixed $ID
      * @param mixed $options
-     * @return void
+     * @return bool
      */
     public function showForm($ID, $options = [])
     {
@@ -364,6 +364,7 @@ class PluginEscaladeConfig extends CommonDBTM
         $options['candel']       = false;
         $this->showFormButtons($options);
         echo "</div>";
+        return true;
     }
 
     public static function loadInSession()

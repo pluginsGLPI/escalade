@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-02 00:46+0000\n"
+"POT-Creation-Date: 2025-01-06 00:43+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: feonsu <feonsu@gmail.com>, 2019,2023-2024\n"
 "Language-Team: Slovak (Slovakia) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/sk_SK/)\n"
@@ -119,7 +119,7 @@ msgstr "Eskalácie"
 msgid "Escalation history in tasks"
 msgstr "História eskalácií v úlohách"
 
-#: front/ticket.form.php:85 inc/ticket.class.php:383
+#: front/ticket.form.php:91 inc/ticket.class.php:383
 #, php-format
 msgid "Escalation to the group %s."
 msgstr "Eskalácia na skupinu %s."
@@ -210,7 +210,7 @@ msgstr "Použiť skupinu technika"
 msgid "View full history"
 msgstr "Zobraziť úplnú históriu"
 
-#: front/ticket.form.php:51
+#: front/ticket.form.php:54
 msgid "You must select a group."
 msgstr "Musíte vybrať skupinu."
 
