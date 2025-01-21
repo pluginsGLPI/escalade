@@ -513,7 +513,7 @@ function plugin_escalade_item_add_ticket($item)
                 }
             } else if (isset($item->input['_actors']) && $item->input['_actors']) {
                 if (isset($item->input['_actors']['assign'])) {
-                    foreach($item->input['_actors']['assign'] as $actor) {
+                    foreach ($item->input['_actors']['assign'] as $actor) {
                         if ($actor['itemtype'] == 'Group') {
                             $groups_id = $actor['items_id'];
                         }
