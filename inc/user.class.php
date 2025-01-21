@@ -115,10 +115,10 @@ class PluginEscaladeUser extends CommonDBTM
 
 
     /**
-     * @param $ID
+     * @param int $ID
      * @param array $options
      *
-     * @return void
+     * @return bool
      */
     public function showForm($ID, array $options = [])
     {
@@ -159,16 +159,15 @@ class PluginEscaladeUser extends CommonDBTM
 
         echo "</table>";
         Html::closeForm();
+        return true;
     }
 
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
-        switch ($item->getType()) {
-            case 'User':
-                $user = new self();
-                $ID   = $item->getField('id');
-                $user->showForm($ID);
-                break;
+        if ($item instanceof User) {
+            $user = new self();
+            $ID   = $item->getField('id');
+            $user->showForm($ID);
         }
         return true;
     }

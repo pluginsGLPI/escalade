@@ -110,7 +110,7 @@ class PluginEscaladeHistory extends CommonDBTM
             echo "<div class='escalade_active'>";
             echo "&nbsp;<i class='fas fa-users'></i>&nbsp;";
             if ($group->getFromDB($first_group['groups_id'])) {
-                echo $group->getLink(true);
+                echo $group->getLink();
             }
             echo "</div>";
         }

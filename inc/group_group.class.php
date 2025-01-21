@@ -121,7 +121,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation
                 Html::showMassiveActionCheckBox(__CLASS__, $gg_id);
             }
             echo "</td>";
-            echo "<td>" . $group->getLink(true) . "</td>";
+            echo "<td>" . $group->getLink() . "</td>";
             echo "</tr>";
         }
 

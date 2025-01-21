@@ -9,7 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+- Ensure that when several technicians are assigned, they are treated correctly during the escalation.
 - Redirect users without ticket rights after escalation.
+- Fix private task added when ticket mandatory fields are not filled
+- Remove redundant notifications
+- Fixed assignment of requester group to ticket
 
 ## [2.9.10] - 2024-11-27
 

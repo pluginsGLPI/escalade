@@ -51,7 +51,7 @@ if (isset($_POST["add"])) {
     Html::back();
 } else if (isset($_POST["delete"])) {
     Session::checkRight("config", DELETE);
-    $config->delete($_POST, 1);
+    $config->delete($_POST, true);
     Html::redirect("./config.form.php");
 } else {
     Html::header(__("Escalation", "escalade"), '', "plugins", "escalade", "config");

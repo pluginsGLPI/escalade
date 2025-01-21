@@ -478,11 +478,9 @@ function plugin_escalade_item_add_user($item)
 
        //this hook is only for assign
         if ($item->fields['type'] == CommonITILActor::ASSIGN) {
-            // @phpstan-ignore-next-line
             return PluginEscaladeTicket::item_add_user($item);
         }
         if ($item->fields['type'] == CommonITILActor::REQUESTER) {
-            // @phpstan-ignore-next-line
             return PluginEscaladeTicket::item_add_user($item, CommonITILActor::REQUESTER);
         }
     }
