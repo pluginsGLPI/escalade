@@ -504,6 +504,7 @@ function plugin_escalade_item_add_ticket($item)
         unset($_SESSION['plugin_escalade']['keep_users']);
         // add first group in history
         if ($_SESSION['plugins']['escalade']['config']['remove_group']) {
+            $groups_id = 0;
             if (isset($item->input['_groups_id_assign']) && $item->input['_groups_id_assign']) {
                 $groups = $item->input['_groups_id_assign'];
                 if (is_array($groups)) {
@@ -512,6 +513,16 @@ function plugin_escalade_item_add_ticket($item)
                 } else {
                     $groups_id = $groups;
                 }
+            } else if (isset($item->input['_actors']) && $item->input['_actors']) {
+                if (isset($item->input['_actors']['assign'])) {
+                    foreach($item->input['_actors']['assign'] as $actor) {
+                        if ($actor['itemtype'] == 'Group') {
+                            $groups_id = $actor['items_id'];
+                        }
+                    }
+                }
+            }
+            if ($groups_id) {
                 $group_ticket = new Group_Ticket();
                 $group_ticket->input = [
                     'id' => $item->getID(),
