@@ -56,12 +56,11 @@ function plugin_init_escalade()
 
     $PLUGIN_HOOKS['csrf_compliant']['escalade'] = true;
     if (Plugin::isPluginActive('escalade')) {
-        if (isset($_SESSION['glpiID']) || isCommandLine()) {
+        if ($DB->tableExists("glpi_plugin_escalade_configs")) {
             //load config in session
-            if ($DB->tableExists("glpi_plugin_escalade_configs")) {
-                PluginEscaladeConfig::loadInSession();
-
-            // == Load js scripts ==
+            PluginEscaladeConfig::loadInSession();
+            if (isset($_SESSION['glpiID']) || isCommandLine()) {
+                // == Load js scripts ==
                 if (isset($_SESSION['glpi_plugins']['escalade']['config'])) {
                     $escalade_config = $_SESSION['glpi_plugins']['escalade']['config'];
 
