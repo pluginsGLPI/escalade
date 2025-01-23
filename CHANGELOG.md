@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix private task added when ticket mandatory fields are not filled
 - Remove redundant notifications
 - Fixed assignment of requester group to ticket
+- Ensure plugin works seamlessly in external contexts (e.g., from plugins)
 
 ## [2.9.10] - 2024-11-27
 

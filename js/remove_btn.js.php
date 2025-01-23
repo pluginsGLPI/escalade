@@ -36,7 +36,7 @@ header("Content-type: application/javascript");
 //not executed in self-service interface & right verification
 if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
     $locale_actor = __('Actor');
-    $esc_config = $_SESSION['plugins']['escalade']['config'];
+    $esc_config = $_SESSION['glpi_plugins']['escalade']['config'];
 
     $remove_delete_requester_user_btn = "true";
     if (

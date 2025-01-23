@@ -85,7 +85,7 @@ class PluginEscaladeHistory extends CommonDBTM
         global $CFG_GLPI;
 
         $filter_groups_id = [];
-        if ($_SESSION['plugins']['escalade']['config']['use_filter_assign_group']) {
+        if ($_SESSION['glpi_plugins']['escalade']['config']['use_filter_assign_group']) {
             $groups_groups = new PluginEscaladeGroup_Group();
              $filter_groups_id = $groups_groups->getGroups($tickets_id);
             $use_filter_assign_group = true;
