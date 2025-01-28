@@ -28,8 +28,6 @@
  * -------------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
-
 echo "<div id='page'>";
 PluginEscaladeHistory::getHistory($_REQUEST['tickets_id'], true);
 echo "</div>";

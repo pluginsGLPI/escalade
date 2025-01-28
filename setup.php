@@ -33,13 +33,12 @@ use Glpi\Plugin\Hooks;
 define('PLUGIN_ESCALADE_VERSION', '2.9.10');
 
 // Minimal GLPI version, inclusive
-define("PLUGIN_ESCALADE_MIN_GLPI", "10.0.11");
+define("PLUGIN_ESCALADE_MIN_GLPI", "11.0.0");
 // Maximum GLPI version, exclusive
-define("PLUGIN_ESCALADE_MAX_GLPI", "10.0.99");
+define("PLUGIN_ESCALADE_MAX_GLPI", "11.0.99");
 
 if (!defined("PLUGIN_ESCALADE_DIR")) {
     define("PLUGIN_ESCALADE_DIR", Plugin::getPhpDir("escalade"));
-    define("PLUGIN_ESCALADE_WEBDIR", Plugin::getWebDir("escalade"));
 }
 
 /**
@@ -116,8 +115,6 @@ function plugin_init_escalade()
             }
         }
 
-        $PLUGIN_HOOKS['add_css']['escalade'][] = 'css/escalade.css';
-
        // == Ticket modifications
         $PLUGIN_HOOKS['pre_item_update']['escalade'] = [
             'Ticket'       => 'plugin_escalade_pre_item_update',
@@ -193,4 +190,11 @@ function plugin_version_escalade()
             ]
         ]
     ];
+}
+
+function plugin_escalade_geturl(): string
+{
+    /** @var array $CFG_GLPI */
+    global $CFG_GLPI;
+    return sprintf('%s/plugins/escalade/', $CFG_GLPI['url_base']);
 }
