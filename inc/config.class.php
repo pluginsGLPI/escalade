@@ -62,9 +62,39 @@ class PluginEscaladeConfig extends CommonDBTM
 {
     public static $rightname  = 'config';
 
+    public static function getMenuName()
+    {
+        return __('Escalade', 'escalade');
+    }
+
     public static function getTypeName($nb = 0)
     {
         return __("Configuration Escalade plugin", "escalade");
+    }
+
+    public static function getSearchURL($full = true)
+    {
+        return '/plugins/escalade/front/config.form.php';
+    }
+
+    public static function getIcon()
+    {
+        return "ti ti-escalator";
+    }
+
+    public static function getMenuContent()
+    {
+        $links = [];
+
+        $menu = [
+            'title'   => self::getMenuName(),
+            'page'    => self::getSearchURL(false),
+            'icon'    => self::getIcon(),
+            'options' => [],
+            'links'   => $links,
+        ];
+
+        return $menu;
     }
 
     /**

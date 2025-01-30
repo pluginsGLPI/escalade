@@ -151,6 +151,10 @@ function plugin_init_escalade()
        // == Interface links ==
         if (Session::haveRight('config', UPDATE)) {
             $PLUGIN_HOOKS['config_page']['escalade'] = 'front/config.form.php';
+
+            $PLUGIN_HOOKS['menu_toadd']['certificatecollector'] = [
+                'admin' => PluginEscaladeConfig::class,
+            ];
         }
 
         $PLUGIN_HOOKS['use_massive_action']['escalade'] = 1;
