@@ -28,11 +28,13 @@
  * -------------------------------------------------------------------------
  */
 
+use Glpi\Exception\Http\BadRequestHttpException;
+
 if (
     ! isset($_REQUEST['tickets_id'])
     || ! isset($_REQUEST['groups_id'])
 ) {
-    throw new Glpi\Exception\Http\BadRequestHttpException(__("missing parameters", "escalade"));
+    throw new BadRequestHttpException(); // @phpstan-ignore-line
 }
 
 PluginEscaladeTicket::climb_group($_REQUEST['tickets_id'], $_REQUEST['groups_id']);

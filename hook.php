@@ -172,7 +172,7 @@ function plugin_escalade_install()
 
    // Update for 0.84 status
     if ($DB->tableExists('glpi_plugin_escalade_configs')) {
-        foreach ($DB->request("glpi_plugin_escalade_configs") as $data) {
+        foreach ($DB->request(['FROM' => "glpi_plugin_escalade_configs"]) as $data) {
             switch ($data['ticket_last_status']) {
                 case 'solved':
                     $status = Ticket::SOLVED;

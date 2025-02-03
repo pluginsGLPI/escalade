@@ -79,17 +79,27 @@ class PluginEscaladeUser extends CommonDBTM
         /** @var DBmysql $DB */
         global $DB;
 
-        $query = "SELECT glpi_groups.id
-                FROM glpi_groups_users
-                INNER JOIN glpi_groups ON (glpi_groups.id = glpi_groups_users.groups_id)
-                WHERE glpi_groups_users.users_id='$userid'" .
-                getEntitiesRestrictRequest(' AND ', 'glpi_groups', '', $entity, true, true);
+        $query = [
+            'SELECT'     => 'glpi_groups.id',
+            'FROM'       => 'glpi_groups_users',
+            'INNER JOIN' => [
+                'glpi_groups' => [
+                    'FKEY' => [
+                        'glpi_groups'     => 'id',
+                        'glpi_groups_users'   => 'groups_id',
+                    ]
+                ],
+            ],
+            'WHERE'  => [
+                'glpi_groups_users.users_id' => $userid,
+                'glpi_groups.entities_id'    => $entity
+            ] + getEntitiesRestrictCriteria('glpi_groups', '', $entity, true, true),
+            'ORDER' => "glpi_groups_users.id"
+        ];
 
         if ($filter) {
-            $query .= "AND ($filter)";
+            $query['WHERE'][$filter] = "1";
         }
-
-        $query .= " ORDER BY glpi_groups_users.id";
 
         $rep = [];
         foreach ($DB->request($query) as $data) {

@@ -152,7 +152,7 @@ function plugin_init_escalade()
         if (Session::haveRight('config', UPDATE)) {
             $PLUGIN_HOOKS['config_page']['escalade'] = 'front/config.form.php';
 
-            $PLUGIN_HOOKS['menu_toadd']['certificatecollector'] = [
+            $PLUGIN_HOOKS['menu_toadd']['escalade'] = [
                 'admin' => PluginEscaladeConfig::class,
             ];
         }

@@ -28,6 +28,8 @@
  * -------------------------------------------------------------------------
  */
 
+use Glpi\Exception\Http\AccessDeniedHttpException;
+
 /** @var array $CFG_GLPI */
 global $CFG_GLPI;
 
@@ -37,12 +39,12 @@ if (isset($_POST['escalate'])) {
 
     $ticket = new Ticket();
     if (!$ticket->getFromDB($tickets_id)) {
-        throw new Glpi\Exception\Http\AccessDeniedHttpException();
+        throw new AccessDeniedHttpException(); // @phpstan-ignore-line
     }
 
     // Same right check as in PluginEscaladeTicket::addToTimeline()
     if (!$ticket->canAssign()) {
-        throw new Glpi\Exception\Http\AccessDeniedHttpException();
+        throw new AccessDeniedHttpException(); // @phpstan-ignore-line
     }
 
     $group = new Group();
