@@ -38,6 +38,7 @@ abstract class EscaladeTestCase extends TestCase
 {
     protected function setUp(): void
     {
+        /** @var \DBmysql $DB */
         global $DB;
         $DB->beginTransaction();
         parent::setUp();
