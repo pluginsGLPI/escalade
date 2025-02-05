@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Remove redundant notifications
 - Fixed assignment of requester group to ticket
 - Ensure plugin works seamlessly in external contexts (e.g., from plugins)
+- Fixed cloned ticket closing when linked ticket is closed (Option : `Close cloned tickets at the same time`)
 
 ## [2.9.10] - 2024-11-27
 
