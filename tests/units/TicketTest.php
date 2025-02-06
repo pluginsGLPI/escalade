@@ -120,7 +120,7 @@ final class TicketTest extends EscaladeTestCase
         ]);
         $this->assertTrue($ticket_cloned);
 
-        //Check if cloned ticket is also solved
+        //Check if cloned ticket is NOT solved
         $this->assertNotEquals(CommonITILObject::SOLVED, $ticket->fields['status']);
     }
 }
