@@ -48,17 +48,16 @@ final class TicketTest extends EscaladeTestCase
         $config->getFromDB($conf['id']);
         $this->assertGreaterThan(0, $conf['id']);
         $this->assertTrue($config->update([
-            'cloneandlink'        => 1,
             'close_linkedtickets' => 1
         ] + $conf));
 
         PluginEscaladeConfig::loadInSession();
 
         $ticket = new \Ticket();
-        $this->assertEquals(0, count($ticket->find(['name' => 'Escalade Ticket to clone test'])));
+        $this->assertEquals(0, count($ticket->find(['name' => 'Escalade Close cloned ticket test'])));
 
         $t_id = $ticket->add([
-            'name' => 'Escalade Ticket to clone test',
+            'name' => 'Escalade Close cloned ticket test',
             'content' => 'Content ticket 1 test',
         ]);
 
@@ -67,7 +66,7 @@ final class TicketTest extends EscaladeTestCase
         $ticket = new \Ticket();
 
         // Check if ticket cloned
-        $this->assertEquals(2, count($ticket->find(['name' => 'Escalade Ticket to clone test'])));
+        $this->assertEquals(2, count($ticket->find(['name' => 'Escalade Close cloned ticket test'])));
 
         // Update ticket status
         $ticket->update([
@@ -77,12 +76,51 @@ final class TicketTest extends EscaladeTestCase
 
         $ticket = new \Ticket();
         $ticket_cloned = $ticket->getFromDBByCrit([
-            'name' => 'Escalade Ticket to clone test',
+            'name' => 'Escalade Close cloned ticket test',
             'NOT' => ['id' => $t_id]
         ]);
         $this->assertTrue($ticket_cloned);
 
         //Check if cloned ticket is also solved
         $this->assertEquals(CommonITILObject::SOLVED, $ticket->fields['status']);
+
+        // Disable close linked tickets option
+        $this->assertTrue($config->update([
+            'cloneandlink'        => 1,
+            'close_linkedtickets' => 0
+        ] + $conf));
+
+        PluginEscaladeConfig::loadInSession();
+
+        $ticket = new \Ticket();
+        $this->assertEquals(0, count($ticket->find(['name' => 'Escalade Close cloned ticket 2 test'])));
+
+        $t_id = $ticket->add([
+            'name' => 'Escalade Close cloned ticket 2 test',
+            'content' => 'Content ticket 2 test',
+        ]);
+
+        PluginEscaladeTicket::cloneAndLink($t_id);
+
+        $ticket = new \Ticket();
+
+        // Check if ticket cloned
+        $this->assertEquals(2, count($ticket->find(['name' => 'Escalade Close cloned ticket 2 test'])));
+
+        // Update ticket status
+        $ticket->update([
+            'id' => $t_id,
+            'status' => CommonITILObject::SOLVED
+        ]);
+
+        $ticket = new \Ticket();
+        $ticket_cloned = $ticket->getFromDBByCrit([
+            'name' => 'Escalade Close cloned ticket 2 test',
+            'NOT' => ['id' => $t_id]
+        ]);
+        $this->assertTrue($ticket_cloned);
+
+        //Check if cloned ticket is also solved
+        $this->assertNotEquals(CommonITILObject::SOLVED, $ticket->fields['status']);
     }
 }
