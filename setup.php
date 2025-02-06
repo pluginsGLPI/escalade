@@ -115,6 +115,9 @@ function plugin_init_escalade()
             }
         }
 
+        // Add css file
+        $PLUGIN_HOOKS['add_css']['escalade'][] = 'css/escalade.css';
+
        // == Ticket modifications
         $PLUGIN_HOOKS['pre_item_update']['escalade'] = [
             'Ticket'       => 'plugin_escalade_pre_item_update',

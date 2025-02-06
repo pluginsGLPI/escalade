@@ -34,7 +34,7 @@ if (
     ! isset($_REQUEST['tickets_id'])
     || ! isset($_REQUEST['groups_id'])
 ) {
-    throw new BadRequestHttpException(); // @phpstan-ignore-line
+    throw new BadRequestHttpException();
 }
 
 PluginEscaladeTicket::climb_group($_REQUEST['tickets_id'], $_REQUEST['groups_id']);

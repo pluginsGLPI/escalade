@@ -31,7 +31,7 @@
 use Glpi\Exception\Http\BadRequestHttpException;
 
 if (!isset($_REQUEST['tickets_id'])) {
-    throw new BadRequestHttpException(); // @phpstan-ignore-line
+    throw new BadRequestHttpException();
 }
 
 PluginEscaladeTicket::assign_me((int) $_REQUEST['tickets_id']);

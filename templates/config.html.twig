@@ -218,10 +218,16 @@
 
                 {% set style_table = config["use_assign_user_group"] ? "" : "display: none !important;" %}
 
-                {# <table style='{{ style_table }}' id='use_technican_group_details'> #}
-
-                {% if behavior_enabled %}
-                    <i>{{ __('Nota: This feature (creation part) is duplicate with the <a href="##link##">Behavior</a>plugin. This last has priority.', 'escalade')|replace({'##link##': behaviorlink}) }}</i>
+                {% if behaviorlink is not empty %}
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-5">
+                            <div class="alert alert-info" role="alert">
+                                {{ __('Nota: This feature (clone tickets) is duplicate with the', 'escalade') }} <a href="{{ behaviorlink }}"> {{ __('Behavior') }}</a> {{ __('plugin. This last has priority.', 'escalade') }}
+                            </div>
+                        </div>
+                        <div class="col-6"></div>
+                    </div>
                 {% endif %}
             </div>
 
@@ -302,8 +308,8 @@
                                 <td></td>
                                 <td>
                                     {{ fields.dropdownYesNo(
-                                        'use_filter_assign_group',
-                                        config["use_filter_assign_group"],
+                                        'remove_delete_assign_supplier_btn',
+                                        config["remove_delete_assign_supplier_btn"],
                                         '',
                                         table_field_options
                                     ) }}

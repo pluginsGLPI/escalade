@@ -39,12 +39,12 @@ if (isset($_POST['escalate'])) {
 
     $ticket = new Ticket();
     if (!$ticket->getFromDB($tickets_id)) {
-        throw new AccessDeniedHttpException(); // @phpstan-ignore-line
+        throw new AccessDeniedHttpException();
     }
 
     // Same right check as in PluginEscaladeTicket::addToTimeline()
     if (!$ticket->canAssign()) {
-        throw new AccessDeniedHttpException(); // @phpstan-ignore-line
+        throw new AccessDeniedHttpException();
     }
 
     $group = new Group();

@@ -57,8 +57,7 @@ if (
                 "title='$locale_cloneandlink'><i class='ti ti-copy me-1'></i>" + __("Clone") +
             "</button>";
 
-         $("#linked_tickets-heading .accordion-button")
-            .append(duplicate_html);
+         $("#linked_itilobjects-heading span:last").after(duplicate_html);
          addOnclick();
 
       }, 100);
