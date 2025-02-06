@@ -723,7 +723,7 @@ class PluginEscaladeTicket
                     $input['id'] = $data['tickets_id'];
                     if (
                         $linkedTicket->can($input['id'], UPDATE)
-                        && $data['link'] == Ticket_Ticket::DUPLICATE_WITH
+                        && $data['link'] == Ticket_Ticket::LINK_TO
                     ) {
                         $linkedTicket->update($input);
                     }
