@@ -28,6 +28,8 @@
  * -------------------------------------------------------------------------
  */
 
+use Glpi\Application\View\TemplateRenderer;
+
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
@@ -49,13 +51,23 @@ class PluginEscaladeGroup_Group extends CommonDBRelation
         return $forbidden;
     }
 
-
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         if ($item instanceof Group) {
-            return __("Escalation", "escalade");
+            $ong[] = self::createTabEntry(
+                __("Escalation", "escalade"),
+                0,
+                $item::class,
+                self::getIcon()
+            );
+            return $ong;
         }
         return '';
+    }
+
+    public static function getIcon()
+    {
+        return "ti ti-escalator";
     }
 
 
@@ -80,59 +92,45 @@ class PluginEscaladeGroup_Group extends CommonDBRelation
         $gg_found = $this->find(['groups_id_source' => $groups_id]);
         $nb = count($gg_found);
 
-        echo "<h2>Escalade</h2>";
         if (Session::haveRight('group', UPDATE)) {
-            echo "<form method='post' id='manageGroup' action='" . PluginEscaladeGroup_Group::getFormURL() . "'>";
             $groups_id_used = [];
             foreach ($gg_found as $gg) {
                 $groups_id_used[] = $gg['groups_id_destination'];
             }
 
-            Dropdown::show('Group', ['name'      => 'groups_id_destination',
-                'condition' => ['is_assign' => 1],
-                'used'      => $groups_id_used
-            ]);
+            if ($nb > 0) {
+                $massiveactionparams = [
+                    'num_displayed'    => min($nb, $_SESSION['glpilist_limit']),
+                    'container'        => 'mass' . __CLASS__ . $rand,
+                    'itemtype'         => 'Group',
+                ];
 
-            echo Html::hidden('groups_id_source', ['value' => $groups_id]);
-            echo Html::submit(_sx('button', 'Add'), ['name' => 'addgroup']);
-            Html::closeForm();
+                if ($nb > 10) {
+                    $massiveactionparams['ontop'] = false;
+                }
+            }
         }
 
-        if (Session::haveRight('group', UPDATE) && $nb) {
-            Html::openMassiveActionsForm('mass' . __CLASS__ . $rand);
-            $massiveactionparams = [
-                'num_displayed'    => min($nb, $_SESSION['glpilist_limit']),
-                'container'        => 'mass' . __CLASS__ . $rand
-            ];
-            Html::showMassiveActions($massiveactionparams);
-        }
-
-        echo "<table class='tab_cadre_fixe'>";
-        echo "<tr>
-         <th width='20'>" . Html::getCheckAllAsCheckbox('mass' . __CLASS__ . $rand) . "</th>
-         <th>" . __('group') . "</th>
-      </tr>";
-
-        foreach ($gg_found as $gg_id => $gg) {
+        $groups = [];
+        foreach ($gg_found as $gg) {
             $group->getFromDB($gg['groups_id_destination']);
-            echo "<tr class='tab_bg_1'>";
-            echo "<td>";
-            if (Session::haveRight('group', UPDATE)) {
-                Html::showMassiveActionCheckBox(__CLASS__, $gg_id);
-            }
-            echo "</td>";
-            echo "<td>" . $group->getLink() . "</td>";
-            echo "</tr>";
+            $groups[] = [
+                'id'       => $gg['id'],
+                'name'     => $group->getName(),
+                'comment'  => $group->fields['comment'],
+                'itemtype' => self::class
+            ];
         }
 
-        echo "</table>";
-        if (Session::haveRight('group', UPDATE) && $nb) {
-            if ($nb > 10) {
-                $massiveactionparams['ontop'] = false;
-                Html::showMassiveActions($massiveactionparams);
-            }
-            Html::closeForm();
-        }
+        TemplateRenderer::getInstance()->display('@escalade/group_group.html.twig', [
+            'canedit'             => Session::haveRight('group', UPDATE),
+            'group_id'              => $groups_id,
+            'groups'                => $groups,
+            'massiveactionparams'   => $massiveactionparams ?? [],
+            'formurl'               => PluginEscaladeGroup_Group::getFormURL(),
+            'used'                  => $groups_id_used,
+            'rand'                  => $rand,
+        ]);
     }
 
     public function getGroups($ticket_id, $removeAlreadyAssigned = true)

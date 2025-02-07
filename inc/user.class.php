@@ -1,5 +1,7 @@
 <?php
 
+use Glpi\Application\View\TemplateRenderer;
+
 /**
  * -------------------------------------------------------------------------
  * Escalade plugin for GLPI
@@ -139,36 +141,14 @@ class PluginEscaladeUser extends CommonDBTM
             $this->fields["use_filter_assign_group"] = 0;
         }
 
-        echo "<form action='" . $this->getFormURL() . "' method='post'>";
-        echo "<table class='tab_cadre_fixe'>";
-
-        $rand = mt_rand();
-
-        echo "<tr class='tab_bg_1'>";
-        echo "<td><label>";
-        echo __("Bypass filtering on the groups assignment", "escalade");
-        echo "&nbsp;";
-        Dropdown::showYesNo("use_filter_assign_group", $this->fields["use_filter_assign_group"], -1, [
-            'width' => '100%',
-            'rand'  => $rand,
+        TemplateRenderer::getInstance()->display('@escalade/user.html.twig', [
+            'formurl'   => $this->getFormURL(),
+            'rand'      => mt_rand(),
+            'users_id'  => $ID,
+            'this'      => $this->fields,
+            'is_exist'  => $is_exist,
         ]);
-        echo "</label>";
-        echo "</td>";
-        echo "</tr>";
 
-        echo "<tr class='tab_bg_1'>";
-        echo "<td class='center' colspan='2'>";
-        echo "<input type='hidden' name='users_id' value='$ID'>";
-        if (! $is_exist) {
-            echo "<input type='submit' name='add' value='" . _sx('button', 'Add') . "' class='submit'>";
-        } else {
-            echo "<input type='hidden' name='id' value='" . $this->getID() . "'>";
-            echo "<input type='submit' name='update' value='" . _sx('button', 'Update') . "' class='submit'>";
-        }
-        echo "</td></tr>";
-
-        echo "</table>";
-        Html::closeForm();
         return true;
     }
 
@@ -184,11 +164,20 @@ class PluginEscaladeUser extends CommonDBTM
 
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
-        switch ($item->getType()) {
-            case 'User':
-                return __("Escalation", "escalade");
-            default:
-                return '';
+        if ($item instanceof User) {
+            $ong[] = self::createTabEntry(
+                __("Escalation", "escalade"),
+                0,
+                $item::class,
+                self::getIcon()
+            );
+            return $ong;
         }
+        return '';
+    }
+
+    public static function getIcon()
+    {
+        return "ti ti-escalator";
     }
 }
