@@ -116,7 +116,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation
             $group->getFromDB($gg['groups_id_destination']);
             $groups[] = [
                 'id'       => $gg['id'],
-                'name'     => $group->getName(),
+                'name'     => $group->getLink(),
                 'comment'  => $group->fields['comment'],
                 'itemtype' => self::class
             ];
