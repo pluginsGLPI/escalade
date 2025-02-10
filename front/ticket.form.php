@@ -74,7 +74,7 @@ if (isset($_POST['escalate'])) {
                 ]
             )
         ) {
-            if ($_SESSION['plugins']['escalade']['config']['task_history']) {
+            if ($_SESSION['glpi_plugins']['escalade']['config']['task_history']) {
                 $task = new TicketTask();
                 $task->add(
                     [
