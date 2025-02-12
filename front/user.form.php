@@ -28,8 +28,6 @@
  * -------------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
-
 $user = new PluginEscaladeUser();
 
 //Note : no Log is show in User

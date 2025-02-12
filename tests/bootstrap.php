@@ -28,13 +28,15 @@
  * -------------------------------------------------------------------------
  */
 
-global $CFG_GLPI, $PLUGIN_HOOKS;
+use Glpi\Kernel\Kernel;
 
-define('GLPI_ROOT', dirname(__DIR__, 3));
-define('GLPI_LOG_DIR', GLPI_ROOT . '/files/_logs');
+global $CFG_GLPI, $PLUGIN_HOOKS;
 
 define('TU_USER', 'glpi');
 define('TU_PASS', 'glpi');
 define('GLPI_LOG_LVL', 'DEBUG');
 
-require GLPI_ROOT . '/inc/includes.php';
+require_once dirname(__DIR__, 3) . '/vendor/autoload.php';
+
+$kernel = new Kernel('testing');
+$kernel->boot();
