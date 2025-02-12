@@ -30,7 +30,7 @@
 
 use Glpi\Application\View\TemplateRenderer;
 use Glpi\DBAL\QuerySubQuery;
-use Glpi\Toolbox\Sanitizer;
+
 
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");

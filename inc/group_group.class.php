@@ -128,7 +128,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation
             'groups'                => $groups,
             'massiveactionparams'   => $massiveactionparams ?? [],
             'formurl'               => PluginEscaladeGroup_Group::getFormURL(),
-            'used'                  => $groups_id_used,
+            'used'                  => $groups_id_used ?? [],
             'rand'                  => $rand,
         ]);
     }
