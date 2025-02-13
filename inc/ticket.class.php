@@ -37,6 +37,8 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginEscaladeTicket
 {
+    public const NO_CHANGE = -1; // Status don't change
+
     public static function pre_item_update(CommonDBTM $item)
     {
         if (isset($item->input['_itil_assign'])) {
@@ -88,7 +90,7 @@ class PluginEscaladeTicket
                 //disable notification to prevent notification for old AND new group
                 $item->input['_disablenotif'] = true;
                 $item->input['_do_not_compute_status'] = true;
-                if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != -1) {
+                if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != self::NO_CHANGE) {
                     $item->input['status'] = $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'];
                 }
                 return PluginEscaladeTicket::addHistoryOnAddGroup($item);
@@ -102,7 +104,7 @@ class PluginEscaladeTicket
                     if (!isset($old_group_ids[$new_group['items_id']])) {
                         $item->input['_disablenotif'] = true;
                         $item->input['_do_not_compute_status'] = true;
-                        if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != -1) {
+                        if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != self::NO_CHANGE) {
                             $item->input['status'] = $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'];
                         }
                         return PluginEscaladeTicket::addHistoryOnAddGroup($item);
@@ -285,7 +287,7 @@ class PluginEscaladeTicket
             }
 
             //update status
-            if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != -1) {
+            if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != self::NO_CHANGE) {
                 $item->update([
                     'id' => $tickets_id,
                     'status' => $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status']
@@ -386,7 +388,7 @@ class PluginEscaladeTicket
             ]);
         }
 
-        if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != -1) {
+        if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != self::NO_CHANGE) {
             $ticket = new Ticket();
             $ticket->update([
                 'id'     => $tickets_id,
