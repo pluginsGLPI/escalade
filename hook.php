@@ -193,7 +193,7 @@ function plugin_escalade_install()
                     $status = Ticket::PLANNED;
                     break;
                 default:
-                    $status = PluginEscaladeTicket::NO_CHANGE;
+                    $status = PluginEscaladeTicket::MANAGED_BY_CORE;
                     break;
             }
             $query = "UPDATE `glpi_plugin_escalade_configs`

@@ -387,7 +387,7 @@ class PluginEscaladeConfig extends CommonDBTM
     {
         $item = new $itemtype();
 
-        $tab[PluginEscaladeTicket::NO_CHANGE] = __("Don't change", "escalade");
+        $tab[PluginEscaladeTicket::MANAGED_BY_CORE] = __("Default (not managed by plugin)", "escalade");
 
         $i = 1;
         foreach ($item->getAllStatusArray(false) as $status) {
