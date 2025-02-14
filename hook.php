@@ -38,14 +38,14 @@ function plugin_escalade_install()
     /** @var DBmysql $DB */
     global $DB;
 
-   //init migration
+    //init migration
     $migration = new Migration(PLUGIN_ESCALADE_VERSION);
 
     $default_charset = DBConnection::getDefaultCharset();
     $default_collation = DBConnection::getDefaultCollation();
     $default_key_sign = DBConnection::getDefaultPrimaryKeySignOption();
 
-   // == Tables creation (initial installation) ==
+    // == Tables creation (initial installation) ==
     if (!$DB->tableExists('glpi_plugin_escalade_histories')) {
         $query = "CREATE TABLE `glpi_plugin_escalade_histories` (
          `id`              INT {$default_key_sign} NOT NULL AUTO_INCREMENT,
@@ -94,7 +94,7 @@ function plugin_escalade_install()
         $DB->doQuery($query);
     }
 
-   // == Update to 1.2 ==
+    // == Update to 1.2 ==
     if (!$DB->fieldExists('glpi_plugin_escalade_configs', 'cloneandlink_ticket')) {
         $migration->addField(
             'glpi_plugin_escalade_configs',
@@ -150,7 +150,7 @@ function plugin_escalade_install()
         $migration->migrationOneTable('glpi_plugin_escalade_histories');
     }
 
-   // == Update to 1.3 ==
+    // == Update to 1.3 ==
     if (!$DB->fieldExists('glpi_plugin_escalade_configs', 'use_filter_assign_group')) {
         $migration->addField(
             'glpi_plugin_escalade_configs',
@@ -170,7 +170,7 @@ function plugin_escalade_install()
         $DB->doQuery($query);
     }
 
-   // Update for 0.84 status
+    // Update for 0.84 status
     if ($DB->tableExists('glpi_plugin_escalade_configs')) {
         foreach ($DB->request("glpi_plugin_escalade_configs") as $data) {
             switch ($data['ticket_last_status']) {
@@ -193,7 +193,7 @@ function plugin_escalade_install()
                     $status = Ticket::PLANNED;
                     break;
                 default:
-                    $status = -1;
+                    $status = PluginEscaladeTicket::MANAGED_BY_CORE;
                     break;
             }
             $query = "UPDATE `glpi_plugin_escalade_configs`
@@ -206,14 +206,14 @@ function plugin_escalade_install()
         $DB->doQuery($query);
     }
 
-   // update to 0.85-1.0
+    // update to 0.85-1.0
     if ($DB->fieldExists("glpi_plugin_escalade_configs", "assign_me_ticket")) {
-       // assign me ticket feature native in glpi 0.85
+        // assign me ticket feature native in glpi 0.85
         $migration->dropField("glpi_plugin_escalade_configs", "assign_me_ticket");
         $migration->migrationOneTable('glpi_plugin_escalade_configs');
     }
 
-   // update to 0.90-1.1
+    // update to 0.90-1.1
     if (!$DB->tableExists('glpi_plugin_escalade_users')) {
         $query = "CREATE TABLE `glpi_plugin_escalade_users` (
                   `id` INT {$default_key_sign} NOT NULL AUTO_INCREMENT,
@@ -239,8 +239,8 @@ function plugin_escalade_install()
         }
     }
 
-   // ## update to 2.2.0
-   // add new fields
+    // ## update to 2.2.0
+    // add new fields
     if (!$DB->fieldExists('glpi_plugin_escalade_configs', 'remove_delete_requester_user_btn')) {
         $migration->addField(
             'glpi_plugin_escalade_configs',
@@ -274,7 +274,7 @@ function plugin_escalade_install()
         );
     }
 
-   // migrate old fields
+    // migrate old fields
     if ($DB->fieldExists('glpi_plugin_escalade_configs', 'remove_delete_user_btn')) {
         $migration->changeField(
             'glpi_plugin_escalade_configs',
@@ -358,8 +358,8 @@ function plugin_escalade_install()
             }
         }
     }
-   //Update to 2.6.3
-   // add new fields
+    //Update to 2.6.3
+    // add new fields
     if (!$DB->fieldExists('glpi_plugin_escalade_configs', 'remove_requester')) {
         $migration->addField(
             'glpi_plugin_escalade_configs',
@@ -395,7 +395,7 @@ function plugin_escalade_uninstall()
     /** @var DBmysql $DB */
     global $DB;
 
-   //Delete plugin's table
+    //Delete plugin's table
     $tables = [
         'glpi_plugin_escalade_histories',
         'glpi_plugin_escalade_configs',
@@ -470,13 +470,13 @@ function plugin_escalade_item_add_user($item)
     }
 
     if ($item instanceof Ticket_User) {
-       //prevent escalade hook to trigger on ticket creation
+        //prevent escalade hook to trigger on ticket creation
         if (isset($_SESSION['plugin_escalade']['skip_hook_add_user'])) {
-           //unset($_SESSION['plugin_escalade']['skip_hook_add_user']);
+            //unset($_SESSION['plugin_escalade']['skip_hook_add_user']);
             return true;
         }
 
-       //this hook is only for assign
+        //this hook is only for assign
         if ($item->fields['type'] == CommonITILActor::ASSIGN) {
             return PluginEscaladeTicket::item_add_user($item);
         }
@@ -496,7 +496,7 @@ function plugin_escalade_pre_item_add_ticket($item)
 
 function plugin_escalade_item_add_ticket($item)
 {
-   //clean escalade session var after ticket creation
+    //clean escalade session var after ticket creation
     if ($item instanceof Ticket) {
         unset($_SESSION['plugin_escalade']['skip_hook_add_user']);
         unset($_SESSION['plugin_escalade']['keep_users']);
@@ -528,47 +528,47 @@ function plugin_escalade_getAddSearchOptions($itemtype)
     $sopt = [];
 
     if ($itemtype == 'Ticket') {
-         $sopt[1881]['table']         = 'glpi_groups';
-         $sopt[1881]['field']         = 'completename';
-         $sopt[1881]['datatype']      = 'dropdown';
-         $sopt[1881]['name']          = __("Group concerned by the escalation", "escalade");
-         $sopt[1881]['forcegroupby']  = true;
-         $sopt[1881]['massiveaction'] = false;
-         $sopt[1881]['condition']     = ['is_assign' => 1];
-         $sopt[1881]['joinparams']    = [
-             'beforejoin' => [
-                 'table'      => 'glpi_plugin_escalade_histories',
-                 'joinparams' => [
-                     'jointype'  => 'child',
-                     'condition' => ''
-                 ]
-             ]
-         ];
+        $sopt[1881]['table']         = 'glpi_groups';
+        $sopt[1881]['field']         = 'completename';
+        $sopt[1881]['datatype']      = 'dropdown';
+        $sopt[1881]['name']          = __("Group concerned by the escalation", "escalade");
+        $sopt[1881]['forcegroupby']  = true;
+        $sopt[1881]['massiveaction'] = false;
+        $sopt[1881]['condition']     = ['is_assign' => 1];
+        $sopt[1881]['joinparams']    = [
+            'beforejoin' => [
+                'table'      => 'glpi_plugin_escalade_histories',
+                'joinparams' => [
+                    'jointype'  => 'child',
+                    'condition' => ''
+                ]
+            ]
+        ];
 
-         $sopt[] = [
-             'id'                 => '1991',
-             'table'              => 'glpi_plugin_escalade_histories',
-             'field'              => 'id',
-             'name'               => __("Number of escalations", "escalade"),
-             'forcegroupby'       => true,
-             'usehaving'          => true,
-             'datatype'           => 'count',
-             'massiveaction'      => false,
-             'joinparams'         => [
-                 'jointype'           => 'child'
-             ]
-         ];
+        $sopt[] = [
+            'id'                 => '1991',
+            'table'              => 'glpi_plugin_escalade_histories',
+            'field'              => 'id',
+            'name'               => __("Number of escalations", "escalade"),
+            'forcegroupby'       => true,
+            'usehaving'          => true,
+            'datatype'           => 'count',
+            'massiveaction'      => false,
+            'joinparams'         => [
+                'jointype'           => 'child'
+            ]
+        ];
 
-         $sopt[] = [
-             'id'                 => '1992',
-             'table'              => 'glpi_plugin_escalade_histories',
-             'field'              => 'counter',
-             'name'               => __("Number of escalations between two groups", "escalade"),
-             'datatype'           => 'integer',
-             'joinparams'         => [
-                 'jointype'           => 'child'
-             ]
-         ];
+        $sopt[] = [
+            'id'                 => '1992',
+            'table'              => 'glpi_plugin_escalade_histories',
+            'field'              => 'counter',
+            'name'               => __("Number of escalations between two groups", "escalade"),
+            'datatype'           => 'integer',
+            'joinparams'         => [
+                'jointype'           => 'child'
+            ]
+        ];
     }
     if ($itemtype == 'User') {
         $sopt[2150]['table']         = 'glpi_plugin_escalade_users';

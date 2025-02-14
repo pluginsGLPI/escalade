@@ -37,6 +37,8 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginEscaladeTicket
 {
+    public const MANAGED_BY_CORE = -1; // Status managed by core, not by plugin
+
     public static function pre_item_update(CommonDBTM $item)
     {
         if (isset($item->input['_itil_assign'])) {
@@ -87,12 +89,12 @@ class PluginEscaladeTicket
             ) {
                 //disable notification to prevent notification for old AND new group
                 $item->input['_disablenotif'] = true;
-                if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != -1) {
+                if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != self::MANAGED_BY_CORE) {
                     $item->input['_do_not_compute_status'] = true;
                     $item->input['status'] = $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'];
                 }
                 return PluginEscaladeTicket::addHistoryOnAddGroup($item);
-            } else if (count($old_groups) == count($new_groups)) {
+            } elseif (count($old_groups) == count($new_groups)) {
                 $old_group_ids = [];
                 foreach ($old_groups as $old_group) {
                     $old_group_ids[$old_group['items_id']] = true;
@@ -101,7 +103,7 @@ class PluginEscaladeTicket
                 foreach ($new_groups as $new_group) {
                     if (!isset($old_group_ids[$new_group['items_id']])) {
                         $item->input['_disablenotif'] = true;
-                        if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != -1) {
+                        if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != self::MANAGED_BY_CORE) {
                             $item->input['_do_not_compute_status'] = true;
                             $item->input['status'] = $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'];
                         }
@@ -141,7 +143,7 @@ class PluginEscaladeTicket
             if (isset($item->input['status']) && $item->input['status'] == CommonITILObject::CLOSED) {
                 //close linked tickets
                 self::linkedTickets($item, CommonITILObject::CLOSED);
-            } else if (
+            } elseif (
                 isset($item->input['status'])
                 && $item->input['status'] == CommonITILObject::ASSIGNED
                 && isset($item->oldvalues['status'])
@@ -285,7 +287,7 @@ class PluginEscaladeTicket
             }
 
             //update status
-            if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != -1) {
+            if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != self::MANAGED_BY_CORE) {
                 $item->update([
                     'id' => $tickets_id,
                     'status' => $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status']
@@ -386,7 +388,7 @@ class PluginEscaladeTicket
             ]);
         }
 
-        if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != -1) {
+        if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != self::MANAGED_BY_CORE) {
             $ticket = new Ticket();
             $ticket->update([
                 'id'     => $tickets_id,

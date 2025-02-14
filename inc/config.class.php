@@ -373,7 +373,7 @@ class PluginEscaladeConfig extends CommonDBTM
         ) {
             $user = new PluginEscaladeUser();
             if ($user->getFromDBByCrit(['users_id' => $_SESSION['glpiID']])) {
-               //if a bypass is defined for user
+                //if a bypass is defined for user
                 if ($user->fields['use_filter_assign_group']) {
                     $config->fields['use_filter_assign_group'] = 0;
                 }
@@ -387,7 +387,7 @@ class PluginEscaladeConfig extends CommonDBTM
     {
         $item = new $itemtype();
 
-        $tab[-1] = __("Don't change", "escalade");
+        $tab[PluginEscaladeTicket::MANAGED_BY_CORE] = __("Default (not managed by plugin)", "escalade");
 
         $i = 1;
         foreach ($item->getAllStatusArray(false) as $status) {
