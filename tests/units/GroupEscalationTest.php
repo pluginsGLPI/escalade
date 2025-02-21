@@ -147,7 +147,7 @@ final class GroupEscalationTest extends EscaladeTestCase
         $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $t_id, 'users_id' => $user2->getID(), 'type' => CommonITILActor::ASSIGN])));
     }
 
-    public function testUserWithsGroupAttributionWithoutRemoveTech()
+    public function testUserWithsGroupAttributionWithoutRemoveTechConfig()
     {
         $this->login();
 
@@ -210,6 +210,10 @@ final class GroupEscalationTest extends EscaladeTestCase
                     [
                         'items_id' => $group2->getID(),
                         'itemtype' => 'Group'
+                    ],
+                    [
+                        'items_id' => $user1->getID(),
+                        'itemtype' => 'User'
                     ]
                 ],
             ]
@@ -221,7 +225,7 @@ final class GroupEscalationTest extends EscaladeTestCase
         $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $t_id, 'type' => CommonITILActor::ASSIGN])));
     }
 
-    public function testUserWithsGroupAttributionWithsRemoveTech()
+    public function testUserWithsGroupAttributionWithsRemoveTechConfig()
     {
         $this->login();
 
@@ -284,6 +288,10 @@ final class GroupEscalationTest extends EscaladeTestCase
                     [
                         'items_id' => $group2->getID(),
                         'itemtype' => 'Group'
+                    ],
+                    [
+                        'items_id' => $user1->getID(),
+                        'itemtype' => 'User'
                     ]
                 ],
             ]
