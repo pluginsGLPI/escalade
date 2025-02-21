@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed `Close cloned tickets at the same time` option
 - Fixed `Bypass filtering on the groups assignment` option
 - Rename the option **"Don't change"** to **"Default (not managed by plugin)"** for the **"Ticket status after an escalation"** setting to reduce ambiguity.
+- Remove the user when a ticket escalates to a group with remote_tech option at true
 
 ## [2.9.10] - 2024-11-27
 
