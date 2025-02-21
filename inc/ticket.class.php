@@ -93,6 +93,9 @@ class PluginEscaladeTicket
                     $item->input['_do_not_compute_status'] = true;
                     $item->input['status'] = $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'];
                 }
+                if ($config['remove_tech']) {
+                    self::removeAssignUsers($item);
+                }
                 return PluginEscaladeTicket::addHistoryOnAddGroup($item);
             } elseif (count($old_groups) == count($new_groups)) {
                 $old_group_ids = [];
@@ -110,11 +113,11 @@ class PluginEscaladeTicket
                         return PluginEscaladeTicket::addHistoryOnAddGroup($item);
                     }
                 }
+                if ($config['remove_tech']) {
+                    self::removeAssignUsers($item);
+                }
             }
 
-            if (count($new_groups) > 0) {
-                self::removeAssignUsers($item);
-            }
             return $item;
         }
     }
