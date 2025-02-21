@@ -147,7 +147,7 @@ final class GroupEscalationTest extends EscaladeTestCase
         $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $t_id, 'users_id' => $user2->getID(), 'type' => CommonITILActor::ASSIGN])));
     }
 
-    public function testUserWithsGroupAttributionWithoutRemoveTechConfig()
+    public function testUserWithsGroupAttributionWithoutRemoveTech()
     {
         $this->login();
 
@@ -159,9 +159,6 @@ final class GroupEscalationTest extends EscaladeTestCase
 
         // Update escalade config
         $this->assertTrue($config->update([
-            'use_assign_user_group'              => 1,
-            'use_assign_user_group_creation'     => 1,
-            'use_assign_user_group_modification' => 1,
             'remove_tech'                        => 0,
         ] + $conf));
 
@@ -211,8 +208,8 @@ final class GroupEscalationTest extends EscaladeTestCase
             '_actors' => [
                 'assign' => [
                     [
-                        'items_id' => $user2->getID(),
-                        'itemtype' => 'User'
+                        'items_id' => $group2->getID(),
+                        'itemtype' => 'Group'
                     ]
                 ],
             ]
@@ -224,7 +221,7 @@ final class GroupEscalationTest extends EscaladeTestCase
         $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $t_id, 'type' => CommonITILActor::ASSIGN])));
     }
 
-    public function testUserWithsGroupAttributionWithsRemoveTechConfig()
+    public function testUserWithsGroupAttributionWithsRemoveTech()
     {
         $this->login();
 
@@ -236,9 +233,6 @@ final class GroupEscalationTest extends EscaladeTestCase
 
         // Update escalade config
         $this->assertTrue($config->update([
-            'use_assign_user_group'              => 1,
-            'use_assign_user_group_creation'     => 1,
-            'use_assign_user_group_modification' => 1,
             'remove_tech'                        => 1,
         ] + $conf));
 
@@ -288,7 +282,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             '_actors' => [
                 'assign' => [
                     [
-                        'items_id' => $user_group2->getID(),
+                        'items_id' => $group2->getID(),
                         'itemtype' => 'Group'
                     ]
                 ],
