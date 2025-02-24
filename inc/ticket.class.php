@@ -408,6 +408,7 @@ class PluginEscaladeTicket
         if ($_SESSION['glpi_plugins']['escalade']['config']['remove_group'] == true) {
             self::removeAssignGroups($tickets_id, $groups_id);
         }
+        //remove old users if remove_tech is enabled
         self::removeAssignUsers($item);
     }
 
