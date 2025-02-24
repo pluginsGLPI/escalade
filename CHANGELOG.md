@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed assignment of requester group to ticket
 - Ensure plugin works seamlessly in external contexts (e.g., from plugins)
 - Fixed `Close cloned tickets at the same time` option
+- Remove the user when a ticket escalates to a group with remote_tech option at true
 
 ## [2.9.10] - 2024-11-27
 
