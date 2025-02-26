@@ -110,9 +110,7 @@ class PluginEscaladeTicket
                 }
             }
 
-            if (count($new_groups) > 0) {
-                self::removeAssignUsers($item);
-            }
+            self::removeAssignUsers($item);
             return $item;
         }
     }
