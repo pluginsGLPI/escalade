@@ -110,7 +110,9 @@ class PluginEscaladeTicket
                 }
             }
 
-            self::removeAssignUsers($item);
+            if (count($new_groups) > 0) {
+                self::removeAssignUsers($item);
+            }
             return $item;
         }
     }
@@ -1114,10 +1116,13 @@ class PluginEscaladeTicket
         $PluginEscaladeGroup_Group = new PluginEscaladeGroup_Group();
         $groups_id_filtered = array_keys($PluginEscaladeGroup_Group->getGroups($tickets_id));
         $groups_id_filtered = empty($groups_id_filtered) ? [-1] : $groups_id_filtered;
+
+        $user_config = new PluginEscaladeUser();
+        $user_config->getFromDBByCrit(['users_id' => Session::getLoginUserID()]);
         $condition = [
             'is_assign' => 1
         ];
-        if ($config->fields['use_filter_assign_group']) {
+        if ($config->fields['use_filter_assign_group'] && !$user_config->fields['use_filter_assign_group']) {
             $condition['id'] = $groups_id_filtered;
         }
         TemplateRenderer::getInstance()->display('@escalade/escalade_form.html.twig', [
