@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-06 00:43+0000\n"
+"POT-Creation-Date: 2025-02-27 00:42+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Cédric Anne, 2023\n"
 "Language-Team: French (Canada) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/fr_CA/)\n"
@@ -64,47 +64,47 @@ msgstr ""
 msgid "Configuration Escalade plugin"
 msgstr "Configuration du plugin Escalade"
 
+#: inc/config.class.php:390
+msgid "Default (not managed by plugin)"
+msgstr ""
+
 #: inc/config.class.php:278
 msgid "Display delete button"
 msgstr "Afficher le bouton de suppression"
 
-#: inc/config.class.php:389
-msgid "Don't change"
-msgstr "Ne pas modifier"
-
-#: inc/config.class.php:347 hook.php:581 hook.php:600
+#: inc/config.class.php:347 hook.php:579 hook.php:598
 msgid "Enable filtering on the groups assignment"
 msgstr "Activer le filtrage sur l'attribution des groupes"
 
-#: inc/ticket.class.php:881
+#: inc/ticket.class.php:899
 msgid "Error : adding actors (group)"
 msgstr "Erreur : ajout des acteurs (groupe)"
 
-#: inc/ticket.class.php:871
+#: inc/ticket.class.php:890
 msgid "Error : adding actors (user)"
 msgstr "Erreur : ajout des acteurs (utilisateur)"
 
-#: inc/ticket.class.php:892
+#: inc/ticket.class.php:909
 msgid "Error : adding documents"
 msgstr "Erreur : ajout des documents"
 
-#: inc/ticket.class.php:859
+#: inc/ticket.class.php:879
 msgid "Error : adding followups"
 msgstr "Erreur: ajout des suivis"
 
-#: inc/ticket.class.php:842
+#: inc/ticket.class.php:862
 msgid "Error : adding link between the two tickets"
 msgstr "Erreur : ajout de lien entre les deux tickets"
 
-#: inc/ticket.class.php:829
+#: inc/ticket.class.php:849
 msgid "Error : adding new ticket"
 msgstr "Erreur : ajout de nouveau ticket"
 
-#: inc/ticket.class.php:813
+#: inc/ticket.class.php:833
 msgid "Error : get old ticket"
 msgstr "Erreur : récupération ancien ticket"
 
-#: inc/ticket.class.php:1011 inc/ticket.class.php:1012
+#: inc/ticket.class.php:1028 inc/ticket.class.php:1029
 msgid "Escalate"
 msgstr ""
 
@@ -112,8 +112,8 @@ msgstr ""
 msgid "Escalate ticket"
 msgstr ""
 
-#: setup.php:184 front/config.form.php:57 inc/user.class.php:180
-#: inc/group_group.class.php:56
+#: inc/user.class.php:179 inc/group_group.class.php:56 setup.php:184
+#: front/config.form.php:57
 msgid "Escalation"
 msgstr "Escalade"
 
@@ -121,12 +121,12 @@ msgstr "Escalade"
 msgid "Escalation history in tasks"
 msgstr "Historique des escalades dans les tâches"
 
-#: front/ticket.form.php:91 inc/ticket.class.php:383
+#: inc/ticket.class.php:387 inc/ticket.class.php:516 front/ticket.form.php:86
 #, php-format
 msgid "Escalation to the group %s."
 msgstr ""
 
-#: hook.php:536
+#: hook.php:534
 msgid "Group concerned by the escalation"
 msgstr "Groupe concerné par l'escalade"
 
@@ -144,11 +144,11 @@ msgid ""
 "href='##link##'>Behavior</a>plugin. This last has priority."
 msgstr "Note: Cette fonctionnalité (partie création) est en doublon avec le plugin <a href='##link##'>Comportement</a>. Ce dernier ayant la priorité."
 
-#: hook.php:554
+#: hook.php:552
 msgid "Number of escalations"
 msgstr "Nombre d'escalades"
 
-#: hook.php:568
+#: hook.php:566
 msgid "Number of escalations between two groups"
 msgstr "Nombre d'escalades entre deux groupes"
 
@@ -176,11 +176,11 @@ msgstr "Utilisateur demandeur de la tâche/rappel"
 msgid "Requester user of the ticket"
 msgstr "Utilisateur demandeur du ticket"
 
-#: inc/ticket.class.php:215
+#: inc/ticket.class.php:220
 msgid "Solution provided, back to the group"
 msgstr "Solution fournie, retour au groupe"
 
-#: inc/ticket.class.php:279
+#: inc/ticket.class.php:284
 msgid "Solution rejected, return to the group"
 msgstr "Solution rejetée, renvoi au groupe"
 
@@ -188,7 +188,7 @@ msgstr "Solution rejetée, renvoi au groupe"
 msgid "Solve date modification"
 msgstr "Date de modification de la résolution"
 
-#: inc/ticket.class.php:853 inc/ticket.class.php:898 inc/ticket.class.php:903
+#: inc/ticket.class.php:873 inc/ticket.class.php:915 inc/ticket.class.php:920
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Ce ticket a été cloné depuis le ticket n°"
 
@@ -228,7 +228,7 @@ msgstr ""
 msgid "full assignation history"
 msgstr "historique d'assignation complet"
 
-#: front/climb_group.php:37 ajax/assign_me.php:34
+#: ajax/assign_me.php:34 front/climb_group.php:37
 msgid "missing parameters"
 msgstr "paramètres manquants"
 
