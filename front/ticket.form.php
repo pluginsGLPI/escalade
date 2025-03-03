@@ -28,9 +28,7 @@
  * -------------------------------------------------------------------------
  */
 
-use Glpi\Toolbox\Sanitizer;
-
-include('../../../inc/includes.php');
+use Glpi\Exception\Http\AccessDeniedHttpException;
 
 /** @var array $CFG_GLPI */
 global $CFG_GLPI;
@@ -41,12 +39,12 @@ if (isset($_POST['escalate'])) {
 
     $ticket = new Ticket();
     if (!$ticket->getFromDB($tickets_id)) {
-        Html::displayNotFoundError();
+        throw new AccessDeniedHttpException();
     }
 
     // Same right check as in PluginEscaladeTicket::addToTimeline()
     if (!$ticket->canAssign()) {
-        Html::displayRightError();
+        throw new AccessDeniedHttpException();
     }
 
     $group = new Group();
@@ -82,9 +80,8 @@ if (isset($_POST['escalate'])) {
                         'is_private' => true,
                         'state'      => Planning::INFO,
                         // Sanitize before merging with $_POST['comment'] which is already sanitized
-                        'content'    => Sanitizer::sanitize(
-                            '<p><i>' . sprintf(__('Escalation to the group %s.', 'escalade'), Sanitizer::unsanitize($group->getName())) . '</i></p><hr />'
-                        ) . $_POST['comment']
+                        'content'    => '<p><i>' . sprintf(__('Escalation to the group %s.', 'escalade'), $group->getName()) . '</i></p><hr />'
+                        . $_POST['comment']
                     ]
                 );
             }

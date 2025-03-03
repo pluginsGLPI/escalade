@@ -29,7 +29,8 @@
  */
 
 use Glpi\Application\View\TemplateRenderer;
-use Glpi\Toolbox\Sanitizer;
+use Glpi\DBAL\QuerySubQuery;
+
 
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
@@ -112,7 +113,13 @@ class PluginEscaladeTicket
                 }
             }
 
-            self::removeAssignUsers($item);
+            if (!empty($_SESSION['glpi_plugins']['escalade']['config']['remove_requester'])) {
+                self::removeAssignUsers($item, false, CommonITILActor::REQUESTER);
+            }
+            if (!empty($_SESSION['glpi_plugins']['escalade']['config']['remove_assign'])) {
+                self::removeAssignUsers($item, false, CommonITILActor::ASSIGN);
+            }
+
             return $item;
         }
     }
@@ -191,7 +198,12 @@ class PluginEscaladeTicket
             }
 
             self::removeAssignGroups($tickets_id, $first_history['groups_id']);
-            self::removeAssignUsers($item);
+            if ($_SESSION['glpi_plugins']['escalade']['config']['remove_requester']) {
+                self::removeAssignUsers($item, false, CommonITILActor::REQUESTER);
+            }
+            if ($_SESSION['glpi_plugins']['escalade']['config']['remove_assign']) {
+                self::removeAssignUsers($item, false, CommonITILActor::ASSIGN);
+            }
 
             //set session var to prevent double task message
             $_SESSION['plugin_escalade']['solution'] = true;
@@ -365,7 +377,12 @@ class PluginEscaladeTicket
         }
 
         //remove old user(s) (pass if user added by new ticket)
-        self::removeAssignUsers($item);
+        if ($_SESSION['glpi_plugins']['escalade']['config']['remove_requester']) {
+            self::removeAssignUsers($item, false, CommonITILActor::REQUESTER);
+        }
+        if ($_SESSION['glpi_plugins']['escalade']['config']['remove_assign']) {
+            self::removeAssignUsers($item, false, CommonITILActor::ASSIGN);
+        }
 
         //add a task to inform the escalation (pass if solution)
         if (isset($_SESSION['plugin_escalade']['solution'])) {
@@ -384,7 +401,7 @@ class PluginEscaladeTicket
                 'tickets_id' => $tickets_id,
                 'is_private' => true,
                 'state'      => Planning::INFO,
-                'content'    => Toolbox::addslashes_deep(sprintf(__("Escalation to the group %s.", "escalade"), $group->getName())),
+                'content'    => sprintf(__("Escalation to the group %s.", "escalade"), $group->getName()),
             ]);
         }
 
@@ -512,9 +529,8 @@ class PluginEscaladeTicket
                         'is_private' => true,
                         'state'      => Planning::INFO,
                         // Sanitize before merging with $_POST['comment'] which is already sanitized
-                        'content'    => Sanitizer::sanitize(
-                            '<p><i>' . sprintf(__('Escalation to the group %s.', 'escalade'), Sanitizer::unsanitize($group->getName())) . '</i></p><hr />'
-                        ) . $_POST['comment']
+                        'content'    => '<p><i>' . sprintf(__('Escalation to the group %s.', 'escalade'), $group->getName()) . '</i></p><hr />'
+                        . $_POST['comment']
                     ]);
                 }
 
@@ -568,12 +584,6 @@ class PluginEscaladeTicket
             $_SESSION['glpi_plugins']['escalade']['config']['remove_tech'] == false
             && $_SESSION['glpi_plugins']['escalade']['config']['remove_requester'] == false
         ) {
-            return;
-        }
-        if ($type == CommonITILActor::ASSIGN && !$_SESSION['glpi_plugins']['escalade']['config']['remove_tech']) {
-            return;
-        }
-        if ($type == CommonITILActor::REQUESTER && !$_SESSION['glpi_plugins']['escalade']['config']['remove_requester']) {
             return;
         }
 
@@ -718,14 +728,14 @@ class PluginEscaladeTicket
                 'status' => $status
             ];
 
-            $tickets = Ticket_Ticket::getLinkedTicketsTo($ticket->getID());
+            $tickets = CommonITILObject_CommonITILObject::getAllLinkedTo(Ticket::class, $ticket->getID());
             if (count($tickets)) {
                 $linkedTicket = new Ticket();
                 foreach ($tickets as $data) {
-                    $input['id'] = $data['tickets_id'];
+                    $input['id'] = $data['items_id_2'];
                     if (
                         $linkedTicket->can($input['id'], UPDATE)
-                        && $data['link'] == Ticket_Ticket::LINK_TO
+                        && $data['link'] == CommonITILObject_CommonITILObject::LINK_TO
                     ) {
                         $linkedTicket->update($input);
                     }
@@ -856,7 +866,7 @@ class PluginEscaladeTicket
             !$ticket_ticket->add([
                 'tickets_id_1' => $tickets_id,
                 'tickets_id_2' => $newID,
-                'link'         => Ticket_Ticket::LINK_TO
+                'link'         => CommonITILObject_CommonITILObject::LINK_TO
             ])
         ) {
             Session::addMessageAfterRedirect(__('Error : adding link between the two tickets', 'escalade'), false, ERROR);
@@ -1107,6 +1117,8 @@ class PluginEscaladeTicket
             'type' => CommonITILActor::ASSIGN,
         ]);
 
+        echo 'test';
+
         $assigned_groups = [];
         foreach ($groups as $grp) {
             $assigned_groups[$grp['groups_id']] = $grp['groups_id'];
@@ -1123,7 +1135,7 @@ class PluginEscaladeTicket
             $condition['id'] = $groups_id_filtered;
         }
         TemplateRenderer::getInstance()->display('@escalade/escalade_form.html.twig', [
-            'action'          => PLUGIN_ESCALADE_WEBDIR . '/front/ticket.form.php',
+            'action'          => plugin_escalade_geturl() . 'front/ticket.form.php',
             'ticket'          => $options['parent'],
             'assign_me_as_observer' => $config->fields['assign_me_as_observer'],
             'assigned_groups' => $assigned_groups,

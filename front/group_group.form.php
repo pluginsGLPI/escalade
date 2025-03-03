@@ -28,8 +28,6 @@
  * -------------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
-
 Html::header("escalade", $_SERVER["PHP_SELF"], "plugins", "escalade", "group_group");
 
 if (Session::haveRight('group', UPDATE)) {
@@ -47,4 +45,3 @@ if (Session::haveRight('group', UPDATE)) {
 }
 
 Html::back();
-Html::footer();
