@@ -9,18 +9,17 @@
 
 ![Screenshot](./screenshots/escalade_history.png)
 
-This GLPI plugin aims to simplifier the ticket escalation process in GLPI.  
-It also adds a graphical historical for assigned groups.  
+This GLPI plugin aims to simplify the ticket escalation process in GLPI.  
+It also adds a graphical history for assigned groups.  
 
-A new dashboard on the user's home page is added, and a new criteria in ticket's search engine.   
-To finish, there's also a clone ticket feature, accessible through an icon on the ticket form.   
+A new dashboard on the user's home page is added, as well as a new criteria in ticket's search engine.   
+Also, there's also a clone ticket feature, accessible through an icon on the ticket form.   
 
-* Download : https://github.com/PluginsGLPI/escalade/releases
+* Download: https://github.com/PluginsGLPI/escalade/releases
 
 ## Documentation
 
 We maintain a detailed documentation here -> [Documentation](https://glpi-plugins.readthedocs.io/en/latest/escalade/index.html)
-
 
 ## Contact
 
@@ -43,5 +42,4 @@ Obtain a personalized service experience, associated with benefits and opportuni
 
 ## Copying
 
-* **Code**: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License ([GPL-2.0](https://www.gnu.org/licenses/gpl-2.0.en.html)).
+* **Code**: you can redistribute it and/or modify it under the terms of the GNU General Public License ([GPL-2.0](https://www.gnu.org/licenses/gpl-2.0.en.html)).
