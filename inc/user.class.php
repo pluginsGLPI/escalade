@@ -38,8 +38,8 @@ class PluginEscaladeUser extends CommonDBTM
     public static function showMassiveActionsSubForm(MassiveAction $ma)
     {
         switch ($ma->getAction()) {
-            case "use_filter_assign_group":
-                Dropdown::showYesNo("use_filter_assign_group", 0, -1, [
+            case "bypass_filter_assign_group":
+                Dropdown::showYesNo("bypass_filter_assign_group", 0, -1, [
                     'width' => '100%',
                 ]);
                 echo "<br><br><input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
@@ -57,13 +57,13 @@ class PluginEscaladeUser extends CommonDBTM
     public static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item, array $ids)
     {
         switch ($ma->getAction()) {
-            case "use_filter_assign_group":
+            case "bypass_filter_assign_group":
                 $escalade_user = new self();
                 $input = $ma->getInput();
 
                 foreach ($ids as $id) {
                     if ($escalade_user->getFromDBByCrit(['users_id' => $id])) {
-                        $escalade_user->fields['use_filter_assign_group'] = $input['use_filter_assign_group'];
+                        $escalade_user->fields['bypass_filter_assign_group'] = $input['bypass_filter_assign_group'];
                         if ($escalade_user->update($escalade_user->fields)) {
                             $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_OK);
                         } else {
@@ -126,7 +126,7 @@ class PluginEscaladeUser extends CommonDBTM
         $is_exist = $this->getFromDBByCrit(['users_id' => $ID]);
 
         if (! $is_exist) { //"Security"
-            $this->fields["use_filter_assign_group"] = 0;
+            $this->fields["bypass_filter_assign_group"] = 0;
         }
 
         echo "<form action='" . $this->getFormURL() . "' method='post'>";
@@ -138,7 +138,7 @@ class PluginEscaladeUser extends CommonDBTM
         echo "<td><label>";
         echo __("Bypass filtering on the groups assignment", "escalade");
         echo "&nbsp;";
-        Dropdown::showYesNo("use_filter_assign_group", $this->fields["use_filter_assign_group"], -1, [
+        Dropdown::showYesNo("bypass_filter_assign_group", $this->fields["bypass_filter_assign_group"], -1, [
             'width' => '100%',
             'rand'  => $rand,
         ]);

@@ -382,6 +382,13 @@ function plugin_escalade_install()
         $migration->migrationOneTable('glpi_plugin_escalade_configs');
     }
 
+    //Update to 2.9.10
+    // change fields name
+    if ($DB->fieldExists('glpi_plugin_escalade_users', 'use_filter_assign_group')) {
+        $migration->changeField('glpi_plugin_escalade_users', 'use_filter_assign_group', 'bypass_filter_assign_group', 'bool');
+        $migration->migrationOneTable('glpi_plugin_escalade_users');
+    }
+
     return true;
 }
 
