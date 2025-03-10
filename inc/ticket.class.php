@@ -579,7 +579,11 @@ class PluginEscaladeTicket
             return;
         }
 
-        $tickets_id = $item->input['tickets_id'] ?? $item->fields['tickets_id'];
+        $tickets_id = $item->input['id'] ?? $item->fields['id'];
+
+        if ($item instanceof Group_Ticket) {
+            $tickets_id = $item->input['tickets_id'] ?? $item->fields['tickets_id'];
+        }
 
         $where_keep = [
             'tickets_id' => $tickets_id,
