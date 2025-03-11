@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unrelease] -
 
+## [2.9.11] - 2024-03-11
+
 ### Fixed
 
 - Ensure that when several technicians are assigned, they are treated correctly during the escalation.
@@ -18,7 +20,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed `Close cloned tickets at the same time` option
 - Fixed `Bypass filtering on the groups assignment` option
 - Rename the option **"Don't change"** to **"Default (not managed by plugin)"** for the **"Ticket status after an escalation"** setting to reduce ambiguity.
-- Remove the user when a ticket escalates to a group with remote_tech option set to true
+- Remove the user when a ticket escalates to a group with `remote_tech option` set to `true`
+
+### Security
+
 - Check permissions before displaying group history or escalating access
 
 ## [2.9.10] - 2024-11-27

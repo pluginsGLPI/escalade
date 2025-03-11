@@ -35,7 +35,7 @@ if (!Plugin::isPluginActive('escalade')) {
     return;
 }
 
-if (!$_SESSION['glpi_plugins']['escalade']['config']['show_history']){
+if (!$_SESSION['glpi_plugins']['escalade']['config']['show_history']) {
     Html::displayRightError();
 }
 
