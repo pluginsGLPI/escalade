@@ -408,6 +408,8 @@ class PluginEscaladeTicket
         if ($_SESSION['glpi_plugins']['escalade']['config']['remove_group'] == true) {
             self::removeAssignGroups($tickets_id, $groups_id);
         }
+        // The config is checked in the function.
+        self::removeAssignUsers($item);
     }
 
 
@@ -578,6 +580,10 @@ class PluginEscaladeTicket
         }
 
         $tickets_id = $item->input['id'] ?? $item->fields['id'];
+
+        if ($item instanceof Group_Ticket) {
+            $tickets_id = $item->input['tickets_id'] ?? $item->fields['tickets_id'];
+        }
 
         $where_keep = [
             'tickets_id' => $tickets_id,
