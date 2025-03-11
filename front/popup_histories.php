@@ -30,8 +30,17 @@
 
 include("../../../inc/includes.php");
 
+if (!Plugin::isPluginActive('escalade')) {
+    echo "Plugin not installed or activated";
+    return;
+}
+
+if (!$_SESSION['glpi_plugins']['escalade']['config']['show_history']){
+    Html::displayRightError();
+}
+
 echo "<div id='page'>";
-PluginEscaladeHistory::getHistory($_REQUEST['tickets_id'], true);
+PluginEscaladeHistory::getHistory((int)$_REQUEST['tickets_id'], true);
 echo "</div>";
 
 Html::popFooter();

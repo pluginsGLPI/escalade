@@ -30,6 +30,11 @@
 
 include("../../../inc/includes.php");
 
+if (!Plugin::isPluginActive('escalade')) {
+    echo "Plugin not installed or activated";
+    return;
+}
+
 if (
     ! isset($_REQUEST['tickets_id'])
     || ! isset($_REQUEST['groups_id'])
@@ -37,4 +42,12 @@ if (
     Html::displayErrorAndDie(__("missing parameters", "escalade"));
 }
 
-PluginEscaladeTicket::climb_group($_REQUEST['tickets_id'], $_REQUEST['groups_id']);
+$ticket = new Ticket();
+$ticket->getFromDB((int)$_REQUEST['tickets_id']);
+
+if (!$ticket->canAssign()) {
+    Html::displayRightError();
+}
+
+
+PluginEscaladeTicket::climb_group((int)$_REQUEST['tickets_id'], (int)$_REQUEST['groups_id']);
