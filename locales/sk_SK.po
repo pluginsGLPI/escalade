@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-03 00:44+0000\n"
+"POT-Creation-Date: 2025-03-12 00:43+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: feonsu <feonsu@gmail.com>, 2019,2023-2024\n"
 "Language-Team: Slovak (Slovakia) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/sk_SK/)\n"
@@ -70,39 +70,39 @@ msgstr ""
 msgid "Display delete button"
 msgstr "Zobraziť tlačidlo mazania"
 
-#: inc/config.class.php:347 hook.php:579 hook.php:598
+#: inc/config.class.php:347 hook.php:586 hook.php:605
 msgid "Enable filtering on the groups assignment"
 msgstr "Povoliť filtrovanie pri priraďovaní skupín"
 
-#: inc/ticket.class.php:899
+#: inc/ticket.class.php:905
 msgid "Error : adding actors (group)"
 msgstr "Chyba: pridávanie riešiteľov (skupina)"
 
-#: inc/ticket.class.php:890
+#: inc/ticket.class.php:896
 msgid "Error : adding actors (user)"
 msgstr "Chyba: pridávanie riešiteľov (používateľ)"
 
-#: inc/ticket.class.php:909
+#: inc/ticket.class.php:915
 msgid "Error : adding documents"
 msgstr "Chyba: pridávanie dokumentov"
 
-#: inc/ticket.class.php:879
+#: inc/ticket.class.php:885
 msgid "Error : adding followups"
 msgstr "Chyba: pridávanie reakcií"
 
-#: inc/ticket.class.php:862
+#: inc/ticket.class.php:868
 msgid "Error : adding link between the two tickets"
 msgstr "Chyba: pridávanie prepojení medzi dvoma požiadavkami"
 
-#: inc/ticket.class.php:849
+#: inc/ticket.class.php:855
 msgid "Error : adding new ticket"
 msgstr "Chyba: pridávanie novej požiadavky"
 
-#: inc/ticket.class.php:833
+#: inc/ticket.class.php:839
 msgid "Error : get old ticket"
 msgstr "Chyba: získavanie starej požiadavky"
 
-#: inc/ticket.class.php:1028 inc/ticket.class.php:1029
+#: inc/ticket.class.php:1034 inc/ticket.class.php:1035
 msgid "Escalate"
 msgstr "Eskalovať"
 
@@ -119,12 +119,12 @@ msgstr "Eskalácie"
 msgid "Escalation history in tasks"
 msgstr "História eskalácií v úlohách"
 
-#: inc/ticket.class.php:387 inc/ticket.class.php:516 front/ticket.form.php:86
+#: inc/ticket.class.php:387 inc/ticket.class.php:518 front/ticket.form.php:86
 #, php-format
 msgid "Escalation to the group %s."
 msgstr "Eskalácia na skupinu %s."
 
-#: hook.php:534
+#: hook.php:541
 msgid "Group concerned by the escalation"
 msgstr "Skupina, ktorej sa týkajú eskalácie"
 
@@ -142,11 +142,11 @@ msgid ""
 "href='##link##'>Behavior</a>plugin. This last has priority."
 msgstr "Poznámka: Táto funkcia (časť vytvorenia) je duplicitná s pluginom <a href='##link##'>Behavior</a>. Táto posledná má prioritu."
 
-#: hook.php:552
+#: hook.php:559
 msgid "Number of escalations"
 msgstr "Počet eskalácií"
 
-#: hook.php:566
+#: hook.php:573
 msgid "Number of escalations between two groups"
 msgstr "Počet eskalácií medzi dvoma skupinami"
 
@@ -186,7 +186,7 @@ msgstr "Riešenie odmietnuté, návrat k skupine"
 msgid "Solve date modification"
 msgstr "Zmena dátumu vyriešenia"
 
-#: inc/ticket.class.php:873 inc/ticket.class.php:915 inc/ticket.class.php:920
+#: inc/ticket.class.php:879 inc/ticket.class.php:921 inc/ticket.class.php:926
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Táto požiadavka bola klonovaná z požiadavky č."
 
@@ -226,7 +226,7 @@ msgstr "v čase úpravy"
 msgid "full assignation history"
 msgstr "úplná história priradenia"
 
-#: ajax/assign_me.php:34 front/climb_group.php:37
+#: ajax/assign_me.php:34 front/climb_group.php:42
 msgid "missing parameters"
 msgstr "chýbajúce parametre"
 
