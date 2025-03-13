@@ -469,9 +469,9 @@ function plugin_escalade_item_add_user($item)
     if ($item instanceof User) {
         $config = new PluginEscaladeConfig();
         $config->getFromDB(1);
-        $default_value = $config->fields["use_filter_assign_group"];
+        $default_value = false;
 
-        $query = "INSERT INTO glpi_plugin_escalade_users (`users_id`, `use_filter_assign_group`)
+        $query = "INSERT INTO glpi_plugin_escalade_users (`users_id`, `bypass_filter_assign_group`)
                   VALUES (" . $item->getID() . ", $default_value)";
         $DB->doQuery($query);
     }
@@ -579,11 +579,11 @@ function plugin_escalade_getAddSearchOptions($itemtype)
     }
     if ($itemtype == 'User') {
         $sopt[2150]['table']         = 'glpi_plugin_escalade_users';
-        $sopt[2150]['field']         = 'use_filter_assign_group';
+        $sopt[2150]['field']         = 'bypass_filter_assign_group';
         $sopt[2150]['linkfield']     = 'id';
         $sopt[2150]['datatype']      = 'bool';
         $sopt[2150]['searchtype']    = ['equals'];
-        $sopt[2150]['name']          = __("Enable filtering on the groups assignment", 'escalade');
+        $sopt[2150]['name']          = __("Bypass filtering on the groups assignment", 'escalade');
         $sopt[2150]['joinparams']    = [
             'beforejoin'  => [
                 'table'      => 'glpi_plugin_escalade_users',
@@ -601,8 +601,8 @@ function plugin_escalade_MassiveActions($itemtype)
 {
     switch ($itemtype) {
         case 'User':
-            return ['PluginEscaladeUser' . MassiveAction::CLASS_ACTION_SEPARATOR . 'use_filter_assign_group'
-                  => __("Enable filtering on the groups assignment", 'escalade')
+            return ['PluginEscaladeUser' . MassiveAction::CLASS_ACTION_SEPARATOR . 'bypass_filter_assign_group'
+                  => __("Bypass filtering on the groups assignment", 'escalade')
             ];
     }
     return [];
