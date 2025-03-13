@@ -467,7 +467,7 @@ function plugin_escalade_item_add_user($item)
     global $DB;
 
     if ($item instanceof User) {
-        $default_value = false;
+        $default_value = 0;
 
         $query = "INSERT INTO glpi_plugin_escalade_users (`users_id`, `bypass_filter_assign_group`)
                   VALUES (" . $item->getID() . ", $default_value)";
