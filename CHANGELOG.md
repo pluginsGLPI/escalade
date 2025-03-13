@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unrelease] -
 
+### Fixed
+
+- Fixed `Bypass filtering on the groups assignment` option
+
 ## [2.9.11] - 2024-03-11
 
 ### Fixed
