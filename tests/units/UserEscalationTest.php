@@ -53,9 +53,6 @@ final class UserEscalationTest extends EscaladeTestCase
         $user1 = new \User();
         $user1->getFromDBbyName('glpi');
         $this->assertGreaterThan(0, $user1->getID());
-        $user2 = new \User();
-        $user2->getFromDBbyName('tech');
-        $this->assertGreaterThan(0, $user2->getID());
 
         $ticket = new \Ticket();
         $t_id = $ticket->add([
@@ -90,10 +87,6 @@ final class UserEscalationTest extends EscaladeTestCase
                             'itemtype' => 'User'
                         ],
                         [
-                            'items_id' => $user2->getID(),
-                            'itemtype' => 'User'
-                        ],
-                        [
                             'items_id' => $group1->getID(),
                             'itemtype' => 'Group'
                         ]
@@ -103,8 +96,8 @@ final class UserEscalationTest extends EscaladeTestCase
         ));
 
         $ticket_user = new \Ticket_User();
-        $this->assertEquals(2, count($ticket_user->find(['tickets_id' => $t_id, 'type' => \CommonITILActor::ASSIGN])));
-        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $t_id, 'type' => \CommonITILActor::ASSIGN, 'users_id' => $user2->getID()])));
+        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $t_id, 'type' => \CommonITILActor::ASSIGN])));
+        $this->assertEquals(0, count($ticket_user->find(['tickets_id' => $t_id, 'type' => \CommonITILActor::ASSIGN, 'users_id' => $user1->getID()])));
 
         $this->assertTrue($config->update([
             'remove_tech' => 0
