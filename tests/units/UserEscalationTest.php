@@ -53,9 +53,9 @@ final class UserEscalationTest extends EscaladeTestCase
         $user1 = new \User();
         $user1->getFromDBbyName('glpi');
         $this->assertGreaterThan(0, $user1->getID());
-        $user2 = new \User();
-        $user2->getFromDBbyName('tech');
-        $this->assertGreaterThan(0, $user2->getID());
+        $group1 = new \Group();
+        $group1_id = $group1->add(['name' => 'Group_1']);
+        $this->assertGreaterThan(0, $group1_id);
 
         $ticket = new \Ticket();
         $t_id = $ticket->add([
@@ -85,8 +85,8 @@ final class UserEscalationTest extends EscaladeTestCase
                             'itemtype' => 'User'
                         ],
                         [
-                            'items_id' => $user2->getID(),
-                            'itemtype' => 'User'
+                            'items_id' => $group1_id,
+                            'itemtype' => 'Group'
                         ]
                     ],
                 ],
