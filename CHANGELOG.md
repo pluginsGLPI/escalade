@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unrelease] -
 
+### Fixed
+
+- Calculation of status when a technician self-assigns to a ticket
+
+
 ## [2.9.11] - 2024-03-11
 
 ### Fixed
