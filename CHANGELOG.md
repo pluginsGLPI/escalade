@@ -32,6 +32,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Security
 
 - Check permissions before displaying group history or escalating access
+- Prevents undefined index `comment` when escalating
 
 ## [2.9.10] - 2024-11-27
 
