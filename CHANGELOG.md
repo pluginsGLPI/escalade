@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Rename the option **"Don't change"** to **"Default (not managed by plugin)"** for the **"Ticket status after an escalation"** setting to reduce ambiguity.
 - Remove the user when a ticket escalates to a group with remote_tech option set to true
 - Check permissions before displaying group history or escalating access
+- Prevents undefined index `comment` when escalating
 
 ## [2.9.10] - 2024-11-27
 
