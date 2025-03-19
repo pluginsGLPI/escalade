@@ -64,7 +64,6 @@ class PluginEscaladeTicket
             $old_groups = array_filter($ticket_actors['assign'], function ($actor) {
                 return isset($actor['itemtype']) && $actor['itemtype'] === 'Group';
             });
-
         }
         if (!isset($item->input['actortype'])) {
             $groups = new Group_Ticket();
