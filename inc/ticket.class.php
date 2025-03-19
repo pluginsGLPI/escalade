@@ -47,7 +47,6 @@ class PluginEscaladeTicket
         ) {
             $item->input['_do_not_compute_status'] = true;
         }
-        $config = $_SESSION['glpi_plugins']['escalade']['config'];
         $old_groups = [];
 
         // Get actual actors for the ticket
@@ -84,6 +83,7 @@ class PluginEscaladeTicket
             $new_groups = array_filter($item->input['_actors']['assign'], function ($actor) {
                 return isset($actor['itemtype']) && $actor['itemtype'] === 'Group';
             });
+
             if (
                 (isset($item->input['actortype']) && $item->input['actortype'] == CommonITILActor::ASSIGN) &&
                 (
@@ -96,6 +96,7 @@ class PluginEscaladeTicket
                     $item->input['_do_not_compute_status'] = true;
                     $item->input['status'] = $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'];
                 }
+                self::removeAssignUsers($item);
                 return PluginEscaladeTicket::addHistoryOnAddGroup($item);
             } elseif (count($old_groups) == count($new_groups)) {
                 $old_group_ids = [];
@@ -110,12 +111,12 @@ class PluginEscaladeTicket
                             $item->input['_do_not_compute_status'] = true;
                             $item->input['status'] = $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'];
                         }
+                        self::removeAssignUsers($item);
                         return PluginEscaladeTicket::addHistoryOnAddGroup($item);
                     }
                 }
             }
 
-            self::removeAssignUsers($item);
             return $item;
         }
     }
