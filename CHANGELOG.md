@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Calculation of status when a technician self-assigns to a ticket
 - Fixed `Bypass filtering on the groups assignment` option
+- Fixed technician deletion when ticket updated
 
 ## [2.9.11] - 2024-03-11
 
