@@ -43,7 +43,6 @@ class PluginEscaladeTicket
     {
         if ($item instanceof CommonITILObject) {
             if (!$item->prepareInputForUpdate($item->input)) {
-                $item->input = false;
                 return false;
             }
         }
