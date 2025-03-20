@@ -41,6 +41,11 @@ class PluginEscaladeTicket
 
     public static function pre_item_update(CommonDBTM $item)
     {
+        if ($item instanceof CommonITILObject) {
+            if (!$item->prepareInputForUpdate($item->input)) {
+                return false;
+            }
+        }
         if (
             isset($item->input['_itil_assign'])
             && $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != self::MANAGED_BY_CORE
