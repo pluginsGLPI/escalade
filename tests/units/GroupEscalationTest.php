@@ -345,7 +345,7 @@ final class GroupEscalationTest extends EscaladeTestCase
         $this->assertEquals(1, count($history->find(['tickets_id' => $t_id, 'groups_id' => $group1_id])));
 
         $group2 = new \Group();
-        $group2_id = $group1->add(['name' => 'Group_history_2']);
+        $group2_id = $group2->add(['name' => 'Group_history_2']);
         $this->assertGreaterThan(0, $group2_id);
 
         $ticket = new \Ticket();
@@ -354,7 +354,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             '_actors' => [
                 'assign' => [
                     [
-                        'items_id' => $group2->getID(),
+                        'items_id' => $group2_id(),
                         'itemtype' => 'Group'
                     ],
                 ],
@@ -379,7 +379,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             '_actors' => [
                 'assign' => [
                     [
-                        'items_id' => $group1->getID(),
+                        'items_id' => $group1_id(),
                         'itemtype' => 'Group'
                     ],
                 ],
