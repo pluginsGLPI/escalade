@@ -354,7 +354,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             '_actors' => [
                 'assign' => [
                     [
-                        'items_id' => $group2_id(),
+                        'items_id' => $group2_id,
                         'itemtype' => 'Group'
                     ],
                 ],
@@ -379,7 +379,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             '_actors' => [
                 'assign' => [
                     [
-                        'items_id' => $group1_id(),
+                        'items_id' => $group1_id,
                         'itemtype' => 'Group'
                     ],
                 ],
