@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed `Bypass filtering on the groups assignment` option
 - Fixed technician deletion when ticket updated
 - Fixed `Ticket status after an escalation` option
+- Do not perform escalation when mandatory ticket fields are missing
 
 ## [2.9.11] - 2025-03-11
 
