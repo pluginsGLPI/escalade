@@ -413,12 +413,7 @@ class PluginEscaladeTicket
             self::removeAssignGroups($tickets_id, $groups_id);
         }
         // The config is checked in the function.
-        if (
-            $_SESSION['glpi_plugins']['escalade']['config']['use_assign_user_group'] == 0
-            || $_SESSION['glpi_plugins']['escalade']['config']['use_assign_user_group_creation'] == 0
-        ) {
-            self::removeAssignUsers($item);
-        }
+        self::removeAssignUsers($item);
 
         if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != self::MANAGED_BY_CORE) {
             $ticket = new Ticket();
@@ -586,6 +581,13 @@ class PluginEscaladeTicket
         if (
             $_SESSION['glpi_plugins']['escalade']['config']['remove_tech'] == false
             && $_SESSION['glpi_plugins']['escalade']['config']['remove_requester'] == false
+        ) {
+            return;
+        }
+
+        if (
+            $_SESSION['glpi_plugins']['escalade']['config']['use_assign_user_group'] != 0
+            && $_SESSION['glpi_plugins']['escalade']['config']['use_assign_user_group_creation'] != 0
         ) {
             return;
         }
