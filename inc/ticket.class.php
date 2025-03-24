@@ -366,9 +366,6 @@ class PluginEscaladeTicket
             }
         }
 
-        //remove old user(s) (pass if user added by new ticket)
-        self::removeAssignUsers($item);
-
         //add a task to inform the escalation (pass if solution)
         if (isset($_SESSION['plugin_escalade']['solution'])) {
             unset($_SESSION['plugin_escalade']['solution']);
