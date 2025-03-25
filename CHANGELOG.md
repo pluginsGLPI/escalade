@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unrelease] -
 
+## [2.9.12] - 2025-03-20
+
 ### Fixed
 
 - Calculation of status when a technician self-assigns to a ticket
@@ -14,8 +16,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed technician deletion when ticket updated
 - Fixed `Ticket status after an escalation` option
 - Fixed `show_history` option when using the `Escalate` button.
+- Do not perform escalation when mandatory ticket fields are missing
 
-## [2.9.11] - 2024-03-11
+## [2.9.11] - 2025-03-11
 
 ### Fixed
 
