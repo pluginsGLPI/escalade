@@ -318,7 +318,13 @@ class PluginEscaladeTicket
             return;
         }
 
-        $tickets_id = $item->input['id'] ?? $item->input['tickets_id'];
+        if ($item instanceof Ticket) {
+            $tickets_id = $item->input['id'];
+        } elseif (isset($item->input['tickets_id'])) {
+            $tickets_id = $item->input['tickets_id'];
+        } else {
+            return false;
+        }
         $groups_id  = $item->input['groups_id'];
 
         $item->fields['status'] = CommonITILObject::ASSIGNED;
