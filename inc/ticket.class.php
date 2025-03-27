@@ -588,9 +588,11 @@ class PluginEscaladeTicket
         if (
             $_SESSION['glpi_plugins']['escalade']['config']['use_assign_user_group'] != 0
             && $_SESSION['glpi_plugins']['escalade']['config']['use_assign_user_group_creation'] != 0
+            && $_SESSION['plugin_escalade']['ticket_creation']
         ) {
             return;
         }
+
         if ($type == CommonITILActor::ASSIGN && !$_SESSION['glpi_plugins']['escalade']['config']['remove_tech']) {
             return;
         }

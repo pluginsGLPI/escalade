@@ -51,7 +51,9 @@ final class GroupEscalationTest extends EscaladeTestCase
         $this->assertTrue($config->update([
             'use_assign_user_group'              => 1,
             'use_assign_user_group_creation'     => 1,
-            'use_assign_user_group_modification' => 1
+            'use_assign_user_group_modification' => 1,
+            'remove_tech'                        => 1,
+            'remove_groupe'                      => 1,
         ] + $conf));
 
         PluginEscaladeConfig::loadInSession();
