@@ -297,16 +297,16 @@ final class GroupEscalationTest extends EscaladeTestCase
 
         $ticket_user = new \Ticket_User();
         // Check user assigned to the ticket
-        $this->assertEquals(2, count($ticket_user->find(['tickets_id' => $t_id])));
+        $this->assertEquals(3, count($ticket_user->find(['tickets_id' => $t_id])));
 
         // Check requester
         $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $t_id, 'users_id' => $user1->getID(), 'type' => CommonITILActor::REQUESTER])));
 
         // Check assign user2
-        $this->assertEquals(0, count($ticket_user->find(['tickets_id' => $t_id, 'users_id' => $user2->getID(), 'type' => CommonITILActor::ASSIGN])));
-
-        // Check assign user
         $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $t_id, 'users_id' => $user2->getID(), 'type' => CommonITILActor::ASSIGN])));
+
+        // Check assign user3
+        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $t_id, 'users_id' => $user3->getID(), 'type' => CommonITILActor::ASSIGN])));
     }
 
     public function testUserWithsGroupAttributionWithoutRemoveTechConfig()
