@@ -102,7 +102,6 @@ class PluginEscaladeTicket
                     $item->input['status'] = $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'];
                 }
                 self::removeAssignUsers($item);
-                return PluginEscaladeTicket::addHistoryOnAddGroup($item);
             } elseif (count($old_groups) == count($new_groups)) {
                 $old_group_ids = [];
                 foreach ($old_groups as $old_group) {
@@ -117,7 +116,6 @@ class PluginEscaladeTicket
                             $item->input['status'] = $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'];
                         }
                         self::removeAssignUsers($item);
-                        return PluginEscaladeTicket::addHistoryOnAddGroup($item);
                     }
                 }
             }
@@ -325,7 +323,13 @@ class PluginEscaladeTicket
             return;
         }
 
-        $tickets_id = $item->input['id'];
+        if ($item instanceof Ticket) {
+            $tickets_id = $item->input['id'];
+        } elseif (isset($item->input['tickets_id'])) {
+            $tickets_id = $item->input['tickets_id'];
+        } else {
+            return false;
+        }
         $groups_id  = $item->input['groups_id'];
 
         $item->fields['status'] = CommonITILObject::ASSIGNED;
@@ -372,9 +376,6 @@ class PluginEscaladeTicket
                 return;
             }
         }
-
-        //remove old user(s) (pass if user added by new ticket)
-        self::removeAssignUsers($item);
 
         //add a task to inform the escalation (pass if solution)
         if (isset($_SESSION['plugin_escalade']['solution'])) {
@@ -426,6 +427,11 @@ class PluginEscaladeTicket
                 'id'     => $tickets_id,
                 'status' => $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status']
             ]);
+        }
+
+        if ($_SESSION['glpi_plugins']['escalade']['config']['show_history'] == true) {
+            $item->input['actortype'] = $item->fields['type'];
+            PluginEscaladeTicket::addHistoryOnAddGroup($item);
         }
     }
 

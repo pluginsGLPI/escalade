@@ -302,4 +302,93 @@ final class GroupEscalationTest extends EscaladeTestCase
         $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $t_id])));
         $this->assertEquals(0, count($ticket_user->find(['tickets_id' => $t_id, 'type' => CommonITILActor::ASSIGN])));
     }
+
+    public function testHistory()
+    {
+        $this->login();
+
+        $config = new PluginEscaladeConfig();
+        $conf = $config->find();
+        $conf = reset($conf);
+        $config->getFromDB($conf['id']);
+        $this->assertGreaterThan(0, $conf['id']);
+
+        // Update escalade config
+        $this->assertTrue($config->update([
+            'show_history' => 1,
+        ] + $conf));
+
+        PluginEscaladeConfig::loadInSession();
+
+        $group1 = new \Group();
+        $group1_id = $group1->add(['name' => 'Group_history_1']);
+        $this->assertGreaterThan(0, $group1_id);
+
+        // Create ticket without technician
+        $ticket = new \Ticket();
+        $t_id = $ticket->add([
+            'name' => 'Assign Group Escalation Test',
+            'content' => '',
+            '_actors' => [
+                'assign' => [
+                    [
+                        'items_id' => $group1_id,
+                        'itemtype' => 'Group'
+                    ]
+                ],
+            ]
+        ]);
+        $this->assertGreaterThan(0, $t_id);
+
+        $history = new \PluginEscaladeHistory();
+        $this->assertEquals(1, count($history->find(['tickets_id' => $t_id,])));
+        $this->assertEquals(1, count($history->find(['tickets_id' => $t_id, 'groups_id' => $group1_id])));
+
+        $group2 = new \Group();
+        $group2_id = $group2->add(['name' => 'Group_history_2']);
+        $this->assertGreaterThan(0, $group2_id);
+
+        $ticket = new \Ticket();
+        $ticket_update = $ticket->update([
+            'id' => $t_id,
+            '_actors' => [
+                'assign' => [
+                    [
+                        'items_id' => $group2_id,
+                        'itemtype' => 'Group'
+                    ],
+                ],
+            ]
+        ]);
+        $this->assertTrue($ticket_update);
+
+        $history = new \PluginEscaladeHistory();
+        $this->assertEquals(2, count($history->find(['tickets_id' => $t_id])));
+        $this->assertEquals(1, count($history->find(['tickets_id' => $t_id, 'groups_id' => $group1_id])));
+        $this->assertEquals(1, count($history->find(['tickets_id' => $t_id, 'groups_id' => $group2_id])));
+
+        $this->assertTrue($config->update([
+            'show_history' => 0,
+        ] + $conf));
+
+        PluginEscaladeConfig::loadInSession();
+
+        $ticket = new \Ticket();
+        $ticket_update = $ticket->update([
+            'id' => $t_id,
+            '_actors' => [
+                'assign' => [
+                    [
+                        'items_id' => $group1_id,
+                        'itemtype' => 'Group'
+                    ],
+                ],
+            ]
+        ]);
+        $this->assertTrue($ticket_update);
+
+        $history = new \PluginEscaladeHistory();
+        $this->assertEquals(2, count($history->find(['tickets_id' => $t_id])));
+        $this->assertEquals(1, count($history->find(['tickets_id' => $t_id, 'groups_id' => $group1_id])));
+    }
 }
