@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unrelease] -
 
+
+## [2.9.13] - 2025-03-31
+
+- Fix `show_history` option when using the `Escalate` button.
+- Fix `use_assign_user_group` option wich delete assing users
+
 ## [2.9.12] - 2025-03-20
 
 ### Fixed
@@ -15,7 +21,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed `Bypass filtering on the groups assignment` option
 - Fixed technician deletion when ticket updated
 - Fixed `Ticket status after an escalation` option
-- Fixed `show_history` option when using the `Escalate` button.
 - Do not perform escalation when mandatory ticket fields are missing
 
 ## [2.9.11] - 2025-03-11

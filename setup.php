@@ -30,7 +30,7 @@
 
 use Glpi\Plugin\Hooks;
 
-define('PLUGIN_ESCALADE_VERSION', '2.9.12');
+define('PLUGIN_ESCALADE_VERSION', '2.9.13');
 
 // Minimal GLPI version, inclusive
 define("PLUGIN_ESCALADE_MIN_GLPI", "10.0.11");
