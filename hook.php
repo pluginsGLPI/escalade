@@ -505,6 +505,7 @@ function plugin_escalade_item_add_ticket($item)
     if ($item instanceof Ticket) {
         unset($_SESSION['plugin_escalade']['skip_hook_add_user']);
         unset($_SESSION['plugin_escalade']['keep_users']);
+        unset($_SESSION['plugin_escalade']['ticket_creation']);
     }
 }
 
@@ -523,6 +524,7 @@ function plugin_escalade_item_add_group_ticket($item)
 function plugin_escalade_post_prepareadd_ticket($item)
 {
     if ($item instanceof Ticket) {
+        $_SESSION['plugin_escalade']['ticket_creation'] = true;
         return PluginEscaladeTicket::assignUserGroup($item);
     }
     return $item;
