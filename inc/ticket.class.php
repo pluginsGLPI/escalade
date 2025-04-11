@@ -110,9 +110,9 @@ class PluginEscaladeTicket
                             $item->input['_do_not_compute_status'] = true;
                             $item->input['status'] = $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'];
                         }
-                        self::removeAssignUsers($item);
                     }
                 }
+                self::removeAssignUsers($item);
             }
 
             return $item;
