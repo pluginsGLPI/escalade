@@ -476,22 +476,18 @@ class PluginEscaladeTicket
                         current($ticket->input['_users_id_assign']),
                         true
                     );
-                //prevent adding empty group
-                if (empty($ticket->input['_groups_id_assign'])) {
-                    unset($ticket->input['_groups_id_assign']);
-                }
             } else {
                 // All groups
-                $ticket->input['_additional_groups_assigns']
+                $ticket->input['_groups_id_assign']
                     = PluginEscaladeUser::getTechnicianGroup(
                         $ticket->input['entities_id'],
-                        $ticket->input['_users_id_assign'],
+                        current($ticket->input['_users_id_assign']),
                         false
                     );
-                //prevent adding empty group
-                if (empty($ticket->input['_additional_groups_assigns'])) {
-                    unset($ticket->input['_additional_groups_assigns']);
-                }
+            }
+            //prevent adding empty group
+            if (empty($ticket->input['_groups_id_assign'])) {
+                unset($ticket->input['_groups_id_assign']);
             }
         }
 
