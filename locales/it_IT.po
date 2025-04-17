@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-13 00:44+0000\n"
+"POT-Creation-Date: 2025-04-17 00:45+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Davide <spam@habilitas.it>, 2024\n"
 "Language-Team: Italian (Italy) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/it_IT/)\n"
@@ -40,7 +40,7 @@ msgstr "Assegnare al responsabile tecnico alla cambiamento di categoria della ch
 msgid "Assign ticket to initial group on solve ticket"
 msgstr "Assegna la chiamata al gruppo iniziale alla risoluzione"
 
-#: inc/user.class.php:139
+#: inc/user.class.php:139 hook.php:586 hook.php:605
 msgid "Bypass filtering on the groups assignment"
 msgstr "Salta il filtro per l'assegnamento dei gruppi"
 
@@ -72,39 +72,39 @@ msgstr ""
 msgid "Display delete button"
 msgstr "Mostra il bottone di cancellazione"
 
-#: inc/config.class.php:347 hook.php:586 hook.php:605
+#: inc/config.class.php:347
 msgid "Enable filtering on the groups assignment"
 msgstr "Abilitare il filtro per gruppi di assegnazione"
 
-#: inc/ticket.class.php:905
+#: inc/ticket.class.php:937
 msgid "Error : adding actors (group)"
 msgstr "Errore: durante l'aggiunta di attori (gruppi)"
 
-#: inc/ticket.class.php:896
+#: inc/ticket.class.php:928
 msgid "Error : adding actors (user)"
 msgstr "Errore: durante l'aggiunta di attori (utenti)"
 
-#: inc/ticket.class.php:915
+#: inc/ticket.class.php:947
 msgid "Error : adding documents"
 msgstr "Errore aggiungendo documenti"
 
-#: inc/ticket.class.php:885
+#: inc/ticket.class.php:917
 msgid "Error : adding followups"
 msgstr "Error: durante l'aggiunta di un commento"
 
-#: inc/ticket.class.php:868
+#: inc/ticket.class.php:900
 msgid "Error : adding link between the two tickets"
 msgstr "Errore: durante il collegamento tra due chiamate"
 
-#: inc/ticket.class.php:855
+#: inc/ticket.class.php:887
 msgid "Error : adding new ticket"
 msgstr "Errore: aggiungi nuove chiamate"
 
-#: inc/ticket.class.php:839
+#: inc/ticket.class.php:871
 msgid "Error : get old ticket"
 msgstr "Errore: recupera le chiamate vecchie"
 
-#: inc/ticket.class.php:1034 inc/ticket.class.php:1035
+#: inc/ticket.class.php:1066 inc/ticket.class.php:1067
 msgid "Escalate"
 msgstr "Scalato"
 
@@ -121,7 +121,7 @@ msgstr "Escalation"
 msgid "Escalation history in tasks"
 msgstr "Cronologia delle escalation nelle attività"
 
-#: inc/ticket.class.php:387 inc/ticket.class.php:518 front/ticket.form.php:86
+#: inc/ticket.class.php:397 inc/ticket.class.php:541 front/ticket.form.php:86
 #, php-format
 msgid "Escalation to the group %s."
 msgstr "Scalato al gruppo %s"
@@ -176,11 +176,11 @@ msgstr "Utente richiedente nel compito/promemoria"
 msgid "Requester user of the ticket"
 msgstr "Utente richiedente nel ticket"
 
-#: inc/ticket.class.php:220
+#: inc/ticket.class.php:227
 msgid "Solution provided, back to the group"
 msgstr "Soluzione fornita, rimandata al gruppo"
 
-#: inc/ticket.class.php:284
+#: inc/ticket.class.php:291
 msgid "Solution rejected, return to the group"
 msgstr "Soluzione rifiutata, rimandata al gruppo"
 
@@ -188,7 +188,7 @@ msgstr "Soluzione rifiutata, rimandata al gruppo"
 msgid "Solve date modification"
 msgstr "Modifica data di risoluzione"
 
-#: inc/ticket.class.php:879 inc/ticket.class.php:921 inc/ticket.class.php:926
+#: inc/ticket.class.php:911 inc/ticket.class.php:953 inc/ticket.class.php:958
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Questa chiamata deriva dalla chiamata numero"
 
