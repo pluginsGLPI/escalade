@@ -78,11 +78,19 @@ class PluginEscaladeTicket
             }
         }
         if (
-            isset($item->input['_actors']['assign'])
+            isset($item->input['_actors']['assign']) || isset($item->input['_itil_assign'])
         ) {
-            $new_groups = array_filter($item->input['_actors']['assign'], function ($actor) {
-                return isset($actor['itemtype']) && $actor['itemtype'] === 'Group';
-            });
+            $new_groups = [];
+            if (isset($item->input['_actors']['assign'])) {
+                $new_groups = array_filter($item->input['_actors']['assign'], function ($actor) {
+                    return isset($actor['itemtype']) && $actor['itemtype'] === 'Group';
+                });
+            } else {
+                $new_groups = array_filter($item->input['_itil_assign'], function ($actor) {
+                    return isset($actor['_type']) && $actor['itemtype'] === 'user';
+                });
+            }
+
 
             if (
                 (isset($item->input['actortype']) && $item->input['actortype'] == CommonITILActor::ASSIGN) &&
