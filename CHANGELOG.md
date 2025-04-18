@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unrelease] -
 
+- Fix the `remove_tech` option when a user was added to a ticket
+
 
 ## [2.9.13] - 2025-03-31
 
