@@ -119,7 +119,7 @@ class PluginEscaladeTicket
                     $item->input['status'] = $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'];
                 }
                 self::removeAssignUsers($item);
-            } elseif (count($old_groups) == count($new_groups) && count($old_users) < count($new_users)) {
+            } elseif (count($old_groups) == count($new_groups)) {
                 $old_group_ids = [];
                 foreach ($old_groups as $old_group) {
                     $old_group_ids[$old_group['items_id']] = true;
@@ -134,7 +134,9 @@ class PluginEscaladeTicket
                         }
                     }
                 }
-                self::removeAssignUsers($item);
+                if (count($old_users) < count($new_users)) {
+                    self::removeAssignUsers($item);
+                }
             }
 
             return $item;
