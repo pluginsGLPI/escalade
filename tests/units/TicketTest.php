@@ -294,4 +294,113 @@ final class TicketTest extends EscaladeTestCase
         }
         $this->assertTrue($found_new_group, "New group should be assigned after successful escalation");
     }
+
+    public function testAvoidTicketEscalationOnUpdate()
+    {
+        $this->login();
+
+        $config = new PluginEscaladeConfig();
+        $conf = $config->find();
+        $conf = reset($conf);
+        $config->getFromDB($conf['id']);
+        $this->assertGreaterThan(0, $conf['id']);
+        $this->assertTrue($config->update([
+            'remove_tech'  => 1,
+            'remove_group' => 1,
+        ] + $conf));
+
+        PluginEscaladeConfig::loadInSession();
+
+        $user1 = new \User();
+        $user1->getFromDBbyName('glpi');
+        $this->assertGreaterThan(0, $user1->getID());
+
+        $group1 = new \Group();
+        $group1_id = $group1->add(['name' => 'Group_1']);
+        $this->assertGreaterThan(0, $group1_id);
+
+        $user_group1 = new \Group_User();
+        $user_group1->add([
+            'users_id' => $user1->getID(),
+            'groups_id' => $group1->getID()
+        ]);
+        $this->assertGreaterThan(0, $user_group1->getID());
+
+        // Create ticket
+        $ticket = new \Ticket();
+        $t_id = $ticket->add([
+            'name' => 'Escalation Test',
+            'content' => '',
+            '_actors' => [
+                'assign' => [
+                    [
+                        'items_id' => $group1->getID(),
+                        'itemtype' => 'Group'
+                    ],
+                ],
+            ]
+        ]);
+
+        // Check group linked to the ticket
+        $ticket_group = new \Group_Ticket();
+        $this->assertEquals(1, count($ticket_group->find(['tickets_id' => $t_id])));
+
+        $ticket_user = new \Ticket_User();
+        $this->assertEquals(0, count($ticket_user->find(['tickets_id' => $t_id])));
+
+        $this->assertTrue($ticket->update(
+            [
+                'id' => $t_id,
+                '_actors' => [
+                    'assign' => [
+                        [
+                            'items_id' => $user1->getID(),
+                            'itemtype' => 'User'
+                        ],
+                        [
+                            'items_id' => $group1->getID(),
+                            'itemtype' => 'Group'
+                        ],
+                    ]
+                ]
+            ]
+        ));
+
+        // Check group linked to the ticket
+        $ticket_group = new \Group_Ticket();
+        $this->assertEquals(1, count($ticket_group->find(['tickets_id' => $t_id])));
+
+        $ticket_user = new \Ticket_User();
+        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $t_id])));
+
+        $itil_cat = new \ITILCategory();
+        $itil_cat_id = $itil_cat->add([
+            'name' => 'Cat1',
+        ]);
+
+        $this->assertTrue($ticket->update(
+            [
+                'id' => $t_id,
+                'itilcategories_id' => $itil_cat_id,
+                '_actors' => [
+                    'assign' => [
+                        [
+                            'items_id' => $user1->getID(),
+                            'itemtype' => 'User'
+                        ],
+                        [
+                            'items_id' => $group1->getID(),
+                            'itemtype' => 'Group'
+                        ],
+                    ]
+                ]
+            ]
+        ));
+
+        $ticket_group = new \Group_Ticket();
+        $this->assertEquals(1, count($ticket_group->find(['tickets_id' => $t_id])));
+
+        $ticket_user = new \Ticket_User();
+        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $t_id])));
+    }
 }
