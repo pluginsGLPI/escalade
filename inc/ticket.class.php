@@ -80,15 +80,29 @@ class PluginEscaladeTicket
         if (
             isset($item->input['_actors']['assign']) || isset($item->input['_itil_assign'])
         ) {
-            $new_groups = [];
+            $new_groups = $old_groups;
             if (isset($item->input['_actors']['assign'])) {
                 $new_groups = array_filter($item->input['_actors']['assign'], function ($actor) {
                     return isset($actor['itemtype']) && $actor['itemtype'] === 'Group';
                 });
-            } else {
-                $new_groups = array_filter($item->input['_itil_assign'], function ($actor) {
-                    return isset($actor['_type']) && $actor['itemtype'] === 'user';
+            }
+
+            $old_users = array_filter($ticket_actors['assign'], function ($actor) use ($item) {
+                return isset($actor['itemtype'])
+                    && $actor['itemtype'] === 'User'
+                    && (
+                        !isset($item->input['_itil_assign']) ||
+                        (isset($actor['items_id']) && $item->input['_itil_assign']['users_id'] != $actor['items_id'])
+                    );
+            });
+
+            $new_users = $old_users;
+            if (isset($item->input['_actors']['assign'])) {
+                $new_users = array_filter($item->input['_actors']['assign'], function ($actor) {
+                    return isset($actor['itemtype']) && $actor['itemtype'] === 'User';
                 });
+            } elseif (isset($item->input['_itil_assign']['_type']) && $item->input['_itil_assign']['_type'] === 'user') {
+                $new_users[] = $item->input['_itil_assign'];
             }
 
 
@@ -105,7 +119,7 @@ class PluginEscaladeTicket
                     $item->input['status'] = $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'];
                 }
                 self::removeAssignUsers($item);
-            } elseif (count($old_groups) == count($new_groups)) {
+            } elseif (count($old_groups) == count($new_groups) && count($old_users) < count($new_users)) {
                 $old_group_ids = [];
                 foreach ($old_groups as $old_group) {
                     $old_group_ids[$old_group['items_id']] = true;
