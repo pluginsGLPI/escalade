@@ -48,6 +48,7 @@ class PluginEscaladeTicket
         }
 
         $old_groups = [];
+        $old_users = [];
 
         // Get actual actors for the ticket
         if ($item instanceof Ticket) {
@@ -63,6 +64,15 @@ class PluginEscaladeTicket
 
             $old_groups = array_filter($ticket_actors['assign'], function ($actor) {
                 return isset($actor['itemtype']) && $actor['itemtype'] === 'Group';
+            });
+
+            $old_users = array_filter($ticket_actors['assign'], function ($actor) use ($item) {
+                return isset($actor['itemtype'])
+                    && $actor['itemtype'] === 'User'
+                    && (
+                        !isset($item->input['_itil_assign']) ||
+                        (isset($actor['items_id']) && $item->input['_itil_assign']['users_id'] != $actor['items_id'])
+                    );
             });
         }
         if (!isset($item->input['actortype'])) {
@@ -86,15 +96,6 @@ class PluginEscaladeTicket
                     return isset($actor['itemtype']) && $actor['itemtype'] === 'Group';
                 });
             }
-
-            $old_users = array_filter($ticket_actors['assign'], function ($actor) use ($item) {
-                return isset($actor['itemtype'])
-                    && $actor['itemtype'] === 'User'
-                    && (
-                        !isset($item->input['_itil_assign']) ||
-                        (isset($actor['items_id']) && $item->input['_itil_assign']['users_id'] != $actor['items_id'])
-                    );
-            });
 
             $new_users = $old_users;
             if (isset($item->input['_actors']['assign'])) {
