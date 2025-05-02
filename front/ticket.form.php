@@ -31,6 +31,7 @@
 use Glpi\Toolbox\Sanitizer;
 
 include('../../../inc/includes.php');
+Session::checkLoginUser();
 
 /** @var array $CFG_GLPI */
 global $CFG_GLPI;
