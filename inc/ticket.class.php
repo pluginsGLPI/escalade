@@ -103,7 +103,11 @@ class PluginEscaladeTicket
                     return isset($actor['itemtype']) && $actor['itemtype'] === 'User';
                 });
             } elseif (isset($item->input['_itil_assign']['_type']) && $item->input['_itil_assign']['_type'] === 'user') {
-                $new_users[] = $item->input['_itil_assign'];
+                $new_users[] = [
+                    'items_id' => $item->input['_itil_assign']['users_id'],
+                    'itemtype' => 'User',
+                    'use_notification' => $item->input['_itil_assign']['use_notification'],
+                ];
             }
 
 
@@ -136,7 +140,11 @@ class PluginEscaladeTicket
                     }
                 }
                 if (count($old_users) < count($new_users)) {
-                    self::removeAssignUsers($item);
+                    $old_ids = array_column($old_users, 'items_id');
+                    $keep_users = array_filter($new_users, function ($user) use ($old_ids) {
+                        return !in_array($user['items_id'], $old_ids);
+                    });
+                    self::removeAssignUsers($item, array_column($keep_users, 'items_id'));
                 }
             }
 
