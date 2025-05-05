@@ -664,6 +664,7 @@ final class TicketTest extends EscaladeTestCase
         $entity = new \Entity();
         $entity->getFromDB(0);
         $entity->update([
+            "id" => 0,
             "auto_assign_mode" => 2,
         ]);
 
