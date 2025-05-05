@@ -29,6 +29,7 @@
  */
 
 include("../../../inc/includes.php");
+Session::checkLoginUser();
 
 if (! isset($_REQUEST['tickets_id'])) {
     Html::displayErrorAndDie(__("missing parameters", "escalade"));

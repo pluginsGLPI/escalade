@@ -29,6 +29,7 @@
  */
 
 include("../../../inc/includes.php");
+Session::checkLoginUser();
 
 if (!Plugin::isPluginActive('escalade')) {
     echo "Plugin not installed or activated";
