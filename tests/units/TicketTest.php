@@ -554,10 +554,10 @@ final class TicketTest extends EscaladeTestCase
     {
         yield [
             'conf' => [
-                'remove_tech'  => 0,
-                'remove_group' => 0,
+                'remove_tech'             => 0,
+                'remove_group'            => 0,
                 'reassign_group_from_cat' => 0,
-                'reassign_tech_from_cat' => 0,
+                'reassign_tech_from_cat'  => 0,
             ],
             'expected' => [
                 'users' => 1,
@@ -571,10 +571,10 @@ final class TicketTest extends EscaladeTestCase
 
         yield [
             'conf' => [
-                'remove_tech'  => 0,
-                'remove_group' => 0,
+                'remove_tech'             => 0,
+                'remove_group'            => 0,
                 'reassign_group_from_cat' => 0,
-                'reassign_tech_from_cat' => 1,
+                'reassign_tech_from_cat'  => 1,
             ],
             'expected' => [
                 'users' => 2,
@@ -588,10 +588,10 @@ final class TicketTest extends EscaladeTestCase
 
         yield [
             'conf' => [
-                'remove_tech'  => 0,
-                'remove_group' => 0,
+                'remove_tech'             => 0,
+                'remove_group'            => 0,
                 'reassign_group_from_cat' => 1,
-                'reassign_tech_from_cat' => 0,
+                'reassign_tech_from_cat'  => 0,
             ],
             'expected' => [
                 'users' => 1,
@@ -605,10 +605,44 @@ final class TicketTest extends EscaladeTestCase
 
         yield [
             'conf' => [
-                'remove_tech'  => 0,
-                'remove_group' => 1,
+                'remove_tech'             => 0,
+                'remove_group'            => 0,
+                'reassign_group_from_cat' => 1,
+                'reassign_tech_from_cat'  => 1,
+            ],
+            'expected' => [
+                'users' => 2,
+                'groups' => 2,
+                'user_1_is_assign' => 1,
+                'user_2_is_assign' => 1,
+                'group_1_is_assign' => 1,
+                'group_2_is_assign' => 1,
+            ],
+        ];
+
+        yield [
+            'conf' => [
+                'remove_tech'             => 0,
+                'remove_group'            => 1,
                 'reassign_group_from_cat' => 0,
-                'reassign_tech_from_cat' => 1,
+                'reassign_tech_from_cat'  => 0,
+            ],
+            'expected' => [
+                'users' => 1,
+                'groups' => 1,
+                'user_1_is_assign' => 1,
+                'user_2_is_assign' => 0,
+                'group_1_is_assign' => 1,
+                'group_2_is_assign' => 0,
+            ],
+        ];
+
+        yield [
+            'conf' => [
+                'remove_tech'             => 0,
+                'remove_group'            => 1,
+                'reassign_group_from_cat' => 0,
+                'reassign_tech_from_cat'  => 1,
             ],
             'expected' => [
                 'users' => 2,
@@ -622,10 +656,27 @@ final class TicketTest extends EscaladeTestCase
 
         yield [
             'conf' => [
-                'remove_tech'  => 0,
-                'remove_group' => 1,
+                'remove_tech'             => 0,
+                'remove_group'            => 1,
                 'reassign_group_from_cat' => 1,
-                'reassign_tech_from_cat' => 1,
+                'reassign_tech_from_cat'  => 0,
+            ],
+            'expected' => [
+                'users' => 1,
+                'groups' => 1,
+                'user_1_is_assign' => 1,
+                'user_2_is_assign' => 0,
+                'group_1_is_assign' => 0,
+                'group_2_is_assign' => 1,
+            ],
+        ];
+
+        yield [
+            'conf' => [
+                'remove_tech'             => 0,
+                'remove_group'            => 1,
+                'reassign_group_from_cat' => 1,
+                'reassign_tech_from_cat'  => 1,
             ],
             'expected' => [
                 'users' => 2,
@@ -639,10 +690,10 @@ final class TicketTest extends EscaladeTestCase
 
         yield [
             'conf' => [
-                'remove_tech'  => 1,
-                'remove_group' => 0,
+                'remove_tech'             => 1,
+                'remove_group'            => 0,
                 'reassign_group_from_cat' => 0,
-                'reassign_tech_from_cat' => 0,
+                'reassign_tech_from_cat'  => 0,
             ],
             'expected' => [
                 'users' => 0,
@@ -656,10 +707,10 @@ final class TicketTest extends EscaladeTestCase
 
         yield [
             'conf' => [
-                'remove_tech'  => 1,
-                'remove_group' => 0,
+                'remove_tech'             => 1,
+                'remove_group'            => 0,
                 'reassign_group_from_cat' => 0,
-                'reassign_tech_from_cat' => 1,
+                'reassign_tech_from_cat'  => 1,
             ],
             'expected' => [
                 'users' => 1,
@@ -673,10 +724,10 @@ final class TicketTest extends EscaladeTestCase
 
         yield [
             'conf' => [
-                'remove_tech'  => 1,
-                'remove_group' => 0,
+                'remove_tech'             => 1,
+                'remove_group'            => 0,
                 'reassign_group_from_cat' => 1,
-                'reassign_tech_from_cat' => 0,
+                'reassign_tech_from_cat'  => 0,
             ],
             'expected' => [
                 'users' => 0,
@@ -690,10 +741,44 @@ final class TicketTest extends EscaladeTestCase
 
         yield [
             'conf' => [
-                'remove_tech'  => 1,
-                'remove_group' => 1,
+                'remove_tech'             => 1,
+                'remove_group'            => 0,
+                'reassign_group_from_cat' => 1,
+                'reassign_tech_from_cat'  => 1,
+            ],
+            'expected' => [
+                'users' => 1,
+                'groups' => 2,
+                'user_1_is_assign' => 0,
+                'user_2_is_assign' => 1,
+                'group_1_is_assign' => 1,
+                'group_2_is_assign' => 1,
+            ],
+        ];
+
+        yield [
+            'conf' => [
+                'remove_tech'             => 1,
+                'remove_group'            => 1,
                 'reassign_group_from_cat' => 0,
-                'reassign_tech_from_cat' => 1,
+                'reassign_tech_from_cat'  => 0,
+            ],
+            'expected' => [
+                'users' => 0,
+                'groups' => 1,
+                'user_1_is_assign' => 0,
+                'user_2_is_assign' => 0,
+                'group_1_is_assign' => 1,
+                'group_2_is_assign' => 0,
+            ],
+        ];
+
+        yield [
+            'conf' => [
+                'remove_tech'             => 1,
+                'remove_group'            => 1,
+                'reassign_group_from_cat' => 0,
+                'reassign_tech_from_cat'  => 1,
             ],
             'expected' => [
                 'users' => 1,
@@ -707,10 +792,10 @@ final class TicketTest extends EscaladeTestCase
 
         yield [
             'conf' => [
-                'remove_tech'  => 1,
-                'remove_group' => 1,
+                'remove_tech'             => 1,
+                'remove_group'            => 1,
                 'reassign_group_from_cat' => 1,
-                'reassign_tech_from_cat' => 0,
+                'reassign_tech_from_cat'  => 0,
             ],
             'expected' => [
                 'users' => 0,
@@ -724,10 +809,10 @@ final class TicketTest extends EscaladeTestCase
 
         yield [
             'conf' => [
-                'remove_tech'  => 1,
-                'remove_group' => 1,
+                'remove_tech'             => 1,
+                'remove_group'            => 1,
                 'reassign_group_from_cat' => 1,
-                'reassign_tech_from_cat' => 1,
+                'reassign_tech_from_cat'  => 1,
             ],
             'expected' => [
                 'users' => 1,
