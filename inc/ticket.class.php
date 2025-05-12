@@ -624,6 +624,13 @@ class PluginEscaladeTicket
         }
 
         if (
+            isset($_SESSION['plugin_escalade']['ticket_creation'])
+            && $_SESSION['plugin_escalade']['ticket_creation']
+        ) {
+            return;
+        }
+
+        if (
             $_SESSION['glpi_plugins']['escalade']['config']['use_assign_user_group'] != 0
             && $_SESSION['glpi_plugins']['escalade']['config']['use_assign_user_group_creation'] != 0
             && isset($_SESSION['plugin_escalade']['ticket_creation'])
@@ -866,6 +873,7 @@ class PluginEscaladeTicket
             ];
             $user_found = $ticket_user->find($user_condition);
             if (empty($user_found)) {
+                self::removeAssignUsers($item);
                 //add user to ticket
                 $ticket_user->add($user_condition);
                 //remove old tech if needed

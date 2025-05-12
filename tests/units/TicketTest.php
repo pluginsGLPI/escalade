@@ -696,9 +696,9 @@ final class TicketTest extends EscaladeTestCase
                 'reassign_tech_from_cat'  => 0,
             ],
             'expected' => [
-                'users' => 0,
+                'users' => 1,
                 'groups' => 1,
-                'user_1_is_assign' => 0,
+                'user_1_is_assign' => 1,
                 'user_2_is_assign' => 0,
                 'group_1_is_assign' => 1,
                 'group_2_is_assign' => 0,
@@ -764,9 +764,9 @@ final class TicketTest extends EscaladeTestCase
                 'reassign_tech_from_cat'  => 0,
             ],
             'expected' => [
-                'users' => 0,
+                'users' => 1,
                 'groups' => 1,
-                'user_1_is_assign' => 0,
+                'user_1_is_assign' => 1,
                 'user_2_is_assign' => 0,
                 'group_1_is_assign' => 1,
                 'group_2_is_assign' => 0,
@@ -904,8 +904,8 @@ final class TicketTest extends EscaladeTestCase
             ]);
             $this->assertGreaterThan(0, $t_id);
             $count_user1_assign_add = $provider['conf']['remove_tech'] === 0 ? 1 : 0;
-            $this->assertEquals($count_user1_assign_add, count($ticket_user->find(['tickets_id' => $t_id])));
-            $this->assertEquals($count_user1_assign_add, count($ticket_user->find(['tickets_id' => $t_id, 'users_id' => $user1->getID()])));
+            $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $t_id])));
+            $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $t_id, 'users_id' => $user1->getID()])));
             $this->assertEquals(0, count($ticket_user->find(['tickets_id' => $t_id, 'users_id' => $user2->getID()])));
             $this->assertEquals(1, count($ticket_group->find(['tickets_id' => $t_id])));
             $this->assertEquals(1, count($ticket_group->find(['tickets_id' => $t_id, 'groups_id' => $group1->getID()])));

@@ -700,6 +700,8 @@ final class GroupEscalationTest extends EscaladeTestCase
             ]);
             $this->assertTrue($ticket_update);
 
+            $temp = $ticket_user->find(['tickets_id' => $t_id, 'type' => CommonITILActor::ASSIGN]);
+
             $this->assertEquals($provider['update_expected']['user_ticket'], count($ticket_user->find(['tickets_id' => $t_id, 'type' => CommonITILActor::ASSIGN])));
             $this->assertEquals($provider['update_expected']['group_ticket'], count($group_ticket->find(['tickets_id' => $t_id, 'type' => CommonITILActor::ASSIGN])));
 
