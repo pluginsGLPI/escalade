@@ -294,4 +294,81 @@ final class TicketTest extends EscaladeTestCase
         }
         $this->assertTrue($found_new_group, "New group should be assigned after successful escalation");
     }
+
+    public function testEscalateButtonShouldTriggerGroupEscalationAndExecuteRuleOnTicket()
+    {
+        $this->login();
+
+        $config = new PluginEscaladeConfig();
+        $conf = $config->find();
+        $conf = reset($conf);
+        $config->getFromDB($conf['id']);
+        $this->assertGreaterThan(0, $conf['id']);
+
+        PluginEscaladeConfig::loadInSession();
+
+        $group_observer = new \Group();
+        $group_observer_id = $group_observer->add([
+            'name' => 'Group Observer',
+            'entities_id' => 0,
+            'is_recursive' => 1,
+        ]);
+        $this->assertGreaterThan(0, $group_observer_id);
+
+        $group_tech = new \Group();
+        $group_tech_id = $group_tech->add([
+            'name' => 'Group tech',
+            'entities_id' => 0,
+            'is_recursive' => 1,
+        ]);
+        $this->assertGreaterThan(0, $group_tech_id);
+
+        $rule = new \Rule();
+        $rule_id = $rule->add([
+            'name' => 'Add RuleTicket',
+            'sub_type' => 'RuleTicket',
+            'match' => 'AND',
+            'is_active' => 1,
+            'condition' => 2,
+        ]);
+        $this->assertGreaterThan(0, $rule_id);
+
+        $rule_action = new \RuleAction();
+        $rule_action_id = $rule_action->add([
+            'rules_id' => $rule_id,
+            'action_type' => 'assign',
+            'field' => '_groups_id_observer',
+            'value' => $group_observer_id,
+        ]);
+        $this->assertGreaterThan(0, $rule_action_id);
+
+        $rule_criteria = new \RuleCriteria();
+        $rule_criteria_id = $rule_criteria->add([
+            'rules_id' => $rule_id,
+            'criteria' => '_groups_id_assign',
+            'condition' => 0,
+            'pattern' => $group_tech_id,
+        ]);
+        $this->assertGreaterThan(0, $rule_criteria_id);
+
+        $ticket = new \Ticket();
+        $ticket_id = $ticket->add([
+            'name' => 'Test ticket for escalation',
+            'content' => 'Content for test ticket',
+        ]);
+        $this->assertGreaterThan(0, $ticket_id);
+
+        $group_ticket = new \Group_Ticket();
+        $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group_tech->getID(), 'type' => \CommonITILActor::ASSIGN])));
+        $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group_observer->getID(), 'type' => \CommonITILActor::OBSERVER])));
+
+        $ticket_update = $ticket->update([
+            'id' => $ticket_id,
+            '_groups_id_assign' => [$group_tech_id],
+        ]);
+        $this->assertTrue($ticket_update);
+
+        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group_tech->getID(), 'type' => \CommonITILActor::ASSIGN])));
+        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group_observer->getID(), 'type' => \CommonITILActor::OBSERVER])));
+    }
 }
