@@ -37,7 +37,6 @@ use DbTestCase;
 
 abstract class EscaladeTestCase extends DbTestCase
 {
-
     protected function login(
         string $user_name = TU_USER,
         string $user_pass = TU_PASS,
