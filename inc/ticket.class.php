@@ -390,11 +390,14 @@ class PluginEscaladeTicket
             $group->getFromDB($groups_id);
 
             $task = new TicketTask();
+            $comment = $_POST['comment'] ?? '';
             $task->add([
                 'tickets_id' => $tickets_id,
                 'is_private' => true,
                 'state'      => Planning::INFO,
-                'content'    => Toolbox::addslashes_deep(sprintf(__("Escalation to the group %s.", "escalade"), $group->getName())),
+                'content'    => Sanitizer::sanitize(
+                    '<p><i>' . sprintf(__('Escalation to the group %s.', 'escalade'), Sanitizer::unsanitize($group->getName())) . '</i></p><hr />'
+                    ) . $comment,
             ]);
         }
 
