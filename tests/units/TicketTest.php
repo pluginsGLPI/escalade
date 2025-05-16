@@ -294,4 +294,69 @@ final class TicketTest extends EscaladeTestCase
         }
         $this->assertTrue($found_new_group, "New group should be assigned after successful escalation");
     }
+
+    public function testEscalateButtonShouldTriggerGroupEscalationAndExecuteRuleOnTicket()
+    {
+        $this->login();
+
+        $config = new PluginEscaladeConfig();
+        $conf = $config->find();
+        $conf = reset($conf);
+        $config->getFromDB($conf['id']);
+        $this->assertGreaterThan(0, $conf['id']);
+
+        PluginEscaladeConfig::loadInSession();
+
+        $group_observer_id = $this->createItem(\Group::class, [
+            'name' => 'Group Observer',
+            'entities_id' => 0,
+            'is_recursive' => 1,
+        ])->getID();
+
+        $group_tech_id = $this->createItem(\Group::class, [
+            'name' => 'Group tech',
+            'entities_id' => 0,
+            'is_recursive' => 1,
+        ])->getID();
+
+        $rule_id = $this->createItem(\Rule::class, [
+            'name' => 'Add RuleTicket',
+            'sub_type' => 'RuleTicket',
+            'match' => 'AND',
+            'is_active' => 1,
+            'condition' => 2,
+        ])->getID();
+
+        $this->createItem(\RuleAction::class, [
+            'rules_id' => $rule_id,
+            'action_type' => 'assign',
+            'field' => '_groups_id_observer',
+            'value' => $group_observer_id,
+        ]);
+
+        $this->createItem(\RuleCriteria::class, [
+            'rules_id' => $rule_id,
+            'criteria' => '_groups_id_assign',
+            'condition' => 0,
+            'pattern' => $group_tech_id,
+        ]);
+
+        $ticket = $this->createItem(\Ticket::class, [
+            'name' => 'Test ticket for escalation',
+            'content' => 'Content for test ticket',
+        ]);
+
+        $group_ticket = new \Group_Ticket();
+        $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group_tech_id, 'type' => \CommonITILActor::ASSIGN])));
+        $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group_observer_id, 'type' => \CommonITILActor::OBSERVER])));
+
+        $ticket_update = $ticket->update([
+            'id' => $ticket->getID(),
+            '_groups_id_assign' => [$group_tech_id],
+        ]);
+        $this->assertTrue($ticket_update);
+
+        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group_tech_id, 'type' => \CommonITILActor::ASSIGN])));
+        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group_observer_id, 'type' => \CommonITILActor::OBSERVER])));
+    }
 }

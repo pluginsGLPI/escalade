@@ -63,33 +63,25 @@ if (isset($_POST['escalate'])) {
             ]);
         }
 
-        $ticket_group = new Group_Ticket();
+        // Update the ticket with actor data in order to execute the necessary rules
+        $_form_object = [
+            '_do_not_compute_status' => true,
+        ];
+        if ($_SESSION['plugins']['escalade']['config']['ticket_last_status'] != -1) {
+            $_form_object['status'] = $_SESSION['plugins']['escalade']['config']['ticket_last_status'];
+        }
+        $updates_ticket = new Ticket();
         if (
-            $ticket_group->add(
-                [
-                    'tickets_id'                    => $tickets_id,
-                    'groups_id'                     => $group_id,
-                    'type'                          => CommonITILActor::ASSIGN,
-                    '_disablenotif'                 => true,
-                    '_plugin_escalade_no_history'   => true,
+            $updates_ticket->update(
+                $_POST['ticket_details'] + [
+                    '_actors' => PluginEscaladeTicket::getTicketFieldsWithActors($tickets_id, $group_id),
+                    '_plugin_escalade_no_history' => true, // Prevent a duplicated task to be added
+                    'actortype' => CommonITILActor::ASSIGN,
+                    'groups_id' => $group_id,
+                    '_form_object' => $_form_object,
                 ]
             )
         ) {
-            if ($_SESSION['glpi_plugins']['escalade']['config']['task_history']) {
-                $task = new TicketTask();
-                $task->add(
-                    [
-                        'tickets_id' => $tickets_id,
-                        'is_private' => true,
-                        'state'      => Planning::INFO,
-                        // Sanitize before merging with $_POST['comment'] which is already sanitized
-                        'content'    => Sanitizer::sanitize(
-                            '<p><i>' . sprintf(__('Escalation to the group %s.', 'escalade'), Sanitizer::unsanitize($group->getName())) . '</i></p><hr />'
-                        ) . $_POST['comment']
-                    ]
-                );
-            }
-
             //notified only the last group assigned
             $ticket = new Ticket();
             $ticket->getFromDB($tickets_id);

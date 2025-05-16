@@ -51,6 +51,14 @@ final class TaskMessageTest extends EscaladeTestCase
 
     public function testGroupEscalation()
     {
+        $this->login();
+        $config = new PluginEscaladeConfig();
+        $conf = $config->find();
+        $conf = reset($conf);
+        $config->getFromDB($conf['id']);
+        $this->assertGreaterThan(0, $conf['id']);
+        PluginEscaladeConfig::loadInSession();
+
         $ticket = new \Ticket();
         $ticket->add([
             'name' => 'Escalation Test',
@@ -119,6 +127,14 @@ final class TaskMessageTest extends EscaladeTestCase
 
     public function testTaskGroupEscalation()
     {
+        $this->login();
+        $config = new PluginEscaladeConfig();
+        $conf = $config->find();
+        $conf = reset($conf);
+        $config->getFromDB($conf['id']);
+        $this->assertGreaterThan(0, $conf['id']);
+        PluginEscaladeConfig::loadInSession();
+
         $ticket = new \Ticket();
         $ticket->add([
             'name' => 'Task Group Escalation Test',
