@@ -397,7 +397,7 @@ class PluginEscaladeTicket
                 'state'      => Planning::INFO,
                 'content'    => Sanitizer::sanitize(
                     '<p><i>' . sprintf(__('Escalation to the group %s.', 'escalade'), Sanitizer::unsanitize($group->getName())) . '</i></p><hr />'
-                    ) . $comment,
+                ) . $comment,
             ]);
         }
 

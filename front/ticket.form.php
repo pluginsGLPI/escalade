@@ -82,7 +82,6 @@ if (isset($_POST['escalate'])) {
                 ]
             )
         ) {
-
             //notified only the last group assigned
             $ticket = new Ticket();
             $ticket->getFromDB($tickets_id);
