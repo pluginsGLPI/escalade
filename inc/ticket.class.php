@@ -106,7 +106,7 @@ class PluginEscaladeTicket
                 $new_users[] = [
                     'items_id' => $item->input['_itil_assign']['users_id'],
                     'itemtype' => 'User',
-                    'use_notification' => $item->input['_itil_assign']['use_notification'],
+                    'use_notification' => isset($item->input['_itil_assign']['use_notification']) ?? false,
                 ];
             }
 
