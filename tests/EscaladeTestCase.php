@@ -33,23 +33,10 @@ namespace GlpiPlugin\Escalade\Tests;
 use Auth;
 use PHPUnit\Framework\TestCase;
 use Session;
+use DbTestCase;
 
-abstract class EscaladeTestCase extends TestCase
+abstract class EscaladeTestCase extends DbTestCase
 {
-    protected function setUp(): void
-    {
-        global $DB;
-        $DB->beginTransaction();
-        parent::setUp();
-    }
-
-    protected function tearDown(): void
-    {
-        global $DB;
-        $DB->rollback();
-        parent::tearDown();
-    }
-
     protected function login(
         string $user_name = TU_USER,
         string $user_pass = TU_PASS,
