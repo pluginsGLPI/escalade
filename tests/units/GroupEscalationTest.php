@@ -576,49 +576,56 @@ final class GroupEscalationTest extends EscaladeTestCase
         $user2->getFromDBbyName('tech');
         $this->assertGreaterThan(0, $user2->getID());
 
-        $group1 = new \Group();
-        $group1_id = $group1->add(['name' => 'GLPI Group_1']);
-        $this->assertGreaterThan(0, $group1_id);
+        $group1 = $this->createItem(
+            \Group::class,
+            [
+                'name' => 'GLPI Group 1',
+            ]
+        );
 
-        $group3 = new \Group();
-        $group3_id = $group3->add(['name' => 'GLPI Group_2']);
-        $this->assertGreaterThan(0, $group3_id);
+        $group2 = $this->createItem(
+            \Group::class,
+            [
+                'name' => 'TECH Group 1',
+            ]
+        );
 
-        $group2 = new \Group();
-        $group2_id = $group2->add(['name' => 'TECH Group_1']);
-        $this->assertGreaterThan(0, $group2_id);
+        $group3 = $this->createItem(
+            \Group::class,
+            [
+                'name' => 'GLPI Group 2',
+            ]
+        );
 
-        $group4 = new \Group();
-        $group4_id = $group4->add(['name' => 'TECH Group_2']);
-        $this->assertGreaterThan(0, $group4_id);
+        $group4 = $this->createItem(
+            \Group::class,
+            [
+                'name' => 'TECH Group 2',
+            ]
+        );
 
-        $user_group1 = new \Group_User();
-        $user_group1->add([
-            'users_id' => $user1->getID(),
-            'groups_id' => $group1->getID()
-        ]);
-        $this->assertGreaterThan(0, $user_group1->getID());
+        $this->createItems(
+            \Group_User::class,
+            [
+                [
+                    'users_id' => $user1->getID(),
+                    'groups_id' => $group1->getID(),
+                ],
+                [
+                    'users_id' => $user2->getID(),
+                    'groups_id' => $group2->getID(),
+                ],
+                [
+                    'users_id' => $user1->getID(),
+                    'groups_id' => $group3->getID(),
+                ],
+                [
+                    'users_id' => $user2->getID(),
+                    'groups_id' => $group4->getID(),
+                ],
+            ],
+        );
 
-        $user_group2 = new \Group_User();
-        $user_group2->add([
-            'users_id' => $user2->getID(),
-            'groups_id' => $group2->getID()
-        ]);
-        $this->assertGreaterThan(0, $user_group2->getID());
-
-        $user_group3 = new \Group_User();
-        $user_group3->add([
-            'users_id' => $user1->getID(),
-            'groups_id' => $group3->getID()
-        ]);
-        $this->assertGreaterThan(0, $user_group3->getID());
-
-        $user_group4 = new \Group_User();
-        $user_group4->add([
-            'users_id' => $user2->getID(),
-            'groups_id' => $group4->getID()
-        ]);
-        $this->assertGreaterThan(0, $user_group4->getID());
         foreach ($this->testTechGroupAttributionProvider() as $provider) {
             $this->login();
 
@@ -628,32 +635,35 @@ final class GroupEscalationTest extends EscaladeTestCase
             $config->getFromDB($conf['id']);
             $this->assertGreaterThan(0, $conf['id']);
             // Update escalade config
-            $conf = array_merge($conf, $provider['conf']);
-            $this->assertTrue($config->update($conf));
+            $this->updateItem(
+                PluginEscaladeConfig::class,
+                $conf['id'],
+                array_merge($conf, $provider['conf']),
+            );
 
             PluginEscaladeConfig::loadInSession();
 
-            $ticket = new \Ticket();
-            $t_id = $ticket->add([
-                'name' => 'Assign Group Escalation Test',
-                'content' => '',
-                '_actors' => [
-                    'assign' => [
-                        [
-                            'items_id' => $user1->getID(),
-                            'itemtype' => 'User'
-                        ]
+            $ticket = $this->createItem(
+                \Ticket::class,
+                [
+                    'name' => 'Assign Group Escalation Test',
+                    'content' => '',
+                    '_actors' => [
+                        'assign' => [
+                            [
+                                'items_id' => $user1->getID(),
+                                'itemtype' => 'User'
+                            ]
+                        ],
                     ],
                 ]
-            ]);
-
-            $this->assertGreaterThan(0, $t_id);
+            );
 
             $ticket_user = new \Ticket_User();
-            $this->assertEquals($provider['add_expected']['user_ticket'], count($ticket_user->find(['tickets_id' => $t_id, 'type' => CommonITILActor::ASSIGN])));
+            $this->assertEquals($provider['add_expected']['user_ticket'], count($ticket_user->find(['tickets_id' => $ticket->getID(), 'type' => CommonITILActor::ASSIGN])));
 
             $group_ticket = new \Group_Ticket();
-            $this->assertEquals($provider['add_expected']['group_ticket'], count($group_ticket->find(['tickets_id' => $t_id, 'type' => CommonITILActor::ASSIGN])));
+            $this->assertEquals($provider['add_expected']['group_ticket'], count($group_ticket->find(['tickets_id' => $ticket->getID(), 'type' => CommonITILActor::ASSIGN])));
 
             if ($provider['conf']['use_assign_user_group_creation'] === 1) {
                 $group = $group_ticket->getFromDBByCrit(['tickets_id' => $ticket->getID(), 'type' => CommonITILActor::ASSIGN]);
@@ -692,18 +702,18 @@ final class GroupEscalationTest extends EscaladeTestCase
                 }
             }
 
-            $ticket_update = $ticket->update([
-                'id'      => $t_id,
-                '_actors' => [
-                    'assign' => $assign
+            $this->updateItem(
+                \Ticket::class,
+                $ticket->getID(),
+                [
+                    '_actors' => [
+                        'assign' => $assign
+                    ],
                 ]
-            ]);
-            $this->assertTrue($ticket_update);
+            );
 
-            $temp = $ticket_user->find(['tickets_id' => $t_id, 'type' => CommonITILActor::ASSIGN]);
-
-            $this->assertEquals($provider['update_expected']['user_ticket'], count($ticket_user->find(['tickets_id' => $t_id, 'type' => CommonITILActor::ASSIGN])));
-            $this->assertEquals($provider['update_expected']['group_ticket'], count($group_ticket->find(['tickets_id' => $t_id, 'type' => CommonITILActor::ASSIGN])));
+            $this->assertEquals($provider['update_expected']['user_ticket'], count($ticket_user->find(['tickets_id' => $ticket->getID(), 'type' => CommonITILActor::ASSIGN])));
+            $this->assertEquals($provider['update_expected']['group_ticket'], count($group_ticket->find(['tickets_id' => $ticket->getID(), 'type' => CommonITILActor::ASSIGN])));
 
             if ($provider['conf']['use_assign_user_group_modification'] === 1) {
                 if ($provider['conf']['use_assign_user_group'] === 1) {
