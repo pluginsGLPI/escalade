@@ -376,12 +376,14 @@ final class TicketTest extends EscaladeTestCase
         $conf = $config->find();
         $conf = reset($conf);
         $config->getFromDB($conf['id']);
-        $this->assertTrue($config->update([
-            "id" => $conf['id'],
-            "reassign_group_from_cat" => 1,
-            'remove_group' => 1,
-        ]));
-        $this->assertGreaterThan(0, $conf['id']);
+        $this->updateItem(
+            PluginEscaladeConfig::class,
+            $conf['id'],
+            array_merge($conf, [
+                "reassign_group_from_cat" => 1,
+                'remove_group' => 1,
+            ])
+        );
 
         PluginEscaladeConfig::loadInSession();
 
