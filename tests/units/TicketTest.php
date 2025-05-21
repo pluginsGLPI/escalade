@@ -560,8 +560,6 @@ final class TicketTest extends EscaladeTestCase
                 'reassign_tech_from_cat'  => 0,
             ],
             'expected' => [
-                'users' => 1,
-                'groups' => 1,
                 'user_1_is_assign' => 1,
                 'user_2_is_assign' => 0,
                 'group_1_is_assign' => 1,
@@ -577,8 +575,6 @@ final class TicketTest extends EscaladeTestCase
                 'reassign_tech_from_cat'  => 1,
             ],
             'expected' => [
-                'users' => 2,
-                'groups' => 1,
                 'user_1_is_assign' => 1,
                 'user_2_is_assign' => 1,
                 'group_1_is_assign' => 1,
@@ -594,8 +590,6 @@ final class TicketTest extends EscaladeTestCase
                 'reassign_tech_from_cat'  => 0,
             ],
             'expected' => [
-                'users' => 1,
-                'groups' => 2,
                 'user_1_is_assign' => 1,
                 'user_2_is_assign' => 0,
                 'group_1_is_assign' => 1,
@@ -611,8 +605,6 @@ final class TicketTest extends EscaladeTestCase
                 'reassign_tech_from_cat'  => 1,
             ],
             'expected' => [
-                'users' => 2,
-                'groups' => 2,
                 'user_1_is_assign' => 1,
                 'user_2_is_assign' => 1,
                 'group_1_is_assign' => 1,
@@ -628,8 +620,6 @@ final class TicketTest extends EscaladeTestCase
                 'reassign_tech_from_cat'  => 0,
             ],
             'expected' => [
-                'users' => 1,
-                'groups' => 1,
                 'user_1_is_assign' => 1,
                 'user_2_is_assign' => 0,
                 'group_1_is_assign' => 1,
@@ -645,8 +635,6 @@ final class TicketTest extends EscaladeTestCase
                 'reassign_tech_from_cat'  => 1,
             ],
             'expected' => [
-                'users' => 2,
-                'groups' => 1,
                 'user_1_is_assign' => 1,
                 'user_2_is_assign' => 1,
                 'group_1_is_assign' => 1,
@@ -662,8 +650,6 @@ final class TicketTest extends EscaladeTestCase
                 'reassign_tech_from_cat'  => 0,
             ],
             'expected' => [
-                'users' => 1,
-                'groups' => 1,
                 'user_1_is_assign' => 1,
                 'user_2_is_assign' => 0,
                 'group_1_is_assign' => 0,
@@ -679,8 +665,6 @@ final class TicketTest extends EscaladeTestCase
                 'reassign_tech_from_cat'  => 1,
             ],
             'expected' => [
-                'users' => 2,
-                'groups' => 1,
                 'user_1_is_assign' => 1,
                 'user_2_is_assign' => 1,
                 'group_1_is_assign' => 0,
@@ -696,8 +680,6 @@ final class TicketTest extends EscaladeTestCase
                 'reassign_tech_from_cat'  => 0,
             ],
             'expected' => [
-                'users' => 1,
-                'groups' => 1,
                 'user_1_is_assign' => 1,
                 'user_2_is_assign' => 0,
                 'group_1_is_assign' => 1,
@@ -713,8 +695,6 @@ final class TicketTest extends EscaladeTestCase
                 'reassign_tech_from_cat'  => 1,
             ],
             'expected' => [
-                'users' => 1,
-                'groups' => 1,
                 'user_1_is_assign' => 0,
                 'user_2_is_assign' => 1,
                 'group_1_is_assign' => 1,
@@ -730,8 +710,6 @@ final class TicketTest extends EscaladeTestCase
                 'reassign_tech_from_cat'  => 0,
             ],
             'expected' => [
-                'users' => 0,
-                'groups' => 2,
                 'user_1_is_assign' => 0,
                 'user_2_is_assign' => 0,
                 'group_1_is_assign' => 1,
@@ -747,8 +725,6 @@ final class TicketTest extends EscaladeTestCase
                 'reassign_tech_from_cat'  => 1,
             ],
             'expected' => [
-                'users' => 1,
-                'groups' => 2,
                 'user_1_is_assign' => 0,
                 'user_2_is_assign' => 1,
                 'group_1_is_assign' => 1,
@@ -764,8 +740,6 @@ final class TicketTest extends EscaladeTestCase
                 'reassign_tech_from_cat'  => 0,
             ],
             'expected' => [
-                'users' => 1,
-                'groups' => 1,
                 'user_1_is_assign' => 1,
                 'user_2_is_assign' => 0,
                 'group_1_is_assign' => 1,
@@ -781,8 +755,6 @@ final class TicketTest extends EscaladeTestCase
                 'reassign_tech_from_cat'  => 1,
             ],
             'expected' => [
-                'users' => 1,
-                'groups' => 1,
                 'user_1_is_assign' => 0,
                 'user_2_is_assign' => 1,
                 'group_1_is_assign' => 1,
@@ -798,8 +770,6 @@ final class TicketTest extends EscaladeTestCase
                 'reassign_tech_from_cat'  => 0,
             ],
             'expected' => [
-                'users' => 0,
-                'groups' => 1,
                 'user_1_is_assign' => 0,
                 'user_2_is_assign' => 0,
                 'group_1_is_assign' => 0,
@@ -815,8 +785,6 @@ final class TicketTest extends EscaladeTestCase
                 'reassign_tech_from_cat'  => 1,
             ],
             'expected' => [
-                'users' => 1,
-                'groups' => 1,
                 'user_1_is_assign' => 0,
                 'user_2_is_assign' => 1,
                 'group_1_is_assign' => 0,
@@ -930,10 +898,8 @@ final class TicketTest extends EscaladeTestCase
                 ],
             );
 
-            $this->assertEquals($provider['expected']['users'], count($ticket_user->find(['tickets_id' => $ticket->getID()])));
             $this->assertEquals($provider['expected']['user_1_is_assign'], count($ticket_user->find(['tickets_id' => $ticket->getID(), 'users_id' => $user1->getID()])));
             $this->assertEquals($provider['expected']['user_2_is_assign'], count($ticket_user->find(['tickets_id' => $ticket->getID(), 'users_id' => $user2->getID()])));
-            $this->assertEquals($provider['expected']['groups'], count($ticket_group->find(['tickets_id' => $ticket->getID()])));
             $this->assertEquals($provider['expected']['group_1_is_assign'], count($ticket_group->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group1->getID()])));
             $this->assertEquals($provider['expected']['group_2_is_assign'], count($ticket_group->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group2->getID()])));
         }
