@@ -166,20 +166,12 @@ final class UserEscalationTest extends EscaladeTestCase
     {
         $this->login();
 
-        $config = new PluginEscaladeConfig();
-        $conf = $config->find();
-        $conf = reset($conf);
-        $config->getFromDB($conf['id']);
-        $this->assertGreaterThan(0, $conf['id']);
         $this->updateItem(
             PluginEscaladeConfig::class,
-            $conf['id'],
-            array_merge(
-                $conf,
-                [
-                    'remove_tech' => 1
-                ]
-            ),
+            1,
+            [
+                'remove_tech' => 1
+            ]
         );
 
         PluginEscaladeConfig::loadInSession();
@@ -248,13 +240,10 @@ final class UserEscalationTest extends EscaladeTestCase
         // Disable remove tech options
         $this->updateItem(
             PluginEscaladeConfig::class,
-            $conf['id'],
-            array_merge(
-                $conf,
-                [
-                    'remove_tech' => 0
-                ]
-            ),
+            1,
+            [
+                'remove_tech' => 0
+            ]
         );
 
         PluginEscaladeConfig::loadInSession();
@@ -307,20 +296,12 @@ final class UserEscalationTest extends EscaladeTestCase
     {
         $this->login();
 
-        $config = new PluginEscaladeConfig();
-        $conf = $config->find();
-        $conf = reset($conf);
-        $config->getFromDB($conf['id']);
-        $this->assertGreaterThan(0, $conf['id']);
         $this->updateItem(
             PluginEscaladeConfig::class,
-            $conf['id'],
-            array_merge(
-                $conf,
-                [
-                    'remove_tech' => 1
-                ]
-            ),
+            1,
+            [
+                'remove_tech' => 1
+            ]
         );
 
         PluginEscaladeConfig::loadInSession();
@@ -384,13 +365,10 @@ final class UserEscalationTest extends EscaladeTestCase
         // Disable remove tech options
         $this->updateItem(
             PluginEscaladeConfig::class,
-            $conf['id'],
-            array_merge(
-                $conf,
-                [
-                    'remove_tech' => 0
-                ]
-            ),
+            1,
+            [
+                'remove_tech' => 0
+            ]
         );
 
         PluginEscaladeConfig::loadInSession();

@@ -629,16 +629,11 @@ final class GroupEscalationTest extends EscaladeTestCase
         foreach ($this->testTechGroupAttributionProvider() as $provider) {
             $this->login();
 
-            $config = new PluginEscaladeConfig();
-            $conf = $config->find();
-            $conf = reset($conf);
-            $config->getFromDB($conf['id']);
-            $this->assertGreaterThan(0, $conf['id']);
             // Update escalade config
             $this->updateItem(
                 PluginEscaladeConfig::class,
-                $conf['id'],
-                array_merge($conf, $provider['conf']),
+                1,
+                $provider['conf'],
             );
 
             PluginEscaladeConfig::loadInSession();
