@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-17 00:45+0000\n"
+"POT-Creation-Date: 2025-05-21 00:49+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Cédric Anne, 2023\n"
 "Language-Team: Korean (Korea) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/ko_KR/)\n"
@@ -75,35 +75,35 @@ msgstr "삭제 버튼 표시"
 msgid "Enable filtering on the groups assignment"
 msgstr "그룹 할당에 필터링 활성화"
 
-#: inc/ticket.class.php:937
+#: inc/ticket.class.php:941
 msgid "Error : adding actors (group)"
 msgstr "오류 : 시행자 추가 (그룹)"
 
-#: inc/ticket.class.php:928
+#: inc/ticket.class.php:932
 msgid "Error : adding actors (user)"
 msgstr "오류 : 시행자 (사용자) 추가"
 
-#: inc/ticket.class.php:947
+#: inc/ticket.class.php:951
 msgid "Error : adding documents"
 msgstr "오류 : 문서 추가"
 
-#: inc/ticket.class.php:917
+#: inc/ticket.class.php:921
 msgid "Error : adding followups"
 msgstr "오류 : 추적 추가"
 
-#: inc/ticket.class.php:900
+#: inc/ticket.class.php:904
 msgid "Error : adding link between the two tickets"
 msgstr "오류 : 두 티켓간의 링크 추가"
 
-#: inc/ticket.class.php:887
+#: inc/ticket.class.php:891
 msgid "Error : adding new ticket"
 msgstr "오류 : 새 티켓 추가"
 
-#: inc/ticket.class.php:871
+#: inc/ticket.class.php:875
 msgid "Error : get old ticket"
 msgstr "오류  : 오래된 티켓 가져오기"
 
-#: inc/ticket.class.php:1066 inc/ticket.class.php:1067
+#: inc/ticket.class.php:1070 inc/ticket.class.php:1071
 msgid "Escalate"
 msgstr ""
 
@@ -111,8 +111,8 @@ msgstr ""
 msgid "Escalate ticket"
 msgstr ""
 
-#: inc/user.class.php:179 inc/group_group.class.php:56 setup.php:184
-#: front/config.form.php:57
+#: inc/group_group.class.php:56 inc/user.class.php:179
+#: front/config.form.php:58 setup.php:184
 msgid "Escalation"
 msgstr "이관"
 
@@ -120,7 +120,7 @@ msgstr "이관"
 msgid "Escalation history in tasks"
 msgstr "업무에 이력 이관"
 
-#: inc/ticket.class.php:397 inc/ticket.class.php:541 front/ticket.form.php:86
+#: inc/ticket.class.php:399 inc/ticket.class.php:544
 #, php-format
 msgid "Escalation to the group %s."
 msgstr ""
@@ -187,7 +187,7 @@ msgstr "해결책 거부됨, 그룹으로 돌아가기"
 msgid "Solve date modification"
 msgstr "해결 일자 변경"
 
-#: inc/ticket.class.php:911 inc/ticket.class.php:953 inc/ticket.class.php:958
+#: inc/ticket.class.php:915 inc/ticket.class.php:957 inc/ticket.class.php:962
 msgid "This ticket has been cloned from the ticket num"
 msgstr "이 티켓은 그 티켓 번호에서 복제되었습니다"
 
@@ -211,7 +211,7 @@ msgstr "기술자 그룹 사용"
 msgid "View full history"
 msgstr "전체 이력 보기"
 
-#: front/ticket.form.php:54
+#: front/ticket.form.php:55
 msgid "You must select a group."
 msgstr ""
 
@@ -227,7 +227,7 @@ msgstr ""
 msgid "full assignation history"
 msgstr "전체 배치 이력"
 
-#: ajax/assign_me.php:34 front/climb_group.php:42
+#: ajax/assign_me.php:35 front/climb_group.php:43
 msgid "missing parameters"
 msgstr "누락된 매개변수"
 

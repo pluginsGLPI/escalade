@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-17 00:45+0000\n"
+"POT-Creation-Date: 2025-05-21 00:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -73,35 +73,35 @@ msgstr ""
 msgid "Enable filtering on the groups assignment"
 msgstr ""
 
-#: inc/ticket.class.php:937
+#: inc/ticket.class.php:941
 msgid "Error : adding actors (group)"
 msgstr ""
 
-#: inc/ticket.class.php:928
+#: inc/ticket.class.php:932
 msgid "Error : adding actors (user)"
 msgstr ""
 
-#: inc/ticket.class.php:947
+#: inc/ticket.class.php:951
 msgid "Error : adding documents"
 msgstr ""
 
-#: inc/ticket.class.php:917
+#: inc/ticket.class.php:921
 msgid "Error : adding followups"
 msgstr ""
 
-#: inc/ticket.class.php:900
+#: inc/ticket.class.php:904
 msgid "Error : adding link between the two tickets"
 msgstr ""
 
-#: inc/ticket.class.php:887
+#: inc/ticket.class.php:891
 msgid "Error : adding new ticket"
 msgstr ""
 
-#: inc/ticket.class.php:871
+#: inc/ticket.class.php:875
 msgid "Error : get old ticket"
 msgstr ""
 
-#: inc/ticket.class.php:1066 inc/ticket.class.php:1067
+#: inc/ticket.class.php:1070 inc/ticket.class.php:1071
 msgid "Escalate"
 msgstr ""
 
@@ -109,8 +109,8 @@ msgstr ""
 msgid "Escalate ticket"
 msgstr ""
 
-#: inc/user.class.php:179 inc/group_group.class.php:56 setup.php:184
-#: front/config.form.php:57
+#: inc/group_group.class.php:56 inc/user.class.php:179 front/config.form.php:58
+#: setup.php:184
 msgid "Escalation"
 msgstr ""
 
@@ -118,7 +118,7 @@ msgstr ""
 msgid "Escalation history in tasks"
 msgstr ""
 
-#: inc/ticket.class.php:397 inc/ticket.class.php:541 front/ticket.form.php:86
+#: inc/ticket.class.php:399 inc/ticket.class.php:544
 #, php-format
 msgid "Escalation to the group %s."
 msgstr ""
@@ -185,7 +185,7 @@ msgstr ""
 msgid "Solve date modification"
 msgstr ""
 
-#: inc/ticket.class.php:911 inc/ticket.class.php:953 inc/ticket.class.php:958
+#: inc/ticket.class.php:915 inc/ticket.class.php:957 inc/ticket.class.php:962
 msgid "This ticket has been cloned from the ticket num"
 msgstr ""
 
@@ -209,7 +209,7 @@ msgstr ""
 msgid "View full history"
 msgstr ""
 
-#: front/ticket.form.php:54
+#: front/ticket.form.php:55
 msgid "You must select a group."
 msgstr ""
 
@@ -225,7 +225,7 @@ msgstr ""
 msgid "full assignation history"
 msgstr ""
 
-#: ajax/assign_me.php:34 front/climb_group.php:42
+#: ajax/assign_me.php:35 front/climb_group.php:43
 msgid "missing parameters"
 msgstr ""
 
