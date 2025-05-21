@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [unrelease] -
 
 - Fix Escalate timeline button execute RuleTicket
+- Fix group assign with `reassign_group_from_cat` option
 
 
 ## [2.9.13] - 2025-03-31
