@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-17 00:45+0000\n"
+"POT-Creation-Date: 2025-05-21 00:49+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Cédric Anne, 2023\n"
 "Language-Team: French (Canada) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/fr_CA/)\n"
@@ -76,35 +76,35 @@ msgstr "Afficher le bouton de suppression"
 msgid "Enable filtering on the groups assignment"
 msgstr "Activer le filtrage sur l'attribution des groupes"
 
-#: inc/ticket.class.php:937
+#: inc/ticket.class.php:941
 msgid "Error : adding actors (group)"
 msgstr "Erreur : ajout des acteurs (groupe)"
 
-#: inc/ticket.class.php:928
+#: inc/ticket.class.php:932
 msgid "Error : adding actors (user)"
 msgstr "Erreur : ajout des acteurs (utilisateur)"
 
-#: inc/ticket.class.php:947
+#: inc/ticket.class.php:951
 msgid "Error : adding documents"
 msgstr "Erreur : ajout des documents"
 
-#: inc/ticket.class.php:917
+#: inc/ticket.class.php:921
 msgid "Error : adding followups"
 msgstr "Erreur: ajout des suivis"
 
-#: inc/ticket.class.php:900
+#: inc/ticket.class.php:904
 msgid "Error : adding link between the two tickets"
 msgstr "Erreur : ajout de lien entre les deux tickets"
 
-#: inc/ticket.class.php:887
+#: inc/ticket.class.php:891
 msgid "Error : adding new ticket"
 msgstr "Erreur : ajout de nouveau ticket"
 
-#: inc/ticket.class.php:871
+#: inc/ticket.class.php:875
 msgid "Error : get old ticket"
 msgstr "Erreur : récupération ancien ticket"
 
-#: inc/ticket.class.php:1066 inc/ticket.class.php:1067
+#: inc/ticket.class.php:1070 inc/ticket.class.php:1071
 msgid "Escalate"
 msgstr ""
 
@@ -112,8 +112,8 @@ msgstr ""
 msgid "Escalate ticket"
 msgstr ""
 
-#: inc/user.class.php:179 inc/group_group.class.php:56 setup.php:184
-#: front/config.form.php:57
+#: inc/group_group.class.php:56 inc/user.class.php:179
+#: front/config.form.php:58 setup.php:184
 msgid "Escalation"
 msgstr "Escalade"
 
@@ -121,7 +121,7 @@ msgstr "Escalade"
 msgid "Escalation history in tasks"
 msgstr "Historique des escalades dans les tâches"
 
-#: inc/ticket.class.php:397 inc/ticket.class.php:541 front/ticket.form.php:86
+#: inc/ticket.class.php:399 inc/ticket.class.php:544
 #, php-format
 msgid "Escalation to the group %s."
 msgstr ""
@@ -188,7 +188,7 @@ msgstr "Solution rejetée, renvoi au groupe"
 msgid "Solve date modification"
 msgstr "Date de modification de la résolution"
 
-#: inc/ticket.class.php:911 inc/ticket.class.php:953 inc/ticket.class.php:958
+#: inc/ticket.class.php:915 inc/ticket.class.php:957 inc/ticket.class.php:962
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Ce ticket a été cloné depuis le ticket n°"
 
@@ -212,7 +212,7 @@ msgstr "Utiliser le groupe du technicien"
 msgid "View full history"
 msgstr "Afficher l'historique complet"
 
-#: front/ticket.form.php:54
+#: front/ticket.form.php:55
 msgid "You must select a group."
 msgstr ""
 
@@ -228,7 +228,7 @@ msgstr ""
 msgid "full assignation history"
 msgstr "historique d'assignation complet"
 
-#: ajax/assign_me.php:34 front/climb_group.php:42
+#: ajax/assign_me.php:35 front/climb_group.php:43
 msgid "missing parameters"
 msgstr "paramètres manquants"
 
