@@ -829,102 +829,118 @@ final class TicketTest extends EscaladeTestCase
     {
         $ticket_user = new \Ticket_User();
         $ticket_group = new \Group_Ticket();
-        $ticket = new \Ticket();
-        $itil_category = new \ITILCategory();
 
         $user1 = new \User();
         $user1->getFromDBbyName('glpi');
         $this->assertGreaterThan(0, $user1->getID());
 
-        $group1 = new \Group();
-        $group1_id = $group1->add(['name' => 'GLPI Group']);
-        $this->assertGreaterThan(0, $group1_id);
-
-        $user_group1 = new \Group_User();
-        $user_group1->add([
-            'users_id' => $user1->getID(),
-            'groups_id' => $group1->getID()
-        ]);
-        $this->assertGreaterThan(0, $user_group1->getID());
-
-        $entity = new \Entity();
-        $entity->getFromDB(0);
-        $entity->update([
-            "id" => 0,
-            "auto_assign_mode" => 2,
-        ]);
-
-        $itil_category1_id = $itil_category->add([
-            'name' => 'Cat1',
-            'users_id' => $user1->getID(),
-            'groups_id' => $group1->getID(),
-        ]);
-        $this->assertGreaterThan(0, $itil_category1_id);
-
         $user2 = new \User();
         $user2->getFromDBbyName('tech');
         $this->assertGreaterThan(0, $user2->getID());
 
-        $group2 = new \Group();
-        $group2_id = $group2->add(['name' => 'TECH Group']);
-        $this->assertGreaterThan(0, $group2_id);
+        $this->login(TU_USER, TU_PASS);
 
-        $user_group2 = new \Group_User();
-        $user_group2->add([
-            'users_id' => $user2->getID(),
-            'groups_id' => $group2->getID()
-        ]);
-        $this->assertGreaterThan(0, $user_group2->getID());
+        $this->updateItem(
+            \Entity::class,
+            0,
+            [
+                "auto_assign_mode" => 2,
+            ]
+        );
 
-        $itil_category2_id = $itil_category->add([
-            'name' => 'Cat2',
-            'users_id' => $user2->getID(),
-            'groups_id' => $group2->getID(),
-        ]);
-        $this->assertGreaterThan(0, $itil_category2_id);
+        $group1 = $this->createItem(
+            \Group::class,
+            [
+                'name' => 'GLPI Group',
+            ]
+        );
+
+        $group2 = $this->createItem(
+            \Group::class,
+            [
+                'name' => 'TECH Group',
+            ]
+        );
+
+        $this->createItem(
+            \Group_User::class,
+            [
+                'users_id' => $user1->getID(),
+                'groups_id' => $group1->getID(),
+            ]
+        );
+
+        $this->createItem(
+            \Group_User::class,
+            [
+                'users_id' => $user2->getID(),
+                'groups_id' => $group2->getID(),
+            ]
+        );
+
+        $itil_category1 = $this->createItem(
+            \ITILCategory::class,
+            [
+                'name' => 'Cat1',
+                'users_id' => $user1->getID(),
+                'groups_id' => $group1->getID(),
+            ]
+        );
+
+        $itil_category2 = $this->createItem(
+            \ITILCategory::class,
+            [
+                'name' => 'Cat2',
+                'users_id' => $user2->getID(),
+                'groups_id' => $group2->getID(),
+            ]
+        );
 
         foreach ($this->testAssignGroupToTicketWithCategoryProvider() as $provider) {
-            $this->login();
-
             $config = new PluginEscaladeConfig();
             $conf = $config->find();
             $conf = reset($conf);
             $config->getFromDB($conf['id']);
             $this->assertGreaterThan(0, $conf['id']);
             // Update escalade config
-            $conf = array_merge($conf, $provider['conf']);
-            $this->assertTrue($config->update($conf));
+            $this->updateItem(
+                PluginEscaladeConfig::class,
+                $conf['id'],
+                array_merge($conf, $provider['conf']),
+            );
 
             PluginEscaladeConfig::loadInSession();
 
-            $t_id = $ticket->add([
-                'name' => 'Assign Cat Escalation Test',
-                'content' => 'content',
-                'itilcategories_id' => $itil_category1_id,
-            ]);
-            $this->assertGreaterThan(0, $t_id);
-            $count_user1_assign_add = $provider['conf']['remove_tech'] === 0 ? 1 : 0;
-            $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $t_id])));
-            $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $t_id, 'users_id' => $user1->getID()])));
-            $this->assertEquals(0, count($ticket_user->find(['tickets_id' => $t_id, 'users_id' => $user2->getID()])));
-            $this->assertEquals(1, count($ticket_group->find(['tickets_id' => $t_id])));
-            $this->assertEquals(1, count($ticket_group->find(['tickets_id' => $t_id, 'groups_id' => $group1->getID()])));
-            $this->assertEquals(0, count($ticket_group->find(['tickets_id' => $t_id, 'groups_id' => $group2->getID()])));
+            $ticket = $this->createItem(
+                \Ticket::class,
+                [
+                    'name' => 'Assign Cat Escalation Test',
+                    'content' => 'content',
+                    'itilcategories_id' => $itil_category1->getID(),
+                ],
+            );
 
-            $ticket->getFromDB($t_id);
+            $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $ticket->getID()])));
+            $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $ticket->getID(), 'users_id' => $user1->getID()])));
+            $this->assertEquals(0, count($ticket_user->find(['tickets_id' => $ticket->getID(), 'users_id' => $user2->getID()])));
+            $this->assertEquals(1, count($ticket_group->find(['tickets_id' => $ticket->getID()])));
+            $this->assertEquals(1, count($ticket_group->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group1->getID()])));
+            $this->assertEquals(0, count($ticket_group->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group2->getID()])));
 
-            $success = $ticket->update([
-                'id' => $t_id,
-                'itilcategories_id' => $itil_category2_id,
-            ]);
-            $this->assertTrue($success);
+            $this->updateItem(
+                \Ticket::class,
+                $ticket->getID(),
+                [
+                    'itilcategories_id' => $itil_category2->getID(),
+                ],
+            );
 
-            $this->assertEquals($provider['expected']['users'], count($ticket_user->find(['tickets_id' => $t_id])));
-            $this->assertEquals($provider['expected']['user_1_is_assign'], count($ticket_user->find(['tickets_id' => $t_id, 'users_id' => $user1->getID()])));
-            $this->assertEquals($provider['expected']['user_2_is_assign'], count($ticket_user->find(['tickets_id' => $t_id, 'users_id' => $user2->getID()])));
-            $this->assertEquals($provider['expected']['groups'], count($ticket_group->find(['tickets_id' => $t_id])));
-            $this->assertEquals($provider['expected']['group_1_is_assign'], count($ticket_group->find(['tickets_id' => $t_id, 'groups_id' => $group1->getID()])));
-            $this->assertEquals($provider['expected']['group_2_is_assign'], count($ticket_group->find(['tickets_id' => $t_id, 'groups_id' => $group2->getID()])));
+            $this->assertEquals($provider['expected']['users'], count($ticket_user->find(['tickets_id' => $ticket->getID()])));
+            $this->assertEquals($provider['expected']['user_1_is_assign'], count($ticket_user->find(['tickets_id' => $ticket->getID(), 'users_id' => $user1->getID()])));
+            $this->assertEquals($provider['expected']['user_2_is_assign'], count($ticket_user->find(['tickets_id' => $ticket->getID(), 'users_id' => $user2->getID()])));
+            $this->assertEquals($provider['expected']['groups'], count($ticket_group->find(['tickets_id' => $ticket->getID()])));
+            $this->assertEquals($provider['expected']['group_1_is_assign'], count($ticket_group->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group1->getID()])));
+            $this->assertEquals($provider['expected']['group_2_is_assign'], count($ticket_group->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group2->getID()])));
         }
     }
 }
