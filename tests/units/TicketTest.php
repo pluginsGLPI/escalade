@@ -448,7 +448,7 @@ final class TicketTest extends EscaladeTestCase
         $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group2->getID(), 'type' => \CommonITILActor::ASSIGN])));
     }
 
-        public function testStatusTicketOption()
+    public function testStatusTicketOption()
     {
         $this->login();
 
@@ -478,7 +478,7 @@ final class TicketTest extends EscaladeTestCase
             'is_recursive' => 1,
         ]);
 
-                $ticket = $this->createItem(\Ticket::class, [
+        $ticket = $this->createItem(\Ticket::class, [
             'name' => 'Test ticket',
             'content' => 'Content',
         ]);
