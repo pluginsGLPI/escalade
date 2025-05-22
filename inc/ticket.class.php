@@ -190,7 +190,7 @@ class PluginEscaladeTicket
         }
 
         //ticket qualification on cat change
-        if (isset($item->updates['itilcategories_id'])) {
+        if (isset($item->updates['itilcategories_id']) || in_array('itilcategories_id', $item->updates)) {
             self::qualification($item);
         }
 
