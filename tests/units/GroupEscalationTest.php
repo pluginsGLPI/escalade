@@ -149,328 +149,578 @@ final class GroupEscalationTest extends EscaladeTestCase
         $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $t_id, 'users_id' => $user2->getID(), 'type' => CommonITILActor::ASSIGN])));
     }
 
+    private function testTechGroupAttributionProvider()
+    {
+        yield [
+            'conf' => [
+                'use_assign_user_group'              => 0,
+                'use_assign_user_group_creation'     => 0,
+                'use_assign_user_group_modification' => 0,
+                'remove_tech'                        => 0,
+                'remove_group'                       => 0,
+            ],
+            'add_expected' => [
+                'user_ticket' => 1,
+                'group_ticket' => 0,
+            ],
+            'update_expected' => [
+                'user_ticket' => 2,
+                'group_ticket' => 0,
+            ]
+        ];
+
+        yield [
+            'conf' => [
+                'use_assign_user_group'              => 0,
+                'use_assign_user_group_creation'     => 0,
+                'use_assign_user_group_modification' => 0,
+                'remove_tech'                        => 0,
+                'remove_group'                       => 1,
+            ],
+            'add_expected' => [
+                'user_ticket' => 1,
+                'group_ticket' => 0,
+            ],
+            'update_expected' => [
+                'user_ticket' => 2,
+                'group_ticket' => 0,
+            ]
+        ];
+
+        yield [
+            'conf' => [
+                'use_assign_user_group'              => 0,
+                'use_assign_user_group_creation'     => 0,
+                'use_assign_user_group_modification' => 0,
+                'remove_tech'                        => 1,
+                'remove_group'                       => 0,
+            ],
+            'add_expected' => [
+                'user_ticket' => 1,
+                'group_ticket' => 0,
+            ],
+            'update_expected' => [
+                'user_ticket' => 1,
+                'group_ticket' => 0,
+            ]
+        ];
+
+        yield [
+            'conf' => [
+                'use_assign_user_group'              => 1,
+                'use_assign_user_group_creation'     => 1,
+                'use_assign_user_group_modification' => 0,
+                'remove_tech'                        => 0,
+                'remove_group'                       => 0,
+            ],
+            'add_expected' => [
+                'user_ticket' => 1,
+                'group_ticket' => 1,
+            ],
+            'update_expected' => [
+                'user_ticket' => 2,
+                'group_ticket' => 1,
+            ]
+        ];
+
+        yield [
+            'conf' => [
+                'use_assign_user_group'              => 1,
+                'use_assign_user_group_creation'     => 1,
+                'use_assign_user_group_modification' => 0,
+                'remove_tech'                        => 0,
+                'remove_group'                       => 1,
+            ],
+            'add_expected' => [
+                'user_ticket' => 1,
+                'group_ticket' => 1,
+            ],
+            'update_expected' => [
+                'user_ticket' => 2,
+                'group_ticket' => 1,
+            ]
+        ];
+
+        yield [
+            'conf' => [
+                'use_assign_user_group'              => 1,
+                'use_assign_user_group_creation'     => 1,
+                'use_assign_user_group_modification' => 0,
+                'remove_tech'                        => 1,
+                'remove_group'                       => 0,
+            ],
+            'add_expected' => [
+                'user_ticket' => 1,
+                'group_ticket' => 1,
+            ],
+            'update_expected' => [
+                'user_ticket' => 1,
+                'group_ticket' => 1,
+            ]
+        ];
+
+        yield [
+            'conf' => [
+                'use_assign_user_group'              => 1,
+                'use_assign_user_group_creation'     => 0,
+                'use_assign_user_group_modification' => 1,
+                'remove_tech'                        => 0,
+                'remove_group'                       => 0,
+            ],
+            'add_expected' => [
+                'user_ticket' => 1,
+                'group_ticket' => 0,
+            ],
+            'update_expected' => [
+                'user_ticket' => 2,
+                'group_ticket' => 1,
+            ]
+        ];
+
+        yield [
+            'conf' => [
+                'use_assign_user_group'              => 1,
+                'use_assign_user_group_creation'     => 0,
+                'use_assign_user_group_modification' => 1,
+                'remove_tech'                        => 0,
+                'remove_group'                       => 1,
+            ],
+            'add_expected' => [
+                'user_ticket' => 1,
+                'group_ticket' => 0,
+            ],
+            'update_expected' => [
+                'user_ticket' => 2,
+                'group_ticket' => 1,
+            ]
+        ];
+
+        yield [
+            'conf' => [
+                'use_assign_user_group'              => 1,
+                'use_assign_user_group_creation'     => 0,
+                'use_assign_user_group_modification' => 1,
+                'remove_tech'                        => 1,
+                'remove_group'                       => 1,
+            ],
+            'add_expected' => [
+                'user_ticket' => 1,
+                'group_ticket' => 0,
+            ],
+            'update_expected' => [
+                'user_ticket' => 1,
+                'group_ticket' => 1,
+            ]
+        ];
+
+        yield [
+            'conf' => [
+                'use_assign_user_group'              => 1,
+                'use_assign_user_group_creation'     => 1,
+                'use_assign_user_group_modification' => 1,
+                'remove_tech'                        => 0,
+                'remove_group'                       => 0,
+            ],
+            'add_expected' => [
+                'user_ticket' => 1,
+                'group_ticket' => 1,
+            ],
+            'update_expected' => [
+                'user_ticket' => 2,
+                'group_ticket' => 2,
+            ]
+        ];
+
+        yield [
+            'conf' => [
+                'use_assign_user_group'              => 1,
+                'use_assign_user_group_creation'     => 1,
+                'use_assign_user_group_modification' => 1,
+                'remove_tech'                        => 0,
+                'remove_group'                       => 1,
+            ],
+            'add_expected' => [
+                'user_ticket' => 1,
+                'group_ticket' => 1,
+            ],
+            'update_expected' => [
+                'user_ticket' => 2,
+                'group_ticket' => 1,
+            ]
+        ];
+
+        yield [
+            'conf' => [
+                'use_assign_user_group'              => 1,
+                'use_assign_user_group_creation'     => 1,
+                'use_assign_user_group_modification' => 1,
+                'remove_tech'                        => 1,
+                'remove_group'                       => 0,
+            ],
+            'add_expected' => [
+                'user_ticket' => 1,
+                'group_ticket' => 1,
+            ],
+            'update_expected' => [
+                'user_ticket' => 1,
+                'group_ticket' => 2,
+            ]
+        ];
+
+        yield [
+            'conf' => [
+                'use_assign_user_group'              => 1,
+                'use_assign_user_group_creation'     => 1,
+                'use_assign_user_group_modification' => 1,
+                'remove_tech'                        => 1,
+                'remove_group'                       => 1,
+            ],
+            'add_expected' => [
+                'user_ticket' => 1,
+                'group_ticket' => 1,
+            ],
+            'update_expected' => [
+                'user_ticket' => 1,
+                'group_ticket' => 1,
+            ]
+        ];
+
+        yield [
+            'conf' => [
+                'use_assign_user_group'              => 2,
+                'use_assign_user_group_creation'     => 1,
+                'use_assign_user_group_modification' => 0,
+                'remove_tech'                        => 0,
+                'remove_group'                       => 0,
+            ],
+            'add_expected' => [
+                'user_ticket' => 1,
+                'group_ticket' => 1,
+            ],
+            'update_expected' => [
+                'user_ticket' => 2,
+                'group_ticket' => 1,
+            ]
+        ];
+
+        yield [
+            'conf' => [
+                'use_assign_user_group'              => 2,
+                'use_assign_user_group_creation'     => 1,
+                'use_assign_user_group_modification' => 0,
+                'remove_tech'                        => 0,
+                'remove_group'                       => 1,
+            ],
+            'add_expected' => [
+                'user_ticket' => 1,
+                'group_ticket' => 1,
+            ],
+            'update_expected' => [
+                'user_ticket' => 2,
+                'group_ticket' => 1,
+            ]
+        ];
+
+        yield [
+            'conf' => [
+                'use_assign_user_group'              => 2,
+                'use_assign_user_group_creation'     => 1,
+                'use_assign_user_group_modification' => 0,
+                'remove_tech'                        => 1,
+                'remove_group'                       => 0,
+            ],
+            'add_expected' => [
+                'user_ticket' => 1,
+                'group_ticket' => 1,
+            ],
+            'update_expected' => [
+                'user_ticket' => 1,
+                'group_ticket' => 1,
+            ]
+        ];
+
+        yield [
+            'conf' => [
+                'use_assign_user_group'              => 2,
+                'use_assign_user_group_creation'     => 0,
+                'use_assign_user_group_modification' => 1,
+                'remove_tech'                        => 0,
+                'remove_group'                       => 0,
+            ],
+            'add_expected' => [
+                'user_ticket' => 1,
+                'group_ticket' => 0,
+            ],
+            'update_expected' => [
+                'user_ticket' => 2,
+                'group_ticket' => 1,
+            ]
+        ];
+
+        yield [
+            'conf' => [
+                'use_assign_user_group'              => 2,
+                'use_assign_user_group_creation'     => 0,
+                'use_assign_user_group_modification' => 1,
+                'remove_tech'                        => 0,
+                'remove_group'                       => 1,
+            ],
+            'add_expected' => [
+                'user_ticket' => 1,
+                'group_ticket' => 0,
+            ],
+            'update_expected' => [
+                'user_ticket' => 2,
+                'group_ticket' => 1,
+            ]
+        ];
+
+        yield [
+            'conf' => [
+                'use_assign_user_group'              => 2,
+                'use_assign_user_group_creation'     => 0,
+                'use_assign_user_group_modification' => 1,
+                'remove_tech'                        => 1,
+                'remove_group'                       => 1,
+            ],
+            'add_expected' => [
+                'user_ticket' => 1,
+                'group_ticket' => 0,
+            ],
+            'update_expected' => [
+                'user_ticket' => 1,
+                'group_ticket' => 1,
+            ]
+        ];
+
+        yield [
+            'conf' => [
+                'use_assign_user_group'              => 2,
+                'use_assign_user_group_creation'     => 1,
+                'use_assign_user_group_modification' => 1,
+                'remove_tech'                        => 0,
+                'remove_group'                       => 0,
+            ],
+            'add_expected' => [
+                'user_ticket' => 1,
+                'group_ticket' => 1,
+            ],
+            'update_expected' => [
+                'user_ticket' => 2,
+                'group_ticket' => 2,
+            ]
+        ];
+
+        yield [
+            'conf' => [
+                'use_assign_user_group'              => 2,
+                'use_assign_user_group_creation'     => 1,
+                'use_assign_user_group_modification' => 1,
+                'remove_tech'                        => 0,
+                'remove_group'                       => 1,
+            ],
+            'add_expected' => [
+                'user_ticket' => 1,
+                'group_ticket' => 1,
+            ],
+            'update_expected' => [
+                'user_ticket' => 2,
+                'group_ticket' => 1,
+            ]
+        ];
+
+        yield [
+            'conf' => [
+                'use_assign_user_group'              => 2,
+                'use_assign_user_group_creation'     => 1,
+                'use_assign_user_group_modification' => 1,
+                'remove_tech'                        => 1,
+                'remove_group'                       => 0,
+            ],
+            'add_expected' => [
+                'user_ticket' => 1,
+                'group_ticket' => 1,
+            ],
+            'update_expected' => [
+                'user_ticket' => 1,
+                'group_ticket' => 2,
+            ]
+        ];
+
+        yield [
+            'conf' => [
+                'use_assign_user_group'              => 2,
+                'use_assign_user_group_creation'     => 1,
+                'use_assign_user_group_modification' => 1,
+                'remove_tech'                        => 1,
+                'remove_group'                       => 1,
+            ],
+            'add_expected' => [
+                'user_ticket' => 1,
+                'group_ticket' => 1,
+            ],
+            'update_expected' => [
+                'user_ticket' => 1,
+                'group_ticket' => 1,
+            ]
+        ];
+    }
+
     public function testTechGroupAttributionAddTicket()
     {
-        $this->login();
-
-        $config = new PluginEscaladeConfig();
-        $conf = $config->find();
-        $conf = reset($conf);
-        $config->getFromDB($conf['id']);
-        $this->assertGreaterThan(0, $conf['id']);
-
-        // Update escalade config
-        $this->assertTrue($config->update([
-            'use_assign_user_group'              => 1,
-            'use_assign_user_group_creation'     => 1,
-            'use_assign_user_group_modification' => 0,
-            'remove_tech'                        => 1,
-            'remove_group'                       => 1,
-        ] + $conf));
-
-        PluginEscaladeConfig::loadInSession();
-
         $user1 = new \User();
         $user1->getFromDBbyName('glpi');
         $this->assertGreaterThan(0, $user1->getID());
-
-        $group1 = new \Group();
-        $group1_id = $group1->add(['name' => 'Group_1']);
-        $this->assertGreaterThan(0, $group1_id);
-
-        $user_group1 = new \Group_User();
-        $user_group1->add([
-            'users_id' => $user1->getID(),
-            'groups_id' => $group1->getID()
-        ]);
-        $this->assertGreaterThan(0, $user_group1->getID());
 
         $user2 = new \User();
         $user2->getFromDBbyName('tech');
         $this->assertGreaterThan(0, $user2->getID());
 
-        $group2 = new \Group();
-        $group2_id = $group2->add(['name' => 'Group_2']);
-        $this->assertGreaterThan(0, $group2_id);
-
-        $user_group2 = new \Group_User();
-        $user_group2->add([
-            'users_id' => $user2->getID(),
-            'groups_id' => $group2->getID()
-        ]);
-        $this->assertGreaterThan(0, $user_group2->getID());
-
-        $user3 = new \User();
-        $user3->getFromDBbyName('normal');
-        $this->assertGreaterThan(0, $user3->getID());
-
-        $group3 = new \Group();
-        $group3_id = $group3->add(['name' => 'Group_3']);
-        $this->assertGreaterThan(0, $group3_id);
-
-        $user_group3 = new \Group_User();
-        $user_group3->add([
-            'users_id' => $user3->getID(),
-            'groups_id' => $group3->getID()
-        ]);
-        $this->assertGreaterThan(0, $user_group3->getID());
-
-        // Create ticket with technician
-        $ticket = new \Ticket();
-        $t_id = $ticket->add([
-            'name' => 'Assign Group Escalation Test',
-            'content' => '',
-            '_actors' => [
-                'requester' => [
-                    [
-                        'items_id' => $user1->getID(),
-                        'itemtype' => 'User'
-                    ]
-                ],
-                'assign' => [
-                    [
-                        'items_id' => $user2->getID(),
-                        'itemtype' => 'User'
-                    ]
-                ],
-            ]
-        ]);
-
-        // Check one group linked to the ticket
-        $ticket_group = new \Group_Ticket();
-        $this->assertEquals(1, count($ticket_group->find(['tickets_id' => $t_id])));
-
-        $ticket_group->getFromDBByCrit([
-            'tickets_id' => $t_id,
-        ]);
-        // Check group assigned to the ticket
-        $this->assertEquals($group2_id, $ticket_group->fields['groups_id']);
-
-        $ticket_user = new \Ticket_User();
-        // Check user assigned to the ticket
-        $this->assertEquals(2, count($ticket_user->find(['tickets_id' => $t_id])));
-
-        // Check requester
-        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $t_id, 'users_id' => $user1->getID(), 'type' => CommonITILActor::REQUESTER])));
-
-        // Check assign
-        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $t_id, 'users_id' => $user2->getID(), 'type' => CommonITILActor::ASSIGN])));
-
-        // Update ticket with a technician
-        $this->assertTrue($ticket->update(
+        $group1 = $this->createItem(
+            \Group::class,
             [
-                'id' => $t_id,
-                '_actors' => [
-                    'requester' => [
-                        [
-                            'items_id' => $user1->getID(),
-                            'itemtype' => 'User'
-                        ]
-                    ],
-                    'assign' => [
-                        [
-                            'items_id' => $user2->getID(),
-                            'itemtype' => 'User'
+                'name' => 'GLPI Group 1',
+            ]
+        );
+
+        $group2 = $this->createItem(
+            \Group::class,
+            [
+                'name' => 'TECH Group 1',
+            ]
+        );
+
+        $group3 = $this->createItem(
+            \Group::class,
+            [
+                'name' => 'GLPI Group 2',
+            ]
+        );
+
+        $group4 = $this->createItem(
+            \Group::class,
+            [
+                'name' => 'TECH Group 2',
+            ]
+        );
+
+        $this->createItems(
+            \Group_User::class,
+            [
+                [
+                    'users_id' => $user1->getID(),
+                    'groups_id' => $group1->getID(),
+                ],
+                [
+                    'users_id' => $user2->getID(),
+                    'groups_id' => $group2->getID(),
+                ],
+                [
+                    'users_id' => $user1->getID(),
+                    'groups_id' => $group3->getID(),
+                ],
+                [
+                    'users_id' => $user2->getID(),
+                    'groups_id' => $group4->getID(),
+                ],
+            ],
+        );
+
+        foreach ($this->testTechGroupAttributionProvider() as $provider) {
+            $this->login();
+
+            // Update escalade config
+            $this->updateItem(
+                PluginEscaladeConfig::class,
+                1,
+                $provider['conf'],
+            );
+
+            PluginEscaladeConfig::loadInSession();
+
+            $ticket = $this->createItem(
+                \Ticket::class,
+                [
+                    'name' => 'Assign Group Escalation Test',
+                    'content' => '',
+                    '_actors' => [
+                        'assign' => [
+                            [
+                                'items_id' => $user1->getID(),
+                                'itemtype' => 'User'
+                            ]
                         ],
-                        [
-                            'items_id' => $group2->getID(),
-                            'itemtype' => 'Group'
-                        ],
-                        [
-                            'items_id' => $user3->getID(),
-                            'itemtype' => 'User'
-                        ]
                     ],
+                ]
+            );
+
+            $ticket_user = new \Ticket_User();
+            $this->assertEquals($provider['add_expected']['user_ticket'], count($ticket_user->find(['tickets_id' => $ticket->getID(), 'type' => CommonITILActor::ASSIGN])));
+
+            $group_ticket = new \Group_Ticket();
+            $this->assertEquals($provider['add_expected']['group_ticket'], count($group_ticket->find(['tickets_id' => $ticket->getID(), 'type' => CommonITILActor::ASSIGN])));
+
+            if ($provider['conf']['use_assign_user_group_creation'] === 1) {
+                $group = $group_ticket->getFromDBByCrit(['tickets_id' => $ticket->getID(), 'type' => CommonITILActor::ASSIGN]);
+                $this->assertTrue($group);
+                if ($provider['conf']['use_assign_user_group'] === 1) {
+                    $this->assertEquals($group_ticket->fields['groups_id'], $group1->getID());
+                }
+                if ($provider['conf']['use_assign_user_group'] === 2) {
+                    $this->assertEquals($group_ticket->fields['groups_id'], $group3->getID());
+                }
+            }
+
+            $assign = [
+                [
+                    'items_id' => $user2->getID(),
+                    'itemtype' => 'User'
                 ],
-            ]
-        ));
+                [
+                    'items_id' => $user1->getID(),
+                    'itemtype' => 'User'
+                ]
+            ];
 
-        // Check one group linked to the ticket
-        $ticket_group = new \Group_Ticket();
-        $this->assertEquals(1, count($ticket_group->find(['tickets_id' => $t_id])));
-
-        $ticket_group->getFromDBByCrit([
-            'tickets_id' => $t_id,
-        ]);
-        // Check group assigned to the ticket
-        $this->assertEquals($group2_id, $ticket_group->fields['groups_id']);
-
-        $ticket_user = new \Ticket_User();
-        // Check user assigned to the ticket
-        $this->assertEquals(3, count($ticket_user->find(['tickets_id' => $t_id])));
-
-        // Check requester
-        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $t_id, 'users_id' => $user1->getID(), 'type' => CommonITILActor::REQUESTER])));
-
-        // Check assign user2
-        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $t_id, 'users_id' => $user2->getID(), 'type' => CommonITILActor::ASSIGN])));
-
-        // Check assign user3
-        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $t_id, 'users_id' => $user3->getID(), 'type' => CommonITILActor::ASSIGN])));
-    }
-
-    public function testUserWithsGroupAttributionWithoutRemoveTechConfig()
-    {
-        $this->login();
-
-        $config = new PluginEscaladeConfig();
-        $conf = $config->find();
-        $conf = reset($conf);
-        $config->getFromDB($conf['id']);
-        $this->assertGreaterThan(0, $conf['id']);
-
-        // Update escalade config
-        $this->assertTrue($config->update([
-            'use_assign_user_group'              => 1,
-            'use_assign_user_group_creation'     => 1,
-            'use_assign_user_group_modification' => 1,
-            'remove_tech'                        => 0,
-            'remove_group'                       => 0,
-        ] + $conf));
-
-        PluginEscaladeConfig::loadInSession();
-
-        $user1 = new \User();
-        $user1->getFromDBbyName('glpi');
-        $this->assertGreaterThan(0, $user1->getID());
-
-        $user2 = new \User();
-        $user2->getFromDBbyName('tech');
-        $this->assertGreaterThan(0, $user2->getID());
-
-        $group2 = new \Group();
-        $group2_id = $group2->add(['name' => 'Group_2']);
-        $this->assertGreaterThan(0, $group2_id);
-
-        $user_group2 = new \Group_User();
-        $user_group2->add([
-            'users_id' => $user2->getID(),
-            'groups_id' => $group2->getID()
-        ]);
-        $this->assertGreaterThan(0, $user_group2->getID());
-
-        // Create ticket without technician
-        $ticket = new \Ticket();
-        $t_id = $ticket->add([
-            'name' => 'Assign Group Escalation Test',
-            'content' => '',
-            '_actors' => [
-                'assign' => [
-                    [
-                        'items_id' => $user1->getID(),
-                        'itemtype' => 'User'
-                    ]
-                ],
-            ]
-        ]);
-        $this->assertGreaterThan(0, $t_id);
-
-        $ticket_user = new \Ticket_User();
-        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $t_id, 'type' => CommonITILActor::ASSIGN])));
-
-        $ticket = new \Ticket();
-        $ticket_update = $ticket->update([
-            'id' => $t_id,
-            '_actors' => [
-                'assign' => [
-                    [
-                        'items_id' => $group2->getID(),
+            if (!empty($provider['conf']['use_assign_user_group_creation'])) {
+                if ($provider['conf']['use_assign_user_group'] === 1) {
+                    $assign[] = [
+                        'items_id' => $group1->getID(),
                         'itemtype' => 'Group'
-                    ],
-                    [
-                        'items_id' => $user1->getID(),
-                        'itemtype' => 'User'
-                    ]
-                ],
-            ]
-        ]);
-        $this->assertTrue($ticket_update);
-
-        $group_ticket = new \Group_Ticket();
-        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $t_id])));
-        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $t_id, 'type' => CommonITILActor::ASSIGN])));
-    }
-
-    public function testUserWithsGroupAttributionWithsRemoveTechConfig()
-    {
-        $this->login();
-
-        $config = new PluginEscaladeConfig();
-        $conf = $config->find();
-        $conf = reset($conf);
-        $config->getFromDB($conf['id']);
-        $this->assertGreaterThan(0, $conf['id']);
-
-        // Update escalade config
-        $this->assertTrue($config->update([
-            'use_assign_user_group'              => 1,
-            'use_assign_user_group_creation'     => 1,
-            'use_assign_user_group_modification' => 1,
-            'remove_tech'                        => 1,
-            'remove_group'                       => 0,
-        ] + $conf));
-
-        PluginEscaladeConfig::loadInSession();
-
-        $user1 = new \User();
-        $user1->getFromDBbyName('glpi');
-        $this->assertGreaterThan(0, $user1->getID());
-
-        $user2 = new \User();
-        $user2->getFromDBbyName('tech');
-        $this->assertGreaterThan(0, $user2->getID());
-
-        $group2 = new \Group();
-        $group2_id = $group2->add(['name' => 'Group_2']);
-        $this->assertGreaterThan(0, $group2_id);
-
-        $user_group2 = new \Group_User();
-        $user_group2->add([
-            'users_id' => $user2->getID(),
-            'groups_id' => $group2->getID()
-        ]);
-        $this->assertGreaterThan(0, $user_group2->getID());
-
-        // Create ticket without technician
-        $ticket = new \Ticket();
-        $t_id = $ticket->add([
-            'name' => 'Assign Group Escalation Test',
-            'content' => '',
-            '_actors' => [
-                'assign' => [
-                    [
-                        'items_id' => $user1->getID(),
-                        'itemtype' => 'User'
-                    ]
-                ],
-            ]
-        ]);
-        $this->assertGreaterThan(0, $t_id);
-
-        $ticket_user = new \Ticket_User();
-        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $t_id, 'type' => CommonITILActor::ASSIGN])));
-
-        $ticket = new \Ticket();
-        $ticket_update = $ticket->update([
-            'id' => $t_id,
-            '_actors' => [
-                'assign' => [
-                    [
-                        'items_id' => $group2->getID(),
+                    ];
+                }
+                if ($provider['conf']['use_assign_user_group'] === 2) {
+                    $assign[] = [
+                        'items_id' => $group3->getID(),
                         'itemtype' => 'Group'
-                    ],
-                    [
-                        'items_id' => $user1->getID(),
-                        'itemtype' => 'User'
-                    ]
-                ],
-            ]
-        ]);
-        $this->assertTrue($ticket_update);
+                    ];
+                }
+            }
 
-        $group_ticket = new \Group_Ticket();
-        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $t_id])));
-        $this->assertEquals(0, count($ticket_user->find(['tickets_id' => $t_id, 'type' => CommonITILActor::ASSIGN])));
+            $this->updateItem(
+                \Ticket::class,
+                $ticket->getID(),
+                [
+                    '_actors' => [
+                        'assign' => $assign
+                    ],
+                ]
+            );
+
+            $this->assertEquals($provider['update_expected']['user_ticket'], count($ticket_user->find(['tickets_id' => $ticket->getID(), 'type' => CommonITILActor::ASSIGN])));
+            $this->assertEquals($provider['update_expected']['group_ticket'], count($group_ticket->find(['tickets_id' => $ticket->getID(), 'type' => CommonITILActor::ASSIGN])));
+
+            if ($provider['conf']['use_assign_user_group_modification'] === 1) {
+                if ($provider['conf']['use_assign_user_group'] === 1) {
+                    $group = $group_ticket->getFromDBByCrit(['tickets_id' => $ticket->getID(), 'type' => CommonITILActor::ASSIGN, 'groups_id' => $group2->getID()]);
+                    $this->assertTrue($group);
+                }
+                if ($provider['conf']['use_assign_user_group'] === 2) {
+                    $group = $group_ticket->getFromDBByCrit(['tickets_id' => $ticket->getID(), 'type' => CommonITILActor::ASSIGN, 'groups_id' => $group4->getID()]);
+                    $this->assertTrue($group);
+                }
+            }
+        }
     }
 
     public function testHistory()
