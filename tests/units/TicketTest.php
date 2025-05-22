@@ -447,4 +447,105 @@ final class TicketTest extends EscaladeTestCase
         $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group1->getID(), 'type' => \CommonITILActor::ASSIGN])));
         $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group2->getID(), 'type' => \CommonITILActor::ASSIGN])));
     }
+
+    public function testStatusTicketOption()
+    {
+        $this->login();
+
+        $config = new PluginEscaladeConfig();
+        $conf = $config->find();
+        $conf = reset($conf);
+        $config->getFromDB($conf['id']);
+        $this->assertGreaterThan(0, $conf['id']);
+        $this->assertTrue($config->update([
+            'ticket_last_status' => \CommonITILObject::INCOMING,
+            'remove_tech' => 0,
+        ] + $conf));
+
+        PluginEscaladeConfig::loadInSession();
+
+        $user1 = new \User();
+        $user1->getFromDBbyName('tech');
+        $this->assertGreaterThan(0, $user1->getID());
+
+        $user2 = new \User();
+        $user2->getFromDBbyName('glpi');
+        $this->assertGreaterThan(0, $user2->getID());
+
+        $group_tech = $this->createItem(\Group::class, [
+            'name' => 'Group tech',
+            'entities_id' => 0,
+            'is_recursive' => 1,
+        ]);
+
+        $ticket = $this->createItem(\Ticket::class, [
+            'name' => 'Test ticket',
+            'content' => 'Content',
+        ]);
+
+        $this->assertEquals(\CommonITILObject::INCOMING, $ticket->fields['status']);
+
+        $group_ticket = new \Group_Ticket();
+        $user_ticket = new \Ticket_User();
+        $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN])));
+        $this->assertEquals(0, count($user_ticket->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN])));
+
+        $this->assertTrue(
+            $ticket->update([
+                'id' => $ticket->getID(),
+                '_actors' => [
+                    'assign' => [
+                        [
+                            'items_id' => $user1->getID(),
+                            'itemtype' => 'User'
+                        ],
+                    ],
+                ],
+            ])
+        );
+        $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN])));
+        $this->assertEquals(1, count($user_ticket->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN])));
+        $this->assertEquals(1, count($user_ticket->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN, 'users_id' => $user1->getID()])));
+        $this->assertEquals(\CommonITILObject::ASSIGNED, $ticket->fields['status']);
+
+        $this->assertTrue(
+            $ticket->update([
+                'id' => $ticket->getID(),
+                '_actors' => [
+                    'assign' => [
+                        [
+                            'items_id' => $user1->getID(),
+                            'itemtype' => 'User'
+                        ],
+                        [
+                            'items_id' => $group_tech->getID(),
+                            'itemtype' => 'Group'
+                        ],
+                    ],
+                ],
+            ])
+        );
+        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN])));
+        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN, 'groups_id' => $group_tech->getID()])));
+        $this->assertEquals(1, count($user_ticket->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN])));
+        $this->assertEquals(1, count($user_ticket->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN, 'users_id' => $user1->getID()])));
+        $this->assertEquals(\CommonITILObject::INCOMING, $ticket->fields['status']);
+
+        $this->assertTrue(
+            $ticket->update([
+                'id' => $ticket->getID(),
+                '_itil_assign' => [
+                    '_type' => "user",
+                    'users_id' => $user2->getID(),
+                    'use_notification' => 1,
+                ]
+            ])
+        );
+        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN])));
+        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN, 'groups_id' => $group_tech->getID()])));
+        $this->assertEquals(2, count($user_ticket->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN])));
+        $this->assertEquals(1, count($user_ticket->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN, 'users_id' => $user1->getID()])));
+        $this->assertEquals(1, count($user_ticket->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN, 'users_id' => $user2->getID()])));
+        $this->assertEquals(\CommonITILObject::ASSIGNED, $ticket->fields['status']);
+    }
 }

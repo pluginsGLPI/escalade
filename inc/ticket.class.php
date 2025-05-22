@@ -46,12 +46,7 @@ class PluginEscaladeTicket
                 return false;
             }
         }
-        if (
-            isset($item->input['_itil_assign'])
-            && $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != self::MANAGED_BY_CORE
-        ) {
-            $item->input['_do_not_compute_status'] = true;
-        }
+
         $old_groups = [];
 
         // Get actual actors for the ticket

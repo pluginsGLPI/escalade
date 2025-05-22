@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Fix `show_history` option when using the `Escalate` button.
 - Fix `use_assign_user_group` option wich delete assing users
+- Fix `ticket_last_status` option when using the `Associate myself` button.
 
 ## [2.9.12] - 2025-03-20
 
