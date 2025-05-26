@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-21 00:49+0000\n"
+"POT-Creation-Date: 2025-05-23 00:48+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Fernando Toledo <ftoledo@docksud.com.ar>, 2024\n"
 "Language-Team: Spanish (Argentina) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/es_AR/)\n"
@@ -74,35 +74,35 @@ msgstr "Mostrar botón de eliminación"
 msgid "Enable filtering on the groups assignment"
 msgstr "Activar el filtrado en la asignación de grupos"
 
-#: inc/ticket.class.php:941
+#: inc/ticket.class.php:936
 msgid "Error : adding actors (group)"
 msgstr "Error : agregando actores (grupo)"
 
-#: inc/ticket.class.php:932
+#: inc/ticket.class.php:927
 msgid "Error : adding actors (user)"
 msgstr "Error : agregando actores (usuario)"
 
-#: inc/ticket.class.php:951
+#: inc/ticket.class.php:946
 msgid "Error : adding documents"
 msgstr "Error : agregando documentos"
 
-#: inc/ticket.class.php:921
+#: inc/ticket.class.php:916
 msgid "Error : adding followups"
 msgstr "Error : agregando seguimientos"
 
-#: inc/ticket.class.php:904
+#: inc/ticket.class.php:899
 msgid "Error : adding link between the two tickets"
 msgstr "Error :  agregando vinculo entre los dos  tickets"
 
-#: inc/ticket.class.php:891
+#: inc/ticket.class.php:886
 msgid "Error : adding new ticket"
 msgstr "Error: agregando nuevo ticket"
 
-#: inc/ticket.class.php:875
+#: inc/ticket.class.php:870
 msgid "Error : get old ticket"
 msgstr "Error : al obtener ticket antiguo"
 
-#: inc/ticket.class.php:1070 inc/ticket.class.php:1071
+#: inc/ticket.class.php:1065 inc/ticket.class.php:1066
 msgid "Escalate"
 msgstr "Escalado"
 
@@ -119,7 +119,7 @@ msgstr "Escalado"
 msgid "Escalation history in tasks"
 msgstr "Historia del escalado en las tareas"
 
-#: inc/ticket.class.php:399 inc/ticket.class.php:544
+#: inc/ticket.class.php:394 inc/ticket.class.php:539
 #, php-format
 msgid "Escalation to the group %s."
 msgstr "Escalamiento al grupo %s"
@@ -174,11 +174,11 @@ msgstr "Usuario solicitante de la tarea/recordatorio"
 msgid "Requester user of the ticket"
 msgstr "Usuario solicitante del ticket"
 
-#: inc/ticket.class.php:227
+#: inc/ticket.class.php:222
 msgid "Solution provided, back to the group"
 msgstr "Solución proveida, volver al grupo"
 
-#: inc/ticket.class.php:291
+#: inc/ticket.class.php:286
 msgid "Solution rejected, return to the group"
 msgstr "Solución rechazada, volver al grupo"
 
@@ -186,7 +186,7 @@ msgstr "Solución rechazada, volver al grupo"
 msgid "Solve date modification"
 msgstr ""
 
-#: inc/ticket.class.php:915 inc/ticket.class.php:957 inc/ticket.class.php:962
+#: inc/ticket.class.php:910 inc/ticket.class.php:952 inc/ticket.class.php:957
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Este ticket ha sido clonado del ticket num"
 

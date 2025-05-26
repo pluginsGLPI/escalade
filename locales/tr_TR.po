@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-21 00:49+0000\n"
+"POT-Creation-Date: 2025-05-26 00:51+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2015-2016,2018-2021,2023-2025\n"
 "Language-Team: Turkish (Turkey) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/tr_TR/)\n"
@@ -65,7 +65,7 @@ msgstr "Üste aktarma eklentisi yapılandırması"
 
 #: inc/config.class.php:390
 msgid "Default (not managed by plugin)"
-msgstr ""
+msgstr "Varsayılan (eklenti tarafından yönetilmez)"
 
 #: inc/config.class.php:278
 msgid "Display delete button"
@@ -75,35 +75,35 @@ msgstr "Sil düğmesi görüntülensin"
 msgid "Enable filtering on the groups assignment"
 msgstr "Grup atamaları süzülebilsin"
 
-#: inc/ticket.class.php:941
+#: inc/ticket.class.php:936
 msgid "Error : adding actors (group)"
 msgstr "Hata : Aktör ekleme (grup)"
 
-#: inc/ticket.class.php:932
+#: inc/ticket.class.php:927
 msgid "Error : adding actors (user)"
 msgstr "Hata : Aktör ekleme (kullanıcı)"
 
-#: inc/ticket.class.php:951
+#: inc/ticket.class.php:946
 msgid "Error : adding documents"
 msgstr "Hata : Belge ekleme"
 
-#: inc/ticket.class.php:921
+#: inc/ticket.class.php:916
 msgid "Error : adding followups"
 msgstr "Hata : İzleme ekleme"
 
-#: inc/ticket.class.php:904
+#: inc/ticket.class.php:899
 msgid "Error : adding link between the two tickets"
 msgstr "Hata : İki destek kaydı arasında ilişki ekleme"
 
-#: inc/ticket.class.php:891
+#: inc/ticket.class.php:886
 msgid "Error : adding new ticket"
 msgstr "Hata : Yeni destek kaydı ekleme"
 
-#: inc/ticket.class.php:875
+#: inc/ticket.class.php:870
 msgid "Error : get old ticket"
 msgstr "Hata : Eski destek kaydı alma"
 
-#: inc/ticket.class.php:1070 inc/ticket.class.php:1071
+#: inc/ticket.class.php:1065 inc/ticket.class.php:1066
 msgid "Escalate"
 msgstr "Üste aktar"
 
@@ -120,7 +120,7 @@ msgstr "Üste aktarma"
 msgid "Escalation history in tasks"
 msgstr "Görevlerde üste aktarma geçmişi kaydedilsin"
 
-#: inc/ticket.class.php:399 inc/ticket.class.php:544
+#: inc/ticket.class.php:394 inc/ticket.class.php:539
 #, php-format
 msgid "Escalation to the group %s."
 msgstr "%s grubuna üste aktarma."
@@ -175,11 +175,11 @@ msgstr "Görev/anımsatıcı isteğinde bulunan kullanıcı"
 msgid "Requester user of the ticket"
 msgstr "Destek kaydı isteğinde bulunan kullanıcı"
 
-#: inc/ticket.class.php:227
+#: inc/ticket.class.php:222
 msgid "Solution provided, back to the group"
 msgstr "Çözüm sağlandı, gruba geri git"
 
-#: inc/ticket.class.php:291
+#: inc/ticket.class.php:286
 msgid "Solution rejected, return to the group"
 msgstr "Çözüm reddedildi, gruba geri git"
 
@@ -187,7 +187,7 @@ msgstr "Çözüm reddedildi, gruba geri git"
 msgid "Solve date modification"
 msgstr "Tarih değişikliğini çöz"
 
-#: inc/ticket.class.php:915 inc/ticket.class.php:957 inc/ticket.class.php:962
+#: inc/ticket.class.php:910 inc/ticket.class.php:952 inc/ticket.class.php:957
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Bu destek, destek kaydı numarasından"
 

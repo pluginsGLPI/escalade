@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-21 00:49+0000\n"
+"POT-Creation-Date: 2025-05-23 00:48+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>, 2020,2022-2023\n"
 "Language-Team: Croatian (Croatia) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/hr_HR/)\n"
@@ -75,35 +75,35 @@ msgstr "Prikaži gumb za brisanje"
 msgid "Enable filtering on the groups assignment"
 msgstr "Aktiviraj filtriranje po zadatku grupe"
 
-#: inc/ticket.class.php:941
+#: inc/ticket.class.php:936
 msgid "Error : adding actors (group)"
 msgstr "Greška: dodavanje učesnika (grupa)"
 
-#: inc/ticket.class.php:932
+#: inc/ticket.class.php:927
 msgid "Error : adding actors (user)"
 msgstr "Greška: dodavanje učesnika (korisnik)"
 
-#: inc/ticket.class.php:951
+#: inc/ticket.class.php:946
 msgid "Error : adding documents"
 msgstr "Greška: dodavanje dokumenata"
 
-#: inc/ticket.class.php:921
+#: inc/ticket.class.php:916
 msgid "Error : adding followups"
 msgstr "Greška: dodavanje priopćenja"
 
-#: inc/ticket.class.php:904
+#: inc/ticket.class.php:899
 msgid "Error : adding link between the two tickets"
 msgstr "Greška: dodavanje veze između ta dva naloga"
 
-#: inc/ticket.class.php:891
+#: inc/ticket.class.php:886
 msgid "Error : adding new ticket"
 msgstr "Greška: dodavanje novog naloga"
 
-#: inc/ticket.class.php:875
+#: inc/ticket.class.php:870
 msgid "Error : get old ticket"
 msgstr "Greška: nabavi stari nalog"
 
-#: inc/ticket.class.php:1070 inc/ticket.class.php:1071
+#: inc/ticket.class.php:1065 inc/ticket.class.php:1066
 msgid "Escalate"
 msgstr "Eskaliraj"
 
@@ -120,7 +120,7 @@ msgstr "Eskalacija"
 msgid "Escalation history in tasks"
 msgstr "Povijest eskalacija u zadacima"
 
-#: inc/ticket.class.php:399 inc/ticket.class.php:544
+#: inc/ticket.class.php:394 inc/ticket.class.php:539
 #, php-format
 msgid "Escalation to the group %s."
 msgstr "Eskalirano u grupu %s."
@@ -175,11 +175,11 @@ msgstr "Podnositelj zadatka/podsjetnika"
 msgid "Requester user of the ticket"
 msgstr "Podnositelj naloga"
 
-#: inc/ticket.class.php:227
+#: inc/ticket.class.php:222
 msgid "Solution provided, back to the group"
 msgstr "Rješenje predloženo, vrati grupi"
 
-#: inc/ticket.class.php:291
+#: inc/ticket.class.php:286
 msgid "Solution rejected, return to the group"
 msgstr "Rješenje odbijeno, vrati grupi"
 
@@ -187,7 +187,7 @@ msgstr "Rješenje odbijeno, vrati grupi"
 msgid "Solve date modification"
 msgstr "Riješi promjenu datuma"
 
-#: inc/ticket.class.php:915 inc/ticket.class.php:957 inc/ticket.class.php:962
+#: inc/ticket.class.php:910 inc/ticket.class.php:952 inc/ticket.class.php:957
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Nalog je kloniran iz naloga broj"
 
