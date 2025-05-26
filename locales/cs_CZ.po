@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-21 00:49+0000\n"
+"POT-Creation-Date: 2025-05-23 00:48+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Cédric Anne, 2018,2023\n"
 "Language-Team: Czech (Czech Republic) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/cs_CZ/)\n"
@@ -76,35 +76,35 @@ msgstr "Zobrazit tlačítko mazání"
 msgid "Enable filtering on the groups assignment"
 msgstr "Filtrovat dle přiřazení skupin"
 
-#: inc/ticket.class.php:941
+#: inc/ticket.class.php:936
 msgid "Error : adding actors (group)"
 msgstr "Chyba: přidávání řešitelů (skupina)"
 
-#: inc/ticket.class.php:932
+#: inc/ticket.class.php:927
 msgid "Error : adding actors (user)"
 msgstr "Chyba: přidávání řešitelů (uživatel)"
 
-#: inc/ticket.class.php:951
+#: inc/ticket.class.php:946
 msgid "Error : adding documents"
 msgstr "Chyba: přidávání dokumentů"
 
-#: inc/ticket.class.php:921
+#: inc/ticket.class.php:916
 msgid "Error : adding followups"
 msgstr "Chyba: přidávání doplňující zprávy"
 
-#: inc/ticket.class.php:904
+#: inc/ticket.class.php:899
 msgid "Error : adding link between the two tickets"
 msgstr "Chyba: přidávání propojení mezi dvěma požadavky"
 
-#: inc/ticket.class.php:891
+#: inc/ticket.class.php:886
 msgid "Error : adding new ticket"
 msgstr "Chyba: přidávání nového požadavku"
 
-#: inc/ticket.class.php:875
+#: inc/ticket.class.php:870
 msgid "Error : get old ticket"
 msgstr "Chyba: získání původního požadavku"
 
-#: inc/ticket.class.php:1070 inc/ticket.class.php:1071
+#: inc/ticket.class.php:1065 inc/ticket.class.php:1066
 msgid "Escalate"
 msgstr ""
 
@@ -121,7 +121,7 @@ msgstr "Eskalace"
 msgid "Escalation history in tasks"
 msgstr "Historie eskalace v úkolech"
 
-#: inc/ticket.class.php:399 inc/ticket.class.php:544
+#: inc/ticket.class.php:394 inc/ticket.class.php:539
 #, php-format
 msgid "Escalation to the group %s."
 msgstr ""
@@ -176,11 +176,11 @@ msgstr "Uživatel-žadatel úkolu/připomínky"
 msgid "Requester user of the ticket"
 msgstr "Uživatel-žadatel požadavku"
 
-#: inc/ticket.class.php:227
+#: inc/ticket.class.php:222
 msgid "Solution provided, back to the group"
 msgstr "Řešení poskytnuto, zpět ke skupině"
 
-#: inc/ticket.class.php:291
+#: inc/ticket.class.php:286
 msgid "Solution rejected, return to the group"
 msgstr "Řešení odmítnuto, vráceno skupině"
 
@@ -188,7 +188,7 @@ msgstr "Řešení odmítnuto, vráceno skupině"
 msgid "Solve date modification"
 msgstr "Změna data vyřešení"
 
-#: inc/ticket.class.php:915 inc/ticket.class.php:957 inc/ticket.class.php:962
+#: inc/ticket.class.php:910 inc/ticket.class.php:952 inc/ticket.class.php:957
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Tento požadavek byl z požadavku č."
 
