@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Fix Escalate timeline button execute RuleTicket
 - Fix group assign with `reassign_group_from_cat` option
+- Fix the `remove_tech` option when a user was added to a ticket
 
 
 ## [2.9.13] - 2025-03-31

@@ -33,6 +33,7 @@ namespace GlpiPlugin\Escalade\Tests\Units;
 use CommonITILActor;
 use CommonITILObject;
 use GlpiPlugin\Escalade\Tests\EscaladeTestCase;
+use ITILCategory;
 use PluginEscaladeConfig;
 use PluginEscaladeTicket;
 
@@ -547,5 +548,360 @@ final class TicketTest extends EscaladeTestCase
         $this->assertEquals(1, count($user_ticket->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN, 'users_id' => $user1->getID()])));
         $this->assertEquals(1, count($user_ticket->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN, 'users_id' => $user2->getID()])));
         $this->assertEquals(\CommonITILObject::ASSIGNED, $ticket->fields['status']);
+    }
+
+    private function testAssignGroupToTicketWithCategoryProvider()
+    {
+        yield [
+            'conf' => [
+                'remove_tech'             => 0,
+                'remove_group'            => 0,
+                'reassign_group_from_cat' => 0,
+                'reassign_tech_from_cat'  => 0,
+            ],
+            'expected' => [
+                'user_1_is_assign' => 1,
+                'user_2_is_assign' => 0,
+                'group_1_is_assign' => 1,
+                'group_2_is_assign' => 0,
+            ],
+        ];
+
+        yield [
+            'conf' => [
+                'remove_tech'             => 0,
+                'remove_group'            => 0,
+                'reassign_group_from_cat' => 0,
+                'reassign_tech_from_cat'  => 1,
+            ],
+            'expected' => [
+                'user_1_is_assign' => 1,
+                'user_2_is_assign' => 1,
+                'group_1_is_assign' => 1,
+                'group_2_is_assign' => 0,
+            ],
+        ];
+
+        yield [
+            'conf' => [
+                'remove_tech'             => 0,
+                'remove_group'            => 0,
+                'reassign_group_from_cat' => 1,
+                'reassign_tech_from_cat'  => 0,
+            ],
+            'expected' => [
+                'user_1_is_assign' => 1,
+                'user_2_is_assign' => 0,
+                'group_1_is_assign' => 1,
+                'group_2_is_assign' => 1,
+            ],
+        ];
+
+        yield [
+            'conf' => [
+                'remove_tech'             => 0,
+                'remove_group'            => 0,
+                'reassign_group_from_cat' => 1,
+                'reassign_tech_from_cat'  => 1,
+            ],
+            'expected' => [
+                'user_1_is_assign' => 1,
+                'user_2_is_assign' => 1,
+                'group_1_is_assign' => 1,
+                'group_2_is_assign' => 1,
+            ],
+        ];
+
+        yield [
+            'conf' => [
+                'remove_tech'             => 0,
+                'remove_group'            => 1,
+                'reassign_group_from_cat' => 0,
+                'reassign_tech_from_cat'  => 0,
+            ],
+            'expected' => [
+                'user_1_is_assign' => 1,
+                'user_2_is_assign' => 0,
+                'group_1_is_assign' => 1,
+                'group_2_is_assign' => 0,
+            ],
+        ];
+
+        yield [
+            'conf' => [
+                'remove_tech'             => 0,
+                'remove_group'            => 1,
+                'reassign_group_from_cat' => 0,
+                'reassign_tech_from_cat'  => 1,
+            ],
+            'expected' => [
+                'user_1_is_assign' => 1,
+                'user_2_is_assign' => 1,
+                'group_1_is_assign' => 1,
+                'group_2_is_assign' => 0,
+            ],
+        ];
+
+        yield [
+            'conf' => [
+                'remove_tech'             => 0,
+                'remove_group'            => 1,
+                'reassign_group_from_cat' => 1,
+                'reassign_tech_from_cat'  => 0,
+            ],
+            'expected' => [
+                'user_1_is_assign' => 1,
+                'user_2_is_assign' => 0,
+                'group_1_is_assign' => 0,
+                'group_2_is_assign' => 1,
+            ],
+        ];
+
+        yield [
+            'conf' => [
+                'remove_tech'             => 0,
+                'remove_group'            => 1,
+                'reassign_group_from_cat' => 1,
+                'reassign_tech_from_cat'  => 1,
+            ],
+            'expected' => [
+                'user_1_is_assign' => 1,
+                'user_2_is_assign' => 1,
+                'group_1_is_assign' => 0,
+                'group_2_is_assign' => 1,
+            ],
+        ];
+
+        yield [
+            'conf' => [
+                'remove_tech'             => 1,
+                'remove_group'            => 0,
+                'reassign_group_from_cat' => 0,
+                'reassign_tech_from_cat'  => 0,
+            ],
+            'expected' => [
+                'user_1_is_assign' => 1,
+                'user_2_is_assign' => 0,
+                'group_1_is_assign' => 1,
+                'group_2_is_assign' => 0,
+            ],
+        ];
+
+        yield [
+            'conf' => [
+                'remove_tech'             => 1,
+                'remove_group'            => 0,
+                'reassign_group_from_cat' => 0,
+                'reassign_tech_from_cat'  => 1,
+            ],
+            'expected' => [
+                'user_1_is_assign' => 0,
+                'user_2_is_assign' => 1,
+                'group_1_is_assign' => 1,
+                'group_2_is_assign' => 0,
+            ],
+        ];
+
+        yield [
+            'conf' => [
+                'remove_tech'             => 1,
+                'remove_group'            => 0,
+                'reassign_group_from_cat' => 1,
+                'reassign_tech_from_cat'  => 0,
+            ],
+            'expected' => [
+                'user_1_is_assign' => 0,
+                'user_2_is_assign' => 0,
+                'group_1_is_assign' => 1,
+                'group_2_is_assign' => 1,
+            ],
+        ];
+
+        yield [
+            'conf' => [
+                'remove_tech'             => 1,
+                'remove_group'            => 0,
+                'reassign_group_from_cat' => 1,
+                'reassign_tech_from_cat'  => 1,
+            ],
+            'expected' => [
+                'user_1_is_assign' => 0,
+                'user_2_is_assign' => 1,
+                'group_1_is_assign' => 1,
+                'group_2_is_assign' => 1,
+            ],
+        ];
+
+        yield [
+            'conf' => [
+                'remove_tech'             => 1,
+                'remove_group'            => 1,
+                'reassign_group_from_cat' => 0,
+                'reassign_tech_from_cat'  => 0,
+            ],
+            'expected' => [
+                'user_1_is_assign' => 1,
+                'user_2_is_assign' => 0,
+                'group_1_is_assign' => 1,
+                'group_2_is_assign' => 0,
+            ],
+        ];
+
+        yield [
+            'conf' => [
+                'remove_tech'             => 1,
+                'remove_group'            => 1,
+                'reassign_group_from_cat' => 0,
+                'reassign_tech_from_cat'  => 1,
+            ],
+            'expected' => [
+                'user_1_is_assign' => 0,
+                'user_2_is_assign' => 1,
+                'group_1_is_assign' => 1,
+                'group_2_is_assign' => 0,
+            ],
+        ];
+
+        yield [
+            'conf' => [
+                'remove_tech'             => 1,
+                'remove_group'            => 1,
+                'reassign_group_from_cat' => 1,
+                'reassign_tech_from_cat'  => 0,
+            ],
+            'expected' => [
+                'user_1_is_assign' => 0,
+                'user_2_is_assign' => 0,
+                'group_1_is_assign' => 0,
+                'group_2_is_assign' => 1,
+            ],
+        ];
+
+        yield [
+            'conf' => [
+                'remove_tech'             => 1,
+                'remove_group'            => 1,
+                'reassign_group_from_cat' => 1,
+                'reassign_tech_from_cat'  => 1,
+            ],
+            'expected' => [
+                'user_1_is_assign' => 0,
+                'user_2_is_assign' => 1,
+                'group_1_is_assign' => 0,
+                'group_2_is_assign' => 1,
+            ],
+        ];
+    }
+
+    public function testAssignGroupToTicketWithCategory()
+    {
+        $ticket_user = new \Ticket_User();
+        $ticket_group = new \Group_Ticket();
+
+        $user1 = new \User();
+        $user1->getFromDBbyName('glpi');
+        $this->assertGreaterThan(0, $user1->getID());
+
+        $user2 = new \User();
+        $user2->getFromDBbyName('tech');
+        $this->assertGreaterThan(0, $user2->getID());
+
+        $this->login(TU_USER, TU_PASS);
+
+        $this->updateItem(
+            \Entity::class,
+            0,
+            [
+                "auto_assign_mode" => 2,
+            ]
+        );
+
+        $group1 = $this->createItem(
+            \Group::class,
+            [
+                'name' => 'GLPI Group',
+            ]
+        );
+
+        $group2 = $this->createItem(
+            \Group::class,
+            [
+                'name' => 'TECH Group',
+            ]
+        );
+
+        $this->createItem(
+            \Group_User::class,
+            [
+                'users_id' => $user1->getID(),
+                'groups_id' => $group1->getID(),
+            ]
+        );
+
+        $this->createItem(
+            \Group_User::class,
+            [
+                'users_id' => $user2->getID(),
+                'groups_id' => $group2->getID(),
+            ]
+        );
+
+        $itil_category1 = $this->createItem(
+            \ITILCategory::class,
+            [
+                'name' => 'Cat1',
+                'users_id' => $user1->getID(),
+                'groups_id' => $group1->getID(),
+            ]
+        );
+
+        $itil_category2 = $this->createItem(
+            \ITILCategory::class,
+            [
+                'name' => 'Cat2',
+                'users_id' => $user2->getID(),
+                'groups_id' => $group2->getID(),
+            ]
+        );
+
+        foreach ($this->testAssignGroupToTicketWithCategoryProvider() as $provider) {
+            // Update escalade config
+            $this->updateItem(
+                PluginEscaladeConfig::class,
+                1,
+                $provider['conf'],
+            );
+
+            PluginEscaladeConfig::loadInSession();
+
+            $ticket = $this->createItem(
+                \Ticket::class,
+                [
+                    'name' => 'Assign Cat Escalation Test',
+                    'content' => 'content',
+                    'itilcategories_id' => $itil_category1->getID(),
+                ],
+            );
+
+            $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $ticket->getID()])));
+            $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $ticket->getID(), 'users_id' => $user1->getID()])));
+            $this->assertEquals(0, count($ticket_user->find(['tickets_id' => $ticket->getID(), 'users_id' => $user2->getID()])));
+            $this->assertEquals(1, count($ticket_group->find(['tickets_id' => $ticket->getID()])));
+            $this->assertEquals(1, count($ticket_group->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group1->getID()])));
+            $this->assertEquals(0, count($ticket_group->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group2->getID()])));
+
+            $this->updateItem(
+                \Ticket::class,
+                $ticket->getID(),
+                [
+                    'itilcategories_id' => $itil_category2->getID(),
+                ],
+            );
+
+            $this->assertEquals($provider['expected']['user_1_is_assign'], count($ticket_user->find(['tickets_id' => $ticket->getID(), 'users_id' => $user1->getID()])));
+            $this->assertEquals($provider['expected']['user_2_is_assign'], count($ticket_user->find(['tickets_id' => $ticket->getID(), 'users_id' => $user2->getID()])));
+            $this->assertEquals($provider['expected']['group_1_is_assign'], count($ticket_group->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group1->getID()])));
+            $this->assertEquals($provider['expected']['group_2_is_assign'], count($ticket_group->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group2->getID()])));
+        }
     }
 }
