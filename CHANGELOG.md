@@ -5,7 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [unrelease] -
+## [UNRELEASE]
+
+## [2.9.14] - 2025-05-28
 
 - Fix Escalate timeline button execute RuleTicket
 - Fix group assign with `reassign_group_from_cat` option
