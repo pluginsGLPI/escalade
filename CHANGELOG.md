@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [UNRELEASE]
 
+- Fix 8 warnings in the `php-errors.log` file
+
 ## [2.9.14] - 2025-05-28
 
 - Fix Escalate timeline button execute RuleTicket
