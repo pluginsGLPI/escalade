@@ -28,10 +28,6 @@
  * -------------------------------------------------------------------------
  */
 
-/** @var array $CFG_GLPI */
-/** @var array $PLUGIN_HOOKS */
-global $CFG_GLPI, $PLUGIN_HOOKS;
-
 define('GLPI_ROOT', __DIR__ . '/../../../');
 define('GLPI_LOG_DIR', __DIR__ . '/files/_logs');
 
@@ -40,3 +36,6 @@ define('TU_PASS', 'glpi');
 define('GLPI_LOG_LVL', 'DEBUG');
 
 require GLPI_ROOT . '/inc/includes.php';
+include_once GLPI_ROOT . '/phpunit/GLPITestCase.php';
+include_once GLPI_ROOT . '/phpunit/DbTestCase.php';
+require_once __DIR__ . '/../vendor/autoload.php';
