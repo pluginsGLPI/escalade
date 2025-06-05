@@ -73,6 +73,8 @@ if (file_exists(GLPI_CONFIG_DIR . DIRECTORY_SEPARATOR . CacheManager::CONFIG_FIL
 require GLPI_ROOT . '/inc/includes.php';
 include_once GLPI_ROOT . '/phpunit/GLPITestCase.php';
 include_once GLPI_ROOT . '/phpunit/DbTestCase.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../setup.php';
 plugin_init_escalade();
 
 if (!file_exists(GLPI_LOG_DIR . '/php-errors.log')) {
