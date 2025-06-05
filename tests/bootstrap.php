@@ -28,14 +28,11 @@
  * -------------------------------------------------------------------------
  */
 
-define('GLPI_ROOT', __DIR__ . '/../../../');
-define('GLPI_LOG_DIR', GLPI_ROOT . '/files/_logs');
-
 define('TU_USER', 'glpi');
 define('TU_PASS', 'glpi');
-define('GLPI_LOG_LVL', 'DEBUG');
+define('GLPI_LOG_DIR', __DIR__ . '/files/_logs');
 
-require GLPI_ROOT . '/inc/includes.php';
-include_once GLPI_ROOT . '/phpunit/GLPITestCase.php';
-include_once GLPI_ROOT . '/phpunit/DbTestCase.php';
+require_once __DIR__ . '/../../../vendor/autoload.php';
+include_once __DIR__ . '/../../../phpunit/GLPITestCase.php';
+include_once __DIR__ . '/../../../phpunit/DbTestCase.php';
 require_once __DIR__ . '/../vendor/autoload.php';
