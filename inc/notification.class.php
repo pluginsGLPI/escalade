@@ -207,21 +207,21 @@ class PluginEscaladeNotification
             $item = $target->obj;
 
             switch ($target->data['items_id']) {
-                    // Only last escalation group
-                    case self::NTRGT_TICKET_LAST_ESCALADE_GROUP: // phpcs:ignore
-                        $manager = 0;
-                    case self::NTRGT_TICKET_LAST_ESCALADE_GROUP_MANAGER:
-                        if (!isset($manager)) {
-                            $manager = 1;
-                        }
-                        $history = new PluginEscaladeHistory();
-                        // Retrieve only the last escalation history
-                        foreach ($history->find(['tickets_id' => $item->getID()], ['id DESC'], 1) as $found_history) {
-                            // We only process the first entry (the most recent)
-                            $target->addForGroup($manager, $found_history['groups_id']);
-                            break;
-                        }
+                // Only last escalation group
+                case self::NTRGT_TICKET_LAST_ESCALADE_GROUP: // phpcs:ignore
+                    $manager = 0;
+                case self::NTRGT_TICKET_LAST_ESCALADE_GROUP_MANAGER:
+                    if (!isset($manager)) {
+                        $manager = 1;
+                    }
+                    $history = new PluginEscaladeHistory();
+                    // Retrieve only the last escalation history
+                    foreach ($history->find(['tickets_id' => $item->getID()], ['id DESC'], 1) as $found_history) {
+                        // We only process the first entry (the most recent)
+                        $target->addForGroup($manager, $found_history['groups_id']);
                         break;
+                    }
+                    break;
             }
         }
     }
