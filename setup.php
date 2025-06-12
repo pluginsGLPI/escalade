@@ -164,6 +164,11 @@ function plugin_init_escalade()
         $PLUGIN_HOOKS['item_action_targets']['escalade']['NotificationTargetPlanningRecall']
          = ['PluginEscaladeNotification', 'getActionTargets'];
 
+        $PLUGIN_HOOKS['item_add_targets']['escalade']['NotificationTargetTicket']
+         = ['PluginEscaladeNotification', 'addTargets'];
+        $PLUGIN_HOOKS['item_action_targets']['escalade']['NotificationTargetTicket']
+         = ['PluginEscaladeNotification', 'getActionTargets'];
+
        // Add additional events for Ticket notifications
         $PLUGIN_HOOKS['item_get_events']['escalade'] = [
             'NotificationTargetTicket' =>  ['PluginEscaladeNotification', 'getEvents']
