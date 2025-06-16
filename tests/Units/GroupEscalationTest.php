@@ -982,14 +982,7 @@ final class GroupEscalationTest extends EscaladeTestCase
         $this->cleanQueuedNotifications();
 
         // Escalate the ticket to the second group
-        $this->assertTrue($ticket->update([
-            'id' => $ticket_id,
-            '_skip_default_actor' => true,
-            '_actors' => PluginEscaladeTicket::getTicketFieldsWithActors($ticket_id, $group2['id']),
-            '_plugin_escalade_no_history' => true,
-            'actortype' => CommonITILActor::ASSIGN,
-            'groups_id' => $group2['id'],
-        ]));
+        \PluginEscaladeTicket::climb_group($ticket_id, $group2['id'], true);
 
         // Check notifications
         $queued = new QueuedNotification();
