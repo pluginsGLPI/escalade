@@ -113,14 +113,14 @@ class PluginEscaladeNotification
                 Notification::AUTHOR,
                 __('Requester user of the task/reminder', 'escalade'),
             );
-        } else if ($target instanceof NotificationTargetCommonITILObject) {
+        } elseif ($target instanceof NotificationTargetCommonITILObject) {
             $target->addTarget(
                 self::NTRGT_TICKET_LAST_ESCALADE_GROUP,
-                __('Last group escalated in the ticket', 'escalade')
+                __('Last group escalated in the ticket', 'escalade'),
             );
             $target->addTarget(
                 self::NTRGT_TICKET_LAST_ESCALADE_GROUP_MANAGER,
-                __('Manager of last group escalated in the ticket', 'escalade')
+                __('Manager of last group escalated in the ticket', 'escalade'),
             );
         }
     }
@@ -211,13 +211,14 @@ class PluginEscaladeNotification
                         break;
                 }
             }
-        } else if ($target instanceof NotificationTargetCommonITILObject) {
+        } elseif ($target instanceof NotificationTargetCommonITILObject) {
             $item = $target->obj;
 
             switch ($target->data['items_id']) {
                 // Only last escalation group
                 case self::NTRGT_TICKET_LAST_ESCALADE_GROUP:
                     $manager = 0;
+                    // no break
                 case self::NTRGT_TICKET_LAST_ESCALADE_GROUP_MANAGER:
                     if (!isset($manager)) {
                         $manager = 1;

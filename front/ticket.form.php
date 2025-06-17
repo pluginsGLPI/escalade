@@ -78,7 +78,7 @@ if (isset($_POST['escalate'])) {
                 'actortype' => CommonITILActor::ASSIGN,
                 'groups_id' => $group_id,
                 '_form_object' => $_form_object,
-            ]
+            ],
         );
     }
 

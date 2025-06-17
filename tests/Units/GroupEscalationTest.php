@@ -860,10 +860,10 @@ final class GroupEscalationTest extends EscaladeTestCase
                 'assign' => [
                     [
                         'items_id' => $group1['id'],
-                        'itemtype' => 'Group'
-                    ]
+                        'itemtype' => 'Group',
+                    ],
                 ],
-            ]
+            ],
         ]);
         $this->assertGreaterThan(0, $ticket_id);
 
@@ -877,10 +877,10 @@ final class GroupEscalationTest extends EscaladeTestCase
                 'assign' => [
                     [
                         'items_id' => $group2['id'],
-                        'itemtype' => 'Group'
+                        'itemtype' => 'Group',
                     ],
                 ],
-            ]
+            ],
         ]));
 
         // Check notifications
@@ -954,8 +954,8 @@ final class GroupEscalationTest extends EscaladeTestCase
         $this->setNotificationTargets(
             $notification->fields['id'],
             [
-                PluginEscaladeNotification::NTRGT_TICKET_LAST_ESCALADE_GROUP
-            ]
+                PluginEscaladeNotification::NTRGT_TICKET_LAST_ESCALADE_GROUP,
+            ],
         );
 
         // Create two groups with users
@@ -971,10 +971,10 @@ final class GroupEscalationTest extends EscaladeTestCase
                 'assign' => [
                     [
                         'items_id' => $group1['id'],
-                        'itemtype' => 'Group'
-                    ]
+                        'itemtype' => 'Group',
+                    ],
                 ],
-            ]
+            ],
         ]);
         $this->assertGreaterThan(0, $ticket_id);
 
@@ -1033,8 +1033,8 @@ final class GroupEscalationTest extends EscaladeTestCase
         $group_id = $this->createItem(
             \Group::class,
             [
-                'name' => $name
-            ]
+                'name' => $name,
+            ],
         )->getID();
 
         $users = [];
@@ -1045,7 +1045,7 @@ final class GroupEscalationTest extends EscaladeTestCase
                 \User::class,
                 [
                     'name' => "{$name}_user_{$i}",
-                ]
+                ],
             )->getID();
 
             $this->createItem(
@@ -1053,7 +1053,7 @@ final class GroupEscalationTest extends EscaladeTestCase
                 [
                     'users_id' => $user_id,
                     'email' => "{$name}_user_{$i}@example.com",
-                ]
+                ],
             );
 
             // Add the user to the group
@@ -1061,21 +1061,21 @@ final class GroupEscalationTest extends EscaladeTestCase
                 \Group_User::class,
                 [
                     'users_id' => $user_id,
-                    'groups_id' => $group_id
-                ]
+                    'groups_id' => $group_id,
+                ],
             )->getID();
 
             $users[] = [
                 'id' => $user_id,
                 'name' => "{$name}_user_{$i}",
-                'email' => "{$name}_user_{$i}@example.com"
+                'email' => "{$name}_user_{$i}@example.com",
             ];
         }
 
         return [
             'id' => $group_id,
             'name' => $name,
-            'users' => $users
+            'users' => $users,
         ];
     }
 
@@ -1109,7 +1109,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             $notification_target->add([
                 'notifications_id' => $notification_id,
                 'type' => 1, // Type 1 = To
-                'items_id' => $target
+                'items_id' => $target,
             ]);
         }
 
