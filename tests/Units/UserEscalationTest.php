@@ -45,7 +45,7 @@ final class UserEscalationTest extends EscaladeTestCase
         $config->getFromDB($conf['id']);
         $this->assertGreaterThan(0, $conf['id']);
         $this->assertTrue($config->update([
-            'remove_tech' => 1
+            'remove_tech' => 1,
         ] + $conf));
 
         PluginEscaladeConfig::loadInSession();
@@ -75,11 +75,11 @@ final class UserEscalationTest extends EscaladeTestCase
                     'assign' => [
                         [
                             'items_id' => $user1->getID(),
-                            'itemtype' => 'User'
-                        ]
+                            'itemtype' => 'User',
+                        ],
                     ],
                 ],
-            ]
+            ],
         ));
 
         $ticket_user = new \Ticket_User();
@@ -92,15 +92,15 @@ final class UserEscalationTest extends EscaladeTestCase
                     'assign' => [
                         [
                             'items_id' => $user1->getID(),
-                            'itemtype' => 'User'
+                            'itemtype' => 'User',
                         ],
                         [
                             'items_id' => $group1->getID(),
-                            'itemtype' => 'Group'
+                            'itemtype' => 'Group',
                         ],
                     ],
                 ],
-            ]
+            ],
         ));
 
         // Check if user is disassociated to this ticket and the group replace it
@@ -112,7 +112,7 @@ final class UserEscalationTest extends EscaladeTestCase
 
         // Disable remove tech options
         $this->assertTrue($config->update([
-            'remove_tech' => 0
+            'remove_tech' => 0,
         ] + $conf));
 
         PluginEscaladeConfig::loadInSession();
@@ -125,11 +125,11 @@ final class UserEscalationTest extends EscaladeTestCase
                     'assign' => [
                         [
                             'items_id' => $user1->getID(),
-                            'itemtype' => 'User'
-                        ]
+                            'itemtype' => 'User',
+                        ],
                     ],
                 ],
-            ]
+            ],
         ));
 
         $ticket_user = new \Ticket_User();
@@ -143,15 +143,15 @@ final class UserEscalationTest extends EscaladeTestCase
                     'assign' => [
                         [
                             'items_id' => $user1->getID(),
-                            'itemtype' => 'User'
+                            'itemtype' => 'User',
                         ],
                         [
                             'items_id' => $group1->getID(),
-                            'itemtype' => 'Group'
-                        ]
+                            'itemtype' => 'Group',
+                        ],
                     ],
                 ],
-            ]
+            ],
         ));
 
         // Check if the user and group are associated to this ticket
@@ -170,8 +170,8 @@ final class UserEscalationTest extends EscaladeTestCase
             PluginEscaladeConfig::class,
             1,
             [
-                'remove_tech' => 1
-            ]
+                'remove_tech' => 1,
+            ],
         );
 
         PluginEscaladeConfig::loadInSession();
@@ -189,7 +189,7 @@ final class UserEscalationTest extends EscaladeTestCase
             [
                 'name' => 'Task User change Escalation Test',
                 'content' => '',
-            ]
+            ],
         );
 
         $ticket_user = new \Ticket_User();
@@ -204,11 +204,11 @@ final class UserEscalationTest extends EscaladeTestCase
                     'assign' => [
                         [
                             'items_id' => $user1->getID(),
-                            'itemtype' => 'User'
+                            'itemtype' => 'User',
                         ],
                     ],
                 ],
-            ]
+            ],
         );
 
         $ticket_user = new \Ticket_User();
@@ -222,15 +222,15 @@ final class UserEscalationTest extends EscaladeTestCase
                     'assign' => [
                         [
                             'items_id' => $user1->getID(),
-                            'itemtype' => 'User'
+                            'itemtype' => 'User',
                         ],
                         [
                             'items_id' => $user2->getID(),
-                            'itemtype' => 'User'
+                            'itemtype' => 'User',
                         ],
                     ],
                 ],
-            ]
+            ],
         );
 
         // Check if user is disassociated to this ticket and the group replace it
@@ -242,8 +242,8 @@ final class UserEscalationTest extends EscaladeTestCase
             PluginEscaladeConfig::class,
             1,
             [
-                'remove_tech' => 0
-            ]
+                'remove_tech' => 0,
+            ],
         );
 
         PluginEscaladeConfig::loadInSession();
@@ -257,17 +257,17 @@ final class UserEscalationTest extends EscaladeTestCase
                     'assign' => [
                         [
                             'items_id' => $user1->getID(),
-                            'itemtype' => 'User'
-                        ]
+                            'itemtype' => 'User',
+                        ],
                     ],
                 ],
-            ]
+            ],
         );
 
         $ticket_user = new \Ticket_User();
         $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN])));
 
-         // Add a group to the ticket
+        // Add a group to the ticket
         $this->updateItem(
             \Ticket::class,
             $ticket->getID(),
@@ -276,15 +276,15 @@ final class UserEscalationTest extends EscaladeTestCase
                     'assign' => [
                         [
                             'items_id' => $user1->getID(),
-                            'itemtype' => 'User'
+                            'itemtype' => 'User',
                         ],
                         [
                             'items_id' => $user2->getID(),
-                            'itemtype' => 'User'
-                        ]
+                            'itemtype' => 'User',
+                        ],
                     ],
                 ],
-            ]
+            ],
         );
 
         // Check if the user and group are associated to this ticket
@@ -300,8 +300,8 @@ final class UserEscalationTest extends EscaladeTestCase
             PluginEscaladeConfig::class,
             1,
             [
-                'remove_tech' => 1
-            ]
+                'remove_tech' => 1,
+            ],
         );
 
         PluginEscaladeConfig::loadInSession();
@@ -319,7 +319,7 @@ final class UserEscalationTest extends EscaladeTestCase
             [
                 'name' => 'Task User change Escalation Test',
                 'content' => '',
-            ]
+            ],
         );
 
         $ticket_user = new \Ticket_User();
@@ -334,11 +334,11 @@ final class UserEscalationTest extends EscaladeTestCase
                     'assign' => [
                         [
                             'items_id' => $user1->getID(),
-                            'itemtype' => 'User'
-                        ]
+                            'itemtype' => 'User',
+                        ],
                     ],
                 ],
-            ]
+            ],
         );
 
         $ticket_user = new \Ticket_User();
@@ -353,8 +353,8 @@ final class UserEscalationTest extends EscaladeTestCase
                     '_type' => "user",
                     'users_id' => \Session::getLoginUserID(),
                     'use_notification' => 1,
-                ]
-            ]
+                ],
+            ],
         );
 
         // Check if user is disassociated to this ticket and the group replace it
@@ -367,8 +367,8 @@ final class UserEscalationTest extends EscaladeTestCase
             PluginEscaladeConfig::class,
             1,
             [
-                'remove_tech' => 0
-            ]
+                'remove_tech' => 0,
+            ],
         );
 
         PluginEscaladeConfig::loadInSession();
@@ -382,11 +382,11 @@ final class UserEscalationTest extends EscaladeTestCase
                     'assign' => [
                         [
                             'items_id' => $user1->getID(),
-                            'itemtype' => 'User'
-                        ]
+                            'itemtype' => 'User',
+                        ],
                     ],
                 ],
-            ]
+            ],
         );
 
         $ticket_user = new \Ticket_User();
@@ -401,8 +401,8 @@ final class UserEscalationTest extends EscaladeTestCase
                 '_itil_assign' => [
                     '_type' => "user",
                     'users_id' => \Session::getLoginUserID(),
-                ]
-            ]
+                ],
+            ],
         );
 
         // Check if the user and group are associated to this ticket

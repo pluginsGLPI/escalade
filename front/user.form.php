@@ -42,7 +42,7 @@ if (!Plugin::isPluginActive('escalade')) {
 if ((new User())->can($_POST['users_id'], UPDATE)) {
     if (isset($_POST["add"])) {
         $user->add($_POST);
-    } else if (isset($_POST["update"])) {
+    } elseif (isset($_POST["update"])) {
         $user->update($_POST);
     }
 }

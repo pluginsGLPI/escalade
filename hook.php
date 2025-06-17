@@ -100,7 +100,7 @@ function plugin_escalade_install()
             'glpi_plugin_escalade_configs',
             'cloneandlink_ticket',
             'integer',
-            ['after' => 'reassign_tech_from_cat']
+            ['after' => 'reassign_tech_from_cat'],
         );
         $migration->migrationOneTable('glpi_plugin_escalade_configs');
     }
@@ -109,7 +109,7 @@ function plugin_escalade_install()
             'glpi_plugin_escalade_configs',
             'close_linkedtickets',
             'integer',
-            ['after' => 'cloneandlink_ticket']
+            ['after' => 'cloneandlink_ticket'],
         );
         $migration->migrationOneTable('glpi_plugin_escalade_configs');
     }
@@ -119,7 +119,7 @@ function plugin_escalade_install()
             'glpi_plugin_escalade_configs',
             'use_assign_user_group',
             'integer',
-            ['after' => 'close_linkedtickets']
+            ['after' => 'close_linkedtickets'],
         );
         $migration->migrationOneTable('glpi_plugin_escalade_configs');
     }
@@ -128,7 +128,7 @@ function plugin_escalade_install()
             'glpi_plugin_escalade_configs',
             'use_assign_user_group_creation',
             'integer',
-            ['after' => 'use_assign_user_group']
+            ['after' => 'use_assign_user_group'],
         );
         $migration->migrationOneTable('glpi_plugin_escalade_configs');
     }
@@ -137,7 +137,7 @@ function plugin_escalade_install()
             'glpi_plugin_escalade_configs',
             'use_assign_user_group_modification',
             'integer',
-            ['after' => 'use_assign_user_group_creation']
+            ['after' => 'use_assign_user_group_creation'],
         );
         $migration->migrationOneTable('glpi_plugin_escalade_configs');
     }
@@ -156,7 +156,7 @@ function plugin_escalade_install()
             'glpi_plugin_escalade_configs',
             'use_filter_assign_group',
             'integer',
-            ['after' => 'use_assign_user_group_modification']
+            ['after' => 'use_assign_user_group_modification'],
         );
         $migration->migrationOneTable('glpi_plugin_escalade_configs');
     }
@@ -246,7 +246,7 @@ function plugin_escalade_install()
             'glpi_plugin_escalade_configs',
             'remove_delete_requester_user_btn',
             'bool',
-            ['value' => 1]
+            ['value' => 1],
         );
     }
     if (!$DB->fieldExists('glpi_plugin_escalade_configs', 'remove_delete_requester_group_btn')) {
@@ -254,7 +254,7 @@ function plugin_escalade_install()
             'glpi_plugin_escalade_configs',
             'remove_delete_requester_group_btn',
             'bool',
-            ['value' => 1]
+            ['value' => 1],
         );
     }
     if (!$DB->fieldExists('glpi_plugin_escalade_configs', 'remove_delete_watcher_user_btn')) {
@@ -262,7 +262,7 @@ function plugin_escalade_install()
             'glpi_plugin_escalade_configs',
             'remove_delete_watcher_user_btn',
             'bool',
-            ['value' => 1]
+            ['value' => 1],
         );
     }
     if (!$DB->fieldExists('glpi_plugin_escalade_configs', 'remove_delete_watcher_group_btn')) {
@@ -270,7 +270,7 @@ function plugin_escalade_install()
             'glpi_plugin_escalade_configs',
             'remove_delete_watcher_group_btn',
             'bool',
-            ['value' => 1]
+            ['value' => 1],
         );
     }
 
@@ -281,7 +281,7 @@ function plugin_escalade_install()
             'remove_delete_user_btn',
             'remove_delete_assign_user_btn',
             'bool',
-            ['value' => 0]
+            ['value' => 0],
         );
     }
     if ($DB->fieldExists('glpi_plugin_escalade_configs', 'remove_delete_group_btn')) {
@@ -290,7 +290,7 @@ function plugin_escalade_install()
             'remove_delete_group_btn',
             'remove_delete_assign_group_btn',
             'bool',
-            ['value' => 0]
+            ['value' => 0],
         );
     }
     if ($DB->fieldExists('glpi_plugin_escalade_configs', 'remove_delete_supplier_btn')) {
@@ -299,7 +299,7 @@ function plugin_escalade_install()
             'remove_delete_supplier_btn',
             'remove_delete_assign_supplier_btn',
             'bool',
-            ['value' => 1]
+            ['value' => 1],
         );
     }
 
@@ -353,7 +353,7 @@ function plugin_escalade_install()
                 $DB->update(
                     'glpi_plugin_escalade_histories',
                     ['groups_id_previous' => $details['groups_id_previous'], 'counter' => $details['counter']],
-                    ['id' => $details['id']]
+                    ['id' => $details['id']],
                 );
             }
         }
@@ -365,7 +365,7 @@ function plugin_escalade_install()
             'glpi_plugin_escalade_configs',
             'remove_requester',
             'integer',
-            ['after' => 'ticket_last_status']
+            ['after' => 'ticket_last_status'],
         );
         $migration->migrationOneTable('glpi_plugin_escalade_configs');
     }
@@ -377,7 +377,7 @@ function plugin_escalade_install()
             'glpi_plugin_escalade_configs',
             'assign_me_as_observer',
             'integer',
-            ['after' => 'close_linkedtickets']
+            ['after' => 'close_linkedtickets'],
         );
         $migration->migrationOneTable('glpi_plugin_escalade_configs');
     }
@@ -428,7 +428,7 @@ function plugin_escalade_item_purge($item)
     if ($item instanceof Ticket) {
         $history = new PluginEscaladeHistory();
         $history->deleteByCriteria([
-            'tickets_id' => $item->getID()
+            'tickets_id' => $item->getID(),
         ]);
     }
     return true;
@@ -547,9 +547,9 @@ function plugin_escalade_getAddSearchOptions($itemtype)
                 'table'      => 'glpi_plugin_escalade_histories',
                 'joinparams' => [
                     'jointype'  => 'child',
-                    'condition' => ''
-                ]
-            ]
+                    'condition' => '',
+                ],
+            ],
         ];
 
         $sopt[] = [
@@ -562,8 +562,8 @@ function plugin_escalade_getAddSearchOptions($itemtype)
             'datatype'           => 'count',
             'massiveaction'      => false,
             'joinparams'         => [
-                'jointype'           => 'child'
-            ]
+                'jointype'           => 'child',
+            ],
         ];
 
         $sopt[] = [
@@ -573,8 +573,8 @@ function plugin_escalade_getAddSearchOptions($itemtype)
             'name'               => __("Number of escalations between two groups", "escalade"),
             'datatype'           => 'integer',
             'joinparams'         => [
-                'jointype'           => 'child'
-            ]
+                'jointype'           => 'child',
+            ],
         ];
     }
     if ($itemtype == 'User') {
@@ -589,9 +589,9 @@ function plugin_escalade_getAddSearchOptions($itemtype)
                 'table'      => 'glpi_plugin_escalade_users',
                 'joinparams' => [
                     'jointype' => 'child',
-                    'condition' => ''
-                ]
-            ]
+                    'condition' => '',
+                ],
+            ],
         ];
     }
     return $sopt;
@@ -602,7 +602,7 @@ function plugin_escalade_MassiveActions($itemtype)
     switch ($itemtype) {
         case 'User':
             return ['PluginEscaladeUser' . MassiveAction::CLASS_ACTION_SEPARATOR . 'bypass_filter_assign_group'
-                  => __("Bypass filtering on the groups assignment", 'escalade')
+                  => __("Bypass filtering on the groups assignment", 'escalade'),
             ];
     }
     return [];

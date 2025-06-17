@@ -41,7 +41,7 @@ if (!$_SESSION['glpi_plugins']['escalade']['config']['show_history']) {
 }
 
 echo "<div id='page'>";
-PluginEscaladeHistory::getHistory((int)$_REQUEST['tickets_id'], true);
+PluginEscaladeHistory::getHistory((int) $_REQUEST['tickets_id'], true);
 echo "</div>";
 
 Html::popFooter();

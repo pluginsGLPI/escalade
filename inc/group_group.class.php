@@ -35,7 +35,7 @@ if (!defined('GLPI_ROOT')) {
 // phpcs:ignore
 class PluginEscaladeGroup_Group extends CommonDBRelation
 {
-   // From CommonDBRelation
+    // From CommonDBRelation
     public static $itemtype_1   = 'Group';
     public static $items_id_1   = 'groups_id_source';
 
@@ -90,7 +90,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation
 
             Dropdown::show('Group', ['name'      => 'groups_id_destination',
                 'condition' => ['is_assign' => 1],
-                'used'      => $groups_id_used
+                'used'      => $groups_id_used,
             ]);
 
             echo Html::hidden('groups_id_source', ['value' => $groups_id]);
@@ -102,7 +102,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation
             Html::openMassiveActionsForm('mass' . __CLASS__ . $rand);
             $massiveactionparams = [
                 'num_displayed'    => min($nb, $_SESSION['glpilist_limit']),
-                'container'        => 'mass' . __CLASS__ . $rand
+                'container'        => 'mass' . __CLASS__ . $rand,
             ];
             Html::showMassiveActions($massiveactionparams);
         }
@@ -139,14 +139,14 @@ class PluginEscaladeGroup_Group extends CommonDBRelation
     {
         $groups = $user_groups = $ticket_groups = [];
 
-       // get groups for user connected
+        // get groups for user connected
         $tmp_user_groups  = Group_User::getUserGroups($_SESSION['glpiID']);
         foreach ($tmp_user_groups as $current_group) {
             $user_groups[$current_group['id']] = $current_group['id'];
             $groups[$current_group['id']] = $current_group['id'];
         }
 
-       // get groups already assigned in the ticket
+        // get groups already assigned in the ticket
         if ($ticket_id > 0) {
             $ticket = new Ticket();
             $ticket->getFromDB($ticket_id);
@@ -155,14 +155,14 @@ class PluginEscaladeGroup_Group extends CommonDBRelation
             }
         }
 
-       // To do an escalation, the user must be in a group currently assigned to the ticket
-       // or no group is assigned to the ticket
-       // TODO : matching with "view all tickets (yes/no) option in profile user"
+        // To do an escalation, the user must be in a group currently assigned to the ticket
+        // or no group is assigned to the ticket
+        // TODO : matching with "view all tickets (yes/no) option in profile user"
         if (!empty($ticket_groups) && count(array_intersect($ticket_groups, $user_groups)) == 0) {
             return [];
         }
 
-       //get all group which we can climb
+        //get all group which we can climb
         $filtering_group = [];
         if (count($ticket_groups) > 0) {
             $group_group = $this->find(['groups_id_source' => $ticket_groups]);
@@ -172,23 +172,23 @@ class PluginEscaladeGroup_Group extends CommonDBRelation
             $groups = $filtering_group;
         }
 
-       //remove already assigned groups
+        //remove already assigned groups
         if (!empty($ticket_groups) && $removeAlreadyAssigned) {
             $groups = array_diff_assoc($groups, $ticket_groups);
         }
 
-       //add name to returned groups and remove non assignable groups
+        //add name to returned groups and remove non assignable groups
         $group_obj = new Group();
         foreach ($groups as $groups_id => &$groupname) {
             $group_obj->getFromDB($groups_id);
 
-           //check if we can assign this group
+            //check if we can assign this group
             if ($group_obj->fields['is_assign'] == 0) {
                 unset($groups[$groups_id]);
                 continue;
             }
 
-           //add name
+            //add name
             $groupname = $group_obj->fields['name'];
         }
 
@@ -196,7 +196,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation
             Group_User::getUserGroups($_SESSION['glpiID']);
         }
 
-       //sort by group name (and keep associative index)
+        //sort by group name (and keep associative index)
         asort($groups);
 
         return $groups;

@@ -68,7 +68,7 @@ function plugin_init_escalade()
 
                     // on central page
                     if (strpos($_SERVER['REQUEST_URI'] ?? '', "central.php") !== false) {
-                    //history and climb feature
+                        //history and climb feature
                         if ($escalade_config['show_history']) {
                             $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/central.js.php';
                         }
@@ -89,7 +89,7 @@ function plugin_init_escalade()
                             || !$escalade_config['remove_delete_assign_group_btn']
                             || !$escalade_config['remove_delete_assign_supplier_btn']
                         ) {
-                        //remove btn feature
+                            //remove btn feature
                             $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/remove_btn.js.php';
                         }
                     }
@@ -99,12 +99,12 @@ function plugin_init_escalade()
                         strpos($_SERVER['REQUEST_URI'] ?? '', "ticket.form.php") !== false
                         && isset($_GET['id'])
                     ) {
-                    //history and climb feature
+                        //history and climb feature
                         if ($escalade_config['show_history']) {
                             $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/escalade.js.php';
                         }
 
-                    //clone ticket feature
+                        //clone ticket feature
                         if ($escalade_config['cloneandlink_ticket']) {
                             $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/cloneandlink_ticket.js.php';
                         }
@@ -118,7 +118,7 @@ function plugin_init_escalade()
 
         $PLUGIN_HOOKS['add_css']['escalade'][] = 'css/escalade.css';
 
-       // == Ticket modifications
+        // == Ticket modifications
         $PLUGIN_HOOKS['pre_item_update']['escalade'] = [
             'Ticket'       => 'plugin_escalade_pre_item_update',
         ];
@@ -144,29 +144,29 @@ function plugin_init_escalade()
         ];
         $PLUGIN_HOOKS['item_add']['escalade']['User'] = 'plugin_escalade_item_add_user';
 
-       //filter group feature
+        //filter group feature
         if ($escalade_config['use_filter_assign_group'] ?? false) {
             $PLUGIN_HOOKS[Hooks::FILTER_ACTORS]['escalade'] = [
                 'PluginEscaladeTicket', 'filter_actors',
             ];
         }
 
-       // == Interface links ==
+        // == Interface links ==
         if (Session::haveRight('config', UPDATE)) {
             $PLUGIN_HOOKS['config_page']['escalade'] = 'front/config.form.php';
         }
 
         $PLUGIN_HOOKS['use_massive_action']['escalade'] = 1;
 
-       // add more target to some notifications
+        // add more target to some notifications
         $PLUGIN_HOOKS['item_add_targets']['escalade']['NotificationTargetPlanningRecall']
          = ['PluginEscaladeNotification', 'addTargets'];
         $PLUGIN_HOOKS['item_action_targets']['escalade']['NotificationTargetPlanningRecall']
          = ['PluginEscaladeNotification', 'getActionTargets'];
 
-       // Add additional events for Ticket notifications
+        // Add additional events for Ticket notifications
         $PLUGIN_HOOKS['item_get_events']['escalade'] = [
-            'NotificationTargetTicket' =>  ['PluginEscaladeNotification', 'getEvents']
+            'NotificationTargetTicket' =>  ['PluginEscaladeNotification', 'getEvents'],
         ];
         $PLUGIN_HOOKS['timeline_answer_actions']['escalade'] = ['PluginEscaladeTicket', 'addToTimeline'];
     }
@@ -190,7 +190,7 @@ function plugin_version_escalade()
             'glpi' => [
                 'min' => PLUGIN_ESCALADE_MIN_GLPI,
                 'max' => PLUGIN_ESCALADE_MAX_GLPI,
-            ]
-        ]
+            ],
+        ],
     ];
 }
