@@ -49,7 +49,7 @@ final class TicketTest extends EscaladeTestCase
         $config->getFromDB($conf['id']);
         $this->assertGreaterThan(0, $conf['id']);
         $this->assertTrue($config->update([
-            'close_linkedtickets' => 1
+            'close_linkedtickets' => 1,
         ] + $conf));
 
         PluginEscaladeConfig::loadInSession();
@@ -72,13 +72,13 @@ final class TicketTest extends EscaladeTestCase
         // Update ticket status
         $ticket->update([
             'id' => $t_id,
-            'status' => CommonITILObject::SOLVED
+            'status' => CommonITILObject::SOLVED,
         ]);
 
         $ticket = new \Ticket();
         $ticket_cloned = $ticket->getFromDBByCrit([
             'name' => 'Escalade Close cloned ticket test',
-            'NOT' => ['id' => $t_id]
+            'NOT' => ['id' => $t_id],
         ]);
         $this->assertTrue($ticket_cloned);
 
@@ -88,7 +88,7 @@ final class TicketTest extends EscaladeTestCase
         // Disable close linked tickets option
         $this->assertTrue($config->update([
             'cloneandlink'        => 1,
-            'close_linkedtickets' => 0
+            'close_linkedtickets' => 0,
         ] + $conf));
 
         PluginEscaladeConfig::loadInSession();
@@ -111,13 +111,13 @@ final class TicketTest extends EscaladeTestCase
         // Update ticket status
         $ticket->update([
             'id' => $t_id,
-            'status' => CommonITILObject::SOLVED
+            'status' => CommonITILObject::SOLVED,
         ]);
 
         $ticket = new \Ticket();
         $ticket_cloned = $ticket->getFromDBByCrit([
             'name' => 'Escalade Close cloned ticket 2 test',
-            'NOT' => ['id' => $t_id]
+            'NOT' => ['id' => $t_id],
         ]);
         $this->assertTrue($ticket_cloned);
 
@@ -204,7 +204,7 @@ final class TicketTest extends EscaladeTestCase
         $input_without_mandatory = [
             'id' => $ticket_id,
             'groups_id' => $group2_id,
-            'actortype' => CommonITILActor::ASSIGN
+            'actortype' => CommonITILActor::ASSIGN,
         ];
 
         // Use a mock to test the behavior
@@ -252,10 +252,10 @@ final class TicketTest extends EscaladeTestCase
                 'assign' => [
                     [
                         'itemtype' => 'Group',
-                        'items_id' => $group2_id
-                    ]
-                ]
-            ]
+                        'items_id' => $group2_id,
+                    ],
+                ],
+            ],
         ];
 
         $mock_ticket_success->input = $input_with_mandatory;
@@ -269,7 +269,7 @@ final class TicketTest extends EscaladeTestCase
         // Check if the _disablenotif flag is set
         $this->assertTrue(
             isset($result->input['_disablenotif']),
-            "The _disablenotif flag should be set on successful escalation"
+            "The _disablenotif flag should be set on successful escalation",
         );
 
         // Add the group to actually test the escalation
@@ -277,7 +277,7 @@ final class TicketTest extends EscaladeTestCase
         $group_ticket->add([
             'tickets_id' => $ticket_id,
             'groups_id' => $group2_id,
-            'type' => CommonITILActor::ASSIGN
+            'type' => CommonITILActor::ASSIGN,
         ]);
 
         // Verify that the group was added
@@ -379,7 +379,7 @@ final class TicketTest extends EscaladeTestCase
             [
                 "reassign_group_from_cat" => 1,
                 'remove_group' => 1,
-            ]
+            ],
         );
 
         PluginEscaladeConfig::loadInSession();
@@ -498,11 +498,11 @@ final class TicketTest extends EscaladeTestCase
                     'assign' => [
                         [
                             'items_id' => $user1->getID(),
-                            'itemtype' => 'User'
+                            'itemtype' => 'User',
                         ],
                     ],
                 ],
-            ])
+            ]),
         );
         $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN])));
         $this->assertEquals(1, count($user_ticket->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN])));
@@ -516,15 +516,15 @@ final class TicketTest extends EscaladeTestCase
                     'assign' => [
                         [
                             'items_id' => $user1->getID(),
-                            'itemtype' => 'User'
+                            'itemtype' => 'User',
                         ],
                         [
                             'items_id' => $group_tech->getID(),
-                            'itemtype' => 'Group'
+                            'itemtype' => 'Group',
                         ],
                     ],
                 ],
-            ])
+            ]),
         );
         $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN])));
         $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN, 'groups_id' => $group_tech->getID()])));
@@ -539,8 +539,8 @@ final class TicketTest extends EscaladeTestCase
                     '_type' => "user",
                     'users_id' => $user2->getID(),
                     'use_notification' => 1,
-                ]
-            ])
+                ],
+            ]),
         );
         $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN])));
         $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN, 'groups_id' => $group_tech->getID()])));
@@ -813,21 +813,21 @@ final class TicketTest extends EscaladeTestCase
             0,
             [
                 "auto_assign_mode" => 2,
-            ]
+            ],
         );
 
         $group1 = $this->createItem(
             \Group::class,
             [
                 'name' => 'GLPI Group',
-            ]
+            ],
         );
 
         $group2 = $this->createItem(
             \Group::class,
             [
                 'name' => 'TECH Group',
-            ]
+            ],
         );
 
         $this->createItem(
@@ -835,7 +835,7 @@ final class TicketTest extends EscaladeTestCase
             [
                 'users_id' => $user1->getID(),
                 'groups_id' => $group1->getID(),
-            ]
+            ],
         );
 
         $this->createItem(
@@ -843,7 +843,7 @@ final class TicketTest extends EscaladeTestCase
             [
                 'users_id' => $user2->getID(),
                 'groups_id' => $group2->getID(),
-            ]
+            ],
         );
 
         $itil_category1 = $this->createItem(
@@ -852,7 +852,7 @@ final class TicketTest extends EscaladeTestCase
                 'name' => 'Cat1',
                 'users_id' => $user1->getID(),
                 'groups_id' => $group1->getID(),
-            ]
+            ],
         );
 
         $itil_category2 = $this->createItem(
@@ -861,7 +861,7 @@ final class TicketTest extends EscaladeTestCase
                 'name' => 'Cat2',
                 'users_id' => $user2->getID(),
                 'groups_id' => $group2->getID(),
-            ]
+            ],
         );
 
         foreach ($this->testAssignGroupToTicketWithCategoryProvider() as $provider) {

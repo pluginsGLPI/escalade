@@ -83,11 +83,11 @@ final class TaskMessageTest extends EscaladeTestCase
                     'assign' => [
                         [
                             'items_id' => $user_test->getID(),
-                            'itemtype' => $user_test->getType()
+                            'itemtype' => $user_test->getType(),
                         ],
                     ],
                 ],
-            ]
+            ],
         ));
 
         // Check that the group linked to this ticket is "Test group 1" and that the technician has disappeared.
@@ -103,15 +103,15 @@ final class TaskMessageTest extends EscaladeTestCase
                     'assign' => [
                         [
                             'items_id' => $user_test->getID(),
-                            'itemtype' => $user_test->getType()
+                            'itemtype' => $user_test->getType(),
                         ],
                         [
                             'items_id' => $group_test->getID(),
-                            'itemtype' => 'Group'
-                        ]
+                            'itemtype' => 'Group',
+                        ],
                     ],
                 ],
-            ]
+            ],
         ));
 
         // Check that the group linked to this ticket is "Test group 1" and that the technician has disappeared.
@@ -159,11 +159,11 @@ final class TaskMessageTest extends EscaladeTestCase
                     'assign' => [
                         [
                             'items_id' => $group_test->getID(),
-                            'itemtype' => 'Group'
+                            'itemtype' => 'Group',
                         ],
                     ],
                 ],
-            ]
+            ],
         ));
 
         // Check the correct task content
@@ -179,15 +179,15 @@ final class TaskMessageTest extends EscaladeTestCase
                     'assign' => [
                         [
                             'items_id' => $group_test->getID(),
-                            'itemtype' => 'Group'
+                            'itemtype' => 'Group',
                         ],
                         [
                             'items_id' => $group_test_2->getID(),
-                            'itemtype' => 'Group'
+                            'itemtype' => 'Group',
                         ],
                     ],
                 ],
-            ]
+            ],
         ));
 
         // Check the correct order of tasks and content
