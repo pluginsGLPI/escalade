@@ -216,7 +216,7 @@ class PluginEscaladeNotification
 
             switch ($target->data['items_id']) {
                 // Only last escalation group
-                case self::NTRGT_TICKET_LAST_ESCALADE_GROUP: // phpcs:ignore
+                case self::NTRGT_TICKET_LAST_ESCALADE_GROUP:
                     $manager = 0;
                 case self::NTRGT_TICKET_LAST_ESCALADE_GROUP_MANAGER:
                     if (!isset($manager)) {
