@@ -118,7 +118,7 @@ class PluginEscaladeConfig extends CommonDBTM
             "Ticket",
             "ticket_last_status",
             $rand,
-            $this->fields["ticket_last_status"]
+            $this->fields["ticket_last_status"],
         );
         echo "</td>";
 
@@ -234,7 +234,7 @@ class PluginEscaladeConfig extends CommonDBTM
             "use_assign_user_group_creation",
             $this->fields["use_assign_user_group_creation"],
             -1,
-            ['rand' => $rand]
+            ['rand' => $rand],
         );
         echo "</td>";
 
@@ -244,7 +244,7 @@ class PluginEscaladeConfig extends CommonDBTM
             "use_assign_user_group_modification",
             $this->fields["use_assign_user_group_modification"],
             -1,
-            ['rand' => $rand]
+            ['rand' => $rand],
         );
         echo "</td>";
         echo "</tr></table>";
@@ -254,8 +254,8 @@ class PluginEscaladeConfig extends CommonDBTM
                 $CFG_GLPI["root_doc"] . "/front/config.form.php?forcetab=PluginBehaviorsConfig%241",
                 __(
                     "Nota: This feature (creation part) is duplicate with the <a href='##link##'>Behavior</a>plugin. This last has priority.",
-                    "escalade"
-                )
+                    "escalade",
+                ),
             ) . "</i>";
         }
         echo "</td>";
@@ -290,19 +290,19 @@ class PluginEscaladeConfig extends CommonDBTM
         echo "<td>";
         Dropdown::showYesNo(
             "remove_delete_requester_user_btn",
-            $this->fields["remove_delete_requester_user_btn"]
+            $this->fields["remove_delete_requester_user_btn"],
         );
         echo "</td>";
         echo "<td>";
         Dropdown::showYesNo(
             "remove_delete_watcher_user_btn",
-            $this->fields["remove_delete_watcher_user_btn"]
+            $this->fields["remove_delete_watcher_user_btn"],
         );
         echo "</td>";
         echo "<td>";
         Dropdown::showYesNo(
             "remove_delete_assign_user_btn",
-            $this->fields["remove_delete_assign_user_btn"]
+            $this->fields["remove_delete_assign_user_btn"],
         );
         echo "</td>";
         echo "</tr>";
@@ -311,19 +311,19 @@ class PluginEscaladeConfig extends CommonDBTM
         echo "<td>";
         Dropdown::showYesNo(
             "remove_delete_requester_group_btn",
-            $this->fields["remove_delete_requester_group_btn"]
+            $this->fields["remove_delete_requester_group_btn"],
         );
         echo "</td>";
         echo "<td>";
         Dropdown::showYesNo(
             "remove_delete_watcher_group_btn",
-            $this->fields["remove_delete_watcher_group_btn"]
+            $this->fields["remove_delete_watcher_group_btn"],
         );
         echo "</td>";
         echo "<td>";
         Dropdown::showYesNo(
             "remove_delete_assign_group_btn",
-            $this->fields["remove_delete_assign_group_btn"]
+            $this->fields["remove_delete_assign_group_btn"],
         );
         echo "</td>";
         echo "</tr>";
@@ -333,7 +333,7 @@ class PluginEscaladeConfig extends CommonDBTM
         echo "<td>";
         Dropdown::showYesNo(
             "remove_delete_assign_supplier_btn",
-            $this->fields["remove_delete_assign_supplier_btn"]
+            $this->fields["remove_delete_assign_supplier_btn"],
         );
         echo "</td>";
         echo "</tr>";

@@ -74,7 +74,7 @@ final class GroupEscalationTest extends EscaladeTestCase
         $user_group1 = new \Group_User();
         $user_group1->add([
             'users_id' => $user1->getID(),
-            'groups_id' => $group1->getID()
+            'groups_id' => $group1->getID(),
         ]);
         $this->assertGreaterThan(0, $user_group1->getID());
 
@@ -89,7 +89,7 @@ final class GroupEscalationTest extends EscaladeTestCase
         $user_group2 = new \Group_User();
         $user_group2->add([
             'users_id' => $user2->getID(),
-            'groups_id' => $group2->getID()
+            'groups_id' => $group2->getID(),
         ]);
         $this->assertGreaterThan(0, $user_group2->getID());
 
@@ -102,10 +102,10 @@ final class GroupEscalationTest extends EscaladeTestCase
                 'requester' => [
                     [
                         'items_id' => $user1->getID(),
-                        'itemtype' => 'User'
-                    ]
+                        'itemtype' => 'User',
+                    ],
                 ],
-            ]
+            ],
         ]);
 
         // Check no group linked to the ticket
@@ -120,17 +120,17 @@ final class GroupEscalationTest extends EscaladeTestCase
                     'requester' => [
                         [
                             'items_id' => $user1->getID(),
-                            'itemtype' => 'User'
-                        ]
+                            'itemtype' => 'User',
+                        ],
                     ],
                     'assign' => [
                         [
                             'items_id' => $user2->getID(),
-                            'itemtype' => 'User'
-                        ]
+                            'itemtype' => 'User',
+                        ],
                     ],
                 ],
-            ]
+            ],
         ));
 
         $ticket_group2 = new \Group_Ticket();
@@ -171,7 +171,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             'update_expected' => [
                 'user_ticket' => 2,
                 'group_ticket' => 0,
-            ]
+            ],
         ];
 
         yield [
@@ -189,7 +189,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             'update_expected' => [
                 'user_ticket' => 2,
                 'group_ticket' => 0,
-            ]
+            ],
         ];
 
         yield [
@@ -207,7 +207,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             'update_expected' => [
                 'user_ticket' => 1,
                 'group_ticket' => 0,
-            ]
+            ],
         ];
 
         yield [
@@ -225,7 +225,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             'update_expected' => [
                 'user_ticket' => 2,
                 'group_ticket' => 1,
-            ]
+            ],
         ];
 
         yield [
@@ -243,7 +243,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             'update_expected' => [
                 'user_ticket' => 2,
                 'group_ticket' => 1,
-            ]
+            ],
         ];
 
         yield [
@@ -261,7 +261,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             'update_expected' => [
                 'user_ticket' => 1,
                 'group_ticket' => 1,
-            ]
+            ],
         ];
 
         yield [
@@ -279,7 +279,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             'update_expected' => [
                 'user_ticket' => 2,
                 'group_ticket' => 1,
-            ]
+            ],
         ];
 
         yield [
@@ -297,7 +297,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             'update_expected' => [
                 'user_ticket' => 2,
                 'group_ticket' => 1,
-            ]
+            ],
         ];
 
         yield [
@@ -315,7 +315,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             'update_expected' => [
                 'user_ticket' => 1,
                 'group_ticket' => 1,
-            ]
+            ],
         ];
 
         yield [
@@ -333,7 +333,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             'update_expected' => [
                 'user_ticket' => 2,
                 'group_ticket' => 2,
-            ]
+            ],
         ];
 
         yield [
@@ -351,7 +351,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             'update_expected' => [
                 'user_ticket' => 2,
                 'group_ticket' => 1,
-            ]
+            ],
         ];
 
         yield [
@@ -369,7 +369,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             'update_expected' => [
                 'user_ticket' => 1,
                 'group_ticket' => 2,
-            ]
+            ],
         ];
 
         yield [
@@ -387,7 +387,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             'update_expected' => [
                 'user_ticket' => 1,
                 'group_ticket' => 1,
-            ]
+            ],
         ];
 
         yield [
@@ -405,7 +405,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             'update_expected' => [
                 'user_ticket' => 2,
                 'group_ticket' => 1,
-            ]
+            ],
         ];
 
         yield [
@@ -423,7 +423,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             'update_expected' => [
                 'user_ticket' => 2,
                 'group_ticket' => 1,
-            ]
+            ],
         ];
 
         yield [
@@ -441,7 +441,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             'update_expected' => [
                 'user_ticket' => 1,
                 'group_ticket' => 1,
-            ]
+            ],
         ];
 
         yield [
@@ -459,7 +459,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             'update_expected' => [
                 'user_ticket' => 2,
                 'group_ticket' => 1,
-            ]
+            ],
         ];
 
         yield [
@@ -477,7 +477,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             'update_expected' => [
                 'user_ticket' => 2,
                 'group_ticket' => 1,
-            ]
+            ],
         ];
 
         yield [
@@ -495,7 +495,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             'update_expected' => [
                 'user_ticket' => 1,
                 'group_ticket' => 1,
-            ]
+            ],
         ];
 
         yield [
@@ -513,7 +513,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             'update_expected' => [
                 'user_ticket' => 2,
                 'group_ticket' => 2,
-            ]
+            ],
         ];
 
         yield [
@@ -531,7 +531,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             'update_expected' => [
                 'user_ticket' => 2,
                 'group_ticket' => 1,
-            ]
+            ],
         ];
 
         yield [
@@ -549,7 +549,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             'update_expected' => [
                 'user_ticket' => 1,
                 'group_ticket' => 2,
-            ]
+            ],
         ];
 
         yield [
@@ -567,7 +567,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             'update_expected' => [
                 'user_ticket' => 1,
                 'group_ticket' => 1,
-            ]
+            ],
         ];
     }
 
@@ -585,28 +585,28 @@ final class GroupEscalationTest extends EscaladeTestCase
             \Group::class,
             [
                 'name' => 'GLPI Group 1',
-            ]
+            ],
         );
 
         $group2 = $this->createItem(
             \Group::class,
             [
                 'name' => 'TECH Group 1',
-            ]
+            ],
         );
 
         $group3 = $this->createItem(
             \Group::class,
             [
                 'name' => 'GLPI Group 2',
-            ]
+            ],
         );
 
         $group4 = $this->createItem(
             \Group::class,
             [
                 'name' => 'TECH Group 2',
-            ]
+            ],
         );
 
         $this->createItems(
@@ -652,11 +652,11 @@ final class GroupEscalationTest extends EscaladeTestCase
                         'assign' => [
                             [
                                 'items_id' => $user1->getID(),
-                                'itemtype' => 'User'
-                            ]
+                                'itemtype' => 'User',
+                            ],
                         ],
                     ],
-                ]
+                ],
             );
 
             $ticket_user = new \Ticket_User();
@@ -679,25 +679,25 @@ final class GroupEscalationTest extends EscaladeTestCase
             $assign = [
                 [
                     'items_id' => $user2->getID(),
-                    'itemtype' => 'User'
+                    'itemtype' => 'User',
                 ],
                 [
                     'items_id' => $user1->getID(),
-                    'itemtype' => 'User'
-                ]
+                    'itemtype' => 'User',
+                ],
             ];
 
             if (!empty($provider['conf']['use_assign_user_group_creation'])) {
                 if ($provider['conf']['use_assign_user_group'] === 1) {
                     $assign[] = [
                         'items_id' => $group1->getID(),
-                        'itemtype' => 'Group'
+                        'itemtype' => 'Group',
                     ];
                 }
                 if ($provider['conf']['use_assign_user_group'] === 2) {
                     $assign[] = [
                         'items_id' => $group3->getID(),
-                        'itemtype' => 'Group'
+                        'itemtype' => 'Group',
                     ];
                 }
             }
@@ -707,9 +707,9 @@ final class GroupEscalationTest extends EscaladeTestCase
                 $ticket->getID(),
                 [
                     '_actors' => [
-                        'assign' => $assign
+                        'assign' => $assign,
                     ],
-                ]
+                ],
             );
 
             $this->assertEquals($provider['update_expected']['user_ticket'], count($ticket_user->find(['tickets_id' => $ticket->getID(), 'type' => CommonITILActor::ASSIGN])));
@@ -758,10 +758,10 @@ final class GroupEscalationTest extends EscaladeTestCase
                 'assign' => [
                     [
                         'items_id' => $group1_id,
-                        'itemtype' => 'Group'
-                    ]
+                        'itemtype' => 'Group',
+                    ],
                 ],
-            ]
+            ],
         ]);
         $this->assertGreaterThan(0, $t_id);
 
@@ -780,10 +780,10 @@ final class GroupEscalationTest extends EscaladeTestCase
                 'assign' => [
                     [
                         'items_id' => $group2_id,
-                        'itemtype' => 'Group'
+                        'itemtype' => 'Group',
                     ],
                 ],
-            ]
+            ],
         ]);
         $this->assertTrue($ticket_update);
 
@@ -805,10 +805,10 @@ final class GroupEscalationTest extends EscaladeTestCase
                 'assign' => [
                     [
                         'items_id' => $group1_id,
-                        'itemtype' => 'Group'
+                        'itemtype' => 'Group',
                     ],
                 ],
-            ]
+            ],
         ]);
         $this->assertTrue($ticket_update);
 

@@ -30,11 +30,11 @@
 
 class PluginEscaladeUser extends CommonDBTM
 {
-   /**
-    * @since version 0.85
-    *
-    * @see CommonDBTM::showMassiveActionsSubForm()
-   **/
+    /**
+     * @since version 0.85
+     *
+     * @see CommonDBTM::showMassiveActionsSubForm()
+    **/
     public static function showMassiveActionsSubForm(MassiveAction $ma)
     {
         switch ($ma->getAction()) {
@@ -49,11 +49,11 @@ class PluginEscaladeUser extends CommonDBTM
         return true;
     }
 
-   /**
-    * @since version 0.85
-    *
-    * @see CommonDBTM::processMassiveActionsForOneItemtype()
-    **/
+    /**
+     * @since version 0.85
+     *
+     * @see CommonDBTM::processMassiveActionsForOneItemtype()
+     **/
     public static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item, array $ids)
     {
         switch ($ma->getAction()) {

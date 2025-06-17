@@ -44,11 +44,11 @@ if (
 }
 
 $ticket = new Ticket();
-$ticket->getFromDB((int)$_REQUEST['tickets_id']);
+$ticket->getFromDB((int) $_REQUEST['tickets_id']);
 
 if (!$ticket->canAssign()) {
     Html::displayRightError();
 }
 
 
-PluginEscaladeTicket::climb_group((int)$_REQUEST['tickets_id'], (int)$_REQUEST['groups_id']);
+PluginEscaladeTicket::climb_group((int) $_REQUEST['tickets_id'], (int) $_REQUEST['groups_id']);

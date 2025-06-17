@@ -37,8 +37,8 @@ Session::checkLoginUser();
 global $CFG_GLPI;
 
 if (isset($_POST['escalate'])) {
-    $group_id = (int)$_POST['groups_id'];
-    $tickets_id = (int)$_POST['tickets_id'];
+    $group_id = (int) $_POST['groups_id'];
+    $tickets_id = (int) $_POST['tickets_id'];
 
     $ticket = new Ticket();
     if (!$ticket->getFromDB($tickets_id)) {
@@ -53,8 +53,8 @@ if (isset($_POST['escalate'])) {
     $group = new Group();
     if ($group_id === 0 || $group->getFromDB($group_id) === false) {
         Session::addMessageAfterRedirect(__('You must select a group.', 'escalade'), false, ERROR);
-    } else if (!empty($_POST['comment']) && !empty($tickets_id)) {
-        if ((bool)$_POST['is_observer_checkbox']) {
+    } elseif (!empty($_POST['comment']) && !empty($tickets_id)) {
+        if ((bool) $_POST['is_observer_checkbox']) {
             $ticket_user = new Ticket_User();
             $ticket_user->add([
                 'type'       => CommonITILActor::OBSERVER,
@@ -88,7 +88,7 @@ if (isset($_POST['escalate'])) {
         Session::addMessageAfterRedirect(
             __('You have been redirected because you no longer have access to this ticket'),
             true,
-            ERROR
+            ERROR,
         );
         Html::redirect($CFG_GLPI["root_doc"] . "/front/ticket.php");
     }
