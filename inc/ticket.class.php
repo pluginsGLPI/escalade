@@ -531,9 +531,10 @@ class PluginEscaladeTicket
      * assign a previous group to the ticket
      * @param  int $tickets_id the ticket to change
      * @param  int $groups_id  the group to assign
+     * @param  bool $no_redirect if true, no redirection after the action
      * @return void
      */
-    public static function climb_group($tickets_id, $groups_id)
+    public static function climb_group($tickets_id, $groups_id, $no_redirect = false)
     {
         //don't add group if already exist for this ticket
         $group = new Group();
@@ -579,7 +580,9 @@ class PluginEscaladeTicket
             }
         }
 
-        Html::back();
+        if (!$no_redirect) {
+            Html::back();
+        }
     }
 
 

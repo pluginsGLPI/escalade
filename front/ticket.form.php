@@ -71,24 +71,15 @@ if (isset($_POST['escalate'])) {
             $_form_object['status'] = $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'];
         }
         $updates_ticket = new Ticket();
-        if (
-            $updates_ticket->update(
-                $_POST['ticket_details'] + [
-                    '_actors' => PluginEscaladeTicket::getTicketFieldsWithActors($tickets_id, $group_id),
-                    '_plugin_escalade_no_history' => true, // Prevent a duplicated task to be added
-                    'actortype' => CommonITILActor::ASSIGN,
-                    'groups_id' => $group_id,
-                    '_form_object' => $_form_object,
-                ],
-            )
-        ) {
-            //notified only the last group assigned
-            $ticket = new Ticket();
-            $ticket->getFromDB($tickets_id);
-
-            $event = "assign_group";
-            NotificationEvent::raiseEvent($event, $ticket);
-        }
+        $updates_ticket->update(
+            $_POST['ticket_details'] + [
+                '_actors' => PluginEscaladeTicket::getTicketFieldsWithActors($tickets_id, $group_id),
+                '_plugin_escalade_no_history' => true, // Prevent a duplicated task to be added
+                'actortype' => CommonITILActor::ASSIGN,
+                'groups_id' => $group_id,
+                '_form_object' => $_form_object,
+            ],
+        );
     }
 
     $track = new Ticket();
