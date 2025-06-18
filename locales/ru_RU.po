@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-23 00:48+0000\n"
+"POT-Creation-Date: 2025-06-18 00:51+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Ilia Kireev, 2024\n"
 "Language-Team: Russian (Russia) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/ru_RU/)\n"
@@ -25,32 +25,138 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
 #: templates/escalade_form.html.twig
+msgid "Escalate ticket"
+msgstr "Переназначить заявку"
+
+#: templates/escalade_form.html.twig
+msgid "Comment"
+msgstr "Комментарий"
+
+#: templates/escalade_form.html.twig
 msgid "Assign me as an observer"
 msgstr "Назначить меня наблюдателем"
 
-#: inc/config.class.php:192
-msgid "Assign me as observer by default"
-msgstr "Назначать меня наблюдателем по умолчанию"
+#: js/cloneandlink_ticket.js.php:42
+msgid "Clone and link"
+msgstr "Клонировать и связать"
 
-#: inc/config.class.php:151
-msgid "Assign the technical group on ticket category change"
-msgstr "Назначить группу специалистов при переназначении"
+#: front/config.form.php:58 inc/user.class.php:179
+#: inc/group_group.class.php:56 setup.php:184
+msgid "Escalation"
+msgstr "Переназначение"
 
-#: inc/config.class.php:140
-msgid "Assign the technical manager on ticket category change"
-msgstr "Присвоить специалиста при смене категории"
+#: front/climb_group.php:43 ajax/assign_me.php:35
+msgid "missing parameters"
+msgstr "Отсутствуют параметры "
+
+#: front/ticket.form.php:55
+msgid "You must select a group."
+msgstr "Вы должны выбрать группу"
+
+#: inc/history.class.php:130
+msgid "Reassign the ticket to group"
+msgstr "Переназначить заявку группе"
+
+#: inc/history.class.php:174
+msgid "full assignation history"
+msgstr "Полная история назначений"
+
+#: inc/history.class.php:177
+msgid "View full history"
+msgstr "Просмотреть полную историю"
+
+#: inc/history.class.php:230
+msgid "Tickets to follow (escalated)"
+msgstr "Заявки к просмотру"
+
+#: inc/history.class.php:244
+msgid "Tickets to close (escalated)"
+msgstr "Заявки к закрытию"
+
+#: inc/ticket.class.php:255
+msgid "Solution provided, back to the group"
+msgstr "Решение найдено, возврат к группе"
+
+#: inc/ticket.class.php:319
+msgid "Solution rejected, return to the group"
+msgstr "Решение отклонено, возврат к группе"
+
+#: inc/ticket.class.php:427 inc/ticket.class.php:568
+#, php-format
+msgid "Escalation to the group %s."
+msgstr "Назначить заявку группе %s"
+
+#: inc/ticket.class.php:907
+msgid "Error : get old ticket"
+msgstr "Ошибка получения данных заявки"
+
+#: inc/ticket.class.php:923
+msgid "Error : adding new ticket"
+msgstr "Ошибка добавления заявки"
+
+#: inc/ticket.class.php:936
+msgid "Error : adding link between the two tickets"
+msgstr "Ошибка связывания заявок"
+
+#: inc/ticket.class.php:947 inc/ticket.class.php:989 inc/ticket.class.php:994
+msgid "This ticket has been cloned from the ticket num"
+msgstr "Заявка создана из другой, №"
+
+#: inc/ticket.class.php:953
+msgid "Error : adding followups"
+msgstr "Ошибка добавления комментария"
+
+#: inc/ticket.class.php:964
+msgid "Error : adding actors (user)"
+msgstr "Ошибка добавления пользователя"
+
+#: inc/ticket.class.php:973
+msgid "Error : adding actors (group)"
+msgstr "Ошибка добавления группы"
+
+#: inc/ticket.class.php:983
+msgid "Error : adding documents"
+msgstr "Ошибка добавления документа"
+
+#: inc/ticket.class.php:1102 inc/ticket.class.php:1103
+msgid "Escalate"
+msgstr "Переназначение"
+
+#: inc/config.class.php:37
+msgid "Configuration Escalade plugin"
+msgstr "Конфигурация плагина Escalade"
+
+#: inc/config.class.php:60
+msgid "Remove old assign group on new group assign"
+msgstr "Удалить группу, назначенную ранее, при назначении группы"
+
+#: inc/config.class.php:82
+msgid "show group assign history visually"
+msgstr "Отображать историю переназначения групп"
+
+#: inc/config.class.php:94
+msgid "Escalation history in tasks"
+msgstr "История переназначения в задачах"
+
+#: inc/config.class.php:103
+msgid "Remove technician(s) on escalation"
+msgstr "Удалить технических специалистов при переназначении"
+
+#: inc/config.class.php:115
+msgid "Ticket status after an escalation"
+msgstr "Статус заявки после переназначения"
 
 #: inc/config.class.php:127
 msgid "Assign ticket to initial group on solve ticket"
 msgstr "Назначить заявку первоначальной группе при решении"
 
-#: inc/user.class.php:139 hook.php:586 hook.php:605
-msgid "Bypass filtering on the groups assignment"
-msgstr "Игнорирование фильтра назначения групп"
+#: inc/config.class.php:140
+msgid "Assign the technical manager on ticket category change"
+msgstr "Присвоить специалиста при смене категории"
 
-#: js/cloneandlink_ticket.js.php:42
-msgid "Clone and link"
-msgstr "Клонировать и связать"
+#: inc/config.class.php:151
+msgid "Assign the technical group on ticket category change"
+msgstr "Назначить группу специалистов при переназначении"
 
 #: inc/config.class.php:163
 msgid "Clone tickets"
@@ -60,165 +166,13 @@ msgstr "Клонировать заявки"
 msgid "Close cloned tickets at the same time"
 msgstr "Закрывать клонированные заявки одновременно"
 
-#: templates/escalade_form.html.twig
-msgid "Comment"
-msgstr "Комментарий"
-
-#: inc/config.class.php:37
-msgid "Configuration Escalade plugin"
-msgstr "Конфигурация плагина Escalade"
-
-#: inc/config.class.php:390
-msgid "Default (not managed by plugin)"
-msgstr ""
-
-#: inc/config.class.php:278
-msgid "Display delete button"
-msgstr "Показывать кнопку удаления"
-
-#: inc/config.class.php:347
-msgid "Enable filtering on the groups assignment"
-msgstr "Разрешить фильтрацию по назначенным группам"
-
-#: inc/ticket.class.php:936
-msgid "Error : adding actors (group)"
-msgstr "Ошибка добавления группы"
-
-#: inc/ticket.class.php:927
-msgid "Error : adding actors (user)"
-msgstr "Ошибка добавления пользователя"
-
-#: inc/ticket.class.php:946
-msgid "Error : adding documents"
-msgstr "Ошибка добавления документа"
-
-#: inc/ticket.class.php:916
-msgid "Error : adding followups"
-msgstr "Ошибка добавления комментария"
-
-#: inc/ticket.class.php:899
-msgid "Error : adding link between the two tickets"
-msgstr "Ошибка связывания заявок"
-
-#: inc/ticket.class.php:886
-msgid "Error : adding new ticket"
-msgstr "Ошибка добавления заявки"
-
-#: inc/ticket.class.php:870
-msgid "Error : get old ticket"
-msgstr "Ошибка получения данных заявки"
-
-#: inc/ticket.class.php:1065 inc/ticket.class.php:1066
-msgid "Escalate"
-msgstr "Переназначение"
-
-#: templates/escalade_form.html.twig
-msgid "Escalate ticket"
-msgstr "Переназначить заявку"
-
-#: inc/group_group.class.php:56 inc/user.class.php:179
-#: front/config.form.php:58 setup.php:184
-msgid "Escalation"
-msgstr "Переназначение"
-
-#: inc/config.class.php:94
-msgid "Escalation history in tasks"
-msgstr "История переназначения в задачах"
-
-#: inc/ticket.class.php:394 inc/ticket.class.php:539
-#, php-format
-msgid "Escalation to the group %s."
-msgstr "Назначить заявку группе %s"
-
-#: hook.php:541
-msgid "Group concerned by the escalation"
-msgstr "Группа, назначенная при эскалации"
-
-#: inc/notification.class.php:102
-msgid "Group escalated in the ticket"
-msgstr "Группа, эскалированная в заявку"
-
-#: inc/notification.class.php:106
-msgid "Manager of the group escalated in the ticket"
-msgstr "Менеджер группы, эскалированной в заявку"
-
-#: inc/config.class.php:256
-msgid ""
-"Nota: This feature (creation part) is duplicate with the <a "
-"href='##link##'>Behavior</a>plugin. This last has priority."
-msgstr "Обратите внимание: эта функциональность (в процессе создания), а также есть в плагине <a href='##link##'>Behavior</a>, который имеет более высокий приоритет."
-
-#: hook.php:559
-msgid "Number of escalations"
-msgstr "Число переназначений"
-
-#: hook.php:573
-msgid "Number of escalations between two groups"
-msgstr "Число переназначений между двумя группами"
-
-#: inc/history.class.php:130
-msgid "Reassign the ticket to group"
-msgstr "Переназначить заявку группе"
-
-#: inc/config.class.php:60
-msgid "Remove old assign group on new group assign"
-msgstr "Удалить группу, назначенную ранее, при назначении группы"
-
-#: inc/config.class.php:266
-msgid "Remove requester(s) on escalation"
-msgstr "Удалить заявителя(ей) при эскалации"
-
-#: inc/config.class.php:103
-msgid "Remove technician(s) on escalation"
-msgstr "Удалить технических специалистов при переназначении"
-
-#: inc/notification.class.php:112
-msgid "Requester user of the task/reminder"
-msgstr "Инициатор задачи/напоминания"
-
-#: inc/notification.class.php:60
-msgid "Requester user of the ticket"
-msgstr "Инициатор заявки"
-
-#: inc/ticket.class.php:222
-msgid "Solution provided, back to the group"
-msgstr "Решение найдено, возврат к группе"
-
-#: inc/ticket.class.php:286
-msgid "Solution rejected, return to the group"
-msgstr "Решение отклонено, возврат к группе"
-
-#: inc/notification.class.php:255
-msgid "Solve date modification"
-msgstr "Изменение даты решения"
-
-#: inc/ticket.class.php:910 inc/ticket.class.php:952 inc/ticket.class.php:957
-msgid "This ticket has been cloned from the ticket num"
-msgstr "Заявка создана из другой, №"
-
-#: inc/config.class.php:115
-msgid "Ticket status after an escalation"
-msgstr "Статус заявки после переназначения"
-
-#: inc/history.class.php:244
-msgid "Tickets to close (escalated)"
-msgstr "Заявки к закрытию"
-
-#: inc/history.class.php:230
-msgid "Tickets to follow (escalated)"
-msgstr "Заявки к просмотру"
+#: inc/config.class.php:192
+msgid "Assign me as observer by default"
+msgstr "Назначать меня наблюдателем по умолчанию"
 
 #: inc/config.class.php:200
 msgid "Use the technician's group"
 msgstr "Использовать группу специалиста"
-
-#: inc/history.class.php:177
-msgid "View full history"
-msgstr "Просмотреть полную историю"
-
-#: front/ticket.form.php:55
-msgid "You must select a group."
-msgstr "Вы должны выбрать группу"
 
 #: inc/config.class.php:218
 msgid "at creation time"
@@ -228,14 +182,54 @@ msgstr "Во время создания"
 msgid "at modification time"
 msgstr "Во время изменения"
 
-#: inc/history.class.php:174
-msgid "full assignation history"
-msgstr "Полная история назначений"
+#: inc/config.class.php:266
+msgid "Remove requester(s) on escalation"
+msgstr "Удалить заявителя(ей) при эскалации"
 
-#: ajax/assign_me.php:35 front/climb_group.php:43
-msgid "missing parameters"
-msgstr "Отсутствуют параметры "
+#: inc/config.class.php:278
+msgid "Display delete button"
+msgstr "Показывать кнопку удаления"
 
-#: inc/config.class.php:82
-msgid "show group assign history visually"
-msgstr "Отображать историю переназначения групп"
+#: inc/config.class.php:347
+msgid "Enable filtering on the groups assignment"
+msgstr "Разрешить фильтрацию по назначенным группам"
+
+#: inc/config.class.php:390
+msgid "Default (not managed by plugin)"
+msgstr ""
+
+#: inc/notification.class.php:60
+msgid "Requester user of the ticket"
+msgstr "Инициатор заявки"
+
+#: inc/notification.class.php:102
+msgid "Group escalated in the ticket"
+msgstr "Группа, эскалированная в заявку"
+
+#: inc/notification.class.php:106
+msgid "Manager of the group escalated in the ticket"
+msgstr "Менеджер группы, эскалированной в заявку"
+
+#: inc/notification.class.php:112
+msgid "Requester user of the task/reminder"
+msgstr "Инициатор задачи/напоминания"
+
+#: inc/notification.class.php:263
+msgid "Solve date modification"
+msgstr "Изменение даты решения"
+
+#: inc/user.class.php:139 hook.php:586 hook.php:605
+msgid "Bypass filtering on the groups assignment"
+msgstr "Игнорирование фильтра назначения групп"
+
+#: hook.php:541
+msgid "Group concerned by the escalation"
+msgstr "Группа, назначенная при эскалации"
+
+#: hook.php:559
+msgid "Number of escalations"
+msgstr "Число переназначений"
+
+#: hook.php:573
+msgid "Number of escalations between two groups"
+msgstr "Число переназначений между двумя группами"
