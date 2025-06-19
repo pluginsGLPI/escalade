@@ -85,6 +85,22 @@ final class TicketTest extends EscaladeTestCase
         //Check if cloned ticket is also solved
         $this->assertEquals(CommonITILObject::SOLVED, $ticket->fields['status']);
 
+        // Update reopen ticket closed
+        $ticket->update([
+            'id' => $t_id,
+            'status' => CommonITILObject::ASSIGNED,
+        ]);
+
+        $ticket = new \Ticket();
+        $ticket_cloned = $ticket->getFromDBByCrit([
+            'name' => 'Escalade Close cloned ticket test',
+            'NOT' => ['id' => $t_id],
+        ]);
+        $this->assertTrue($ticket_cloned);
+
+        //Check if cloned ticket is also solved
+        $this->assertEquals(CommonITILObject::ASSIGNED, $ticket->fields['status']);
+
         // Disable close linked tickets option
         $this->assertTrue($config->update([
             'cloneandlink'        => 1,

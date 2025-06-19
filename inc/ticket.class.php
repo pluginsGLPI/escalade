@@ -180,12 +180,14 @@ class PluginEscaladeTicket
                 self::linkedTickets($item, CommonITILObject::CLOSED);
             } elseif (
                 isset($item->input['status'])
-                && $item->input['status'] == CommonITILObject::ASSIGNED
+                && ($item->input['status'] == CommonITILObject::ASSIGNED || $item->input['status'] == CommonITILObject::INCOMING)
                 && isset($item->oldvalues['status'])
                 && $item->oldvalues['status'] == CommonITILObject::SOLVED
             ) {
                 //solution rejected
                 self::AssignLastGroupOnRejectedSolution($item);
+                // reopen linked tickets
+                self::linkedTickets($item, CommonITILObject::ASSIGNED);
             }
         }
 
