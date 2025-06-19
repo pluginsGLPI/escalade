@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [UNRELEASE]
 
 - Fix 8 warnings in the `php-errors.log` file
+- Fix reopening of a cloned ticket when the parent ticket is reopened
 
 ## [2.9.14] - 2025-05-28
 
