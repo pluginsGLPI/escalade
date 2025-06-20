@@ -34,6 +34,7 @@ use Auth;
 use PHPUnit\Framework\TestCase;
 use Session;
 use DbTestCase;
+use Ticket;
 
 abstract class EscaladeTestCase extends DbTestCase
 {

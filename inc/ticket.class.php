@@ -39,6 +39,8 @@ class PluginEscaladeTicket
 {
     public const MANAGED_BY_CORE = -1; // Status managed by core, not by plugin
 
+    private static ?TicketTask $ticket_task = null;
+
     public static function pre_item_update(CommonDBTM $item)
     {
         if ($item instanceof CommonITILObject) {
@@ -231,6 +233,20 @@ class PluginEscaladeTicket
             //set session var to prevent double task message
             $_SESSION['plugin_escalade']['solution'] = true;
 
+            //add a task to inform the escalation
+            if ($_SESSION['glpi_plugins']['escalade']['config']['task_history']) {
+                $group = new Group();
+                $group->getFromDB($first_history['groups_id']);
+                self::setTicketTask([
+                    'tickets_id' => $tickets_id,
+                    'is_private' => true,
+                    '_no_reopen' => true, //prevent reopening ticket
+                    'state'      => Planning::INFO,
+                    'content'    => __("Solution provided, back to the group", "escalade") . " " .
+                        $group->getName(),
+                ]);
+            }
+
             //add the first history group (if not already exist)
             $group_ticket = new Group_Ticket();
             $condition = [
@@ -240,21 +256,6 @@ class PluginEscaladeTicket
             ];
             if (!$group_ticket->find($condition)) {
                 $group_ticket->add($condition);
-            }
-
-            //add a task to inform the escalation
-            if ($_SESSION['glpi_plugins']['escalade']['config']['task_history']) {
-                $group = new Group();
-                $group->getFromDB($first_history['groups_id']);
-                $task = new TicketTask();
-                $task->add([
-                    'tickets_id' => $tickets_id,
-                    'is_private' => true,
-                    '_no_reopen' => true, //prevent reopening ticket
-                    'state'      => Planning::INFO,
-                    'content'    => __("Solution provided, back to the group", "escalade") . " " .
-                        $group->getName(),
-                ]);
             }
         }
     }
@@ -299,20 +300,11 @@ class PluginEscaladeTicket
             //set session var to prevent double task message
             $_SESSION['plugin_escalade']['solution'] = true;
 
-            //add the first history group
-            $group_ticket = new Group_Ticket();
-            $group_ticket->add([
-                'tickets_id' => $tickets_id,
-                'groups_id'  => $rejected_history['groups_id'],
-                'type'       => CommonITILActor::ASSIGN,
-            ]);
-
             //add a task to inform the escalation
             if ($_SESSION['glpi_plugins']['escalade']['config']['task_history']) {
                 $group = new Group();
                 $group->getFromDB($rejected_history['groups_id']);
-                $task = new TicketTask();
-                $task->add([
+                self::setTicketTask([
                     'tickets_id' => $tickets_id,
                     'is_private' => true,
                     'state'      => Planning::INFO,
@@ -320,6 +312,14 @@ class PluginEscaladeTicket
                         $group->getName(),
                 ]);
             }
+
+            //add the first history group
+            $group_ticket = new Group_Ticket();
+            $group_ticket->add([
+                'tickets_id' => $tickets_id,
+                'groups_id'  => $rejected_history['groups_id'],
+                'type'       => CommonITILActor::ASSIGN,
+            ]);
 
             //update status
             if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != self::MANAGED_BY_CORE) {
@@ -410,24 +410,6 @@ class PluginEscaladeTicket
             unset($_SESSION['plugin_escalade']['solution']);
             return $item;
         }
-        if (
-            $_SESSION['glpi_plugins']['escalade']['config']['task_history']
-            && !($item->input['_plugin_escalade_no_history'] ?? false)
-        ) {
-            $group = new Group();
-            $group->getFromDB($groups_id);
-
-            $task = new TicketTask();
-            $comment = $_POST['comment'] ?? '';
-            $task->add([
-                'tickets_id' => $tickets_id,
-                'is_private' => true,
-                'state'      => Planning::INFO,
-                'content'    => Sanitizer::sanitize(
-                    '<p><i>' . sprintf(__('Escalation to the group %s.', 'escalade'), Sanitizer::unsanitize($group->getName())) . '</i></p><hr />',
-                ) . $comment,
-            ]);
-        }
 
         if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != self::MANAGED_BY_CORE) {
             $ticket = new Ticket();
@@ -440,7 +422,7 @@ class PluginEscaladeTicket
         return $item;
     }
 
-    public static function processAfterAddGroup(CommonDBTM $item)
+    public static function processAfterAddGroup(Group_Ticket $item)
     {
         $tickets_id = $item->fields['tickets_id'];
         $groups_id = $item->fields['groups_id'];
@@ -464,6 +446,23 @@ class PluginEscaladeTicket
             $item->input['actortype'] = $item->fields['type'];
             PluginEscaladeTicket::addHistoryOnAddGroup($item);
         }
+
+        $comment = $_POST['comment'] ?? '';
+        $group = new Group();
+        $group->getFromDB($groups_id);
+        $ticket = new Ticket();
+        $ticket->getFromDB($tickets_id);
+
+        //default task content
+        $task_content = '<p><i>' . sprintf(__('Escalation to the group %s.', 'escalade'), Sanitizer::unsanitize($group->getName())) . '</i></p><hr />' . Sanitizer::unsanitize($comment);
+        self::setTicketTask([
+            'tickets_id' => $tickets_id,
+            'is_private' => true,
+            'state'      => Planning::INFO,
+            'content'    => Sanitizer::sanitize($task_content),
+        ]);
+
+        self::addTicketTaskInTimeline();
     }
 
 
@@ -547,6 +546,15 @@ class PluginEscaladeTicket
         ];
         if (!$group_ticket->find($condition)) {
             $ticket_group = new Group_Ticket();
+            self::setTicketTask([
+                'tickets_id' => $tickets_id,
+                'is_private' => true,
+                'state'      => Planning::INFO,
+                // Sanitize before merging with $_POST['comment'] which is already sanitized
+                'content'    => Sanitizer::sanitize(
+                    '<p><i>' . sprintf(__('Escalation to the group %s.', 'escalade'), Sanitizer::unsanitize($group->getName())) . '</i></p><hr />',
+                ),
+            ]);
             if (
                 $ticket_group->add(
                     [
@@ -558,18 +566,6 @@ class PluginEscaladeTicket
                     ],
                 )
             ) {
-                if ($_SESSION['glpi_plugins']['escalade']['config']['task_history']) {
-                    $task = new TicketTask();
-                    $task->add([
-                        'tickets_id' => $tickets_id,
-                        'is_private' => true,
-                        'state'      => Planning::INFO,
-                        // Sanitize before merging with $_POST['comment'] which is already sanitized
-                        'content'    => Sanitizer::sanitize(
-                            '<p><i>' . sprintf(__('Escalation to the group %s.', 'escalade'), Sanitizer::unsanitize($group->getName())) . '</i></p><hr />',
-                        ),
-                    ]);
-                }
 
                 //notified only the last group assigned
                 $ticket = new Ticket();
@@ -1209,5 +1205,52 @@ class PluginEscaladeTicket
             'assigned_groups' => $assigned_groups,
             'condition'     => $condition,
         ]);
+    }
+
+    public static function setTicketTask(array $input): void
+    {
+        if (self::$ticket_task === null) {
+            self::$ticket_task = new TicketTask();
+        }
+
+        if (!self::canAddEscaladeTicketTask()) {
+            return;
+        }
+
+        if (!empty(self::$ticket_task->input)) {
+            return;
+        }
+
+        self::$ticket_task->input = $input;
+    }
+
+    public static function canAddEscaladeTicketTask(): bool
+    {
+        if (!$_SESSION['glpi_plugins']['escalade']['config']['task_history']) {
+            return false;
+        }
+
+        if (
+            isset($_SESSION['plugin_escalade']['ticket_creation'])
+            && $_SESSION['plugin_escalade']['ticket_creation']
+        ) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public static function addTicketTaskInTimeline(): void
+    {
+        if (!self::canAddEscaladeTicketTask()) {
+            return;
+        }
+        self::$ticket_task->add(self::$ticket_task->input);
+        self::resetTicketTask();
+    }
+
+    public static function resetTicketTask(): void
+    {
+        self::$ticket_task = new TicketTask();
     }
 }

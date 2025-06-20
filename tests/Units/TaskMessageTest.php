@@ -128,11 +128,17 @@ final class TaskMessageTest extends EscaladeTestCase
     public function testTaskGroupEscalation()
     {
         $this->login();
-        $config = new PluginEscaladeConfig();
-        $conf = $config->find();
-        $conf = reset($conf);
-        $config->getFromDB($conf['id']);
-        $this->assertGreaterThan(0, $conf['id']);
+
+        // Update escalade config
+        $this->updateItem(
+            PluginEscaladeConfig::class,
+            1,
+            [
+                'remove_group' => 1,
+                'task_history' => 1,
+            ]
+        );
+
         PluginEscaladeConfig::loadInSession();
 
         $ticket = new \Ticket();
