@@ -38,13 +38,18 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginEscaladeTicket
 {
+    public const MANAGED_BY_CORE = -1; // Status managed by core, not by plugin
+
     public static function pre_item_update(CommonDBTM $item)
     {
-        if (isset($item->input['_itil_assign'])) {
-            $item->input['_do_not_compute_status'] = true;
+        if ($item instanceof CommonITILObject) {
+            if (!$item->prepareInputForUpdate($item->input)) {
+                return false;
+            }
         }
-        $config = $_SESSION['glpi_plugins']['escalade']['config'];
+
         $old_groups = [];
+        $old_users = [];
 
         // Get actual actors for the ticket
         if ($item instanceof Ticket) {
@@ -55,11 +60,20 @@ class PluginEscaladeTicket
                     $carry[$item->getActorFieldNameType($type)] = $item->getActorsForType($type);
                     return $carry;
                 },
-                []
+                [],
             );
 
             $old_groups = array_filter($ticket_actors['assign'], function ($actor) {
                 return isset($actor['itemtype']) && $actor['itemtype'] === 'Group';
+            });
+
+            $old_users = array_filter($ticket_actors['assign'], function ($actor) use ($item) {
+                return isset($actor['itemtype'])
+                    && $actor['itemtype'] === 'User'
+                    && (
+                        !isset($item->input['_itil_assign']) ||
+                        (isset($actor['items_id']) && $item->input['_itil_assign']['users_id'] != $actor['items_id'])
+                    );
             });
         }
         if (!isset($item->input['actortype'])) {
@@ -75,11 +89,29 @@ class PluginEscaladeTicket
             }
         }
         if (
-            isset($item->input['_actors']['assign'])
+            isset($item->input['_actors']['assign']) || isset($item->input['_itil_assign'])
         ) {
-            $new_groups = array_filter($item->input['_actors']['assign'], function ($actor) {
-                return isset($actor['itemtype']) && $actor['itemtype'] === 'Group';
-            });
+            $new_groups = $old_groups;
+            if (isset($item->input['_actors']['assign'])) {
+                $new_groups = array_filter($item->input['_actors']['assign'], function ($actor) {
+                    return isset($actor['itemtype']) && $actor['itemtype'] === 'Group';
+                });
+            }
+
+            $new_users = $old_users;
+            if (isset($item->input['_actors']['assign'])) {
+                $new_users = array_filter($item->input['_actors']['assign'], function ($actor) {
+                    return isset($actor['itemtype']) && $actor['itemtype'] === 'User';
+                });
+            } elseif (isset($item->input['_itil_assign']['_type']) && $item->input['_itil_assign']['_type'] === 'user') {
+                $new_users[] = [
+                    'items_id' => $item->input['_itil_assign']['users_id'],
+                    'itemtype' => 'User',
+                    'use_notification' => $item->input['_itil_assign']['use_notification'] ?? false,
+                ];
+            }
+
+
             if (
                 (isset($item->input['actortype']) && $item->input['actortype'] == CommonITILActor::ASSIGN) &&
                 (
@@ -88,12 +120,12 @@ class PluginEscaladeTicket
             ) {
                 //disable notification to prevent notification for old AND new group
                 $item->input['_disablenotif'] = true;
-                if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != -1) {
+                if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != self::MANAGED_BY_CORE) {
                     $item->input['_do_not_compute_status'] = true;
                     $item->input['status'] = $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'];
                 }
-                return PluginEscaladeTicket::addHistoryOnAddGroup($item);
-            } else if (count($old_groups) == count($new_groups)) {
+                self::removeAssignUsers($item);
+            } elseif (count($old_groups) == count($new_groups)) {
                 $old_group_ids = [];
                 foreach ($old_groups as $old_group) {
                     $old_group_ids[$old_group['items_id']] = true;
@@ -102,12 +134,18 @@ class PluginEscaladeTicket
                 foreach ($new_groups as $new_group) {
                     if (!isset($old_group_ids[$new_group['items_id']])) {
                         $item->input['_disablenotif'] = true;
-                        if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != -1) {
+                        if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != self::MANAGED_BY_CORE) {
                             $item->input['_do_not_compute_status'] = true;
                             $item->input['status'] = $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'];
                         }
-                        return PluginEscaladeTicket::addHistoryOnAddGroup($item);
                     }
+                }
+                if (count($old_users) < count($new_users)) {
+                    $old_ids = array_column($old_users, 'items_id');
+                    $keep_users = array_filter($new_users, function ($user) use ($old_ids) {
+                        return !in_array($user['items_id'], $old_ids);
+                    });
+                    self::removeAssignUsers($item, array_column($keep_users, 'items_id'));
                 }
             }
 
@@ -148,7 +186,7 @@ class PluginEscaladeTicket
             if (isset($item->input['status']) && $item->input['status'] == CommonITILObject::CLOSED) {
                 //close linked tickets
                 self::linkedTickets($item, CommonITILObject::CLOSED);
-            } else if (
+            } elseif (
                 isset($item->input['status'])
                 && $item->input['status'] == CommonITILObject::ASSIGNED
                 && isset($item->oldvalues['status'])
@@ -160,7 +198,7 @@ class PluginEscaladeTicket
         }
 
         //ticket qualification on cat change
-        if (isset($item->input['itilcategories_id'])) {
+        if (isset($item->updates['itilcategories_id']) || in_array('itilcategories_id', $item->updates)) {
             self::qualification($item);
         }
 
@@ -211,7 +249,7 @@ class PluginEscaladeTicket
             $condition = [
                 'tickets_id' => $tickets_id,
                 'groups_id'  => $first_history['groups_id'],
-                'type'       => CommonITILActor::ASSIGN
+                'type'       => CommonITILActor::ASSIGN,
             ];
             if (!$group_ticket->find($condition)) {
                 $group_ticket->add($condition);
@@ -228,7 +266,7 @@ class PluginEscaladeTicket
                     '_no_reopen' => true, //prevent reopening ticket
                     'state'      => Planning::INFO,
                     'content'    => __("Solution provided, back to the group", "escalade") . " " .
-                        $group->getName()
+                        $group->getName(),
                 ]);
             }
         }
@@ -279,7 +317,7 @@ class PluginEscaladeTicket
             $group_ticket->add([
                 'tickets_id' => $tickets_id,
                 'groups_id'  => $rejected_history['groups_id'],
-                'type'       => CommonITILActor::ASSIGN
+                'type'       => CommonITILActor::ASSIGN,
             ]);
 
             //add a task to inform the escalation
@@ -292,15 +330,15 @@ class PluginEscaladeTicket
                     'is_private' => true,
                     'state'      => Planning::INFO,
                     'content'    => __("Solution rejected, return to the group", "escalade") . " " .
-                        $group->getName()
+                        $group->getName(),
                 ]);
             }
 
             //update status
-            if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != -1) {
+            if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != self::MANAGED_BY_CORE) {
                 $item->update([
                     'id' => $tickets_id,
-                    'status' => $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status']
+                    'status' => $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'],
                 ]);
             }
         }
@@ -326,7 +364,13 @@ class PluginEscaladeTicket
             return;
         }
 
-        $tickets_id = $item->input['id'];
+        if ($item instanceof Ticket) {
+            $tickets_id = $item->input['id'];
+        } elseif (isset($item->input['tickets_id'])) {
+            $tickets_id = $item->input['tickets_id'];
+        } else {
+            return false;
+        }
         $groups_id  = $item->input['groups_id'];
 
         $item->fields['status'] = CommonITILObject::ASSIGNED;
@@ -339,7 +383,7 @@ class PluginEscaladeTicket
             'ORDER'   => 'id DESC',
             'LIMIT'      => 1,
             'tickets_id' => $tickets_id,
-            'type'       => 2
+            'type'       => 2,
         ]);
 
         $previous_groups_id = 0;
@@ -359,7 +403,7 @@ class PluginEscaladeTicket
             'tickets_id'         => $tickets_id,
             'groups_id'          => $groups_id,
             'groups_id_previous' => $previous_groups_id,
-            'counter'            => $counter
+            'counter'            => $counter,
         ]);
 
         // check if group assignment is made during ticket creation
@@ -395,6 +439,7 @@ class PluginEscaladeTicket
             $group->getFromDB($groups_id);
 
             $task = new TicketTask();
+            $comment = $_POST['comment'] ?? '';
             $task->add([
                 'tickets_id' => $tickets_id,
                 'is_private' => true,
@@ -403,11 +448,11 @@ class PluginEscaladeTicket
             ]);
         }
 
-        if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != -1) {
+        if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != self::MANAGED_BY_CORE) {
             $ticket = new Ticket();
             $ticket->update([
                 'id'     => $tickets_id,
-                'status' => $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status']
+                'status' => $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'],
             ]);
         }
 
@@ -422,6 +467,21 @@ class PluginEscaladeTicket
         //remove old groups (keep last assigned)
         if ($_SESSION['glpi_plugins']['escalade']['config']['remove_group'] == true) {
             self::removeAssignGroups($tickets_id, $groups_id);
+        }
+        // The config is checked in the function.
+        self::removeAssignUsers($item);
+
+        if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != self::MANAGED_BY_CORE) {
+            $ticket = new Ticket();
+            $ticket->update([
+                'id'     => $tickets_id,
+                'status' => $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'],
+            ]);
+        }
+
+        if ($_SESSION['glpi_plugins']['escalade']['config']['show_history'] == true) {
+            $item->input['actortype'] = $item->fields['type'];
+            PluginEscaladeTicket::addHistoryOnAddGroup($item);
         }
     }
 
@@ -466,24 +526,20 @@ class PluginEscaladeTicket
                     = PluginEscaladeUser::getTechnicianGroup(
                         $ticket->input['entities_id'],
                         current($ticket->input['_users_id_assign']),
-                        true
+                        true,
                     );
-                //prevent adding empty group
-                if (empty($ticket->input['_groups_id_assign'])) {
-                    unset($ticket->input['_groups_id_assign']);
-                }
             } else {
                 // All groups
-                $ticket->input['_additional_groups_assigns']
+                $ticket->input['_groups_id_assign']
                     = PluginEscaladeUser::getTechnicianGroup(
                         $ticket->input['entities_id'],
-                        $ticket->input['_users_id_assign'],
-                        false
+                        current($ticket->input['_users_id_assign']),
+                        false,
                     );
-                //prevent adding empty group
-                if (empty($ticket->input['_additional_groups_assigns'])) {
-                    unset($ticket->input['_additional_groups_assigns']);
-                }
+            }
+            //prevent adding empty group
+            if (empty($ticket->input['_groups_id_assign'])) {
+                unset($ticket->input['_groups_id_assign']);
             }
         }
 
@@ -505,7 +561,7 @@ class PluginEscaladeTicket
         $condition = [
             'tickets_id' => $tickets_id,
             'groups_id'  => $groups_id,
-            'type'       => CommonITILActor::ASSIGN
+            'type'       => CommonITILActor::ASSIGN,
         ];
         if (!$group_ticket->find($condition)) {
             $ticket_group = new Group_Ticket();
@@ -517,7 +573,7 @@ class PluginEscaladeTicket
                         'type'                          => CommonITILActor::ASSIGN,
                         '_disablenotif'                 => true,
                         '_plugin_escalade_no_history'   => true,
-                    ]
+                    ],
                 )
             ) {
                 if ($_SESSION['glpi_plugins']['escalade']['config']['task_history']) {
@@ -585,11 +641,38 @@ class PluginEscaladeTicket
             return;
         }
 
+        if (
+            isset($_SESSION['plugin_escalade']['ticket_creation'])
+            && $_SESSION['plugin_escalade']['ticket_creation']
+        ) {
+            return;
+        }
+
+        if (
+            $_SESSION['glpi_plugins']['escalade']['config']['use_assign_user_group'] != 0
+            && $_SESSION['glpi_plugins']['escalade']['config']['use_assign_user_group_creation'] != 0
+            && isset($_SESSION['plugin_escalade']['ticket_creation'])
+            && $_SESSION['plugin_escalade']['ticket_creation']
+        ) {
+            return;
+        }
+
+        if ($type == CommonITILActor::ASSIGN && !$_SESSION['glpi_plugins']['escalade']['config']['remove_tech']) {
+            return;
+        }
+        if ($type == CommonITILActor::REQUESTER && !$_SESSION['glpi_plugins']['escalade']['config']['remove_requester']) {
+            return;
+        }
+
         $tickets_id = $item->input['id'] ?? $item->fields['id'];
+
+        if ($item instanceof Group_Ticket) {
+            $tickets_id = $item->input['tickets_id'] ?? $item->fields['tickets_id'];
+        }
 
         $where_keep = [
             'tickets_id' => $tickets_id,
-            'type' => $type
+            'type' => $type,
         ];
         if ($keep_users_id !== false) {
             $where_keep[] = ['NOT' => ['users_id' => $keep_users_id]];
@@ -597,7 +680,7 @@ class PluginEscaladeTicket
 
         $types = [
             CommonITILActor::ASSIGN => 'assign',
-            CommonITILActor::REQUESTER => 'requester'
+            CommonITILActor::REQUESTER => 'requester',
         ];
 
         $ticket_user = new Ticket_User();
@@ -664,14 +747,14 @@ class PluginEscaladeTicket
             $groups_id = PluginEscaladeUser::getTechnicianGroup(
                 $ticket->fields['entities_id'],
                 $item->fields['users_id'],
-                true
+                true,
             );
         } else {
             // All groups
             $groups_id = PluginEscaladeUser::getTechnicianGroup(
                 $ticket->fields['entities_id'],
                 $item->fields['users_id'],
-                false
+                false,
             );
         }
 
@@ -682,7 +765,7 @@ class PluginEscaladeTicket
             $found = $group_ticket->find([
                 'tickets_id' => $tickets_id,
                 'groups_id'  => $groups_id,
-                'type'       => CommonITILActor::ASSIGN
+                'type'       => CommonITILActor::ASSIGN,
             ]);
             if (!empty($found)) {
                 return false;
@@ -696,7 +779,7 @@ class PluginEscaladeTicket
             $group_ticket->add([
                 'tickets_id' => $tickets_id,
                 'groups_id'  => $groups_id,
-                'type'       => CommonITILActor::ASSIGN
+                'type'       => CommonITILActor::ASSIGN,
             ]);
         } else {
             if ($_SESSION['glpi_plugins']['escalade']['config']['remove_tech']) {
@@ -707,7 +790,7 @@ class PluginEscaladeTicket
         //fix ticket status
         return $ticket->update([
             'id'     => $tickets_id,
-            'status' => CommonITILObject::ASSIGNED
+            'status' => CommonITILObject::ASSIGNED,
         ]);
     }
 
@@ -723,7 +806,7 @@ class PluginEscaladeTicket
     {
         if ($_SESSION['glpi_plugins']['escalade']['config']['close_linkedtickets']) {
             $input = [
-                'status' => $status
+                'status' => $status,
             ];
 
             $tickets = CommonITILObject_CommonITILObject::getAllLinkedTo(Ticket::class, $ticket->getID());
@@ -808,6 +891,7 @@ class PluginEscaladeTicket
             ];
             $user_found = $ticket_user->find($user_condition);
             if (empty($user_found)) {
+                self::removeAssignUsers($item);
                 //add user to ticket
                 $ticket_user->add($user_condition);
                 //remove old tech if needed
@@ -881,7 +965,7 @@ class PluginEscaladeTicket
                 'content'         => __("This ticket has been cloned from the ticket num", "escalade") . " " .
                     $tickets_id,
                 'is_private'      => true,
-                'requesttypes_id' => 6 //other
+                'requesttypes_id' => 6, //other
             ])
         ) {
             Session::addMessageAfterRedirect(__('Error : adding followups', 'escalade'), false, ERROR);
@@ -940,7 +1024,7 @@ class PluginEscaladeTicket
         $found = $tu->find([
             'tickets_id' => $tickets_id,
             'users_id'   => $_SESSION['glpiID'],
-            'type'       => CommonITILActor::ASSIGN
+            'type'       => CommonITILActor::ASSIGN,
         ]);
 
         if (empty($found)) {
@@ -949,8 +1033,8 @@ class PluginEscaladeTicket
                 'id'           => $tickets_id,
                 '_itil_assign' => [
                     'users_id' => $_SESSION['glpiID'],
-                    '_type'    => 'user'
-                ]
+                    '_type'    => 'user',
+                ],
             ]);
         }
     }
@@ -1015,16 +1099,16 @@ class PluginEscaladeTicket
                     'WHERE'  => [
                         'tickets_id' => $options['item']->getID(),
                         'type' => CommonITILActor::ASSIGN,
-                    ]
-                ])
+                    ],
+                ]),
             ],
             // Restrict to ticket entity
             getEntitiesRestrictCriteria(
                 Group::getTable(),
                 '',
                 $options['item']->fields['entities_id'],
-                true
-            )
+                true,
+            ),
         ]);
 
         $itemtypes = [];
@@ -1035,7 +1119,7 @@ class PluginEscaladeTicket
                 'icon' => 'ti ti-arrow-up',
                 'label' => __('Escalate', 'escalade'),
                 'short_label' => __('Escalate', 'escalade'),
-                'item' => new self()
+                'item' => new self(),
             ];
         }
 
@@ -1090,17 +1174,17 @@ class PluginEscaladeTicket
         $_actors['assign'] = array_merge(
             $ticket_actors['User']['assign'] ?? [],
             $ticket_actors['Group']['assign'],
-            $ticket_actors['Supplier']['assign'] ?? []
+            $ticket_actors['Supplier']['assign'] ?? [],
         );
         $_actors['observer'] = array_merge(
             $ticket_actors['User']['observer'] ?? [],
             $ticket_actors['Group']['observer'] ?? [],
-            $ticket_actors['Supplier']['observer'] ?? []
+            $ticket_actors['Supplier']['observer'] ?? [],
         );
         $_actors['requester'] = array_merge(
             $ticket_actors['User']['requester'] ?? [],
             $ticket_actors['Group']['requester'] ?? [],
-            $ticket_actors['Supplier']['requester'] ?? []
+            $ticket_actors['Supplier']['requester'] ?? [],
         );
 
         return $_actors;
@@ -1126,10 +1210,13 @@ class PluginEscaladeTicket
         $PluginEscaladeGroup_Group = new PluginEscaladeGroup_Group();
         $groups_id_filtered = array_keys($PluginEscaladeGroup_Group->getGroups($tickets_id));
         $groups_id_filtered = empty($groups_id_filtered) ? [-1] : $groups_id_filtered;
+
+        $user_config = new PluginEscaladeUser();
+        $user_config->getFromDBByCrit(['users_id' => Session::getLoginUserID()]);
         $condition = [
-            'is_assign' => 1
+            'is_assign' => 1,
         ];
-        if ($config->fields['use_filter_assign_group']) {
+        if ($config->fields['use_filter_assign_group'] && !$user_config->fields['bypass_filter_assign_group']) {
             $condition['id'] = $groups_id_filtered;
         }
         TemplateRenderer::getInstance()->display('@escalade/escalade_form.html.twig', [

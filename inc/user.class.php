@@ -32,16 +32,16 @@ use Glpi\Application\View\TemplateRenderer;
 
 class PluginEscaladeUser extends CommonDBTM
 {
-   /**
-    * @since version 0.85
-    *
-    * @see CommonDBTM::showMassiveActionsSubForm()
-   **/
+    /**
+     * @since version 0.85
+     *
+     * @see CommonDBTM::showMassiveActionsSubForm()
+    **/
     public static function showMassiveActionsSubForm(MassiveAction $ma)
     {
         switch ($ma->getAction()) {
-            case "use_filter_assign_group":
-                Dropdown::showYesNo("use_filter_assign_group", 0, -1, [
+            case "bypass_filter_assign_group":
+                Dropdown::showYesNo("bypass_filter_assign_group", 0, -1, [
                     'width' => '100%',
                 ]);
                 echo "<br><br><input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
@@ -51,21 +51,21 @@ class PluginEscaladeUser extends CommonDBTM
         return true;
     }
 
-   /**
-    * @since version 0.85
-    *
-    * @see CommonDBTM::processMassiveActionsForOneItemtype()
-    **/
+    /**
+     * @since version 0.85
+     *
+     * @see CommonDBTM::processMassiveActionsForOneItemtype()
+     **/
     public static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item, array $ids)
     {
         switch ($ma->getAction()) {
-            case "use_filter_assign_group":
+            case "bypass_filter_assign_group":
                 $escalade_user = new self();
                 $input = $ma->getInput();
 
                 foreach ($ids as $id) {
                     if ($escalade_user->getFromDBByCrit(['users_id' => $id])) {
-                        $escalade_user->fields['use_filter_assign_group'] = $input['use_filter_assign_group'];
+                        $escalade_user->fields['bypass_filter_assign_group'] = $input['bypass_filter_assign_group'];
                         if ($escalade_user->update($escalade_user->fields)) {
                             $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_OK);
                         } else {
@@ -138,7 +138,7 @@ class PluginEscaladeUser extends CommonDBTM
         $is_exist = $this->getFromDBByCrit(['users_id' => $ID]);
 
         if (! $is_exist) { //"Security"
-            $this->fields["use_filter_assign_group"] = 0;
+            $this->fields["bypass_filter_assign_group"] = 0;
         }
 
         TemplateRenderer::getInstance()->display('@escalade/user.html.twig', [

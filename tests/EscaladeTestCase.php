@@ -33,8 +33,9 @@ namespace GlpiPlugin\Escalade\Tests;
 use Auth;
 use PHPUnit\Framework\TestCase;
 use Session;
+use DbTestCase;
 
-abstract class EscaladeTestCase extends TestCase
+abstract class EscaladeTestCase extends DbTestCase
 {
     protected function setUp(): void
     {

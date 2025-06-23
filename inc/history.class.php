@@ -34,7 +34,7 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginEscaladeHistory extends CommonDBTM
 {
-    const HISTORY_LIMIT = 4;
+    public const HISTORY_LIMIT = 4;
 
     public static function getFirstLineForTicket($tickets_id)
     {
@@ -65,8 +65,8 @@ class PluginEscaladeHistory extends CommonDBTM
                                                  [
                                                      'tickets_id' => $tickets_id,
                                                      'groups_id' => [$groups_id, $previous_groups_id],
-                                                     'groups_id_previous' => [$groups_id, $previous_groups_id]
-                                                 ]
+                                                     'groups_id_previous' => [$groups_id, $previous_groups_id],
+                                                 ],
         ]);
 
         return $history;
@@ -87,7 +87,7 @@ class PluginEscaladeHistory extends CommonDBTM
         $filter_groups_id = [];
         if ($_SESSION['glpi_plugins']['escalade']['config']['use_filter_assign_group']) {
             $groups_groups = new PluginEscaladeGroup_Group();
-             $filter_groups_id = $groups_groups->getGroups($tickets_id);
+            $filter_groups_id = $groups_groups->getGroups($tickets_id);
             $use_filter_assign_group = true;
         } else {
             $use_filter_assign_group = false;
@@ -95,18 +95,18 @@ class PluginEscaladeHistory extends CommonDBTM
 
         $plugin_dir = plugin_escalade_geturl();
 
-       //get all line for this ticket
+        //get all line for this ticket
         $group = new Group();
 
         $history = new self();
         $found = $history->find(['tickets_id' => $tickets_id], "date_mod DESC");
         $nb_histories = count($found);
 
-       //remove first line (current assign)
+        //remove first line (current assign)
         $first_group = array_shift($found);
 
         if ($full_history) {
-           //show 1st group
+            //show 1st group
             echo "<div class='escalade_active'>";
             echo "&nbsp;<i class='fas fa-users'></i>&nbsp;";
             if ($group->getFromDB($first_group['groups_id'])) {
@@ -116,7 +116,7 @@ class PluginEscaladeHistory extends CommonDBTM
         }
 
         echo "<div class='escalade'>";
-       //parse all lines
+        //parse all lines
         $i = 0;
         foreach ($found as $key => $hline) {
             echo "<div class='escalade_history'>";
@@ -165,14 +165,14 @@ class PluginEscaladeHistory extends CommonDBTM
             }
         }
 
-       //In case there are more than 10 group changes, a popup can display historical
+        //In case there are more than 10 group changes, a popup can display historical
         if ($nb_histories - 1 > self::HISTORY_LIMIT && !$full_history) {
             echo Ajax::createModalWindow(
                 'full_history',
                 $plugin_dir . "/front/popup_histories.php?tickets_id=" . $tickets_id,
                 [
-                    'title' => __("full assignation history", "escalade")
-                ]
+                    'title' => __("full assignation history", "escalade"),
+                ],
             );
             echo "<a href='#' onclick='full_history.show();' title='" . __("View full history", "escalade") . "'>...</a>";
         }
@@ -274,16 +274,16 @@ class PluginEscaladeHistory extends CommonDBTM
         $result = $DB->doQuery($query);
         $number = $DB->numrows($result);
 
-       //show central list
+        //show central list
         if ($numrows > 0) {
-           //construct link to ticket list
+            //construct link to ticket list
             $options['reset'] = 'reset';
 
             $options['criteria'][0]['field']      = 12; // status
             $options['criteria'][0]['searchtype'] = 'equals';
             if ($type == 'notold') {
                 $options['criteria'][0]['value']   = 'notold';
-            } else if ($type == 'solved') {
+            } elseif ($type == 'solved') {
                 $options['criteria'][0]['value']   = 5;
             }
             $options['criteria'][0]['link']       = 'AND';

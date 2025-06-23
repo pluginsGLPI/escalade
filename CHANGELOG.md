@@ -5,7 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [unrelease] -
+## [UNRELEASE]
+
+- Fix 8 warnings in the `php-errors.log` file
+
+## [2.9.14] - 2025-05-28
+
+- Fix Escalate timeline button execute RuleTicket
+- Fix group assign with `reassign_group_from_cat` option
+- Fix the `remove_tech` option when a user was added to a ticket
+
+
+## [2.9.13] - 2025-03-31
+
+- Fix `show_history` option when using the `Escalate` button.
+- Fix `use_assign_user_group` option wich delete assing users
+- Fix `ticket_last_status` option when using the `Associate myself` button.
+
+## [2.9.12] - 2025-03-20
+
+### Fixed
+
+- Calculation of status when a technician self-assigns to a ticket
+- Fixed `Bypass filtering on the groups assignment` option
+- Fixed technician deletion when ticket updated
+- Fixed `Ticket status after an escalation` option
+- Do not perform escalation when mandatory ticket fields are missing
+
+## [2.9.11] - 2025-03-11
 
 ### Fixed
 
@@ -16,6 +43,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed assignment of requester group to ticket
 - Ensure plugin works seamlessly in external contexts (e.g., from plugins)
 - Fixed `Close cloned tickets at the same time` option
+- Fixed `Bypass filtering on the groups assignment` option
+- Rename the option **"Don't change"** to **"Default (not managed by plugin)"** for the **"Ticket status after an escalation"** setting to reduce ambiguity.
+- Remove the user when a ticket escalates to a group with `remote_tech option` set to `true`
+
+### Security
+
+- Check permissions before displaying group history or escalating access
+- Prevents undefined index `comment` when escalating
 
 ## [2.9.10] - 2024-11-27
 

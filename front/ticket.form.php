@@ -30,12 +30,14 @@
 
 use Glpi\Exception\Http\AccessDeniedHttpException;
 
+Session::checkLoginUser();
+
 /** @var array $CFG_GLPI */
 global $CFG_GLPI;
 
 if (isset($_POST['escalate'])) {
-    $group_id = (int)$_POST['groups_id'];
-    $tickets_id = (int)$_POST['tickets_id'];
+    $group_id = (int) $_POST['groups_id'];
+    $tickets_id = (int) $_POST['tickets_id'];
 
     $ticket = new Ticket();
     if (!$ticket->getFromDB($tickets_id)) {
@@ -50,8 +52,8 @@ if (isset($_POST['escalate'])) {
     $group = new Group();
     if ($group_id === 0 || $group->getFromDB($group_id) === false) {
         Session::addMessageAfterRedirect(__('You must select a group.', 'escalade'), false, ERROR);
-    } else if (!empty($_POST['comment']) && !empty($tickets_id)) {
-        if ((bool)$_POST['is_observer_checkbox']) {
+    } elseif (!empty($_POST['comment']) && !empty($tickets_id)) {
+        if ((bool) $_POST['is_observer_checkbox']) {
             $ticket_user = new Ticket_User();
             $ticket_user->add([
                 'type'       => CommonITILActor::OBSERVER,
@@ -60,16 +62,23 @@ if (isset($_POST['escalate'])) {
             ]);
         }
 
-        $ticket_group = new Group_Ticket();
+        // Update the ticket with actor data in order to execute the necessary rules
+        $_form_object = [
+            '_do_not_compute_status' => true,
+        ];
+        if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != -1) {
+            $_form_object['status'] = $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'];
+        }
+        $updates_ticket = new Ticket();
         if (
-            $ticket_group->add(
-                [
-                    'tickets_id'                    => $tickets_id,
-                    'groups_id'                     => $group_id,
-                    'type'                          => CommonITILActor::ASSIGN,
-                    '_disablenotif'                 => true,
-                    '_plugin_escalade_no_history'   => true,
-                ]
+            $updates_ticket->update(
+                $_POST['ticket_details'] + [
+                    '_actors' => PluginEscaladeTicket::getTicketFieldsWithActors($tickets_id, $group_id),
+                    '_plugin_escalade_no_history' => true, // Prevent a duplicated task to be added
+                    'actortype' => CommonITILActor::ASSIGN,
+                    'groups_id' => $group_id,
+                    '_form_object' => $_form_object,
+                ],
             )
         ) {
             if ($_SESSION['glpi_plugins']['escalade']['config']['task_history']) {
@@ -101,7 +110,7 @@ if (isset($_POST['escalate'])) {
         Session::addMessageAfterRedirect(
             __('You have been redirected because you no longer have access to this ticket'),
             true,
-            ERROR
+            ERROR,
         );
         Html::redirect($CFG_GLPI["root_doc"] . "/front/ticket.php");
     }

@@ -30,6 +30,8 @@
 
 use Glpi\Exception\Http\BadRequestHttpException;
 
+Session::checkLoginUser();
+
 if (!isset($_REQUEST['tickets_id'])) {
     throw new BadRequestHttpException();
 }

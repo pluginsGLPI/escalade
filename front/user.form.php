@@ -28,14 +28,24 @@
  * -------------------------------------------------------------------------
  */
 
+Session::checkLoginUser();
+
 $user = new PluginEscaladeUser();
 
 //Note : no Log is show in User
-
-if (isset($_POST["add"])) {
-    $user->add($_POST);
-} else if (isset($_POST["update"])) {
-    $user->update($_POST);
+if (!Plugin::isPluginActive('escalade')) {
+    echo "Plugin not installed or activated";
+    return;
 }
+
+if ((new User())->can($_POST['users_id'], UPDATE)) {
+    if (isset($_POST["add"])) {
+        $user->add($_POST);
+    } elseif (isset($_POST["update"])) {
+        $user->update($_POST);
+    }
+}
+
+
 
 Html::back();
