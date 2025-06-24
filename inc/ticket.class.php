@@ -31,7 +31,6 @@
 use Glpi\Application\View\TemplateRenderer;
 use Glpi\DBAL\QuerySubQuery;
 
-
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
@@ -584,7 +583,7 @@ class PluginEscaladeTicket
                         'state'      => Planning::INFO,
                         // Sanitize before merging with $_POST['comment'] which is already sanitized
                         'content'    => '<p><i>' . sprintf(__('Escalation to the group %s.', 'escalade'), $group->getName()) . '</i></p><hr />'
-                        . $_POST['comment']
+                        . $_POST['comment'],
                     ]);
                 }
 
@@ -948,7 +947,7 @@ class PluginEscaladeTicket
             !$ticket_ticket->add([
                 'tickets_id_1' => $tickets_id,
                 'tickets_id_2' => $newID,
-                'link'         => CommonITILObject_CommonITILObject::LINK_TO
+                'link'         => CommonITILObject_CommonITILObject::LINK_TO,
             ])
         ) {
             Session::addMessageAfterRedirect(__('Error : adding link between the two tickets', 'escalade'), false, ERROR);

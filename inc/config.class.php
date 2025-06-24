@@ -90,11 +90,12 @@ class PluginEscaladeConfig extends CommonDBTM
             '@escalade/config.html.twig',
             [
                 'id'                => $ID,
+                'item'              => $this,
                 'config'            => $this->fields,
                 'action'            => plugin_escalade_geturl() . 'front/config.form.php',
                 'generic_status'    => self::getGenericStatus("Ticket"),
-                'behaviorlink'      => $behaviorlink ?? ''
-            ]
+                'behaviorlink'      => $behaviorlink ?? '',
+            ],
         );
         return true;
     }

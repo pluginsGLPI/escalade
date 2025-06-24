@@ -90,8 +90,8 @@ if (isset($_POST['escalate'])) {
                         'state'      => Planning::INFO,
                         // Sanitize before merging with $_POST['comment'] which is already sanitized
                         'content'    => '<p><i>' . sprintf(__('Escalation to the group %s.', 'escalade'), $group->getName()) . '</i></p><hr />'
-                        . $_POST['comment']
-                    ]
+                        . $_POST['comment'],
+                    ],
                 );
             }
 

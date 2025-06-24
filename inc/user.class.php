@@ -89,14 +89,14 @@ class PluginEscaladeUser extends CommonDBTM
                     'FKEY' => [
                         'glpi_groups'     => 'id',
                         'glpi_groups_users'   => 'groups_id',
-                    ]
+                    ],
                 ],
             ],
             'WHERE'  => [
                 'glpi_groups_users.users_id' => $userid,
-                'glpi_groups.entities_id'    => $entity
+                'glpi_groups.entities_id'    => $entity,
             ] + getEntitiesRestrictCriteria('glpi_groups', '', $entity, true, true),
-            'ORDER' => "glpi_groups_users.id"
+            'ORDER' => "glpi_groups_users.id",
         ];
 
         if ($filter) {
@@ -169,7 +169,7 @@ class PluginEscaladeUser extends CommonDBTM
                 __("Escalation", "escalade"),
                 0,
                 $item::class,
-                self::getIcon()
+                self::getIcon(),
             );
             return $ong;
         }

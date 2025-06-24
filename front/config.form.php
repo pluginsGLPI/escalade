@@ -59,7 +59,7 @@ if (isset($_POST["add"])) {
         '',
         'admin',
         'PluginEscaladeConfig',
-        ''
+        '',
     );
     $config->showForm(1);
     Html::footer();

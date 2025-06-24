@@ -58,7 +58,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation
                 __("Escalation", "escalade"),
                 0,
                 $item::class,
-                self::getIcon()
+                self::getIcon(),
             );
             return $ong;
         }
@@ -118,7 +118,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation
                 'id'       => $gg['id'],
                 'name'     => $group->getLink(),
                 'comment'  => $group->fields['comment'],
-                'itemtype' => self::class
+                'itemtype' => self::class,
             ];
         }
 
