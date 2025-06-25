@@ -31,13 +31,12 @@
 namespace GlpiPlugin\Escalade\Tests;
 
 use Auth;
-use PHPUnit\Framework\TestCase;
 use Session;
 use DbTestCase;
 
 abstract class EscaladeTestCase extends DbTestCase
 {
-    protected function setUp(): void
+    public function setUp(): void
     {
         /** @var \DBmysql $DB */
         global $DB;
@@ -45,7 +44,7 @@ abstract class EscaladeTestCase extends DbTestCase
         parent::setUp();
     }
 
-    protected function tearDown(): void
+    public function tearDown(): void
     {
         global $DB;
         $DB->rollback();
