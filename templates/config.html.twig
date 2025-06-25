@@ -1,0 +1,399 @@
+{#
+ # -------------------------------------------------------------------------
+ # Escalade plugin for GLPI
+ # -------------------------------------------------------------------------
+ #
+ # LICENSE
+ #
+ # This file is part of Escalade.
+ #
+ # Escalade is free software; you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation; either version 2 of the License, or
+ # (at your option) any later version.
+ #
+ # Escalade is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ # GNU General Public License for more details.
+ #
+ # You should have received a copy of the GNU General Public License
+ # along with Escalade. If not, see <http://www.gnu.org/licenses/>.
+ # -------------------------------------------------------------------------
+ # @copyright Copyright (C) 2015-2023 by Escalade plugin team.
+ # @license   GPLv2 https://www.gnu.org/licenses/gpl-2.0.html
+ # @link      https://github.com/pluginsGLPI/escalade
+ # -------------------------------------------------------------------------
+ #}
+
+{% import "components/form/fields_macros.html.twig" as fields %}
+
+{% set field_options = {'label_class': 'col-8', 'input_class': 'col-4', 'full_width': false} %}
+
+{{ include('components/form/header.html.twig') }}
+<div class="card">
+    <div class="card-body">
+        <form name='form' action='{{ action }}' method='post'>
+            <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="id" value="{{ id }}">
+
+            <div class="hr-text mt-2">
+                <i class="fa-2x ti ti-users-group"></i>
+                <span>{{ __('Group assignment', 'escalade') }}</span>
+            </div>
+            <div class="row">
+                {{ fields.sliderField(
+                    'remove_group',
+                    config["remove_group"],
+                    __('Remove old assign group on new group assign', 'escalade'),
+                    field_options
+                ) }}
+
+                {% set nofirstlast = {0: __("No"), 1: __('First'), 2: __('Last')} %}
+
+                {{ fields.dropdownArrayField(
+                    'use_assign_user_group',
+                    config["use_assign_user_group"],
+                    nofirstlast,
+                    __("Use the technician's group", "escalade"),
+                    {on_change: 'hide_technician_group(this.value)'}|merge(field_options)
+                ) }}
+
+                {% set display_remove_group_options = not config["remove_group"] ? 'd-none' : '' %}
+                {% set display_tech_group_options = not config["use_assign_user_group"] ? 'd-none' : '' %}
+                {% set display_hidden_field = (not config["remove_group"] and config["use_assign_user_group"]) or (config["remove_group"] and not config["use_assign_user_group"]) ? '' : 'd-none' %}
+
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-4">
+                        <div name="remove_group_border" class="hr-text m-0 p-0 {{ display_remove_group_options }}">
+                            <i class="fa-lg ti ti-chevron-up m-0 p-0"></i>
+                        </div>
+                    </div>
+                    <div class="col-3"></div>
+                    <div class="col-3">
+                        <div name="tech_group_border" class="hr-text m-0 p-0 {{ display_tech_group_options }}">
+                            <i class="fa-lg ti ti-chevron-up m-0 p-0"></i>
+                        </div>
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+
+                {{ fields.sliderField(
+                    'show_history',
+                    config["show_history"],
+                    __("Show group assign history visually", "escalade"),
+                    field_options|merge({'add_field_class': display_remove_group_options})
+                ) }}
+
+                {{ fields.hiddenField(
+                    'splitfield',
+                    '',
+                    '',
+                    field_options|merge({'add_field_class': display_hidden_field})
+                ) }}
+
+                {{ fields.sliderField(
+                    'use_assign_user_group_creation',
+                    config["use_assign_user_group_creation"],
+                    __('at creation time', 'escalade'),
+                    field_options|merge({'add_field_class': display_tech_group_options})
+                ) }}
+
+                {{ fields.sliderField(
+                    'solve_return_group',
+                    config["solve_return_group"],
+                    __("Assign ticket to initial group on solve ticket", "escalade"),
+                    field_options|merge({'add_field_class': display_remove_group_options})
+                ) }}
+
+                {{ fields.hiddenField(
+                    'splitfield',
+                    '',
+                    '',
+                    field_options|merge({'add_field_class': display_hidden_field})
+                ) }}
+
+                {{ fields.sliderField(
+                    'use_assign_user_group_modification',
+                    config["use_assign_user_group_modification"],
+                    __('at modification time', 'escalade'),
+                    field_options|merge({'add_field_class': display_tech_group_options})
+                ) }}
+
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-4">
+                        <div name="remove_group_border" class="hr m-0 p-0 {{ display_remove_group_options }}"></div>
+                    </div>
+                    <div class="col-3"></div>
+                    <div class="col-3">
+                        <div name="tech_group_border" class="hr m-0 p-0 {{ display_tech_group_options }}"></div>
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+
+                {{ fields.sliderField(
+                    'reassign_group_from_cat',
+                    config["reassign_group_from_cat"],
+                    __("Assign the technical group on ticket category change", "escalade"),
+                    field_options
+                ) }}
+
+                {{ fields.sliderField(
+                    'use_filter_assign_group',
+                    config["use_filter_assign_group"],
+                    __('Enable filtering on the groups assignment', 'escalade'),
+                    field_options
+                ) }}
+
+                <div class="hr-text">
+                    <i class="fa-2x ti ti-user-cog"></i>
+                    <span>{{ __('User assignment', 'escalade') }}</span>
+                </div>
+
+                {{ fields.sliderField(
+                    'remove_tech',
+                    config["remove_tech"],
+                    __("Remove technician(s) on escalation", "escalade"),
+                    field_options
+                ) }}
+
+                {{ fields.sliderField(
+                    'reassign_tech_from_cat',
+                    config["reassign_tech_from_cat"],
+                    __("Assign the technical manager on ticket category change", "escalade"),
+                    field_options
+                ) }}
+
+                {{ fields.sliderField(
+                    'remove_requester',
+                    config["remove_requester"],
+                    __('Remove requester(s) on escalation', 'escalade'),
+                    field_options
+                ) }}
+
+                {{ fields.sliderField(
+                    'assign_me_as_observer',
+                    config["assign_me_as_observer"],
+                    __("Assign me as observer by default", "escalade"),
+                    field_options
+                ) }}
+            </div>
+
+            <div class="hr-text">
+                <i class="fa-2x ti ti-adjustments-cog"></i>
+                <span>{{ __('Other', 'escalade') }}</span>
+            </div>
+
+            <div class="row">
+                {{ fields.sliderField(
+                    'task_history',
+                    config["task_history"],
+                    __("Escalation history in tasks", "escalade"),
+                    field_options
+                ) }}
+
+                {{ fields.dropdownArrayField(
+                    'ticket_last_status',
+                    config["ticket_last_status"],
+                    generic_status,
+                    __("Ticket status after an escalation", "escalade"),
+                    field_options
+                ) }}
+
+                {{ fields.sliderField(
+                    'cloneandlink_ticket',
+                    config["cloneandlink_ticket"],
+                    __("Clone tickets", "escalade"),
+                    field_options
+                ) }}
+
+                {{ fields.sliderField(
+                    'close_linkedtickets',
+                    config["close_linkedtickets"],
+                    __("Close cloned tickets at the same time", "escalade"),
+                    field_options
+                ) }}
+
+                {% set style_table = config["use_assign_user_group"] ? "" : "display: none !important;" %}
+
+                {% if behaviorlink is not empty %}
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-5">
+                            <div class="alert alert-info" role="alert">
+                                {{ __('Nota: This feature (clone tickets) is duplicate with the', 'escalade') }} <a href="{{ behaviorlink }}"> {{ __('Behavior') }}</a> {{ __('plugin. This last has priority.', 'escalade') }}
+                            </div>
+                        </div>
+                        <div class="col-6"></div>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="hr-text">
+                <i class="fa-2x ti ti-square-rounded-x"></i>
+                <span>{{ __('Display delete button', 'escalade') }}</span>
+            </div>
+
+            <div class="row">
+                {% set table_field_options = {no_label: true, field_class: 'm-0 p-0', mb: 'mb-0', use_checkbox: true} %}
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <table class="table table-bordered text-center rounded">
+                        <tbody>
+                            <tr class="bg-body-tertiary">
+                                <th class="bg-body-secondary"></th>
+                                <th>{{ __('Requester') }}</th>
+                                <th>{{ __('Watcher') }}</th>
+                                <th>{{ __('Assigned to') }}</th>
+                            </tr>
+                            <tr>
+                                <th class="bg-body-tertiary">{{ __('User') }}</th>
+                                <td>
+                                    {{ fields.dropdownYesNo(
+                                        'remove_delete_requester_user_btn',
+                                        config["remove_delete_requester_user_btn"],
+                                        '',
+                                        table_field_options
+                                    ) }}
+                                </td>
+                                <td>
+                                    {{ fields.dropdownYesNo(
+                                        'remove_delete_watcher_user_btn',
+                                        config["remove_delete_watcher_user_btn"],
+                                        '',
+                                        table_field_options
+                                    ) }}
+                                </td>
+                                <td>
+                                    {{ fields.dropdownYesNo(
+                                        'remove_delete_assign_user_btn',
+                                        config["remove_delete_assign_user_btn"],
+                                        '',
+                                        table_field_options
+                                    ) }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="bg-body-tertiary">{{ __('Group') }}</th>
+                                <td>
+                                    {{ fields.dropdownYesNo(
+                                        'remove_delete_requester_group_btn',
+                                        config["remove_delete_requester_group_btn"],
+                                        '',
+                                        table_field_options
+                                    ) }}
+                                </td>
+                                <td>
+                                    {{ fields.dropdownYesNo(
+                                        'remove_delete_watcher_group_btn',
+                                        config["remove_delete_watcher_group_btn"],
+                                        '',
+                                        table_field_options
+                                    ) }}
+                                </td>
+                                <td>
+                                    {{ fields.dropdownYesNo(
+                                        'remove_delete_assign_group_btn',
+                                        config["remove_delete_assign_group_btn"],
+                                        '',
+                                        table_field_options
+                                    ) }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="bg-body-tertiary">{{ __('Supplier') }}</th>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    {{ fields.dropdownYesNo(
+                                        'remove_delete_assign_supplier_btn',
+                                        config["remove_delete_assign_supplier_btn"],
+                                        '',
+                                        table_field_options
+                                    ) }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="hr mt-3 mb-3"></div>
+            <div class="hstack gap-1">
+                <div class="pe-5 ms-auto">
+                    <button class="btn btn-primary" type="submit" name="update" value="1">
+                        <i class="ti ti-device-floppy"></i>
+                        <span>{{ _x('button', 'Save') }}</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        const remove_group_checkbox = document.querySelector('[name="remove_group"][type="checkbox"]');
+        const remove_group_elements = document.querySelectorAll('[for*="show-history"], [for*="solve-return-group"]');
+        remove_group_checkbox.addEventListener('click', function() {
+            const selectValue = document.querySelector('[name="use_assign_user_group"]').value;
+            hide_show_hidden_fields(selectValue);
+            remove_group_elements.forEach(function(element) {
+                const parentDiv = element.closest('.form-field');
+                if (parentDiv.classList.contains('d-none')) {
+                    parentDiv.classList.remove('d-none');
+                } else {
+                    parentDiv.classList.add('d-none');
+                }
+            });
+            const remove_group_border = document.querySelectorAll('[name*="remove_group_border"]');
+            remove_group_border.forEach(function(element) {
+                if (element.classList.contains('d-none')) {
+                    element.classList.remove('d-none');
+                } else {
+                    element.classList.add('d-none');
+                }
+            });
+        });
+    })
+    function hide_technician_group(val) {
+        const technician_group_elements = document.querySelectorAll('[for*="use-assign-user-group-modification"], [for*="use-assign-user-group-creation"]');
+        hide_show_hidden_fields(val);
+        technician_group_elements.forEach(function(element) {
+            const parentDiv = element.closest('.form-field');
+            if (parentDiv.classList.contains('d-none')) {
+                parentDiv.classList.remove('d-none');
+            } else {
+                if (val == 0) {
+                    parentDiv.classList.add('d-none');
+                }
+            }
+        });
+        const tech_group_border = document.querySelectorAll('[name*="tech_group_border"]');
+        tech_group_border.forEach(function(element) {
+            if (element.classList.contains('d-none')) {
+                element.classList.remove('d-none');
+            } else {
+                if (val == 0) {
+                    element.classList.add('d-none');
+                }
+            }
+        });
+    }
+    function hide_show_hidden_fields(val) {
+        const remove_group_checkbox = document.querySelector('[name="remove_group"][type="checkbox"]');
+        const hidden_elements = document.querySelectorAll('[for*="splitfield"]');
+        if ((!remove_group_checkbox.checked && val == 0) || (remove_group_checkbox.checked && val != 0)) {
+            hidden_elements.forEach(function(element) {
+                const parentDiv = element.closest('.form-field');
+                parentDiv.classList.add('d-none');
+            });
+        } else {
+            hidden_elements.forEach(function(element) {
+                const parentDiv = element.closest('.form-field');
+                parentDiv.classList.remove('d-none');
+            });
+        }
+    }
+</script>

@@ -28,7 +28,6 @@
  * -------------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
 Session::checkLoginUser();
 
 if (! isset($_GET["id"])) {
@@ -55,7 +54,13 @@ if (isset($_POST["add"])) {
     $config->delete($_POST, true);
     Html::redirect("./config.form.php");
 } else {
-    Html::header(__("Escalation", "escalade"), '', "plugins", "escalade", "config");
+    Html::header(
+        PluginEscaladeConfig::getTypeName(Session::getPluralNumber()),
+        '',
+        'admin',
+        'PluginEscaladeConfig',
+        '',
+    );
     $config->showForm(1);
     Html::footer();
 }
