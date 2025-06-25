@@ -33,7 +33,12 @@ namespace GlpiPlugin\Escalade\Tests\Units;
 use CommonITILActor;
 use GlpiPlugin\Escalade\Tests\EscaladeTestCase;
 use Group_User;
+use NotificationEvent;
+use NotificationTarget;
 use PluginEscaladeConfig;
+use PluginEscaladeNotification;
+use PluginEscaladeTicket;
+use QueuedNotification;
 
 final class GroupEscalationTest extends EscaladeTestCase
 {
@@ -810,5 +815,304 @@ final class GroupEscalationTest extends EscaladeTestCase
         $history = new \PluginEscaladeHistory();
         $this->assertEquals(2, count($history->find(['tickets_id' => $t_id])));
         $this->assertEquals(1, count($history->find(['tickets_id' => $t_id, 'groups_id' => $group1_id])));
+    }
+
+    /**
+     * Test that the standard target "Group in charge of the ticket"
+     * sends notifications to users of both groups (old and new) during an escalation
+     */
+    public function testStandardGroupNotification()
+    {
+        global $CFG_GLPI;
+
+        $this->login();
+
+        $config = new PluginEscaladeConfig();
+        $conf = $config->find();
+        $conf = reset($conf);
+        $config->getFromDB($conf['id']);
+        $this->assertGreaterThan(0, $conf['id']);
+
+        // Update escalade config
+        $this->assertTrue($config->update([
+            'show_history' => 1,
+        ] + $conf));
+
+        PluginEscaladeConfig::loadInSession();
+
+        // Enable notifications for the test
+        $CFG_GLPI['use_notifications'] = 1;
+        $CFG_GLPI['notifications_mailing'] = 1;
+
+        // Create two groups with users
+        $group1 = $this->createGroupWithUsers('test_standard_group_1', 2);
+        $group2 = $this->createGroupWithUsers('test_standard_group_2', 2);
+
+        // Clear the notification queue
+        $this->cleanQueuedNotifications();
+
+        // Create a ticket assigned to the first group
+        $ticket = new \Ticket();
+        $ticket_id = $ticket->add([
+            'name' => 'Test notification standard',
+            'content' => 'Contenu de test',
+            '_actors' => [
+                'assign' => [
+                    [
+                        'items_id' => $group1['id'],
+                        'itemtype' => 'Group',
+                    ],
+                ],
+            ],
+        ]);
+        $this->assertGreaterThan(0, $ticket_id);
+
+        // Clear the notification queue again
+        $this->cleanQueuedNotifications();
+
+        // Escalate the ticket to the second group
+        $this->assertTrue($ticket->update([
+            'id' => $ticket_id,
+            '_actors' => [
+                'assign' => [
+                    [
+                        'items_id' => $group2['id'],
+                        'itemtype' => 'Group',
+                    ],
+                ],
+            ],
+        ]));
+
+        // Check notifications
+        $queued = new QueuedNotification();
+        $notifications = $queued->find();
+
+        // Get the list of notification recipients (emails)
+        $notification_recipients = [];
+        foreach ($notifications as $notif) {
+            $notification_recipients[] = $notif['recipient'];
+        }
+
+        // Check that users from both groups received notifications
+        $group1_user_emails = array_column($group1['users'], 'email');
+        $group2_user_emails = array_column($group2['users'], 'email');
+
+        // At least one user from each group should have received a notification
+        $group1_notified = false;
+        $group2_notified = false;
+
+        foreach ($group1_user_emails as $email) {
+            if (in_array($email, $notification_recipients)) {
+                $group1_notified = true;
+                break;
+            }
+        }
+
+        foreach ($group2_user_emails as $email) {
+            if (in_array($email, $notification_recipients)) {
+                $group2_notified = true;
+                break;
+            }
+        }
+
+        $this->assertTrue($group1_notified, "No user from the original group received a notification");
+        $this->assertTrue($group2_notified, "No user from the new group received a notification");
+    }
+
+    /**
+     * Test that the "Last group escalated in the ticket" target
+     * only sends notifications to users of the last escalated group
+     */
+    public function testLastEscalatedGroupNotification()
+    {
+        global $CFG_GLPI;
+
+        $this->login();
+
+        $config = new PluginEscaladeConfig();
+        $conf = $config->find();
+        $conf = reset($conf);
+        $config->getFromDB($conf['id']);
+        $this->assertGreaterThan(0, $conf['id']);
+
+        // Update escalade config
+        $this->assertTrue($config->update([
+            'show_history' => 1,
+        ] + $conf));
+
+        PluginEscaladeConfig::loadInSession();
+
+        // Enable notifications for the test
+        $CFG_GLPI['use_notifications'] = 1;
+        $CFG_GLPI['notifications_mailing'] = 1;
+
+        // Modify the notification to use the escalation target
+        $notification = new \Notification();
+        $notification->getFromDBByCrit(['itemtype' => 'Ticket', 'event' => 'assign_group']);
+
+        // Add our new target
+        $this->setNotificationTargets(
+            $notification->fields['id'],
+            [
+                PluginEscaladeNotification::NTRGT_TICKET_LAST_ESCALADE_GROUP,
+            ],
+        );
+
+        // Create two groups with users
+        $group1 = $this->createGroupWithUsers('test_escalated_group_1', 2);
+        $group2 = $this->createGroupWithUsers('test_escalated_group_2', 2);
+
+        // Create a ticket assigned to the first group
+        $ticket = new \Ticket();
+        $ticket_id = $ticket->add([
+            'name' => 'Test notification escalade',
+            'content' => 'Contenu de test',
+            '_actors' => [
+                'assign' => [
+                    [
+                        'items_id' => $group1['id'],
+                        'itemtype' => 'Group',
+                    ],
+                ],
+            ],
+        ]);
+        $this->assertGreaterThan(0, $ticket_id);
+
+        // Clear the notification queue again
+        $this->cleanQueuedNotifications();
+
+        // Escalate the ticket to the second group
+        \PluginEscaladeTicket::climb_group($ticket_id, $group2['id'], true);
+
+        // Check notifications
+        $queued = new QueuedNotification();
+        $notifications = $queued->find();
+
+        // Get the list of notification recipients (emails)
+        $notification_recipients = [];
+        foreach ($notifications as $notif) {
+            $notification_recipients[] = $notif['recipient'];
+        }
+
+        // Check that only users from the last group received notifications
+        $group1_user_emails = array_column($group1['users'], 'email');
+        $group2_user_emails = array_column($group2['users'], 'email');
+
+        // Check if users from group 1 received a notification
+        $group1_notified = false;
+        foreach ($group1_user_emails as $email) {
+            if (in_array($email, $notification_recipients)) {
+                $group1_notified = true;
+                break;
+            }
+        }
+
+        // Check if users from group 2 received a notification
+        $group2_notified = false;
+        foreach ($group2_user_emails as $email) {
+            if (in_array($email, $notification_recipients)) {
+                $group2_notified = true;
+                break;
+            }
+        }
+
+        $this->assertFalse($group1_notified, "Users from the original group should not receive a notification");
+        $this->assertTrue($group2_notified, "Users from the new group should receive a notification");
+    }
+
+    /**
+     * Creates a group with users for testing
+     *
+     * @param string $name Group name
+     * @param int $num_users Number of users to create
+     * @return array Group details with its users
+     */
+    private function createGroupWithUsers($name, $num_users = 2)
+    {
+        // Create the group
+        $group_id = $this->createItem(
+            \Group::class,
+            [
+                'name' => $name,
+            ],
+        )->getID();
+
+        $users = [];
+
+        // Create users and add them to the group
+        for ($i = 0; $i < $num_users; $i++) {
+            $user_id = $this->createItem(
+                \User::class,
+                [
+                    'name' => "{$name}_user_{$i}",
+                ],
+            )->getID();
+
+            $this->createItem(
+                \UserEmail::class,
+                [
+                    'users_id' => $user_id,
+                    'email' => "{$name}_user_{$i}@example.com",
+                ],
+            );
+
+            // Add the user to the group
+            $group_user_id = $this->createItem(
+                \Group_User::class,
+                [
+                    'users_id' => $user_id,
+                    'groups_id' => $group_id,
+                ],
+            )->getID();
+
+            $users[] = [
+                'id' => $user_id,
+                'name' => "{$name}_user_{$i}",
+                'email' => "{$name}_user_{$i}@example.com",
+            ];
+        }
+
+        return [
+            'id' => $group_id,
+            'name' => $name,
+            'users' => $users,
+        ];
+    }
+
+    /**
+     * Cleans the notification queue
+     */
+    private function cleanQueuedNotifications()
+    {
+        global $DB;
+        $DB->doQuery("TRUNCATE TABLE `glpi_queuednotifications`");
+
+        $queued = new QueuedNotification();
+        $notifications = $queued->find();
+        $this->assertEmpty($notifications, "The notification queue is not empty after cleaning");
+    }
+
+    /**
+     * Adds notification targets
+     */
+    private function setNotificationTargets($notification_id, array $targets)
+    {
+        //Clear targets
+        $notification_target = new \NotificationTarget();
+        foreach ($notification_target->find(['notifications_id' => $notification_id]) as $target) {
+            $notification_target->delete(['id' => $target['id']]);
+        }
+
+        //Set new targets
+        $notification_target = new \NotificationTarget();
+        foreach ($targets as $target) {
+            $notification_target->add([
+                'notifications_id' => $notification_id,
+                'type' => 1, // Type 1 = To
+                'items_id' => $target,
+            ]);
+        }
+
+        $this->assertEquals(count($targets), count($notification_target->find(['notifications_id' => $notification_id])), "The number of notification targets doesn't match after addition");
     }
 }
