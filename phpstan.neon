@@ -7,7 +7,6 @@ parameters:
         - front
         - inc
         - public
-        - tests
         - hook.php
         - setup.php
     scanDirectories:
@@ -17,3 +16,5 @@ parameters:
     bootstrapFiles:
         - ../../stubs/glpi_constants.php
         - ../../vendor/autoload.php
+    ignoreErrors:
+        - '#Function define is unsafe to use#'

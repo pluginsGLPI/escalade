@@ -27,6 +27,7 @@
  * @link      https://github.com/pluginsGLPI/escalade
  * -------------------------------------------------------------------------
  */
+
 use Glpi\Application\View\TemplateRenderer;
 
 if (!defined('GLPI_ROOT')) {
