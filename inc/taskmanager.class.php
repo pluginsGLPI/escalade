@@ -28,7 +28,7 @@
  * -------------------------------------------------------------------------
  */
 
-class PluginEscaladeTask_Manager
+class PluginEscaladeTaskmanager
 {
     private static ?TicketTask $ticket_task = null;
 
