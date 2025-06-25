@@ -28,11 +28,12 @@
  * -------------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
+use Glpi\Exception\Http\BadRequestHttpException;
+
 Session::checkLoginUser();
 
 if (! isset($_REQUEST['tickets_id'])) {
-    Html::displayErrorAndDie(__("missing parameters", "escalade"));
+    throw new BadRequestHttpException();
 }
 
 PluginEscaladeTicket::assign_me((int) $_REQUEST['tickets_id']);

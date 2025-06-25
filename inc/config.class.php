@@ -28,13 +28,45 @@
  * -------------------------------------------------------------------------
  */
 
+use Glpi\Application\View\TemplateRenderer;
+
 class PluginEscaladeConfig extends CommonDBTM
 {
     public static $rightname  = 'config';
 
+    public static function getMenuName()
+    {
+        return __('Escalade', 'escalade');
+    }
+
     public static function getTypeName($nb = 0)
     {
         return __("Configuration Escalade plugin", "escalade");
+    }
+
+    public static function getSearchURL($full = true)
+    {
+        return '/plugins/escalade/front/config.form.php';
+    }
+
+    public static function getIcon()
+    {
+        return "ti ti-escalator-up";
+    }
+
+    public static function getMenuContent()
+    {
+        $links = [];
+
+        $menu = [
+            'title'   => self::getMenuName(),
+            'page'    => self::getSearchURL(false),
+            'icon'    => self::getIcon(),
+            'options' => [],
+            'links'   => $links,
+        ];
+
+        return $menu;
     }
 
     /**
@@ -249,114 +281,20 @@ class PluginEscaladeConfig extends CommonDBTM
         echo "</td>";
         echo "</tr></table>";
         if (Plugin::isPluginActive('behaviors')) {
-            echo "<i>" . str_replace(
-                '##link##',
-                $CFG_GLPI["root_doc"] . "/front/config.form.php?forcetab=PluginBehaviorsConfig%241",
-                __(
-                    "Nota: This feature (creation part) is duplicate with the <a href='##link##'>Behavior</a>plugin. This last has priority.",
-                    "escalade",
-                ),
-            ) . "</i>";
+            $behaviorlink = $CFG_GLPI["root_doc"] . "/front/config.form.php?forcetab=PluginBehaviorsConfig%241";
         }
-        echo "</td>";
-        echo "</tr>";
 
-        $rand = mt_rand();
-        echo "<tr class='tab_bg_1'>";
-        echo "<td><label for='dropdown_remove_requester$rand'>" . __("Remove requester(s) on escalation", "escalade") . "</label></td>";
-        echo "<td>";
-        Dropdown::showYesNo("remove_requester", $this->fields["remove_requester"], -1, [
-            'width' => '100%',
-            'rand' => $rand,
-        ]);
-        echo "</td>";
-        echo "</tr>";
-
-        $rand = mt_rand();
-        echo "<tr class='tab_bg_1'>";
-        echo "<td><label for='dropdown_remove_delete_group_btn$rand'>";
-        echo __("Display delete button", "escalade") . "</td>";
-        echo "<td colspan='3'>";
-
-        echo "<table style='width: 100%'>";
-        echo "<tr>";
-        echo "<th></th>";
-        echo "<th>" . __("Requester") . "</th>";
-        echo "<th>" . __("Watcher") . "</th>";
-        echo "<th>" . __("Assigned to") . "</th>";
-        echo "</tr>";
-        echo "<tr>";
-        echo "<th>" . __("User") . "</th>";
-        echo "<td>";
-        Dropdown::showYesNo(
-            "remove_delete_requester_user_btn",
-            $this->fields["remove_delete_requester_user_btn"],
+        TemplateRenderer::getInstance()->display(
+            '@escalade/config.html.twig',
+            [
+                'id'                => $ID,
+                'item'              => $this,
+                'config'            => $this->fields,
+                'action'            => plugin_escalade_geturl() . 'front/config.form.php',
+                'generic_status'    => self::getGenericStatus("Ticket"),
+                'behaviorlink'      => $behaviorlink ?? '',
+            ],
         );
-        echo "</td>";
-        echo "<td>";
-        Dropdown::showYesNo(
-            "remove_delete_watcher_user_btn",
-            $this->fields["remove_delete_watcher_user_btn"],
-        );
-        echo "</td>";
-        echo "<td>";
-        Dropdown::showYesNo(
-            "remove_delete_assign_user_btn",
-            $this->fields["remove_delete_assign_user_btn"],
-        );
-        echo "</td>";
-        echo "</tr>";
-        echo "<tr>";
-        echo "<th>" . __("Group") . "</th>";
-        echo "<td>";
-        Dropdown::showYesNo(
-            "remove_delete_requester_group_btn",
-            $this->fields["remove_delete_requester_group_btn"],
-        );
-        echo "</td>";
-        echo "<td>";
-        Dropdown::showYesNo(
-            "remove_delete_watcher_group_btn",
-            $this->fields["remove_delete_watcher_group_btn"],
-        );
-        echo "</td>";
-        echo "<td>";
-        Dropdown::showYesNo(
-            "remove_delete_assign_group_btn",
-            $this->fields["remove_delete_assign_group_btn"],
-        );
-        echo "</td>";
-        echo "</tr>";
-        echo "<tr>";
-        echo "<th>" . __("Supplier") . "</th>";
-        echo "<td colspan='2'></td>";
-        echo "<td>";
-        Dropdown::showYesNo(
-            "remove_delete_assign_supplier_btn",
-            $this->fields["remove_delete_assign_supplier_btn"],
-        );
-        echo "</td>";
-        echo "</tr>";
-        echo "</table>";
-        echo "</td>";
-        echo "</tr>";
-
-        $rand = mt_rand();
-        echo "<tr class='tab_bg_1'>";
-        echo "<td><label for='dropdown_use_filter_assign_group$rand'>";
-        echo __("Enable filtering on the groups assignment", "escalade") . "</td>";
-        echo "<td>";
-        Dropdown::showYesNo("use_filter_assign_group", $this->fields["use_filter_assign_group"], -1, [
-            'width' => '100%',
-            'rand' => $rand,
-        ]);
-        echo "</td>";
-        echo "<td colspan='2'></td>";
-        echo "</tr>";
-
-        $options['candel']       = false;
-        $this->showFormButtons($options);
-        echo "</div>";
         return true;
     }
 
@@ -383,9 +321,21 @@ class PluginEscaladeConfig extends CommonDBTM
         $_SESSION['glpi_plugins']['escalade']['config'] = $config->fields;
     }
 
-    public static function dropdownGenericStatus($itemtype, $name, $rand, $value = CommonITILObject::INCOMING)
+    public static function getGenericStatus($itemtype)
     {
-        $item = new $itemtype();
+        switch ($itemtype) {
+            case 'Ticket':
+                $item = new Ticket();
+                break;
+            case 'Change':
+                $item = new Change();
+                break;
+            case 'Problem':
+                $item = new Problem();
+                break;
+            default:
+                return [];
+        }
 
         $tab[PluginEscaladeTicket::MANAGED_BY_CORE] = __("Default (not managed by plugin)", "escalade");
 
@@ -395,10 +345,6 @@ class PluginEscaladeConfig extends CommonDBTM
             $i++;
         }
 
-        Dropdown::showFromArray($name, $tab, [
-            'value' => $value,
-            'width' => '80%',
-            'rand' => $rand,
-        ]);
+        return $tab;
     }
 }

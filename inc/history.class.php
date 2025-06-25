@@ -29,7 +29,7 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
+    throw new Exception("Sorry. You can't access directly to this file");
 }
 
 class PluginEscaladeHistory extends CommonDBTM
@@ -154,7 +154,7 @@ class PluginEscaladeHistory extends CommonDBTM
             $use_filter_assign_group = false;
         }
 
-        $plugin_dir = Plugin::getWebDir('escalade');
+        $plugin_dir = plugin_escalade_geturl();
 
         //get all line for this ticket
         $group = new Group();
