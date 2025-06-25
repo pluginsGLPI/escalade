@@ -56,7 +56,7 @@
                     config["use_assign_user_group"],
                     nofirstlast,
                     __("Use the technician's group", "escalade"),
-                    { on_change: 'hide_technician_group(this.value)' }|merge(field_options)
+                    {on_change: 'hide_technician_group(this.value)'}|merge(field_options)
                 ) }}
 
                 {% set display_remove_group_options = not config["remove_group"] ? 'd-none' : '' %}

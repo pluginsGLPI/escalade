@@ -48,7 +48,7 @@ $ticket = new Ticket();
 $ticket->getFromDB((int) $_REQUEST['tickets_id']);
 
 if (!$ticket->canAssign()) {
-    Html::displayRightError();
+    throw new Glpi\Exception\Http\AccessDeniedHttpException();
 }
 
 

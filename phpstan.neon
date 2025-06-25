@@ -13,8 +13,6 @@ parameters:
         - ../../src/Glpi/Exception
         - ../../inc
         - ../../src
-    ignoreErrors:
-        - '#^Invalid type Glpi\\Exception\\Http\\[A-z-\-:]* to throw*#'
     bootstrapFiles:
         - ../../stubs/glpi_constants.php
         - ../../vendor/autoload.php
