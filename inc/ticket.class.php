@@ -29,7 +29,7 @@
  */
 
 use Glpi\Application\View\TemplateRenderer;
-use Glpi\Toolbox\Sanitizer;
+use Glpi\DBAL\QuerySubQuery;
 
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
@@ -423,9 +423,8 @@ class PluginEscaladeTicket
                 'tickets_id' => $tickets_id,
                 'is_private' => true,
                 'state'      => Planning::INFO,
-                'content'    => Sanitizer::sanitize(
-                    '<p><i>' . sprintf(__('Escalation to the group %s.', 'escalade'), Sanitizer::unsanitize($group->getName())) . '</i></p><hr />',
-                ) . $comment,
+                'content'    => '<p><i>' . sprintf(__('Escalation to the group %s.', 'escalade'), $group->getName()) . '</i></p><hr />'
+                    . $comment,
             ]);
         }
 
@@ -565,9 +564,8 @@ class PluginEscaladeTicket
                         'is_private' => true,
                         'state'      => Planning::INFO,
                         // Sanitize before merging with $_POST['comment'] which is already sanitized
-                        'content'    => Sanitizer::sanitize(
-                            '<p><i>' . sprintf(__('Escalation to the group %s.', 'escalade'), Sanitizer::unsanitize($group->getName())) . '</i></p><hr />',
-                        ),
+                        'content'    => '<p><i>' . sprintf(__('Escalation to the group %s.', 'escalade'), $group->getName()) . '</i></p><hr />'
+                        . $_POST['comment'] ?? '',
                     ]);
                 }
 
@@ -794,14 +792,14 @@ class PluginEscaladeTicket
                 'status' => $status,
             ];
 
-            $tickets = Ticket_Ticket::getLinkedTicketsTo($ticket->getID());
+            $tickets = CommonITILObject_CommonITILObject::getAllLinkedTo(Ticket::class, $ticket->getID());
             if (count($tickets)) {
                 $linkedTicket = new Ticket();
                 foreach ($tickets as $data) {
-                    $input['id'] = $data['tickets_id'];
+                    $input['id'] = $data['items_id_2'];
                     if (
                         $linkedTicket->can($input['id'], UPDATE)
-                        && $data['link'] == Ticket_Ticket::LINK_TO
+                        && $data['link'] == CommonITILObject_CommonITILObject::LINK_TO
                     ) {
                         $linkedTicket->update($input);
                     }
@@ -913,7 +911,6 @@ class PluginEscaladeTicket
 
         //set fields
         $fields = $ticket->fields;
-        $fields = array_map(['Toolbox', 'addslashes_deep'], $fields);
         $fields['id']                  = 0;
         $fields['_users_id_requester'] = 0;
         $fields['status']              = CommonITILObject::INCOMING;
@@ -933,7 +930,7 @@ class PluginEscaladeTicket
             !$ticket_ticket->add([
                 'tickets_id_1' => $tickets_id,
                 'tickets_id_2' => $newID,
-                'link'         => Ticket_Ticket::LINK_TO,
+                'link'         => CommonITILObject_CommonITILObject::LINK_TO,
             ])
         ) {
             Session::addMessageAfterRedirect(__('Error : adding link between the two tickets', 'escalade'), false, ERROR);
@@ -1203,11 +1200,11 @@ class PluginEscaladeTicket
             $condition['id'] = $groups_id_filtered;
         }
         TemplateRenderer::getInstance()->display('@escalade/escalade_form.html.twig', [
-            'action'          => PLUGIN_ESCALADE_WEBDIR . '/front/ticket.form.php',
-            'ticket'          => $options['parent'],
+            'action'                => plugin_escalade_geturl() . 'front/ticket.form.php',
+            'ticket'                => $options['parent'],
             'assign_me_as_observer' => $config->fields['assign_me_as_observer'],
-            'assigned_groups' => $assigned_groups,
-            'condition'     => $condition,
+            'assigned_groups'       => $assigned_groups,
+            'condition'             => $condition,
         ]);
     }
 }
