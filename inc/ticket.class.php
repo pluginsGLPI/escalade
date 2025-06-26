@@ -907,7 +907,7 @@ class PluginEscaladeTicket
         $ticket = new Ticket();
         if (!$ticket->getFromDB($tickets_id)) {
             Session::addMessageAfterRedirect(__('Error : get old ticket', 'escalade'), false, ERROR);
-            return false;
+            return;
         }
 
         //set fields
@@ -922,7 +922,7 @@ class PluginEscaladeTicket
         //create new ticket (duplicate from previous)
         if (!$newID = $ticket->add($fields)) {
             Session::addMessageAfterRedirect(__('Error : adding new ticket', 'escalade'), false, ERROR);
-            return false;
+            return;
         }
 
         //add link between them
@@ -935,7 +935,7 @@ class PluginEscaladeTicket
             ])
         ) {
             Session::addMessageAfterRedirect(__('Error : adding link between the two tickets', 'escalade'), false, ERROR);
-            return false;
+            return;
         }
 
         //add a followup to indicate duplication
@@ -952,7 +952,7 @@ class PluginEscaladeTicket
             ])
         ) {
             Session::addMessageAfterRedirect(__('Error : adding followups', 'escalade'), false, ERROR);
-            return false;
+            return;
         }
 
         //add actors to the new ticket (without assign)
@@ -963,7 +963,7 @@ class PluginEscaladeTicket
       WHERE tickets_id = $tickets_id AND type != 2";
         if (!$res = $DB->doQuery($query_users)) {
             Session::addMessageAfterRedirect(__('Error : adding actors (user)', 'escalade'), false, ERROR);
-            return false;
+            return;
         }
         //groups
         $query_groups = "INSERT INTO glpi_groups_tickets
@@ -972,7 +972,7 @@ class PluginEscaladeTicket
       WHERE tickets_id = $tickets_id AND type != 2";
         if (!$res = $DB->doQuery($query_groups)) {
             Session::addMessageAfterRedirect(__('Error : adding actors (group)', "escalade"), false, ERROR);
-            return false;
+            return;
         }
 
         //add documents
@@ -982,7 +982,7 @@ class PluginEscaladeTicket
       WHERE items_id = $tickets_id AND itemtype = 'Ticket'";
         if (!$res = $DB->doQuery($query_docs)) {
             Session::addMessageAfterRedirect(__('Error : adding documents', 'escalade'), false, ERROR);
-            return false;
+            return;
         }
 
         //add history to the new ticket
