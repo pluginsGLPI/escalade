@@ -126,10 +126,17 @@ class PluginEscaladeConfig extends CommonDBTM
 
     public static function getGenericStatus($itemtype)
     {
-        if ($itemtype instanceof CommonGLPI) {
-            $itemtype = $itemtype::getType();
+        switch ($itemtype) {
+            case 'Ticket':
+                $item = new Ticket();
+                break;
+            case 'Change':
+                $item = new Change();
+                break;
+            case 'Problem':
+                $item = new Problem();
+                break;
         }
-        $item = new $itemtype();
 
         $tab[PluginEscaladeTicket::MANAGED_BY_CORE] = __("Default (not managed by plugin)", "escalade");
 

@@ -133,90 +133,86 @@ class PluginEscaladeNotification
     public static function getActionTargets(NotificationTarget $target)
     {
         if ($target instanceof NotificationTargetPlanningRecall) {
-            $itemtype = $target->obj->fields['itemtype'] ?? '';
-            if ($itemtype instanceof CommonGLPI) {
-                $item = new $target->obj->fields['itemtype']();
-                $item->getFromDB($target->obj->fields['items_id']);
-                if ($item instanceof TicketTask) {
-                    $ticket = new Ticket();
-                    $ticket->getFromDB($item->getField('tickets_id'));
+            $item = getItemForItemtype($target->obj->fields['itemtype']);
+            if ($item === false) {
+                return; // Ou gérer l'erreur d'une autre manière appropriée
+            }
+            $item->getFromDB($target->obj->fields['items_id']);
+            if ($item instanceof TicketTask) {
+                $ticket = new Ticket();
+                $ticket->getFromDB($item->getField('tickets_id'));
 
-                    switch ($target->data['items_id']) {
-                        // group's users
-                        case self::NTRGT_TICKET_REQUESTER_GROUP: // phpcs:ignore
+                switch ($target->data['items_id']) {
+                    // group's users
+                    case self::NTRGT_TICKET_REQUESTER_GROUP: // phpcs:ignore
+                        $group_type = CommonITILActor::REQUESTER;
+                        // no break
+                    case self::NTRGT_TICKET_WATCH_GROUP: // phpcs:ignore
+                        if (!isset($group_type)) {
+                            $group_type = CommonITILActor::OBSERVER;
+                        }
+                        // no break
+                    case self::NTRGT_TICKET_TECH_GROUP:
+                        $manager = 0;
+
+                        // manager of group's users
+                        // no break
+                    case self::NTRGT_TICKET_REQUESTER_GROUP_MANAGER: // phpcs:ignore
+                        if (!isset($group_type)) {
                             $group_type = CommonITILActor::REQUESTER;
-                            // no break
-                        case self::NTRGT_TICKET_WATCH_GROUP: // phpcs:ignore
-                            if (!isset($group_type)) {
-                                $group_type = CommonITILActor::OBSERVER;
-                            }
-                            // no break
-                        case self::NTRGT_TICKET_TECH_GROUP:
-                            $manager = 0;
+                        }
+                        // no break
+                    case self::NTRGT_TICKET_WATCH_GROUP_MANAGER: // phpcs:ignore
+                        if (!isset($group_type)) {
+                            $group_type = CommonITILActor::OBSERVER;
+                        }
+                        // no break
+                    case self::NTRGT_TICKET_TECH_GROUP_MANAGER:
+                        if (!isset($manager)) {
+                            $manager = 1;
+                        }
+                        if (!isset($group_type)) {
+                            $group_type = CommonITILActor::ASSIGN;
+                        }
 
-                            // manager of group's users
-                            // no break
-                        case self::NTRGT_TICKET_REQUESTER_GROUP_MANAGER: // phpcs:ignore
-                            if (!isset($group_type)) {
-                                $group_type = CommonITILActor::REQUESTER;
-                            }
-                            // no break
-                        case self::NTRGT_TICKET_WATCH_GROUP_MANAGER: // phpcs:ignore
-                            if (!isset($group_type)) {
-                                $group_type = CommonITILActor::OBSERVER;
-                            }
-                            // no break
-                        case self::NTRGT_TICKET_TECH_GROUP_MANAGER:
-                            if (!isset($manager)) {
-                                $manager = 1;
-                            }
-                            if (!isset($group_type)) {
-                                $group_type = CommonITILActor::ASSIGN;
-                            }
+                        self::addGroupsOfTicket($target, $ticket->getID(), $manager, $group_type);
+                        break;
 
-                            self::addGroupsOfTicket($target, $ticket->getID(), $manager, $group_type);
-                            break;
+                        // users
+                    case self::NTRGT_TICKET_REQUESTER_USER: // phpcs:ignore
+                        $user_type = CommonITILActor::REQUESTER;
+                        // no break
+                    case self::NTRGT_TICKET_WATCH_USER: // phpcs:ignore
+                        if (!isset($user_type)) {
+                            $user_type = CommonITILActor::OBSERVER;
+                        }
+                        // no break
+                    case self::NTRGT_TICKET_TECH_USER:
+                        if (!isset($user_type)) {
+                            $user_type = CommonITILActor::ASSIGN;
+                        }
+                        self::addUsersOfTicket($target, $ticket->getID(), $user_type);
+                        break;
 
-                            // users
-                        case self::NTRGT_TICKET_REQUESTER_USER: // phpcs:ignore
-                            $user_type = CommonITILActor::REQUESTER;
-                            // no break
-                        case self::NTRGT_TICKET_WATCH_USER: // phpcs:ignore
-                            if (!isset($user_type)) {
-                                $user_type = CommonITILActor::OBSERVER;
-                            }
-                            // no break
-                        case self::NTRGT_TICKET_TECH_USER:
-                            if (!isset($user_type)) {
-                                $user_type = CommonITILActor::ASSIGN;
-                            }
-                            self::addUsersOfTicket($target, $ticket->getID(), $user_type);
-                            break;
+                        // task group
+                    case self::NTRGT_TASK_GROUP:
+                        $target->addForGroup(0, $item->getField('groups_id_tech'));
+                        break;
 
-                            // task group
-                        case self::NTRGT_TASK_GROUP:
-                            $target->addForGroup(0, $item->getField('groups_id_tech'));
-                            break;
-
-                            // escalation groups
-                        case self::NTRGT_TICKET_ESCALADE_GROUP: // phpcs:ignore
-                            $manager = 0;
-                            // no break
-                        case self::NTRGT_TICKET_ESCALADE_GROUP_MANAGER:
-                            if (!isset($manager)) {
-                                $manager = 1;
-                            }
-                            $history = new PluginEscaladeHistory();
-                            foreach ($history->find(['tickets_id' => $ticket->getID()]) as $found_history) {
-                                $target->addForGroup($manager, $found_history['groups_id']);
-                            }
-                            break;
-                    }
+                        // escalation groups
+                    case self::NTRGT_TICKET_ESCALADE_GROUP: // phpcs:ignore
+                        $manager = 0;
+                        // no break
+                    case self::NTRGT_TICKET_ESCALADE_GROUP_MANAGER:
+                        if (!isset($manager)) {
+                            $manager = 1;
+                        }
+                        $history = new PluginEscaladeHistory();
+                        foreach ($history->find(['tickets_id' => $ticket->getID()]) as $found_history) {
+                            $target->addForGroup($manager, $found_history['groups_id']);
+                        }
+                        break;
                 }
-            } else {
-                // If itemtype is not a CommonGLPI, we cannot retrieve the item
-                // This should not happen, but we handle it gracefully
-                $target->addToRecipientsList(['language' => 'en', 'users_id' => 0]);
             }
         } elseif ($target instanceof NotificationTargetCommonITILObject) {
             $item = $target->obj;
