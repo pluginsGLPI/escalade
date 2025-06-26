@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-18 00:51+0000\n"
+"POT-Creation-Date: 2025-06-26 00:51+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>, 2020,2022-2023\n"
 "Language-Team: Croatian (Croatia) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/hr_HR/)\n"
@@ -36,7 +36,7 @@ msgid "Clone and link"
 msgstr "Kloniraj i poveži"
 
 #: front/config.form.php:58 inc/user.class.php:179
-#: inc/group_group.class.php:56 setup.php:184
+#: inc/group_group.class.php:56 setup.php:189
 msgid "Escalation"
 msgstr "Eskalacija"
 
@@ -76,44 +76,44 @@ msgstr "Rješenje predloženo, vrati grupi"
 msgid "Solution rejected, return to the group"
 msgstr "Rješenje odbijeno, vrati grupi"
 
-#: inc/ticket.class.php:427 inc/ticket.class.php:568
+#: inc/ticket.class.php:427 inc/ticket.class.php:569
 #, php-format
 msgid "Escalation to the group %s."
 msgstr "Eskalirano u grupu %s."
 
-#: inc/ticket.class.php:907
+#: inc/ticket.class.php:910
 msgid "Error : get old ticket"
 msgstr "Greška: nabavi stari nalog"
 
-#: inc/ticket.class.php:923
+#: inc/ticket.class.php:926
 msgid "Error : adding new ticket"
 msgstr "Greška: dodavanje novog naloga"
 
-#: inc/ticket.class.php:936
+#: inc/ticket.class.php:939
 msgid "Error : adding link between the two tickets"
 msgstr "Greška: dodavanje veze između ta dva naloga"
 
-#: inc/ticket.class.php:947 inc/ticket.class.php:989 inc/ticket.class.php:994
+#: inc/ticket.class.php:950 inc/ticket.class.php:992 inc/ticket.class.php:997
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Nalog je kloniran iz naloga broj"
 
-#: inc/ticket.class.php:953
+#: inc/ticket.class.php:956
 msgid "Error : adding followups"
 msgstr "Greška: dodavanje priopćenja"
 
-#: inc/ticket.class.php:964
+#: inc/ticket.class.php:967
 msgid "Error : adding actors (user)"
 msgstr "Greška: dodavanje učesnika (korisnik)"
 
-#: inc/ticket.class.php:973
+#: inc/ticket.class.php:976
 msgid "Error : adding actors (group)"
 msgstr "Greška: dodavanje učesnika (grupa)"
 
-#: inc/ticket.class.php:983
+#: inc/ticket.class.php:986
 msgid "Error : adding documents"
 msgstr "Greška: dodavanje dokumenata"
 
-#: inc/ticket.class.php:1102 inc/ticket.class.php:1103
+#: inc/ticket.class.php:1105 inc/ticket.class.php:1106
 msgid "Escalate"
 msgstr "Eskaliraj"
 
@@ -193,23 +193,31 @@ msgstr "Aktiviraj filtriranje po zadatku grupe"
 msgid "Default (not managed by plugin)"
 msgstr ""
 
-#: inc/notification.class.php:60
+#: inc/notification.class.php:62
 msgid "Requester user of the ticket"
 msgstr "Podnositelj naloga"
 
-#: inc/notification.class.php:102
+#: inc/notification.class.php:104
 msgid "Group escalated in the ticket"
 msgstr "Eskalirana grupa u nalogu"
 
-#: inc/notification.class.php:106
+#: inc/notification.class.php:108
 msgid "Manager of the group escalated in the ticket"
 msgstr "Voditelj eskalirane grupe u nalogu"
 
-#: inc/notification.class.php:112
+#: inc/notification.class.php:114
 msgid "Requester user of the task/reminder"
 msgstr "Podnositelj zadatka/podsjetnika"
 
-#: inc/notification.class.php:263
+#: inc/notification.class.php:119
+msgid "Last group escalated in the ticket"
+msgstr ""
+
+#: inc/notification.class.php:123
+msgid "Manager of last group escalated in the ticket"
+msgstr ""
+
+#: inc/notification.class.php:295
 msgid "Solve date modification"
 msgstr "Riješi promjenu datuma"
 

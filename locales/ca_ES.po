@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-18 00:51+0000\n"
+"POT-Creation-Date: 2025-06-26 00:51+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Nuria Costa <nuria.costa@uvic.cat>, 2025\n"
 "Language-Team: Catalan (Spain) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/ca_ES/)\n"
@@ -35,7 +35,7 @@ msgid "Clone and link"
 msgstr "Clona i enllaça"
 
 #: front/config.form.php:58 inc/user.class.php:179
-#: inc/group_group.class.php:56 setup.php:184
+#: inc/group_group.class.php:56 setup.php:189
 msgid "Escalation"
 msgstr "Escalar"
 
@@ -75,44 +75,44 @@ msgstr "Solució proporcionada, tornar al grup"
 msgid "Solution rejected, return to the group"
 msgstr "Solució rebutjada, retornar al grup"
 
-#: inc/ticket.class.php:427 inc/ticket.class.php:568
+#: inc/ticket.class.php:427 inc/ticket.class.php:569
 #, php-format
 msgid "Escalation to the group %s."
 msgstr "Escala al grup %s."
 
-#: inc/ticket.class.php:907
+#: inc/ticket.class.php:910
 msgid "Error : get old ticket"
 msgstr "Error: obtenir el tiquet antic"
 
-#: inc/ticket.class.php:923
+#: inc/ticket.class.php:926
 msgid "Error : adding new ticket"
 msgstr "Error: afegint un tiquet nou"
 
-#: inc/ticket.class.php:936
+#: inc/ticket.class.php:939
 msgid "Error : adding link between the two tickets"
 msgstr "Error: afegint enllaç entre dos tiquets"
 
-#: inc/ticket.class.php:947 inc/ticket.class.php:989 inc/ticket.class.php:994
+#: inc/ticket.class.php:950 inc/ticket.class.php:992 inc/ticket.class.php:997
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Aquest tiquet està clonat a partir del tiquet número"
 
-#: inc/ticket.class.php:953
+#: inc/ticket.class.php:956
 msgid "Error : adding followups"
 msgstr "Error: afegint seguiments"
 
-#: inc/ticket.class.php:964
+#: inc/ticket.class.php:967
 msgid "Error : adding actors (user)"
 msgstr "Error: afegint actors (usuaris)"
 
-#: inc/ticket.class.php:973
+#: inc/ticket.class.php:976
 msgid "Error : adding actors (group)"
 msgstr "Error: afegint actors (grups)"
 
-#: inc/ticket.class.php:983
+#: inc/ticket.class.php:986
 msgid "Error : adding documents"
 msgstr "Error: afegint documents"
 
-#: inc/ticket.class.php:1102 inc/ticket.class.php:1103
+#: inc/ticket.class.php:1105 inc/ticket.class.php:1106
 msgid "Escalate"
 msgstr "Escalar"
 
@@ -192,23 +192,31 @@ msgstr "Activa el filtre a l'assignació de grups"
 msgid "Default (not managed by plugin)"
 msgstr "Per defecte (no gestionat pel connector)"
 
-#: inc/notification.class.php:60
+#: inc/notification.class.php:62
 msgid "Requester user of the ticket"
 msgstr "Sol·licitant del tiquet"
 
-#: inc/notification.class.php:102
+#: inc/notification.class.php:104
 msgid "Group escalated in the ticket"
 msgstr "Grup escalat al tiquet"
 
-#: inc/notification.class.php:106
+#: inc/notification.class.php:108
 msgid "Manager of the group escalated in the ticket"
 msgstr "Gestor del grup on s'ha escalat el tiquet"
 
-#: inc/notification.class.php:112
+#: inc/notification.class.php:114
 msgid "Requester user of the task/reminder"
 msgstr "Sol·licitant de la tasca/recordatori"
 
-#: inc/notification.class.php:263
+#: inc/notification.class.php:119
+msgid "Last group escalated in the ticket"
+msgstr "Últim grup on s'ha escalat el tiquet"
+
+#: inc/notification.class.php:123
+msgid "Manager of last group escalated in the ticket"
+msgstr "Gestor/a de l'últim grup on s'ha escalat el tiquet"
+
+#: inc/notification.class.php:295
 msgid "Solve date modification"
 msgstr "Modifica la data de resolució"
 
