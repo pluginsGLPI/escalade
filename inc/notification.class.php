@@ -133,7 +133,8 @@ class PluginEscaladeNotification
     public static function getActionTargets(NotificationTarget $target)
     {
         if ($target instanceof NotificationTargetPlanningRecall) {
-            $item = new $target->obj->fields['itemtype']();
+            $itemtype = get_class($target->obj->fields['itemtype']);
+            $item = new $itemtype();
             $item->getFromDB($target->obj->fields['items_id']);
             if ($item instanceof TicketTask) {
                 $ticket = new Ticket();

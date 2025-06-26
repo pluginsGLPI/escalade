@@ -29,7 +29,7 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
+    throw new Exception("Sorry. You can't access directly to this file");
 }
 
 class PluginEscaladeHistory extends CommonDBTM

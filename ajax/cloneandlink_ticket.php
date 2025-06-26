@@ -33,8 +33,6 @@ Html::header_nocache();
 
 Session::checkLoginUser();
 
-if (!isset($_REQUEST['tickets_id'])) {
-    exit;
+if (isset($_REQUEST['tickets_id'])) {
+    PluginEscaladeTicket::cloneAndLink($_REQUEST['tickets_id']);
 }
-
-PluginEscaladeTicket::cloneAndLink($_REQUEST['tickets_id']);

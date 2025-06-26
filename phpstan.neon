@@ -16,5 +16,3 @@ parameters:
     bootstrapFiles:
         - ../../stubs/glpi_constants.php
         - ../../vendor/autoload.php
-    ignoreErrors:
-        - '#Function define is unsafe to use#'
