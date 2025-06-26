@@ -37,6 +37,21 @@ use DbTestCase;
 
 abstract class EscaladeTestCase extends DbTestCase
 {
+    public function setUp(): void
+    {
+        /** @var \DBmysql $DB */
+        global $DB;
+        $DB->beginTransaction();
+        parent::setUp();
+    }
+
+    public function tearDown(): void
+    {
+        global $DB;
+        $DB->rollback();
+        parent::tearDown();
+    }
+
     protected function login(
         string $user_name = TU_USER,
         string $user_pass = TU_PASS,

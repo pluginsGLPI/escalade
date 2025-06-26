@@ -172,7 +172,7 @@ function plugin_escalade_install()
 
     // Update for 0.84 status
     if ($DB->tableExists('glpi_plugin_escalade_configs')) {
-        foreach ($DB->request("glpi_plugin_escalade_configs") as $data) {
+        foreach ($DB->request(['FROM' => "glpi_plugin_escalade_configs"]) as $data) {
             switch ($data['ticket_last_status']) {
                 case 'solved':
                     $status = Ticket::SOLVED;
@@ -246,7 +246,7 @@ function plugin_escalade_install()
             'glpi_plugin_escalade_configs',
             'remove_delete_requester_user_btn',
             'bool',
-            ['value' => 1],
+            ['value' => '1'],
         );
     }
     if (!$DB->fieldExists('glpi_plugin_escalade_configs', 'remove_delete_requester_group_btn')) {
@@ -254,7 +254,7 @@ function plugin_escalade_install()
             'glpi_plugin_escalade_configs',
             'remove_delete_requester_group_btn',
             'bool',
-            ['value' => 1],
+            ['value' => '1'],
         );
     }
     if (!$DB->fieldExists('glpi_plugin_escalade_configs', 'remove_delete_watcher_user_btn')) {
@@ -262,7 +262,7 @@ function plugin_escalade_install()
             'glpi_plugin_escalade_configs',
             'remove_delete_watcher_user_btn',
             'bool',
-            ['value' => 1],
+            ['value' => '1'],
         );
     }
     if (!$DB->fieldExists('glpi_plugin_escalade_configs', 'remove_delete_watcher_group_btn')) {
@@ -270,7 +270,7 @@ function plugin_escalade_install()
             'glpi_plugin_escalade_configs',
             'remove_delete_watcher_group_btn',
             'bool',
-            ['value' => 1],
+            ['value' => '1'],
         );
     }
 
