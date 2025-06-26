@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-18 00:51+0000\n"
+"POT-Creation-Date: 2025-06-26 00:51+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Stanislas <skita@teclib.com>, 2024\n"
 "Language-Team: French (France) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/fr_FR/)\n"
@@ -40,7 +40,7 @@ msgid "Clone and link"
 msgstr "Cloner et lier"
 
 #: front/config.form.php:58 inc/user.class.php:179
-#: inc/group_group.class.php:56 setup.php:184
+#: inc/group_group.class.php:56 setup.php:189
 msgid "Escalation"
 msgstr "Escalades"
 
@@ -80,44 +80,44 @@ msgstr "Solution apportée, retour vers le groupe"
 msgid "Solution rejected, return to the group"
 msgstr "Solution rejetée, renvoi vers le groupe"
 
-#: inc/ticket.class.php:427 inc/ticket.class.php:568
+#: inc/ticket.class.php:427 inc/ticket.class.php:569
 #, php-format
 msgid "Escalation to the group %s."
 msgstr "Escalade vers le groupe %s."
 
-#: inc/ticket.class.php:907
+#: inc/ticket.class.php:910
 msgid "Error : get old ticket"
 msgstr "Erreur : erreur récupération ancien ticket"
 
-#: inc/ticket.class.php:923
+#: inc/ticket.class.php:926
 msgid "Error : adding new ticket"
 msgstr "Erreur : ajout du nouveau ticket"
 
-#: inc/ticket.class.php:936
+#: inc/ticket.class.php:939
 msgid "Error : adding link between the two tickets"
 msgstr "Erreur : ajout lien entre les deux tickets"
 
-#: inc/ticket.class.php:947 inc/ticket.class.php:989 inc/ticket.class.php:994
+#: inc/ticket.class.php:950 inc/ticket.class.php:992 inc/ticket.class.php:997
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Ce ticket a été cloné depuis le ticket n°"
 
-#: inc/ticket.class.php:953
+#: inc/ticket.class.php:956
 msgid "Error : adding followups"
 msgstr "Erreur: ajout des suivis"
 
-#: inc/ticket.class.php:964
+#: inc/ticket.class.php:967
 msgid "Error : adding actors (user)"
 msgstr "Erreur : ajout des acteurs (utilisateur)"
 
-#: inc/ticket.class.php:973
+#: inc/ticket.class.php:976
 msgid "Error : adding actors (group)"
 msgstr "Erreur : ajout des acteurs (groupe)"
 
-#: inc/ticket.class.php:983
+#: inc/ticket.class.php:986
 msgid "Error : adding documents"
 msgstr "Erreur : ajout des documents"
 
-#: inc/ticket.class.php:1102 inc/ticket.class.php:1103
+#: inc/ticket.class.php:1105 inc/ticket.class.php:1106
 msgid "Escalate"
 msgstr "Escalader"
 
@@ -197,23 +197,31 @@ msgstr "Activer le filtrage sur les groupes d'attribution"
 msgid "Default (not managed by plugin)"
 msgstr ""
 
-#: inc/notification.class.php:60
+#: inc/notification.class.php:62
 msgid "Requester user of the ticket"
 msgstr "Utilisateur demandeur du ticket"
 
-#: inc/notification.class.php:102
+#: inc/notification.class.php:104
 msgid "Group escalated in the ticket"
 msgstr "Groupe d'escalade du ticket"
 
-#: inc/notification.class.php:106
+#: inc/notification.class.php:108
 msgid "Manager of the group escalated in the ticket"
 msgstr "Responsable du groupe en escalade du ticket"
 
-#: inc/notification.class.php:112
+#: inc/notification.class.php:114
 msgid "Requester user of the task/reminder"
 msgstr "Utilisateur demandeur de la tâche/rappel"
 
-#: inc/notification.class.php:263
+#: inc/notification.class.php:119
+msgid "Last group escalated in the ticket"
+msgstr ""
+
+#: inc/notification.class.php:123
+msgid "Manager of last group escalated in the ticket"
+msgstr ""
+
+#: inc/notification.class.php:295
 msgid "Solve date modification"
 msgstr "Date de modification de la résolution"
 
