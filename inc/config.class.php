@@ -136,6 +136,8 @@ class PluginEscaladeConfig extends CommonDBTM
             case 'Problem':
                 $item = new Problem();
                 break;
+            default:
+                return [];
         }
 
         $tab[PluginEscaladeTicket::MANAGED_BY_CORE] = __("Default (not managed by plugin)", "escalade");
