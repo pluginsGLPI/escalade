@@ -28,9 +28,8 @@
  * -------------------------------------------------------------------------
  */
 
-use Glpi\Toolbox\Sanitizer;
+use Glpi\Exception\Http\AccessDeniedHttpException;
 
-include('../../../inc/includes.php');
 Session::checkLoginUser();
 
 /** @var array $CFG_GLPI */
@@ -42,12 +41,12 @@ if (isset($_POST['escalate'])) {
 
     $ticket = new Ticket();
     if (!$ticket->getFromDB($tickets_id)) {
-        Html::displayNotFoundError();
+        throw new AccessDeniedHttpException();
     }
 
     // Same right check as in PluginEscaladeTicket::addToTimeline()
     if (!$ticket->canAssign()) {
-        Html::displayRightError();
+        throw new AccessDeniedHttpException();
     }
 
     $group = new Group();

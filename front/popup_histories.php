@@ -28,7 +28,6 @@
  * -------------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
 Session::checkLoginUser();
 
 if (!Plugin::isPluginActive('escalade')) {
@@ -37,7 +36,7 @@ if (!Plugin::isPluginActive('escalade')) {
 }
 
 if (!$_SESSION['glpi_plugins']['escalade']['config']['show_history']) {
-    Html::displayRightError();
+    throw new Glpi\Exception\Http\AccessDeniedHttpException();
 }
 
 echo "<div id='page'>";
