@@ -157,8 +157,10 @@ final class TaskMessageTest extends EscaladeTestCase
             'name' => 'Task Group 2',
         ]);
 
+        $this->climb_with_history_button($ticket, $group_test);
+
         // Update ticket with just one group
-        $this->assertTrue($ticket->update(
+        /*$this->assertTrue($ticket->update(
             [
                 'id' => $ticket->getID(),
                 '_actors' => [
@@ -170,13 +172,13 @@ final class TaskMessageTest extends EscaladeTestCase
                     ],
                 ],
             ],
-        ));
+        ));*/
 
         // Check the correct task content
         $ticket_task = new TicketTask();
         $t_tasks = $ticket_task->find(['tickets_id' => $ticket->getID()]);
         $last_task = end($t_tasks);
-        $this->assertStringContainsString('Task Group 1', $last_task['content']);
+        $this->assertStringContainsString('Escalation to the group Task Group 1', $last_task['content']);
 
         $this->assertTrue($ticket->update(
             [

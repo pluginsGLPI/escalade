@@ -28,8 +28,6 @@
  * -------------------------------------------------------------------------
  */
 
-use Glpi\Toolbox\Sanitizer;
-
 include('../../../inc/includes.php');
 Session::checkLoginUser();
 

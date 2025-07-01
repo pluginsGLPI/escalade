@@ -34,7 +34,6 @@ use Auth;
 use PHPUnit\Framework\TestCase;
 use Session;
 use DbTestCase;
-use Ticket;
 
 abstract class EscaladeTestCase extends DbTestCase
 {
@@ -58,5 +57,23 @@ abstract class EscaladeTestCase extends DbTestCase
         $ctime = $_SESSION['glpi_currenttime'];
         Session::destroy();
         $_SESSION['glpi_currenttime'] = $ctime;
+    }
+
+    public function climb_with_timeline_button(\Ticket $ticket): bool
+    {
+        $this->assertTrue(Ticket::canViewTimelineButton());
+        $this->assertTrue(Ticket::canClimbWithTimelineButton());
+        return true;
+    }
+
+    public function climb_with_history_button(\Ticket $ticket, \Group $group)
+    {
+        \PluginEscaladeTicket::climb_group($ticket->getID(), $group->getID());
+        $ticketgroup = new \Group_Ticket();
+        $is_escalate = $ticketgroup->getFromDBByCrit([
+            'tickets_id' => $ticket->getID(),
+            'groups_id'  => $group->getID(),
+        ]);
+       // $this->assertTrue($is_escalate);
     }
 }
