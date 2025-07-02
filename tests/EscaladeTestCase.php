@@ -68,12 +68,12 @@ abstract class EscaladeTestCase extends DbTestCase
 
     public function climb_with_history_button(\Ticket $ticket, \Group $group)
     {
-        \PluginEscaladeTicket::climb_group($ticket->getID(), $group->getID());
+        \PluginEscaladeTicket::climb_group($ticket->getID(), $group->getID(), true);
         $ticketgroup = new \Group_Ticket();
         $is_escalate = $ticketgroup->getFromDBByCrit([
             'tickets_id' => $ticket->getID(),
             'groups_id'  => $group->getID(),
         ]);
-       // $this->assertTrue($is_escalate);
+       $this->assertTrue($is_escalate);
     }
 }
