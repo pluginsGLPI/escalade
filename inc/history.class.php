@@ -62,11 +62,11 @@ class PluginEscaladeHistory extends CommonDBTM
         $history->getFromDBByRequest(['ORDER'   => 'date_mod DESC',
             'LIMIT'      => 1,
             'WHERE' =>
-                                                 [
-                                                     'tickets_id' => $tickets_id,
-                                                     'groups_id' => [$groups_id, $previous_groups_id],
-                                                     'groups_id_previous' => [$groups_id, $previous_groups_id],
-                                                 ],
+            [
+                'tickets_id' => $tickets_id,
+                'groups_id' => [$groups_id, $previous_groups_id],
+                'groups_id_previous' => [$groups_id, $previous_groups_id],
+            ],
         ]);
 
         return $history;
@@ -76,6 +76,67 @@ class PluginEscaladeHistory extends CommonDBTM
     {
         $history = new self();
         return $history->find(['tickets_id' => $tickets_id], "date_mod DESC");
+    }
+
+    /**
+     * Get the most recently escalated group for a ticket
+     * This method is more reliable than getLastLineForTicket as it uses date_mod ordering
+     *
+     * @param int $tickets_id The ticket ID
+     * @return array|false The most recent escalation history entry or false if none found
+     */
+    public static function getMostRecentEscalationForTicket($tickets_id)
+    {
+        $history = new self();
+        $found = $history->find(
+            ['tickets_id' => $tickets_id],
+            ['date_mod DESC', 'id DESC'],
+            1,
+        );
+
+        if (empty($found)) {
+            return false;
+        }
+
+        return reset($found);
+    }
+
+    /**
+     * Get the most recently escalated group that is still assigned to the ticket
+     * This provides an additional verification layer for notification targeting
+     *
+     * @param int $tickets_id The ticket ID
+     * @return array|false The most recent relevant escalation entry or false if none found
+     */
+    public static function getMostRecentRelevantEscalationForTicket($tickets_id)
+    {
+        $history = new self();
+        $escalations = $history->find(
+            ['tickets_id' => $tickets_id],
+            ['date_mod DESC', 'id DESC'],
+        );
+
+        if (empty($escalations)) {
+            return false;
+        }
+
+        // Verify which escalated groups are still assigned to the ticket
+        $group_ticket = new Group_Ticket();
+        $assigned_groups = $group_ticket->find([
+            'tickets_id' => $tickets_id,
+            'type' => CommonITILActor::ASSIGN,
+        ]);
+
+        $assigned_group_ids = array_column($assigned_groups, 'groups_id');
+
+        // Find the most recent escalation where the group is still assigned
+        foreach ($escalations as $escalation) {
+            if (in_array($escalation['groups_id'], $assigned_group_ids)) {
+                return $escalation;
+            }
+        }
+
+        return false;
     }
 
 

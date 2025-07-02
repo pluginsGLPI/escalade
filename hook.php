@@ -499,6 +499,24 @@ function plugin_escalade_pre_item_add_ticket($item)
     }
 }
 
+function plugin_escalade_pre_item_add_group_ticket($item)
+{
+    if (
+        $item instanceof Group_Ticket
+        && $item->input['type'] == CommonITILActor::ASSIGN
+    ) {
+        if (!isset($_SESSION['plugin_escalade']['current_group_assignment'])) {
+            $_SESSION['plugin_escalade']['current_group_assignment'] = [];
+        }
+
+        $_SESSION['plugin_escalade']['current_group_assignment'][$item->input['tickets_id']] = [
+            'group_id' => $item->input['groups_id'],
+            'timestamp' => time(),
+        ];
+    }
+    return $item;
+}
+
 function plugin_escalade_item_add_ticket($item)
 {
     //clean escalade session var after ticket creation
