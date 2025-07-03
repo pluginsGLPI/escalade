@@ -125,7 +125,78 @@ final class TaskMessageTest extends EscaladeTestCase
         $this->assertEquals($ticket_group->fields['groups_id'], $group_test->getID());
     }
 
-    public function testTaskGroupEscalation()
+    public static function testTaskGroupEscalationProvider()
+    {
+        yield [
+            'conf' => [
+                'remove_group' => 0,
+                'solve_return_group' => 0,
+                'task_history' => 0,
+            ],
+        ];
+
+        yield [
+            'conf' => [
+                'remove_group' => 0,
+                'solve_return_group' => 0,
+                'task_history' => 1,
+            ],
+        ];
+
+        yield [
+            'conf' => [
+                'remove_group' => 0,
+                'solve_return_group' => 1,
+                'task_history' => 0,
+            ],
+        ];
+
+        yield [
+            'conf' => [
+                'remove_group' => 0,
+                'solve_return_group' => 1,
+                'task_history' => 1,
+            ],
+        ];
+
+        yield [
+            'conf' => [
+                'remove_group' => 1,
+                'solve_return_group' => 0,
+                'task_history' => 0,
+            ],
+        ];
+
+        yield [
+            'conf' => [
+                'remove_group' => 1,
+                'solve_return_group' => 0,
+                'task_history' => 1,
+            ],
+        ];
+
+        yield [
+            'conf' => [
+                'remove_group' => 1,
+                'solve_return_group' => 1,
+                'task_history' => 0,
+            ],
+        ];
+
+        yield [
+            'conf' => [
+                'remove_group' => 1,
+                'solve_return_group' => 1,
+                'task_history' => 1,
+            ],
+        ];
+
+    }
+
+    /**
+     * @dataProvider testTaskGroupEscalationProvider
+     */
+    public function testTaskGroupEscalation(array $conf)
     {
         $this->login();
 
@@ -133,83 +204,96 @@ final class TaskMessageTest extends EscaladeTestCase
         $this->updateItem(
             PluginEscaladeConfig::class,
             1,
-            [
-                'remove_group' => 1,
-                'task_history' => 1,
-            ]
+            $conf,
         );
 
         PluginEscaladeConfig::loadInSession();
 
-        $ticket = new \Ticket();
-        $ticket->add([
-            'name' => 'Task Group Escalation Test',
-            'content' => '',
-        ]);
-
-        $group_test = new \Group();
-        $group_test->add([
-            'name' => 'Task Group 1',
-        ]);
-
-        $group_test_2 = new \Group();
-        $group_test_2->add([
-            'name' => 'Task Group 2',
-        ]);
-
-        $this->climb_with_history_button($ticket, $group_test);
-
-        // Update ticket with just one group
-        /*$this->assertTrue($ticket->update(
+        $ticket = $this->createItem(
+            \Ticket::class,
             [
-                'id' => $ticket->getID(),
-                '_actors' => [
-                    'assign' => [
-                        [
-                            'items_id' => $group_test->getID(),
-                            'itemtype' => 'Group',
-                        ],
-                    ],
-                ],
+                'name' => 'Task Group Escalation Test',
+                'content' => '',
             ],
-        ));*/
+        );
+
+        $group1 = $this->createItem(
+            \Group::class,
+            [
+                'name' => 'Test group 1',
+            ],
+        );
+
+        $group2 = $this->createItem(
+            \Group::class,
+            [
+                'name' => 'Test group 2',
+            ],
+        );
+
+        $_SESSION["glpi_currenttime"] = '2025-01-01 00:00:00';
+
+        $this->climbWithHistoryButton($ticket, $group1);
 
         // Check the correct task content
         $ticket_task = new TicketTask();
         $t_tasks = $ticket_task->find(['tickets_id' => $ticket->getID()]);
-        $last_task = end($t_tasks);
-        $this->assertStringContainsString('Escalation to the group Task Group 1', $last_task['content']);
+        if (!$conf['task_history']) {
+            $this->assertEquals(0, count($t_tasks));
+        } else {
+            $this->assertEquals(1, count($t_tasks));
+            $last_task = end($t_tasks);
+            $this->assertStringContainsString('Escalation to the group ' . $group1->fields['name'], $last_task['content']);
+        }
 
-        $this->assertTrue($ticket->update(
-            [
-                'id' => $ticket->getID(),
-                '_actors' => [
-                    'assign' => [
-                        [
-                            'items_id' => $group_test->getID(),
-                            'itemtype' => 'Group',
-                        ],
-                        [
-                            'items_id' => $group_test_2->getID(),
-                            'itemtype' => 'Group',
-                        ],
-                    ],
-                ],
-            ],
-        ));
+        $_SESSION["glpi_currenttime"] = '2025-01-01 01:00:00';
 
-        // Check the correct order of tasks and content
+        $this->climbWithTimelineButton($ticket, $group2, [
+            'comment' => 'Test comment',
+        ]);
+
+        // Check the correct task content
         $ticket_task = new TicketTask();
         $t_tasks = $ticket_task->find(['tickets_id' => $ticket->getID()]);
-        $first_task = reset($t_tasks);
-        $this->assertStringContainsString('Task Group 1', $first_task['content']);
-        $last_task = end($t_tasks);
-        $this->assertStringContainsString('Task Group 2', $last_task['content']);
+        if (!$conf['task_history']) {
+            $this->assertEquals(0, count($t_tasks));
+        } else {
+            $this->assertEquals(2, count($t_tasks));
+            $last_task = end($t_tasks);
+            $this->assertStringContainsString('Escalation to the group ' . $group2->fields['name'], $last_task['content']);
+            $this->assertStringContainsString('Test comment', $last_task['content']);
+        }
 
-        // Check that the group linked to this ticket is "Test group 2".
-        $ticket_group = new Group_Ticket();
-        $t_groups = $ticket_group->find(['tickets_id' => $ticket->getID()]);
-        $t_groups = end($t_groups);
-        $this->assertEquals($t_groups['groups_id'], $group_test_2->getID());
+        $_SESSION["glpi_currenttime"] = '2025-01-01 02:00:00';
+
+        if ($conf['remove_group'] && $conf['solve_return_group']) {
+            $this->climbWithSolvedTicket($ticket, $group1);
+
+            // Check the correct task content
+            $ticket_task = new TicketTask();
+            $t_tasks = $ticket_task->find(['tickets_id' => $ticket->getID()]);
+            if (!$conf['task_history']) {
+                $this->assertEquals(0, count($t_tasks));
+            } else {
+                $this->assertEquals(3, count($t_tasks));
+                $last_task = end($t_tasks);
+                $this->assertStringContainsString('Solution provided, back to the group ' . $group1->fields['name'], $last_task['content']);
+            }
+
+            $_SESSION["glpi_currenttime"] = '2025-01-01 03:00:00';
+
+            $this->climbWithRejectSolutionTicket($ticket, $group2);
+
+            // Check the correct task content
+            $ticket_task = new TicketTask();
+            $t_tasks = $ticket_task->find(['tickets_id' => $ticket->getID()]);
+            if (!$conf['task_history']) {
+                $this->assertEquals(0, count($t_tasks));
+            } else {
+                $this->assertEquals(4, count($t_tasks));
+                $last_task = end($t_tasks);
+                $this->assertStringContainsString('Solution rejected, return to the group ' . $group2->fields['name'], $last_task['content']);
+            }
+        }
     }
 }
