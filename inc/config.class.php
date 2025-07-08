@@ -170,7 +170,7 @@ class PluginEscaladeConfig extends CommonDBTM
 
         $rand = mt_rand();
         echo "<td><label for='dropdown_close_linkedtickets$rand'>";
-        echo __("Close cloned tickets at the same time", "escalade");
+        echo __("Close linked tickets at the same time", "escalade");
         echo "</label></td>";
         echo "<td>";
         Dropdown::showYesNo("close_linkedtickets", $this->fields["close_linkedtickets"], -1, [

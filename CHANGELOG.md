@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [UNRELEASE]
 
-### Fixed
 - Improved access control checks when cloning ticket
+- Rename 2 options in config interface
 
 ## [2.9.15] - 2025-07-08
 
