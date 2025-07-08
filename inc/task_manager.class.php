@@ -28,38 +28,54 @@
  * -------------------------------------------------------------------------
  */
 
-include('../../../inc/includes.php');
-Session::checkLoginUser();
+class PluginEscaladeTask_Manager
+{
+    private static ?TicketTask $ticket_task = null;
 
-/** @var array $CFG_GLPI */
-global $CFG_GLPI;
+    public static function setTicketTask(array $input): void
+    {
+        if (self::$ticket_task === null) {
+            self::$ticket_task = new TicketTask();
+        }
 
-if (isset($_POST['escalate'])) {
-    $group_id = (int) $_POST['groups_id'];
-    $tickets_id = (int) $_POST['tickets_id'];
+        if (!self::canAddEscaladeTicketTask()) {
+            return;
+        }
 
-    $ticket = new Ticket();
-    if (!$ticket->getFromDB($tickets_id)) {
-        Html::displayNotFoundError();
+        if (!empty(self::$ticket_task->input)) {
+            return;
+        }
+
+        self::$ticket_task->input = $input;
     }
 
-    // Same right check as in PluginEscaladeTicket::addToTimeline()
-    if (!$ticket->canAssign()) {
-        Html::displayRightError();
+    public static function canAddEscaladeTicketTask(): bool
+    {
+        if (!$_SESSION['glpi_plugins']['escalade']['config']['task_history']) {
+            return false;
+        }
+
+        if (
+            isset($_SESSION['plugin_escalade']['ticket_creation'])
+            && $_SESSION['plugin_escalade']['ticket_creation']
+        ) {
+            return false;
+        }
+
+        return true;
     }
 
-    PluginEscaladeTicket::timelineClimbAction($group_id, $tickets_id, $_POST);
+    public static function addTicketTaskInTimeline(): void
+    {
+        if (!self::canAddEscaladeTicketTask()) {
+            return;
+        }
+        self::$ticket_task->add(self::$ticket_task->input);
+        self::resetTicketTask();
+    }
 
-    $track = new Ticket();
-
-    if (!$track->can($_POST["tickets_id"], READ)) {
-        Session::addMessageAfterRedirect(
-            __('You have been redirected because you no longer have access to this ticket'),
-            true,
-            ERROR,
-        );
-        Html::redirect($CFG_GLPI["root_doc"] . "/front/ticket.php");
+    public static function resetTicketTask(): void
+    {
+        self::$ticket_task = new TicketTask();
     }
 }
-
-Html::back();
