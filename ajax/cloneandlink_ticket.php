@@ -34,8 +34,21 @@ Html::header_nocache();
 
 Session::checkLoginUser();
 
+$escalade_config = $_SESSION['glpi_plugins']['escalade']['config'];
+
+if (!$escalade_config['cloneandlink_ticket']) {
+    die;
+}
+
 if (!isset($_REQUEST['tickets_id'])) {
     exit;
 }
 
-PluginEscaladeTicket::cloneAndLink($_REQUEST['tickets_id']);
+$ticket = new Ticket();
+if ($ticket->getFromDB($_REQUEST['tickets_id']) ) {
+    if ($ticket->can($_REQUEST['tickets_id'], READ)) {
+        PluginEscaladeTicket::cloneAndLink($_REQUEST['tickets_id']);
+    } else {
+        Html::displayRightError("The user does not have permission to view this ticket.");
+    }
+}
