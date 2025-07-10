@@ -45,7 +45,7 @@ if (!isset($_REQUEST['tickets_id'])) {
 }
 
 $ticket = new Ticket();
-if ($ticket->getFromDB($_REQUEST['tickets_id']) ) {
+if ($ticket->getFromDB($_REQUEST['tickets_id'])) {
     if ($ticket->can($_REQUEST['tickets_id'], READ)) {
         PluginEscaladeTicket::cloneAndLink($_REQUEST['tickets_id']);
     } else {
