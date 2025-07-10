@@ -7,7 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [UNRELEASE]
 
+## [2.9.16] - 2025-07-10
+
 ### Fixed
+
 - Improved access control checks when cloning ticket
 
 ## [2.9.15] - 2025-07-08
