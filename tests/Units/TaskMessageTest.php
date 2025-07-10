@@ -190,7 +190,6 @@ final class TaskMessageTest extends EscaladeTestCase
                 'task_history' => 1,
             ],
         ];
-
     }
 
     /**
