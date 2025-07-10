@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [UNRELEASE]
 
-- Rename 2 options in config interface
+### Fixed 
+
+- Rename options related to ticket cloning and closure to avoid ambiguity
 
 ## [2.9.16] - 2025-07-10
 
