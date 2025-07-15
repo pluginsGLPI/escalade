@@ -710,7 +710,6 @@ class PluginEscaladeTicket
         $ticket->getFromDB($tickets_id);
         $groups_id = [];
 
-
         // == Add user groups on modification ==
         //check this plugin config
         if (
@@ -718,6 +717,7 @@ class PluginEscaladeTicket
             || $_SESSION['glpi_plugins']['escalade']['config']['use_assign_user_group_modification'] == 0
             || $type != CommonITILActor::ASSIGN
         ) {
+            self::removeAssignUsers($ticket, [$users_id], $type);
             return true;
         }
 
