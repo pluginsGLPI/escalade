@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Alan Lehoux, 2025
 # Fernando Toledo <ftoledo@docksud.com.ar>, 2024
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-14 00:55+0000\n"
+"POT-Creation-Date: 2025-07-23 00:54+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
-"Last-Translator: Fernando Toledo <ftoledo@docksud.com.ar>, 2024\n"
+"Last-Translator: Alan Lehoux, 2025\n"
 "Language-Team: Spanish (Argentina) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/es_AR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -32,15 +33,15 @@ msgstr "Asignarme como observador"
 
 #: hook.php:559
 msgid "Group concerned by the escalation"
-msgstr "Grupo afectado por el  escalado"
+msgstr "Grupo afectado por el escalado"
 
 #: hook.php:577
 msgid "Number of escalations"
-msgstr "Número de escalamientos"
+msgstr "Cantidad de escaladas"
 
 #: hook.php:591
 msgid "Number of escalations between two groups"
-msgstr "Número de escaladas entre dos grupos"
+msgstr "Cantidad de escaladas entre dos grupos"
 
 #: hook.php:604 hook.php:623 inc/user.class.php:139
 msgid "Bypass filtering on the groups assignment"
@@ -61,7 +62,7 @@ msgstr "Clonar y vincular"
 
 #: inc/config.class.php:37
 msgid "Configuration Escalade plugin"
-msgstr "Configuración del plugin Escalade"
+msgstr "Configuración del complemento Escalada"
 
 #: inc/config.class.php:60
 msgid "Remove old assign group on new group assign"
@@ -69,7 +70,7 @@ msgstr "Eliminar la asignación antigua del grupo en la nueva asignación"
 
 #: inc/config.class.php:82
 msgid "show group assign history visually"
-msgstr "mostrar historial visual de asignación de grupo"
+msgstr "mostrar visualmente el historial de asignación de grupos"
 
 #: inc/config.class.php:94
 msgid "Escalation history in tasks"
@@ -97,11 +98,11 @@ msgstr "Asignar el grupo técnico al cambiar la categoría del ticket"
 
 #: inc/config.class.php:163
 msgid "Clone and link tickets"
-msgstr ""
+msgstr "Clonar y vincular tickets"
 
 #: inc/config.class.php:173
 msgid "Close linked tickets at the same time"
-msgstr ""
+msgstr "Cerrar tickets vinculados a la misma vez"
 
 #: inc/config.class.php:192
 msgid "Assign me as observer by default"
@@ -109,19 +110,19 @@ msgstr "Asignarme como observador por defecto"
 
 #: inc/config.class.php:200
 msgid "Use the technician's group"
-msgstr "Usar el grupo de técnicos"
+msgstr "Usar el grupo del técnico"
 
 #: inc/config.class.php:218
 msgid "at creation time"
-msgstr ""
+msgstr "al momento de la creación"
 
 #: inc/config.class.php:220
 msgid "at modification time"
-msgstr ""
+msgstr "al momento de la modificación"
 
 #: inc/config.class.php:266
 msgid "Remove requester(s) on escalation"
-msgstr "Retirar al solicitante(s) en escalado"
+msgstr "Retirar solicitante(s) en la escalada"
 
 #: inc/config.class.php:278
 msgid "Display delete button"
@@ -133,7 +134,7 @@ msgstr "Activar el filtrado en la asignación de grupos"
 
 #: inc/config.class.php:390
 msgid "Default (not managed by plugin)"
-msgstr ""
+msgstr "Por defecto (no administrado por el complemento)"
 
 #: inc/history.class.php:191
 msgid "Reassign the ticket to group"
@@ -149,11 +150,11 @@ msgstr "Ver historial completo"
 
 #: inc/history.class.php:291
 msgid "Tickets to follow (escalated)"
-msgstr "Tickets a seguir (escalado)"
+msgstr "Tickets a seguir (escalados)"
 
 #: inc/history.class.php:305
 msgid "Tickets to close (escalated)"
-msgstr " Tickets para cerrar (escalado)"
+msgstr "Tickets a cerrar (escalados)"
 
 #: inc/notification.class.php:71
 msgid "Requester user of the ticket"
@@ -165,7 +166,7 @@ msgstr "Grupo escalado en el ticket"
 
 #: inc/notification.class.php:117
 msgid "Manager of the group escalated in the ticket"
-msgstr "Responsable del grupo escalado en el ticket"
+msgstr "Responsable del grupo al que se escaló el ticket"
 
 #: inc/notification.class.php:123
 msgid "Requester user of the task/reminder"
@@ -173,19 +174,19 @@ msgstr "Usuario solicitante de la tarea/recordatorio"
 
 #: inc/notification.class.php:128
 msgid "Last group escalated in the ticket"
-msgstr ""
+msgstr "Último grupo escalado en el ticket"
 
 #: inc/notification.class.php:132
 msgid "Manager of last group escalated in the ticket"
-msgstr ""
+msgstr "Responsable del último grupo escalado en el ticket"
 
 #: inc/notification.class.php:367
 msgid "Solve date modification"
-msgstr ""
+msgstr "Modificación de la fecha de solución"
 
 #: inc/ticket.class.php:243
 msgid "Solution provided, back to the group"
-msgstr "Solución proveida, volver al grupo"
+msgstr "Solución proporcionada, volver al grupo"
 
 #: inc/ticket.class.php:309
 msgid "Solution rejected, return to the group"
@@ -194,19 +195,19 @@ msgstr "Solución rechazada, volver al grupo"
 #: inc/ticket.class.php:455 inc/ticket.class.php:553
 #, php-format
 msgid "Escalation to the group %s."
-msgstr "Escalamiento al grupo %s"
+msgstr "Escalada al grupo %s"
 
 #: inc/ticket.class.php:904
 msgid "Error : get old ticket"
-msgstr "Error : al obtener ticket antiguo"
+msgstr "Error : obtener ticket antiguo"
 
 #: inc/ticket.class.php:920
 msgid "Error : adding new ticket"
-msgstr "Error: agregando nuevo ticket"
+msgstr "Error : agregando un nuevo ticket"
 
 #: inc/ticket.class.php:933
 msgid "Error : adding link between the two tickets"
-msgstr "Error :  agregando vinculo entre los dos  tickets"
+msgstr "Error : agregando vínculo entre los dos tickets"
 
 #: inc/ticket.class.php:944 inc/ticket.class.php:986 inc/ticket.class.php:991
 msgid "This ticket has been cloned from the ticket num"
