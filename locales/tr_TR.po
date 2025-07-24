@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-14 00:55+0000\n"
+"POT-Creation-Date: 2025-07-24 00:55+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2015-2016,2018-2021,2023-2025\n"
 "Language-Team: Turkish (Turkey) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/tr_TR/)\n"
@@ -98,11 +98,11 @@ msgstr "Destek kaydı kategorisi değiştiğinde atanacak teknik grup"
 
 #: inc/config.class.php:163
 msgid "Clone and link tickets"
-msgstr ""
+msgstr "Destek kayıtlarını çoğalt ve bağla "
 
 #: inc/config.class.php:173
 msgid "Close linked tickets at the same time"
-msgstr ""
+msgstr "Bağlantılı destek kayıtları aynı anda kapatılsın"
 
 #: inc/config.class.php:192
 msgid "Assign me as observer by default"
