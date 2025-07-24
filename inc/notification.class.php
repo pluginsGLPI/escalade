@@ -144,7 +144,7 @@ class PluginEscaladeNotification
         if ($target instanceof NotificationTargetPlanningRecall) {
             $item = getItemForItemtype($target->obj->fields['itemtype']);
             if ($item === false) {
-                return; // Ou gérer l'erreur d'une autre manière appropriée
+                return;
             }
             $item->getFromDB($target->obj->fields['items_id']);
             if ($item instanceof TicketTask) {
