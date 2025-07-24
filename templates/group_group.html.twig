@@ -78,37 +78,3 @@
         {{ include('components/datatable.html.twig', datatable_params, with_context = false) }}
     {% endif %}
 {% endif %}
-
-{# {% if is_granted('group', 'update') and nb %}
-    {% set rand = random() %}
-    {% set massiveactionparams = {
-        'num_displayed': min(nb, app.session.glpilist_limit),
-        'container': 'mass' ~ _self|class_basename ~ rand
-    } %}
-    {{ form_start(massiveActionForm) }}
-    {% if nb > 10 %}
-        {{ form_widget(massiveActionForm) }}
-    {% endif %}
-    <table class="tab_cadre_fixe">
-        <tr>
-            <th width="20">{{ form_widget(massiveActionForm.mass_all) }}</th>
-            <th>{{ 'group'|trans }}</th>
-        </tr>
-        {% for gg_id, gg in gg_found %}
-            <tr class="tab_bg_1">
-                <td>
-                    {% if is_granted('group', 'update') %}
-                        {{ form_widget(massiveActionForm.mass[gg_id]) }}
-                    {% endif %}
-                </td>
-                <td>{{ group.getLink() }}</td>
-            </tr>
-        {% endfor %}
-    </table>
-    {% if nb > 10 %}
-        {% if massiveactionparams.ontop is not defined %}
-            {{ form_widget(massiveActionForm) }}
-        {% endif %}
-    {% endif %}
-    {{ form_end(massiveActionForm) }}
-{% endif %} #}
