@@ -59,44 +59,50 @@ final class NotificationTest extends EscaladeTestCase
 
     private function createGroupWithUsers(string $group_name, int $user_count = 2): array
     {
-        $group = $this->createItem(Group::class, [
+        $group = new Group();
+        $group_id = $group->add([
             'name' => $group_name,
             'entities_id' => 0,
             'is_recursive' => 1,
             'is_assign' => 1,
         ]);
+        $this->assertGreaterThan(0, $group_id);
 
         $users = [];
         for ($i = 1; $i <= $user_count; $i++) {
-            $user = $this->createItem(User::class, [
+            $user = new User();
+            $user_id = $user->add([
                 'name' => $group_name . '_user_' . $i,
                 '_profiles_id' => 4,
                 'firstname' => 'Test',
                 'realname' => 'User ' . $i,
             ]);
+            $this->assertGreaterThan(0, $user_id);
 
             $email = strtolower($group_name) . '_user_' . $i . '@example.com';
-            $this->createItem(\UserEmail::class, [
-                'users_id' => $user->getID(),
+            $userEmail = new \UserEmail();
+            $userEmail->add([
+                'users_id' => $user_id,
                 'email' => $email,
                 'is_default' => 1,
             ]);
 
-            $this->createItem(\Group_User::class, [
-                'groups_id' => $group->getID(),
-                'users_id' => $user->getID(),
+            $groupUser = new \Group_User();
+            $groupUser->add([
+                'groups_id' => $group_id,
+                'users_id' => $user_id,
             ]);
 
             $users[] = [
-                'id' => $user->getID(),
-                'name' => $user->fields['name'],
+                'id' => $user_id,
+                'name' => $group_name . '_user_' . $i,
                 'email' => $email,
             ];
         }
 
         return [
-            'id' => $group->getID(),
-            'name' => $group->fields['name'],
+            'id' => $group_id,
+            'name' => $group_name,
             'users' => $users,
         ];
     }
@@ -183,7 +189,8 @@ final class NotificationTest extends EscaladeTestCase
         $group1 = $this->createGroupWithUsers('test_climb_group_1', 2);
         $group2 = $this->createGroupWithUsers('test_climb_group_2', 2);
 
-        $ticket = $this->createItem(Ticket::class, [
+        $ticket = new Ticket();
+        $ticket_id = $ticket->add([
             'name' => 'Test escalation via climb_group',
             'content' => 'Content for escalation test',
             '_actors' => [
@@ -195,17 +202,18 @@ final class NotificationTest extends EscaladeTestCase
                 ],
             ],
         ]);
+        $this->assertGreaterThan(0, $ticket_id);
 
         // Clear notification queue
         $this->cleanQueuedNotifications();
 
         // Escalate using climb_group method (from history widget)
-        PluginEscaladeTicket::climb_group($ticket->getID(), $group2['id'], true);
+        PluginEscaladeTicket::climb_group($ticket_id, $group2['id'], true);
 
         // Check that the ticket is now assigned to group2 only
         $group_ticket = new Group_Ticket();
         $assigned_groups = $group_ticket->find([
-            'tickets_id' => $ticket->getID(),
+            'tickets_id' => $ticket_id,
             'type' => CommonITILActor::ASSIGN,
         ]);
 
@@ -254,7 +262,8 @@ final class NotificationTest extends EscaladeTestCase
         $group2 = $this->createGroupWithUsers('test_update_group_2', 2);
 
         // Create a ticket assigned to the first group
-        $ticket = $this->createItem(Ticket::class, [
+        $ticket = new Ticket();
+        $ticket_id = $ticket->add([
             'name' => 'Test escalation via ticket update',
             'content' => 'Content for escalation test',
             '_actors' => [
@@ -266,6 +275,7 @@ final class NotificationTest extends EscaladeTestCase
                 ],
             ],
         ]);
+        $this->assertGreaterThan(0, $ticket_id);
 
         // Clear notification queue
         $this->cleanQueuedNotifications();
@@ -273,7 +283,8 @@ final class NotificationTest extends EscaladeTestCase
         // Escalate using ticket update (via form submission)
         // We add the new group while keeping the old one in the payload
         // The escalade plugin should handle removing the old group
-        $this->updateItem(Ticket::class, $ticket->getID(), [
+        $this->assertTrue($ticket->update([
+            'id' => $ticket_id,
             '_actors' => [
                 'assign' => [
                     [
@@ -286,12 +297,12 @@ final class NotificationTest extends EscaladeTestCase
                     ],
                 ],
             ],
-        ]);
+        ]));
 
         // Check that the ticket is now assigned to group2 only
         $group_ticket = new Group_Ticket();
         $assigned_groups = $group_ticket->find([
-            'tickets_id' => $ticket->getID(),
+            'tickets_id' => $ticket_id,
             'type' => CommonITILActor::ASSIGN,
         ]);
 
@@ -340,7 +351,8 @@ final class NotificationTest extends EscaladeTestCase
         $group2 = $this->createGroupWithUsers('test_itil_group_2', 2);
 
         // Create a ticket assigned to the first group
-        $ticket = $this->createItem(Ticket::class, [
+        $ticket = new Ticket();
+        $ticket_id = $ticket->add([
             'name' => 'Test escalation via _itil_assign',
             'content' => 'Content for escalation test',
             '_actors' => [
@@ -352,23 +364,25 @@ final class NotificationTest extends EscaladeTestCase
                 ],
             ],
         ]);
+        $this->assertGreaterThan(0, $ticket_id);
 
         // Clear notification queue
         $this->cleanQueuedNotifications();
 
         // Escalate using _itil_assign method
-        $this->updateItem(Ticket::class, $ticket->getID(), [
+        $this->assertTrue($ticket->update([
+            'id' => $ticket_id,
             '_itil_assign' => [
                 '_type' => 'group',
                 'groups_id' => $group2['id'],
                 'use_notification' => 1,
             ],
-        ]);
+        ]));
 
         // Check that the ticket is now assigned to group2 only
         $group_ticket = new Group_Ticket();
         $assigned_groups = $group_ticket->find([
-            'tickets_id' => $ticket->getID(),
+            'tickets_id' => $ticket_id,
             'type' => CommonITILActor::ASSIGN,
         ]);
 
@@ -400,8 +414,6 @@ final class NotificationTest extends EscaladeTestCase
         }
     }
 
-
-
     /**
      * Test that direct group assignment (not escalation) still works correctly
      */
@@ -418,16 +430,19 @@ final class NotificationTest extends EscaladeTestCase
         $group = $this->createGroupWithUsers('test_direct_group', 2);
 
         // Create a ticket without any initial assignment
-        $ticket = $this->createItem(Ticket::class, [
+        $ticket = new Ticket();
+        $ticket_id = $ticket->add([
             'name' => 'Test direct group assignment',
             'content' => 'Content for direct assignment test',
         ]);
+        $this->assertGreaterThan(0, $ticket_id);
 
         // Clear notification queue
         $this->cleanQueuedNotifications();
 
         // Directly assign the group (not an escalation)
-        $this->updateItem(Ticket::class, $ticket->getID(), [
+        $this->assertTrue($ticket->update([
+            'id' => $ticket_id,
             '_actors' => [
                 'assign' => [
                     [
@@ -436,12 +451,12 @@ final class NotificationTest extends EscaladeTestCase
                     ],
                 ],
             ],
-        ]);
+        ]));
 
         // Check that the ticket is assigned to the group
         $group_ticket = new Group_Ticket();
         $assigned_groups = $group_ticket->find([
-            'tickets_id' => $ticket->getID(),
+            'tickets_id' => $ticket_id,
             'type' => CommonITILActor::ASSIGN,
         ]);
 
@@ -480,7 +495,8 @@ final class NotificationTest extends EscaladeTestCase
         $group2 = $this->createGroupWithUsers('test_history_group_2', 1);
 
         // Create a ticket assigned to group1
-        $ticket = $this->createItem(Ticket::class, [
+        $ticket = new Ticket();
+        $ticket_id = $ticket->add([
             'name' => 'Test escalation history',
             'content' => 'Content for history test',
             '_actors' => [
@@ -492,11 +508,12 @@ final class NotificationTest extends EscaladeTestCase
                 ],
             ],
         ]);
+        $this->assertGreaterThan(0, $ticket_id);
 
         // Check initial group assignment
         $group_ticket = new Group_Ticket();
         $assigned_groups_before = $group_ticket->find([
-            'tickets_id' => $ticket->getID(),
+            'tickets_id' => $ticket_id,
             'type' => CommonITILActor::ASSIGN,
         ]);
         $this->assertCount(1, $assigned_groups_before, "Should have one assigned group initially");
@@ -504,11 +521,11 @@ final class NotificationTest extends EscaladeTestCase
         $this->assertEquals($group1['id'], $initial_group['groups_id'], "Should be assigned to group1 initially");
 
         // Escalate to group2 using climb_group
-        PluginEscaladeTicket::climb_group($ticket->getID(), $group2['id'], true);
+        PluginEscaladeTicket::climb_group($ticket_id, $group2['id'], true);
 
         // Check final group assignment
         $assigned_groups_after = $group_ticket->find([
-            'tickets_id' => $ticket->getID(),
+            'tickets_id' => $ticket_id,
             'type' => CommonITILActor::ASSIGN,
         ]);
         $this->assertCount(1, $assigned_groups_after, "Should have one assigned group after escalation");
@@ -517,11 +534,11 @@ final class NotificationTest extends EscaladeTestCase
 
         // Check escalation history
         $history = new \PluginEscaladeHistory();
-        $history_entries = $history->find(['tickets_id' => $ticket->getID()]);
+        $history_entries = $history->find(['tickets_id' => $ticket_id]);
         $this->assertGreaterThan(0, count($history_entries), "Should have escalation history entries");
 
         // Check that the most recent history entry corresponds to group2
-        $recent_escalation = \PluginEscaladeHistory::getMostRecentEscalationForTicket($ticket->getID());
+        $recent_escalation = \PluginEscaladeHistory::getMostRecentEscalationForTicket($ticket_id);
         $this->assertNotFalse($recent_escalation, "Should find most recent escalation");
         $this->assertEquals($group2['id'], $recent_escalation['groups_id'], "Most recent escalation should be to group2");
     }
