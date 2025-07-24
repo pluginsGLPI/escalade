@@ -133,7 +133,7 @@ abstract class EscaladeTestCase extends TestCase
     public function climbWithRejectSolutionTicket(\Ticket $ticket, \Group $group, array $followup_options = []): void
     {
         $_POST['add_reopen'] = 1;
-        
+
         $followup = new \ITILFollowup();
         $followup_id = $followup->add(array_merge([
             'itemtype'   => 'Ticket',
