@@ -35,7 +35,7 @@ use PHPUnit\Framework\TestCase;
 use Session;
 use DbTestCase;
 
-abstract class EscaladeTestCase extends DbTestCase
+abstract class EscaladeTestCase extends TestCase
 {
     public function setUp(): void
     {
