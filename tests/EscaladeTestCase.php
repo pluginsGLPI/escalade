@@ -33,10 +33,24 @@ namespace GlpiPlugin\Escalade\Tests;
 use Auth;
 use PHPUnit\Framework\TestCase;
 use Session;
-use DbTestCase;
 
-abstract class EscaladeTestCase extends DbTestCase
+abstract class EscaladeTestCase extends TestCase
 {
+    public function setUp(): void
+    {
+        /** @var \DBmysql $DB */
+        global $DB;
+        $DB->beginTransaction();
+        parent::setUp();
+    }
+
+    public function tearDown(): void
+    {
+        global $DB;
+        $DB->rollback();
+        parent::tearDown();
+    }
+
     protected function login(
         string $user_name = TU_USER,
         string $user_pass = TU_PASS,
@@ -99,12 +113,15 @@ abstract class EscaladeTestCase extends DbTestCase
 
     public function climbWithSolvedTicket(\Ticket $ticket, \Group $group, array $solution_options = []): void
     {
-        $this->createItem(\ITILSolution::class, array_merge([
+        $solution = new \ITILSolution();
+        $solution_id = $solution->add(array_merge([
             'content' => 'Test Solution',
             'itemtype' => $ticket->getType(),
             'items_id' => $ticket->getID(),
             'users_id' => Session::getLoginUserID(),
         ], $solution_options));
+        $this->assertGreaterThan(0, $solution_id);
+
         $ticketgroup = new \Group_Ticket();
         $is_escalate = $ticketgroup->getFromDBByCrit([
             'tickets_id' => $ticket->getID(),
@@ -116,18 +133,16 @@ abstract class EscaladeTestCase extends DbTestCase
     public function climbWithRejectSolutionTicket(\Ticket $ticket, \Group $group, array $followup_options = []): void
     {
         $_POST['add_reopen'] = 1;
-        $this->createItem(
-            \ITILFollowup::class,
-            array_merge([
-                'itemtype'   => 'Ticket',
-                'items_id'   => $ticket->getID(),
-                'add_reopen'   => '1',
-                'content'      => 'reopen followup',
-            ], $followup_options),
-            [
-                'add_reopen',
-            ],
-        );
+
+        $followup = new \ITILFollowup();
+        $followup_id = $followup->add(array_merge([
+            'itemtype'   => 'Ticket',
+            'items_id'   => $ticket->getID(),
+            'add_reopen'   => '1',
+            'content'      => 'reopen followup',
+        ], $followup_options));
+        $this->assertGreaterThan(0, $followup_id);
+
         $ticketgroup = new \Group_Ticket();
         $is_escalate = $ticketgroup->getFromDBByCrit([
             'tickets_id' => $ticket->getID(),
