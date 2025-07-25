@@ -7,15 +7,16 @@
 # alexandre delaunay <delaunay.alexandre@gmail.com>, 2016
 # Cédric Anne, 2018,2023
 # Johan Cwiklinski, 2016
+# EpicIT33, 2025
 # Pierre <plebel@teclib.com>, 2016
 # Stanislas <skita@teclib.com>, 2024
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-14 00:55+0000\n"
+"POT-Creation-Date: 2025-07-25 00:54+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
-"Last-Translator: Stanislas <skita@teclib.com>, 2024\n"
+"Last-Translator: EpicIT33, 2025\n"
 "Language-Team: French (France) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/fr_FR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -102,11 +103,11 @@ msgstr "Assigner le groupe technique au changement de catégorie"
 
 #: inc/config.class.php:163
 msgid "Clone and link tickets"
-msgstr ""
+msgstr "Cloner et lier un ticket"
 
 #: inc/config.class.php:173
 msgid "Close linked tickets at the same time"
-msgstr ""
+msgstr "Clôturer les tickets liés en même temps"
 
 #: inc/config.class.php:192
 msgid "Assign me as observer by default"
@@ -178,11 +179,11 @@ msgstr "Utilisateur demandeur de la tâche/rappel"
 
 #: inc/notification.class.php:128
 msgid "Last group escalated in the ticket"
-msgstr ""
+msgstr "Dernier groupe escaladé du ticket"
 
 #: inc/notification.class.php:132
 msgid "Manager of last group escalated in the ticket"
-msgstr ""
+msgstr "Responsable du dernier groupe escaladé du ticket"
 
 #: inc/notification.class.php:367
 msgid "Solve date modification"
