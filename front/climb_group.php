@@ -28,7 +28,8 @@
  * -------------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
+use Glpi\Exception\Http\BadRequestHttpException;
+
 Session::checkLoginUser();
 
 if (!Plugin::isPluginActive('escalade')) {
@@ -40,14 +41,14 @@ if (
     ! isset($_REQUEST['tickets_id'])
     || ! isset($_REQUEST['groups_id'])
 ) {
-    Html::displayErrorAndDie(__("missing parameters", "escalade"));
+    throw new BadRequestHttpException();
 }
 
 $ticket = new Ticket();
 $ticket->getFromDB((int) $_REQUEST['tickets_id']);
 
 if (!$ticket->canAssign()) {
-    Html::displayRightError();
+    throw new Glpi\Exception\Http\AccessDeniedHttpException();
 }
 
 
