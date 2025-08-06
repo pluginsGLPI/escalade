@@ -42,11 +42,13 @@ class PluginEscaladeTicket
     public static function pre_item_update(CommonDBTM $item)
     {
         if ($item instanceof CommonITILObject) {
-            if (!$item->prepareInputForUpdate($item->input)) {
+            $input = $item->prepareInputForUpdate($item->input);
+            if (!$input) {
                 return false;
             }
         }
 
+        $item->input = $input;
         $old_groups = [];
         $old_users = [];
 
