@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed 
 
 - Rename options related to ticket cloning and closure to avoid ambiguity
+- Fix rule doesn't trigger when user uses "Assign myself" button
 
 ## [2.9.16] - 2025-07-10
 

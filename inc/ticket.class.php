@@ -48,7 +48,7 @@ class PluginEscaladeTicket
             }
         }
 
-        $item->input = $input;
+        $item->input = array_merge($input, $item->input);
         $old_groups = [];
         $old_users = [];
 
@@ -685,6 +685,11 @@ class PluginEscaladeTicket
                         && $actor['itemtype'] == User::class
                     ) {
                         unset($item->input['_actors'][$types[$type]][$key]);
+                    }
+                }
+                foreach ($item->input['_users_id_assign'] as $key => $actor) {
+                    if ($actor == $tu['users_id']) {
+                        unset($item->input['_users_id_assign'][$key]);
                     }
                 }
             }
