@@ -41,6 +41,7 @@ class PluginEscaladeTicket
 
     public static function pre_item_update(CommonDBTM $item)
     {
+        $input = $item->input;
         if ($item instanceof CommonITILObject) {
             $input = $item->prepareInputForUpdate($item->input);
             if (!$input) {
@@ -555,25 +556,14 @@ class PluginEscaladeTicket
                     '<p><i>' . sprintf(__('Escalation to the group %s.', 'escalade'), Sanitizer::unsanitize($group->getName())) . '</i></p><hr />',
                 ),
             ]);
-            if (
-                $ticket_group->add(
-                    [
-                        'tickets_id'                    => $tickets_id,
-                        'groups_id'                     => $groups_id,
-                        'type'                          => CommonITILActor::ASSIGN,
-                        '_disablenotif'                 => true,
-                        '_plugin_escalade_no_history'   => true,
-                    ],
-                )
-            ) {
-
-                //notified only the last group assigned
-                $ticket = new Ticket();
-                $ticket->getFromDB($tickets_id);
-
-                $event = "assign_group";
-                NotificationEvent::raiseEvent($event, $ticket);
-            }
+            $ticket = new Ticket();
+            $ticket->update([
+                'id'           => $tickets_id,
+                '_itil_assign' => [
+                    'groups_id' => $groups_id,
+                    '_type'    => 'group',
+                ],
+            ]);
         }
 
         if (!$no_redirect) {

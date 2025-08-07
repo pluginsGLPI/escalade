@@ -296,6 +296,9 @@ final class TicketTest extends EscaladeTestCase
         $this->assertTrue($found_new_group, "New group should be assigned after successful escalation");
     }
 
+    /**
+     * Test rule execution when escalating a ticket
+     */
     public function testTriggerEscalationAndExecuteRuleOnTicket()
     {
         $this->login();
@@ -308,6 +311,7 @@ final class TicketTest extends EscaladeTestCase
 
         PluginEscaladeConfig::loadInSession();
 
+        // Create a group
         $group_observer_id = $this->createItem(\Group::class, [
             'name' => 'Group Observer',
             'entities_id' => 0,
@@ -320,10 +324,12 @@ final class TicketTest extends EscaladeTestCase
             'is_recursive' => 1,
         ]);
 
+        // Get the tech user
         $user_tech = new \User();
         $user_tech->getFromDBbyName('tech');
         $this->assertGreaterThan(0, $user_tech->getID());
 
+        // Create a rule to assign the group observer if the group tech or tech user is assigned
         $rule_id = $this->createItem(\Rule::class, [
             'name' => 'Add RuleTicket',
             'sub_type' => 'RuleTicket',
@@ -353,6 +359,7 @@ final class TicketTest extends EscaladeTestCase
             'pattern' => $user_tech->getID(),
         ]);
 
+        // Test the rule ticket during the escalation
         foreach ($this->climbTicketMethods(['climbWithTimelineButton', 'climbWithHistoryButton', 'climbWithAssignMySelfButton']) as $data) {
             $ticket = $this->createItem(\Ticket::class, [
                 'name' => 'Test ticket for escalation',
@@ -371,9 +378,8 @@ final class TicketTest extends EscaladeTestCase
                 $this->{$data['method']}($ticket, $user_tech);
                 $this->assertEquals(1, count($user_ticket->find(['tickets_id' => $ticket->getID(), 'users_id' => $user_tech->getID(), 'type' => \CommonITILActor::ASSIGN])));
             }
+            $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group_observer_id, 'type' => \CommonITILActor::OBSERVER])));
         }
-
-        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group_observer_id, 'type' => \CommonITILActor::OBSERVER])));
     }
 
     public function testTicketUpdateDoesNotChangeITILCategoryAssignedGroup()

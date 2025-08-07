@@ -31,7 +31,6 @@
 namespace GlpiPlugin\Escalade\Tests;
 
 use Auth;
-use PHPUnit\Framework\TestCase;
 use Session;
 use DbTestCase;
 
@@ -59,6 +58,14 @@ abstract class EscaladeTestCase extends DbTestCase
         $_SESSION['glpi_currenttime'] = $ctime;
     }
 
+    /**
+     * Get the methods for simulating different ways of escalating a ticket.
+     *
+     * @param array $methods Contains the names of the different methods that must be used to simulate an escalation.
+     * eg. ['climbWithTimelineButton', 'climbWithHistoryButton'] to simulate the escalation with the timeline and history buttons.
+     *
+     * @return array
+     */
     public static function climbTicketMethods(array $methods = []): array
     {
         $climb_methods = [
@@ -90,6 +97,13 @@ abstract class EscaladeTestCase extends DbTestCase
 
     }
 
+    /**
+     * Simulate the escalation of a ticket with the timeline button.
+     *
+     * @param \Ticket $ticket
+     * @param \Group $group
+     * @param array $options
+     */
     public function climbWithTimelineButton(\Ticket $ticket, \Group $group, array $options = []): void
     {
         $options['ticket_details'] = array_merge(
@@ -117,6 +131,12 @@ abstract class EscaladeTestCase extends DbTestCase
         }
     }
 
+    /**
+     * Simulate the escalation of a ticket with the history button.
+     *
+     * @param \Ticket $ticket
+     * @param \Group $group
+     */
     public function climbWithHistoryButton(\Ticket $ticket, \Group $group): void
     {
         \PluginEscaladeTicket::climb_group($ticket->getID(), $group->getID(), true);
@@ -128,6 +148,13 @@ abstract class EscaladeTestCase extends DbTestCase
         $this->assertTrue($is_escalate);
     }
 
+    /**
+     * Simulate the escalation of a ticket with a solved ticket.
+     *
+     * @param \Ticket $ticket
+     * @param \Group $group
+     * @param array $solution_options
+     */
     public function climbWithSolvedTicket(\Ticket $ticket, \Group $group, array $solution_options = []): void
     {
         $config = new \PluginEscaladeConfig();
@@ -142,7 +169,7 @@ abstract class EscaladeTestCase extends DbTestCase
             1,
             [
                 'solve_return_group' => 1,
-            ] + $conf
+            ] + $conf,
         );
 
         $this->createItem(\ITILSolution::class, array_merge([
@@ -159,6 +186,13 @@ abstract class EscaladeTestCase extends DbTestCase
         $this->assertTrue($is_escalate);
     }
 
+    /**
+     * Simulate the escalation of a ticket with a reject solution ticket.
+     *
+     * @param \Ticket $ticket
+     * @param \Group $group
+     * @param array $followup_options
+     */
     public function climbWithRejectSolutionTicket(\Ticket $ticket, \Group $group, array $followup_options = []): void
     {
         $_POST['add_reopen'] = 1;
@@ -182,6 +216,12 @@ abstract class EscaladeTestCase extends DbTestCase
         $this->assertTrue($is_escalate);
     }
 
+    /**
+     * Simulate the escalation of a ticket with the assign myself button.
+     *
+     * @param \Ticket $ticket
+     * @param \User $user
+     */
     public function climbWithAssignMySelfButton(\Ticket $ticket, \User $user): void
     {
         $this->updateItem(
