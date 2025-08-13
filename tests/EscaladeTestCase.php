@@ -68,7 +68,7 @@ abstract class EscaladeTestCase extends DbTestCase
      */
     public static function escalateTicketMethods(array $methods = []): array
     {
-        $climb_methods = [
+        $escalate_methods = [
             [
                 'method' => 'escalateWithTimelineButton',
                 'itemtype' => \Group::class,
@@ -91,8 +91,8 @@ abstract class EscaladeTestCase extends DbTestCase
             ],
         ];
 
-        return array_filter($climb_methods, function ($climb_method) use ($methods) {
-            return in_array($climb_method['method'], $methods);
+        return array_filter($escalate_methods, function ($escalate_method) use ($methods) {
+            return in_array($escalate_method['method'], $methods);
         });
 
     }
