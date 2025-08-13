@@ -62,31 +62,31 @@ abstract class EscaladeTestCase extends DbTestCase
      * Get the methods for simulating different ways of escalating a ticket.
      *
      * @param array $methods Contains the names of the different methods that must be used to simulate an escalation.
-     * eg. ['climbWithTimelineButton', 'climbWithHistoryButton'] to simulate the escalation with the timeline and history buttons.
+     * eg. ['escalateWithTimelineButton', 'escalateWithHistoryButton'] to simulate the escalation with the timeline and history buttons.
      *
      * @return array
      */
-    public static function climbTicketMethods(array $methods = []): array
+    public static function escalateTicketMethods(array $methods = []): array
     {
         $climb_methods = [
             [
-                'method' => 'climbWithTimelineButton',
+                'method' => 'escalateWithTimelineButton',
                 'itemtype' => \Group::class,
             ],
             [
-                'method' => 'climbWithHistoryButton',
+                'method' => 'escalateWithHistoryButton',
                 'itemtype' => \Group::class,
             ],
             [
-                'method' => 'climbWithSolvedTicket',
+                'method' => 'escalateWithSolvedTicket',
                 'itemtype' => \Group::class,
             ],
             [
-                'method' => 'climbWithRejectSolutionTicket',
+                'method' => 'escalateWithRejectSolutionTicket',
                 'itemtype' => \Group::class,
             ],
             [
-                'method' => 'climbWithAssignMySelfButton',
+                'method' => 'escalateWithAssignMySelfButton',
                 'itemtype' => \User::class,
             ],
         ];
@@ -104,7 +104,7 @@ abstract class EscaladeTestCase extends DbTestCase
      * @param \Group $group
      * @param array $options
      */
-    public function climbWithTimelineButton(\Ticket $ticket, \Group $group, array $options = []): void
+    public function escalateWithTimelineButton(\Ticket $ticket, \Group $group, array $options = []): void
     {
         $options['ticket_details'] = array_merge(
             $options['ticket_details'] ?? [],
@@ -137,7 +137,7 @@ abstract class EscaladeTestCase extends DbTestCase
      * @param \Ticket $ticket
      * @param \Group $group
      */
-    public function climbWithHistoryButton(\Ticket $ticket, \Group $group): void
+    public function escalateWithHistoryButton(\Ticket $ticket, \Group $group): void
     {
         \PluginEscaladeTicket::climb_group($ticket->getID(), $group->getID(), true);
         $ticketgroup = new \Group_Ticket();
@@ -155,7 +155,7 @@ abstract class EscaladeTestCase extends DbTestCase
      * @param \Group $group
      * @param array $solution_options
      */
-    public function climbWithSolvedTicket(\Ticket $ticket, \Group $group, array $solution_options = []): void
+    public function escalateWithSolvedTicket(\Ticket $ticket, \Group $group, array $solution_options = []): void
     {
         $config = new \PluginEscaladeConfig();
         $conf = $config->find();
@@ -193,7 +193,7 @@ abstract class EscaladeTestCase extends DbTestCase
      * @param \Group $group
      * @param array $followup_options
      */
-    public function climbWithRejectSolutionTicket(\Ticket $ticket, \Group $group, array $followup_options = []): void
+    public function escalateWithRejectSolutionTicket(\Ticket $ticket, \Group $group, array $followup_options = []): void
     {
         $_POST['add_reopen'] = 1;
         $this->createItem(
@@ -222,7 +222,7 @@ abstract class EscaladeTestCase extends DbTestCase
      * @param \Ticket $ticket
      * @param \User $user
      */
-    public function climbWithAssignMySelfButton(\Ticket $ticket, \User $user): void
+    public function escalateWithAssignMySelfButton(\Ticket $ticket, \User $user): void
     {
         $this->updateItem(
             \Ticket::class,

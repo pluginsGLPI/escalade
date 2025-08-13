@@ -360,7 +360,7 @@ final class TicketTest extends EscaladeTestCase
         ]);
 
         // Test the rule ticket during the escalation
-        foreach ($this->climbTicketMethods(['climbWithTimelineButton', 'climbWithHistoryButton', 'climbWithAssignMySelfButton']) as $data) {
+        foreach ($this->escalateTicketMethods(['escalateWithTimelineButton', 'escalateWithHistoryButton', 'escalateWithAssignMySelfButton']) as $data) {
             $ticket = $this->createItem(\Ticket::class, [
                 'name' => 'Test ticket for escalation',
                 'content' => 'Content for test ticket',
