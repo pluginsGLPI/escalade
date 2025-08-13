@@ -28,8 +28,6 @@
  * -------------------------------------------------------------------------
  */
 
-use Glpi\Toolbox\Sanitizer;
-
 include('../../../inc/includes.php');
 Session::checkLoginUser();
 
@@ -50,46 +48,7 @@ if (isset($_POST['escalate'])) {
         Html::displayRightError();
     }
 
-    $group = new Group();
-    if ($group_id === 0 || $group->getFromDB($group_id) === false) {
-        Session::addMessageAfterRedirect(__('You must select a group.', 'escalade'), false, ERROR);
-    } elseif (!empty($_POST['comment']) && !empty($tickets_id)) {
-        if ((bool) $_POST['is_observer_checkbox']) {
-            $ticket_user = new Ticket_User();
-            $ticket_user->add([
-                'type'       => CommonITILActor::OBSERVER,
-                'tickets_id' => $tickets_id,
-                'users_id'   => Session::getLoginUserID(),
-            ]);
-        }
-
-        // Update the ticket with actor data in order to execute the necessary rules
-        $_form_object = [
-            '_do_not_compute_status' => true,
-        ];
-        if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != -1) {
-            $_form_object['status'] = $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'];
-        }
-        $updates_ticket = new Ticket();
-        if (
-            $updates_ticket->update(
-                $_POST['ticket_details'] + [
-                    '_actors' => PluginEscaladeTicket::getTicketFieldsWithActors($tickets_id, $group_id),
-                    '_plugin_escalade_no_history' => true, // Prevent a duplicated task to be added
-                    'actortype' => CommonITILActor::ASSIGN,
-                    'groups_id' => $group_id,
-                    '_form_object' => $_form_object,
-                ],
-            )
-        ) {
-            //notified only the last group assigned
-            $ticket = new Ticket();
-            $ticket->getFromDB($tickets_id);
-
-            $event = "assign_group";
-            NotificationEvent::raiseEvent($event, $ticket);
-        }
-    }
+    PluginEscaladeTicket::timelineClimbAction($group_id, $tickets_id, $_POST);
 
     $track = new Ticket();
 

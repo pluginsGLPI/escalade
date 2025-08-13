@@ -160,7 +160,7 @@ class PluginEscaladeConfig extends CommonDBTM
 
         $rand = mt_rand();
         echo "<tr class='tab_bg_1'>";
-        echo "<td><label for='dropdown_cloneandlink_ticket$rand'>" . __("Clone tickets", "escalade") . "</label></td>";
+        echo "<td><label for='dropdown_cloneandlink_ticket$rand'>" . __("Clone and link tickets", "escalade") . "</label></td>";
         echo "<td>";
         Dropdown::showYesNo("cloneandlink_ticket", $this->fields["cloneandlink_ticket"], -1, [
             'width' => '25%',
@@ -170,7 +170,7 @@ class PluginEscaladeConfig extends CommonDBTM
 
         $rand = mt_rand();
         echo "<td><label for='dropdown_close_linkedtickets$rand'>";
-        echo __("Close cloned tickets at the same time", "escalade");
+        echo __("Close linked tickets at the same time", "escalade");
         echo "</label></td>";
         echo "<td>";
         Dropdown::showYesNo("close_linkedtickets", $this->fields["close_linkedtickets"], -1, [

@@ -7,8 +7,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [UNRELEASE]
 
+### Fixed 
+
+- Rename options related to ticket cloning and closure to avoid ambiguity
+
+## [2.9.16] - 2025-07-10
+
+### Fixed
+
+- Improved access control checks when cloning ticket
+
+## [2.9.15] - 2025-07-08
+
+- Fix duplicate notifications being sent during escalation by implementing two additional targets.
 - Fix 8 warnings in the `php-errors.log` file
 - Fix reopening of a cloned ticket when the parent ticket is reopened
+- Fix ticket task not added to timeline during escalation
 
 ## [2.9.14] - 2025-05-28
 

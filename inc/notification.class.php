@@ -43,12 +43,23 @@ class PluginEscaladeNotification
 
     public const NTRGT_TICKET_ESCALADE_GROUP          = 457951;
     public const NTRGT_TICKET_ESCALADE_GROUP_MANAGER  = 457952;
+    public const NTRGT_TICKET_LAST_ESCALADE_GROUP     = 457953;
+    public const NTRGT_TICKET_LAST_ESCALADE_GROUP_MANAGER = 457954;
 
     /**
-     * Add additional targets (recipient) to Glpi Notification 'planningrecall'
-     * This function aims to provide a list of keys (integer, see const above) values (labels) for targets
-     * @param NotificationTarget $target the current NotificationTarget.
-     *                                   we compute (atm) only NotificationTargetPlanningRecall
+     * Add additional targets (recipient) to Glpi Notification
+     *
+     * This function provides notification targets for escalation scenarios:
+     *
+     * For NotificationTargetPlanningRecall:
+     * - Standard targets for ticket actors (requester, observer, technician)
+     * - NTRGT_TICKET_ESCALADE_GROUP* targets: notify ALL groups in escalation history
+     *
+     * For NotificationTargetCommonITILObject (Ticket notifications):
+     * - NTRGT_TICKET_LAST_ESCALADE_GROUP* targets: notify ONLY the most recently assigned group
+     *   This prevents duplicate notifications during escalation by focusing on the current assignment
+     *
+     * @param NotificationTarget $target the current NotificationTarget
      */
     public static function addTargets(NotificationTarget $target)
     {
@@ -111,13 +122,22 @@ class PluginEscaladeNotification
                 Notification::AUTHOR,
                 __('Requester user of the task/reminder', 'escalade'),
             );
+        } elseif ($target instanceof NotificationTargetCommonITILObject) {
+            $target->addTarget(
+                self::NTRGT_TICKET_LAST_ESCALADE_GROUP,
+                __('Last group escalated in the ticket', 'escalade'),
+            );
+            $target->addTarget(
+                self::NTRGT_TICKET_LAST_ESCALADE_GROUP_MANAGER,
+                __('Manager of last group escalated in the ticket', 'escalade'),
+            );
         }
     }
 
     /**
      * Computer targets with real users_id/email
      * @param NotificationTarget $target the current NotificationTarget.
-     *                                   we compute (atm) only NotificationTargetPlanningRecall
+     * The second type is designed to prevent duplicate notifications during escalation.
      */
     public static function getActionTargets(NotificationTarget $target)
     {
@@ -193,12 +213,96 @@ class PluginEscaladeNotification
                         if (!isset($manager)) {
                             $manager = 1;
                         }
+
                         $history = new PluginEscaladeHistory();
-                        foreach ($history->find(['tickets_id' => $ticket->getID()]) as $found_history) {
+                        $history_entries = $history->find([
+                            'tickets_id' => $ticket->getID(),
+                        ], ['date_mod DESC', 'id DESC']);
+
+                        foreach ($history_entries as $found_history) {
                             $target->addForGroup($manager, $found_history['groups_id']);
                         }
                         break;
                 }
+            }
+        } elseif ($target instanceof NotificationTargetCommonITILObject) {
+            $item = $target->obj;
+
+            switch ($target->data['items_id']) {
+                // Only last escalation group
+                case self::NTRGT_TICKET_LAST_ESCALADE_GROUP:
+                    $manager = 0;
+                    // no break
+                case self::NTRGT_TICKET_LAST_ESCALADE_GROUP_MANAGER:
+                    if (!isset($manager)) {
+                        $manager = 1;
+                    }
+
+                    $group_to_notify = null;
+
+                    if (isset($_POST['escalate']) && isset($_POST['groups_id'])) {
+                        // Direct escalation via plugin's ticket.form.php
+                        $group_to_notify = (int) $_POST['groups_id'];
+                    } elseif (isset($_POST['_actors']['assign'])) {
+                        // Escalation via _actors update
+                        $groups = [];
+                        foreach ($_POST['_actors']['assign'] as $actor) {
+                            if (isset($actor['itemtype']) && $actor['itemtype'] === 'Group') {
+                                $groups[] = $actor['items_id'];
+                            }
+                        }
+                        $group_ticket = new Group_Ticket();
+                        $current_groups = $group_ticket->find(
+                            [
+                                'tickets_id' => $item->getID(),
+                                'type' => CommonITILActor::ASSIGN,
+                            ],
+                            ['id DESC'],
+                            1,
+                        );
+                        $group_to_notify = array_intersect($groups, array_column($current_groups, 'groups_id'));
+                    } elseif (isset($_POST['_itil_assign']['groups_id'])) {
+                        $group_to_notify = $_POST['_itil_assign']['groups_id'];
+                    }
+
+                    if (!$group_to_notify) {
+                        $group_ticket = new Group_Ticket();
+                        $current_groups = $group_ticket->find(
+                            [
+                                'tickets_id' => $item->getID(),
+                                'type' => CommonITILActor::ASSIGN,
+                            ],
+                            ['id DESC'],
+                            1,
+                        );
+
+                        if (!empty($current_groups)) {
+                            $current_group = reset($current_groups);
+                            $group_to_notify = $current_group['groups_id'];
+                        }
+                    }
+
+                    if (!$group_to_notify) {
+                        $last_escalation = PluginEscaladeHistory::getMostRecentEscalationForTicket($item->getID());
+
+                        if ($last_escalation !== false) {
+                            $group_ticket = new Group_Ticket();
+                            $verification = $group_ticket->find([
+                                'tickets_id' => $item->getID(),
+                                'groups_id' => $last_escalation['groups_id'],
+                                'type' => CommonITILActor::ASSIGN,
+                            ]);
+
+                            if (!empty($verification)) {
+                                $group_to_notify = $last_escalation['groups_id'];
+                            }
+                        }
+                    }
+
+                    if ($group_to_notify) {
+                        $target->addForGroup($manager, $group_to_notify);
+                    }
+                    break;
             }
         }
     }

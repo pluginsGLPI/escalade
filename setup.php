@@ -30,7 +30,7 @@
 
 use Glpi\Plugin\Hooks;
 
-define('PLUGIN_ESCALADE_VERSION', '2.9.14');
+define('PLUGIN_ESCALADE_VERSION', '2.9.16');
 
 // Minimal GLPI version, inclusive
 define("PLUGIN_ESCALADE_MIN_GLPI", "10.0.11");
@@ -162,6 +162,11 @@ function plugin_init_escalade()
         $PLUGIN_HOOKS['item_add_targets']['escalade']['NotificationTargetPlanningRecall']
          = ['PluginEscaladeNotification', 'addTargets'];
         $PLUGIN_HOOKS['item_action_targets']['escalade']['NotificationTargetPlanningRecall']
+         = ['PluginEscaladeNotification', 'getActionTargets'];
+
+        $PLUGIN_HOOKS['item_add_targets']['escalade']['NotificationTargetTicket']
+         = ['PluginEscaladeNotification', 'addTargets'];
+        $PLUGIN_HOOKS['item_action_targets']['escalade']['NotificationTargetTicket']
          = ['PluginEscaladeNotification', 'getActionTargets'];
 
         // Add additional events for Ticket notifications

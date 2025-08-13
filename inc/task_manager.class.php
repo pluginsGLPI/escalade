@@ -28,27 +28,54 @@
  * -------------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
-header("Content-Type: text/html; charset=UTF-8");
-Html::header_nocache();
+class PluginEscaladeTask_Manager
+{
+    private static ?TicketTask $ticket_task = null;
 
-Session::checkLoginUser();
+    public static function setTicketTask(array $input): void
+    {
+        if (self::$ticket_task === null) {
+            self::$ticket_task = new TicketTask();
+        }
 
-$escalade_config = $_SESSION['glpi_plugins']['escalade']['config'];
+        if (!self::canAddEscaladeTicketTask()) {
+            return;
+        }
 
-if (!$escalade_config['cloneandlink_ticket']) {
-    die;
-}
+        if (!empty(self::$ticket_task->input)) {
+            return;
+        }
 
-if (!isset($_REQUEST['tickets_id'])) {
-    exit;
-}
+        self::$ticket_task->input = $input;
+    }
 
-$ticket = new Ticket();
-if ($ticket->getFromDB($_REQUEST['tickets_id'])) {
-    if ($ticket->can($_REQUEST['tickets_id'], READ)) {
-        PluginEscaladeTicket::cloneAndLink($_REQUEST['tickets_id']);
-    } else {
-        Html::displayRightError("The user does not have permission to view this ticket.");
+    public static function canAddEscaladeTicketTask(): bool
+    {
+        if (!$_SESSION['glpi_plugins']['escalade']['config']['task_history']) {
+            return false;
+        }
+
+        if (
+            isset($_SESSION['plugin_escalade']['ticket_creation'])
+            && $_SESSION['plugin_escalade']['ticket_creation']
+        ) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public static function addTicketTaskInTimeline(): void
+    {
+        if (!self::canAddEscaladeTicketTask()) {
+            return;
+        }
+        self::$ticket_task->add(self::$ticket_task->input);
+        self::resetTicketTask();
+    }
+
+    public static function resetTicketTask(): void
+    {
+        self::$ticket_task = new TicketTask();
     }
 }
