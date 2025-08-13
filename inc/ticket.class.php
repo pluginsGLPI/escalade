@@ -41,12 +41,15 @@ class PluginEscaladeTicket
 
     public static function pre_item_update(CommonDBTM $item)
     {
+        $input = $item->input;
         if ($item instanceof CommonITILObject) {
-            if (!$item->prepareInputForUpdate($item->input)) {
+            $input = $item->prepareInputForUpdate($item->input);
+            if (!$input) {
                 return false;
             }
         }
 
+        $item->input = array_merge($input, $item->input);
         $old_groups = [];
         $old_users = [];
 
@@ -553,25 +556,14 @@ class PluginEscaladeTicket
                     '<p><i>' . sprintf(__('Escalation to the group %s.', 'escalade'), Sanitizer::unsanitize($group->getName())) . '</i></p><hr />',
                 ),
             ]);
-            if (
-                $ticket_group->add(
-                    [
-                        'tickets_id'                    => $tickets_id,
-                        'groups_id'                     => $groups_id,
-                        'type'                          => CommonITILActor::ASSIGN,
-                        '_disablenotif'                 => true,
-                        '_plugin_escalade_no_history'   => true,
-                    ],
-                )
-            ) {
-
-                //notified only the last group assigned
-                $ticket = new Ticket();
-                $ticket->getFromDB($tickets_id);
-
-                $event = "assign_group";
-                NotificationEvent::raiseEvent($event, $ticket);
-            }
+            $ticket = new Ticket();
+            $ticket->update([
+                'id'           => $tickets_id,
+                '_itil_assign' => [
+                    'groups_id' => $groups_id,
+                    '_type'    => 'group',
+                ],
+            ]);
         }
 
         if (!$no_redirect) {
@@ -683,6 +675,11 @@ class PluginEscaladeTicket
                         && $actor['itemtype'] == User::class
                     ) {
                         unset($item->input['_actors'][$types[$type]][$key]);
+                    }
+                }
+                foreach ($item->input['_users_id_assign'] as $key => $actor) {
+                    if ($actor == $tu['users_id']) {
+                        unset($item->input['_users_id_assign'][$key]);
                     }
                 }
             }
