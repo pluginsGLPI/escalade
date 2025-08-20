@@ -187,7 +187,7 @@ class PluginEscaladeTicket
                 //solution rejected
                 self::AssignLastGroupOnRejectedSolution($item);
                 // reopen linked tickets
-                self::linkedTickets($item, CommonITILObject::ASSIGNED);
+                self::linkedTickets($item, $item->input['status']);
             }
         }
 
@@ -785,24 +785,37 @@ class PluginEscaladeTicket
      */
     public static function linkedTickets(CommonDBTM $ticket, $status = CommonITILObject::SOLVED)
     {
-        if ($_SESSION['glpi_plugins']['escalade']['config']['close_linkedtickets']) {
-            $input = [
-                'status' => $status,
-            ];
+        if (!$_SESSION['glpi_plugins']['escalade']['config']['close_linkedtickets']) {
+            return;
+        }
 
-            $tickets = Ticket_Ticket::getLinkedTicketsTo($ticket->getID());
-            if (count($tickets)) {
-                $linkedTicket = new Ticket();
-                foreach ($tickets as $data) {
-                    $input['id'] = $data['tickets_id'];
-                    if (
-                        $linkedTicket->can($input['id'], UPDATE)
-                        && $data['link'] == Ticket_Ticket::LINK_TO
-                    ) {
-                        $linkedTicket->update($input);
-                    }
-                }
+        $tickets = Ticket_Ticket::getLinkedTicketsTo($ticket->getID());
+        if (empty($tickets)) {
+            return;
+        }
+
+        // Pre-define status for solved/closed tickets
+        $has_predefined_status = ($status == CommonITILObject::SOLVED || $status == CommonITILObject::CLOSED);
+        $input_base = $has_predefined_status ? ['status' => $status] : [];
+
+        $linkedTicket = new Ticket();
+
+        foreach ($tickets as $data) {
+            if ($data['link'] !== Ticket_Ticket::LINK_TO || !$linkedTicket->can($data['tickets_id'], UPDATE)) {
+                continue;
             }
+
+            $input = $input_base;
+            $input['id'] = $data['tickets_id'];
+
+            // Determine status only if not predefined
+            if (!$has_predefined_status) {
+                $linkedTicket->getFromDB($data['tickets_id']);
+                $actors = $linkedTicket->getActorsForType(CommonITILActor::ASSIGN);
+                $input['status'] = (count($actors) > 0) ? CommonITILObject::ASSIGNED : CommonITILObject::INCOMING;
+            }
+
+            $linkedTicket->update($input);
         }
     }
 

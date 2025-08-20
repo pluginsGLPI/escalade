@@ -91,15 +91,47 @@ final class TicketTest extends EscaladeTestCase
             'status' => CommonITILObject::ASSIGNED,
         ]);
 
-        $ticket = new \Ticket();
-        $ticket_cloned = $ticket->getFromDBByCrit([
+        $ticket_c = new \Ticket();
+        $ticket_cloned = $ticket_c->getFromDBByCrit([
             'name' => 'Escalade Close cloned ticket test',
             'NOT' => ['id' => $t_id],
         ]);
         $this->assertTrue($ticket_cloned);
 
+        //Check if cloned ticket status also changed
+        $this->assertEquals(CommonITILObject::INCOMING, $ticket_c->fields['status']);
+
+        //Add technician to cloned ticket
+        $ticket_user = new \Ticket_User();
+
+        $ticket_user->add([
+            'tickets_id' => $ticket_c->fields['id'],
+            'users_id' => 2,
+            'type' => CommonITILActor::ASSIGN,
+        ]);
+
+        // Solved ticket
+        $ticket->update([
+            'id' => $t_id,
+            'status' => CommonITILObject::SOLVED,
+        ]);
+
         //Check if cloned ticket is also solved
-        $this->assertEquals(CommonITILObject::ASSIGNED, $ticket->fields['status']);
+        $this->assertEquals(CommonITILObject::SOLVED, $ticket->fields['status']);
+
+        //Reopen ticket with technician
+        $ticket->update([
+            'id' => $t_id,
+            'status' => CommonITILObject::ASSIGNED,
+        ]);
+
+        //Check if cloned ticket status is ASSIGNED
+        $ticket_c = new \Ticket();
+        $ticket_c->getFromDBByCrit([
+            'name' => 'Escalade Close cloned ticket test',
+            'NOT' => ['id' => $t_id],
+        ]);
+        $this->assertEquals(CommonITILObject::ASSIGNED, $ticket_c->fields['status']);
 
         // Disable close linked tickets option
         $this->assertTrue($config->update([
