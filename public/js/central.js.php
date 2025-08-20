@@ -28,8 +28,6 @@
  * -------------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
-
 //change mimetype
 header("Content-type: application/javascript");
 
@@ -37,45 +35,34 @@ header("Content-type: application/javascript");
 if (
     $_SESSION['glpiactiveprofile']['interface'] == "central"
     && (Session::haveRight("ticket", CREATE)
-        || Session::haveRight("ticket", UPDATE))
+      || Session::haveRight("ticket", UPDATE))
 ) {
-    $locale_actor = __('Actor');
+    $locale_group_view = __('Group View');
 
     $JS = <<<JAVASCRIPT
 
-    var plugin_url = CFG_GLPI.root_doc+"/"+GLPI_PLUGINS_PATH.escalade;
-
-    var ticketEscalation = function() {
-        var tickets_id = getUrlParameter('id');
-
-        //only in edit form
-        if (tickets_id == undefined) {
-            return;
-        }
-
-        // if escalade block already inserted
-        if ($(".escalade_active").get(0)) {
-            return;
-        }
-
-        $("#actors .form-field:last")
-            .addClass('escalade_active')
-            .append(
-                $('<div></div>').load(
-                    plugin_url+'/ajax/history.php',
-                    {'tickets_id': tickets_id}
-                )
-            );
-    }
-
-    $(document).ready(function() {
-        // only in ticket form
-        if (location.pathname.indexOf('ticket.form.php') != 0) {
-            $(document).on('glpi.tab.loaded', function() {
-                ticketEscalation();
+   $(document).ready(function() {
+      // intercept tabs changes
+      $(document).on('glpi.tab.loaded', function(event) {
+          setTimeout(() => {
+            if ($('.nav-link.active:contains($locale_group_view)').length == 0) {
+               return;
+            }
+            $.ajax({ type: "GET",
+               url: CFG_GLPI.root_doc+"/"+GLPI_PLUGINS_PATH.escalade+'/ajax/central.php',
+               async: false,
+               success : function(text)
+               {
+                  if (text !== "") {
+                     var target_masnry = $(".masonry_grid:visible");
+                     target_masnry.append(text);
+                     window['msnry_' + target_masnry.prop('id')].appended($(".escalade-appended"));
+                  }
+               }
             });
-        }
-    });
+          }, 100);
+      });
+   });
 
 JAVASCRIPT;
     echo $JS;
