@@ -32,8 +32,10 @@ namespace GlpiPlugin\Escalade\Tests\Units;
 
 use CommonITILActor;
 use CommonITILObject;
+use CommonITILValidation;
 use GlpiPlugin\Escalade\Tests\EscaladeTestCase;
 use ITILCategory;
+use ITILSolution;
 use PluginEscaladeConfig;
 use PluginEscaladeTicket;
 
@@ -126,6 +128,44 @@ final class TicketTest extends EscaladeTestCase
         ]);
 
         //Check if cloned ticket status is ASSIGNED
+        $ticket_c = new \Ticket();
+        $ticket_c->getFromDBByCrit([
+            'name' => 'Escalade Close cloned ticket test',
+            'NOT' => ['id' => $t_id],
+        ]);
+        $this->assertEquals(CommonITILObject::ASSIGNED, $ticket_c->fields['status']);
+
+        // Add solution to the parent ticket
+        $solution = new ITILSolution();
+        $solution_id = $solution->add([
+            'itemtype' => 'Ticket',
+            'items_id' => $t_id,
+            'content' => 'Test solution',
+            'status' => CommonITILValidation::WAITING,
+            'users_id' => 2,
+        ]);
+
+        $this->assertNotFalse($solution_id);
+
+        //Check if cloned ticket status is SOLVED
+        $ticket_c = new \Ticket();
+        $ticket_c->getFromDBByCrit([
+            'name' => 'Escalade Close cloned ticket test',
+            'NOT' => ['id' => $t_id],
+        ]);
+        $this->assertEquals(CommonITILObject::SOLVED, $ticket_c->fields['status']);
+
+        //Refuse solution on the parent ticket
+        $follow = new \ITILFollowup();
+        $follow_id = (int) $follow->add([
+            'itemtype'  => $ticket::getType(),
+            'items_id'   => $ticket->getID(),
+            'add_reopen'   => '1',
+            'content'      => 'This is required',
+        ]);
+        $this->assertGreaterThan(0, $follow_id);
+
+        //Check if cloned ticket status is also reopened
         $ticket_c = new \Ticket();
         $ticket_c->getFromDBByCrit([
             'name' => 'Escalade Close cloned ticket test',
