@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Fix duplicate notifications being sent during escalation by implementing two additional targets.
 - Fix 8 warnings in the `php-errors.log` file
+- Fix reopening of a cloned ticket when the parent ticket is reopened
 - Fix ticket task not added to timeline during escalation
 
 ## [2.9.14] - 2025-05-28
