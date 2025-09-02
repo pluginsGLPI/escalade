@@ -691,9 +691,11 @@ class PluginEscaladeTicket
                         unset($item->input['_actors'][$types[$type]][$key]);
                     }
                 }
-                foreach ($item->input['_users_id_assign'] as $key => $actor) {
-                    if ($actor == $tu['users_id']) {
-                        unset($item->input['_users_id_assign'][$key]);
+                if (isset($item->input['_users_id_assign'])) {
+                    foreach ($item->input['_users_id_assign'] as $key => $actor) {
+                        if ($actor == $tu['users_id']) {
+                            unset($item->input['_users_id_assign'][$key]);
+                        }
                     }
                 }
             }
