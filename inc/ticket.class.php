@@ -56,7 +56,8 @@ class PluginEscaladeTicket
         }
 
         // Only merge specific escalation-related fields to avoid overwriting other important fields
-        $escalation_fields = ['_actors', '_itil_assign', 'actortype', 'groups_id', '_disablenotif', '_do_not_compute_status', 'status'];
+        // Include rule-related fields to ensure rules can execute properly
+        $escalation_fields = ['_actors', '_itil_assign', 'actortype', 'groups_id', '_disablenotif', '_do_not_compute_status', 'status', '_groups_id_assign', '_users_id_assign'];
         foreach ($escalation_fields as $field) {
             if (isset($input[$field])) {
                 $item->input[$field] = $input[$field];
@@ -691,11 +692,9 @@ class PluginEscaladeTicket
                         unset($item->input['_actors'][$types[$type]][$key]);
                     }
                 }
-                if (isset($item->input['_users_id_assign'])) {
-                    foreach ($item->input['_users_id_assign'] as $key => $actor) {
-                        if ($actor == $tu['users_id']) {
-                            unset($item->input['_users_id_assign'][$key]);
-                        }
+                foreach ($item->input['_users_id_assign'] as $key => $actor) {
+                    if ($actor == $tu['users_id']) {
+                        unset($item->input['_users_id_assign'][$key]);
                     }
                 }
             }
