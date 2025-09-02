@@ -41,6 +41,12 @@ class PluginEscaladeTicket
 
     public static function pre_item_update(CommonDBTM $item)
     {
+        // Only process escalation logic if we're dealing with actor assignments
+        // Don't interfere with other updates like solutions, status changes, etc.
+        if (!isset($item->input['_actors']) && !isset($item->input['_itil_assign']) && !isset($item->input['actortype'])) {
+            return $item;
+        }
+
         $input = $item->input;
         if ($item instanceof CommonITILObject) {
             $input = $item->prepareInputForUpdate($item->input);
@@ -49,7 +55,13 @@ class PluginEscaladeTicket
             }
         }
 
-        $item->input = array_merge($input, $item->input);
+        // Only merge specific escalation-related fields to avoid overwriting other important fields
+        $escalation_fields = ['_actors', '_itil_assign', 'actortype', 'groups_id', '_disablenotif', '_do_not_compute_status', 'status'];
+        foreach ($escalation_fields as $field) {
+            if (isset($input[$field])) {
+                $item->input[$field] = $input[$field];
+            }
+        }
         $old_groups = [];
         $old_users = [];
 
