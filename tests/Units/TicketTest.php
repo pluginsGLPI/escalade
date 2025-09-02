@@ -1013,4 +1013,143 @@ final class TicketTest extends EscaladeTestCase
             $this->assertEquals($provider['expected']['group_2_is_assign'], count($ticket_group->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group2->getID()])));
         }
     }
+
+    /**
+     * Test that adding a solution to a ticket with mandatory template fields works correctly
+     * This test reproduces the issue where the Escalade plugin interfered with template validation
+     * when adding solutions to tickets with mandatory requester fields.
+     */
+    public function testAddSolutionWithMandatoryTemplateFields()
+    {
+        $this->login();
+
+        // Load Escalade plugin configuration
+        $config = new PluginEscaladeConfig();
+        $conf = $config->find();
+        $conf = reset($conf);
+        $config->getFromDB($conf['id']);
+        $this->assertGreaterThan(0, $conf['id']);
+        PluginEscaladeConfig::loadInSession();
+
+        // Create a ticket template with mandatory requester field
+        $template = new \TicketTemplate();
+        $template_id = $template->add([
+            'name' => 'Template with mandatory requester',
+            'entities_id' => 0,
+            'is_recursive' => 1,
+        ]);
+        $this->assertGreaterThan(0, $template_id);
+
+        // Add mandatory field (requester) to the template
+        $mandatory_field = new \TicketTemplateMandatoryField();
+        $mandatory_field_id = $mandatory_field->add([
+            'tickettemplates_id' => $template_id,
+            'num' => 4, // _users_id_requester field number
+        ]);
+        $this->assertGreaterThan(0, $mandatory_field_id);
+
+        // Create a category linked to this template
+        $category = new \ITILCategory();
+        $category_id = $category->add([
+            'name' => 'Category with mandatory template',
+            'tickettemplates_id_incident' => $template_id,
+            'is_incident' => 1,
+            'entities_id' => 0,
+            'is_recursive' => 1,
+        ]);
+        $this->assertGreaterThan(0, $category_id);
+
+        // Create a user to be the requester
+        $user = new \User();
+        $user_id = $user->add([
+            'name' => 'test_requester',
+            'realname' => 'Test Requester',
+            'firstname' => 'User',
+        ]);
+        $this->assertGreaterThan(0, $user_id);
+
+        // Create a ticket with the template and mandatory requester filled
+        $ticket = new \Ticket();
+        $ticket_id = $ticket->add([
+            'name' => 'Ticket for solution test',
+            'content' => 'Content for solution test',
+            'itilcategories_id' => $category_id,
+            '_users_id_requester' => [$user_id],
+            'status' => CommonITILObject::ASSIGNED,
+        ]);
+        $this->assertGreaterThan(0, $ticket_id);
+
+        // Verify the ticket was created with the requester
+        $ticket->getFromDB($ticket_id);
+        $this->assertEquals(CommonITILObject::ASSIGNED, $ticket->fields['status']);
+
+        // Verify that the requester is properly assigned
+        $ticket_user = new \Ticket_User();
+        $requesters = $ticket_user->find([
+            'tickets_id' => $ticket_id,
+            'type' => CommonITILActor::REQUESTER,
+        ]);
+        $this->assertEquals(1, count($requesters));
+        $requester = reset($requesters);
+        $this->assertEquals($user_id, $requester['users_id']);
+
+        // Create a solution type
+        $solution_type = new \SolutionType();
+        $solution_type_id = $solution_type->add([
+            'name' => 'Test solution type',
+            'entities_id' => 0,
+            'is_recursive' => 1,
+        ]);
+        $this->assertGreaterThan(0, $solution_type_id);
+
+        // Now try to add a solution to the ticket - this should work without validation errors
+        // In GLPI, we need to add the solution using ITILSolution, then update the ticket status
+        $solution = new ITILSolution();
+        $solution_id = $solution->add([
+            'itemtype' => 'Ticket',
+            'items_id' => $ticket_id,
+            'solutiontypes_id' => $solution_type_id,
+            'content' => 'This is the solution to the problem.',
+        ]);
+        $this->assertGreaterThan(0, $solution_id);
+
+        // Update ticket status to solved - this is where the template validation could fail
+        $success = $ticket->update([
+            'id' => $ticket_id,
+            'status' => CommonITILObject::SOLVED,
+        ]);
+
+        // The update should succeed
+        $this->assertTrue($success);
+
+        // Reload the ticket and verify it's now solved
+        $ticket->getFromDB($ticket_id);
+        $this->assertEquals(CommonITILObject::SOLVED, $ticket->fields['status']);
+
+        // Verify the solution was properly added
+        $solutions = $solution->find([
+            'itemtype' => 'Ticket',
+            'items_id' => $ticket_id,
+        ]);
+        $this->assertEquals(1, count($solutions));
+        $solution_data = reset($solutions);
+        $this->assertEquals('This is the solution to the problem.', $solution_data['content']);
+        $this->assertEquals($solution_type_id, $solution_data['solutiontypes_id']);
+
+        // Verify that the requester is still properly assigned (not lost during solution update)
+        $requesters_after = $ticket_user->find([
+            'tickets_id' => $ticket_id,
+            'type' => CommonITILActor::REQUESTER,
+        ]);
+        $this->assertEquals(1, count($requesters_after));
+        $requester_after = reset($requesters_after);
+        $this->assertEquals($user_id, $requester_after['users_id']);
+
+        // Clean up
+        $ticket->delete(['id' => $ticket_id], true);
+        $template->delete(['id' => $template_id], true);
+        $category->delete(['id' => $category_id], true);
+        $user->delete(['id' => $user_id], true);
+        $solution_type->delete(['id' => $solution_type_id], true);
+    }
 }
