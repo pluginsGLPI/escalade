@@ -41,6 +41,12 @@ class PluginEscaladeTicket
 
     public static function pre_item_update(CommonDBTM $item)
     {
+        // Only process escalation logic if we're dealing with actor assignments
+        // Don't interfere with other updates like solutions, status changes, etc.
+        if (!isset($item->input['_actors']) && !isset($item->input['_itil_assign']) && !isset($item->input['actortype'])) {
+            return $item;
+        }
+
         $input = $item->input;
         if ($item instanceof CommonITILObject) {
             $input = $item->prepareInputForUpdate($item->input);
