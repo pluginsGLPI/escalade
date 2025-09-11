@@ -1152,4 +1152,143 @@ final class TicketTest extends EscaladeTestCase
         $user->delete(['id' => $user_id], true);
         $solution_type->delete(['id' => $solution_type_id], true);
     }
+
+    /**
+     * Test that using "Associate myself" button works correctly with mandatory template fields
+     * This test ensures the assign_me function doesn't interfere with template validation
+     */
+    public function testAssignMeWithMandatoryTemplateFields()
+    {
+        $this->login();
+
+        // Load Escalade plugin configuration
+        $config = new PluginEscaladeConfig();
+        $conf = $config->find();
+        $conf = reset($conf);
+        $config->getFromDB($conf['id']);
+        $this->assertGreaterThan(0, $conf['id']);
+        PluginEscaladeConfig::loadInSession();
+
+        // Create a ticket template with mandatory requester field
+        $template = new \TicketTemplate();
+        $template_id = $template->add([
+            'name' => 'Test template for assign me',
+            'entities_id' => 0,
+            'is_recursive' => 1,
+        ]);
+        $this->assertGreaterThan(0, $template_id);
+
+        // Add mandatory field (requester) to the template
+        $mandatory_field = new \TicketTemplateMandatoryField();
+        $mandatory_field_id = $mandatory_field->add([
+            'tickettemplates_id' => $template_id,
+            'num' => 4, // _users_id_requester field number
+        ]);
+        $this->assertGreaterThan(0, $mandatory_field_id);
+
+        // Create a category linked to this template
+        $category = new \ITILCategory();
+        $category_id = $category->add([
+            'name' => 'Test category for assign me',
+            'tickettemplates_id_incident' => $template_id,
+            'is_incident' => 1,
+            'entities_id' => 0,
+            'is_recursive' => 1,
+        ]);
+        $this->assertGreaterThan(0, $category_id);
+
+        // Create a requester user
+        $requester = new \User();
+        $requester_id = $requester->add([
+            'name' => 'requester_test',
+            'firstname' => 'Requester',
+            'lastname' => 'Test',
+        ]);
+        $this->assertGreaterThan(0, $requester_id);
+
+        // Create a ticket with the template and mandatory requester filled
+        $ticket = new \Ticket();
+        $ticket_id = $ticket->add([
+            'name' => 'Test ticket for assign me',
+            'content' => 'Content for test ticket',
+            'itilcategories_id' => $category_id,
+            '_users_id_requester' => [$requester_id],
+            'status' => CommonITILObject::INCOMING,
+        ]);
+        $this->assertGreaterThan(0, $ticket_id);
+
+        // Verify the ticket was created with the requester
+        $ticket_user = new \Ticket_User();
+        $requesters = $ticket_user->find([
+            'tickets_id' => $ticket_id,
+            'type' => CommonITILActor::REQUESTER,
+        ]);
+        $this->assertEquals(1, count($requesters));
+        $requester_data = reset($requesters);
+        $this->assertEquals($requester_id, $requester_data['users_id']);
+
+        // Get current user ID for the assignment test
+        $current_user_id = $_SESSION['glpiID'];
+
+        // Verify the current user is not already assigned
+        $assigned_users = $ticket_user->find([
+            'tickets_id' => $ticket_id,
+            'type' => CommonITILActor::ASSIGN,
+            'users_id' => $current_user_id,
+        ]);
+        $this->assertEquals(0, count($assigned_users));
+
+        // Use the "Associate myself" functionality - simulate exactly what happens in ticket.form.php
+        // when addme_as_actor is called
+        $ticket->getFromDB($ticket_id); // Refresh the ticket data
+        $input = array_merge(\Toolbox::addslashes_deep($ticket->fields), [
+            'id' => $ticket_id,
+            '_itil_assign' => [
+                '_type' => "user",
+                'users_id' => $current_user_id,
+                'use_notification' => 1,
+            ],
+        ]);
+
+        // This should work without template validation errors
+        $result = $ticket->update($input);
+        $this->assertTrue($result);
+
+        // Verify the current user was assigned successfully
+        $assigned_users_after = $ticket_user->find([
+            'tickets_id' => $ticket_id,
+            'type' => CommonITILActor::ASSIGN,
+            'users_id' => $current_user_id,
+        ]);
+        $this->assertEquals(1, count($assigned_users_after));
+
+        // Verify the ticket status changed to ASSIGNED
+        $ticket->getFromDB($ticket_id);
+        $this->assertEquals(CommonITILObject::ASSIGNED, $ticket->fields['status']);
+
+        // Verify that the requester is still properly assigned (not lost during self-assignment)
+        $requesters_after = $ticket_user->find([
+            'tickets_id' => $ticket_id,
+            'type' => CommonITILActor::REQUESTER,
+        ]);
+        $this->assertEquals(1, count($requesters_after));
+        $requester_after = reset($requesters_after);
+        $this->assertEquals($requester_id, $requester_after['users_id']);
+
+        // Test that calling it again doesn't create duplicate assignments
+        $result2 = $ticket->update($input);
+        $this->assertTrue($result2);
+        $assigned_users_final = $ticket_user->find([
+            'tickets_id' => $ticket_id,
+            'type' => CommonITILActor::ASSIGN,
+            'users_id' => $current_user_id,
+        ]);
+        $this->assertEquals(1, count($assigned_users_final)); // Should still be 1, not 2
+
+        // Clean up
+        $ticket->delete(['id' => $ticket_id], true);
+        $template->delete(['id' => $template_id], true);
+        $category->delete(['id' => $category_id], true);
+        $requester->delete(['id' => $requester_id], true);
+    }
 }

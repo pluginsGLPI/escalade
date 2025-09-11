@@ -47,6 +47,18 @@ class PluginEscaladeTicket
             return $item;
         }
 
+        // Special case: If we only have _itil_assign without actortype and many other fields,
+        // it's likely a self-assignment via "Associate myself" button (which merges all ticket fields)
+        // Don't interfere with those
+        if (isset($item->input['_itil_assign']) && !isset($item->input['actortype']) && !isset($item->input['_actors'])) {
+            // Check if it's likely an "Associate myself" action by counting input fields
+            // Associate myself merges all ticket fields, so there are many fields (>10)
+            // Manual assignments usually have just a few fields
+            if (count($item->input) > 10) {
+                return $item;
+            }
+        }
+
         $input = $item->input;
         if ($item instanceof CommonITILObject) {
             $input = $item->prepareInputForUpdate($item->input);
