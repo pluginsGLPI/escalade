@@ -47,21 +47,45 @@ class PluginEscaladeTicket
             return $item;
         }
 
-        // Special case: If we only have _itil_assign without actortype and many other fields,
-        // it's likely a self-assignment via "Associate myself" button (which merges all ticket fields)
-        // Don't interfere with those
+        // Special case: If we have _itil_assign without actortype, we need to distinguish between:
+        // 1. "Associate myself" button - many fields merged from ticket form
+        // 2. History button escalation (climb_group) - specific structure with groups_id and _type = 'group'
+        // 3. Other _itil_assign operations
         if (isset($item->input['_itil_assign']) && !isset($item->input['actortype']) && !isset($item->input['_actors'])) {
-            // Check if it's likely an "Associate myself" action by counting input fields
-            // Associate myself merges all ticket fields, so there are many fields (>10)
-            // Manual assignments usually have just a few fields
-            if (count($item->input) > 10) {
+            $itil_assign = $item->input['_itil_assign'];
+
+            // Check if it's a history button escalation from climb_group
+            if (isset($itil_assign['groups_id']) && isset($itil_assign['_type']) && $itil_assign['_type'] === 'group' && count($item->input) <= 3) {
+                // This is a history button escalation - add required fields for template validation
+                // but don't interfere with the escalation logic
+                $item->input['_no_escalade_template_validation'] = true;
+            }
+            // Check if it's "Associate myself" (many fields merged)
+            elseif (count($item->input) > 10) {
+                // Associate myself - don't interfere
                 return $item;
             }
         }
 
         $input = $item->input;
         if ($item instanceof CommonITILObject) {
-            $input = $item->prepareInputForUpdate($item->input);
+            // Special handling for history button escalation to pass template validation
+            if (isset($item->input['_no_escalade_template_validation'])) {
+                // Add existing ticket fields temporarily for template validation
+                $existing_fields = Toolbox::addslashes_deep($item->fields);
+                $temp_input = array_merge($existing_fields, $item->input);
+
+                // Ensure required fields are not empty for template validation
+                if (empty($temp_input['content'])) {
+                    $temp_input['content'] = 'Auto-generated content for escalation';
+                }
+
+                $temp_input['_disablenotif'] = true; // Disable notifications for this validation
+                $input = $item->prepareInputForUpdate($temp_input);
+                unset($item->input['_no_escalade_template_validation']); // Clean up flag
+            } else {
+                $input = $item->prepareInputForUpdate($item->input);
+            }
             if (!$input) {
                 return false;
             }
