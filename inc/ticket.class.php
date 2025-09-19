@@ -80,6 +80,28 @@ class PluginEscaladeTicket
                     $temp_input['content'] = 'Auto-generated content for escalation';
                 }
 
+                // Add existing actors to pass mandatory field validation
+                $ticket_user = new \Ticket_User();
+                $ticket_group = new \Group_Ticket();
+
+                // Get existing requesters
+                $requesters = $ticket_user->find([
+                    'tickets_id' => $item->getID(),
+                    'type' => CommonITILActor::REQUESTER,
+                ]);
+                if (!empty($requesters)) {
+                    $temp_input['_users_id_requester'] = array_column($requesters, 'users_id');
+                }
+
+                // Get existing requester groups
+                $requester_groups = $ticket_group->find([
+                    'tickets_id' => $item->getID(),
+                    'type' => CommonITILActor::REQUESTER,
+                ]);
+                if (!empty($requester_groups)) {
+                    $temp_input['_groups_id_requester'] = array_column($requester_groups, 'groups_id');
+                }
+
                 $temp_input['_disablenotif'] = true; // Disable notifications for this validation
                 $input = $item->prepareInputForUpdate($temp_input);
                 unset($item->input['_no_escalade_template_validation']); // Clean up flag

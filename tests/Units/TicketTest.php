@@ -1291,4 +1291,149 @@ final class TicketTest extends EscaladeTestCase
         $category->delete(['id' => $category_id], true);
         $requester->delete(['id' => $requester_id], true);
     }
+
+    /**
+     * Test that using the History button escalation works correctly with mandatory template fields
+     * This test reproduces the issue where the History button still triggers the
+     * "Mandatory fields are not filled. Please correct: Requester" error.
+     */
+    public function testHistoryButtonEscalationWithMandatoryTemplateFields()
+    {
+        $this->login();
+
+        // Load Escalade plugin configuration
+        $config = new PluginEscaladeConfig();
+        $conf = $config->find();
+        $conf = reset($conf);
+        $config->getFromDB($conf['id']);
+        $this->assertGreaterThan(0, $conf['id']);
+        PluginEscaladeConfig::loadInSession();
+
+        // Create a ticket template with mandatory requester field
+        $template = new \TicketTemplate();
+        $template_id = $template->add([
+            'name' => 'Test template for history button',
+            'entities_id' => 0,
+            'is_recursive' => 1,
+        ]);
+        $this->assertGreaterThan(0, $template_id);
+
+        // Add mandatory field (requester) to the template
+        $mandatory_field = new \TicketTemplateMandatoryField();
+        $mandatory_field_id = $mandatory_field->add([
+            'tickettemplates_id' => $template_id,
+            'num' => 4, // _users_id_requester field number
+        ]);
+        $this->assertGreaterThan(0, $mandatory_field_id);
+
+        // Create a category linked to this template
+        $category = new \ITILCategory();
+        $category_id = $category->add([
+            'name' => 'Test category for history button',
+            'tickettemplates_id_incident' => $template_id,
+            'is_incident' => 1,
+            'entities_id' => 0,
+            'is_recursive' => 1,
+        ]);
+        $this->assertGreaterThan(0, $category_id);
+
+        // Create a requester user
+        $requester = new \User();
+        $requester_id = $requester->add([
+            'name' => 'requester_history_test',
+            'firstname' => 'Requester',
+            'lastname' => 'HistoryTest',
+        ]);
+        $this->assertGreaterThan(0, $requester_id);
+
+        // Create first escalation group
+        $group1 = new \Group();
+        $group1_id = $group1->add([
+            'name' => 'First escalation group',
+            'entities_id' => 0,
+            'is_recursive' => 1,
+            'is_assign' => 1,
+        ]);
+        $this->assertGreaterThan(0, $group1_id);
+
+        // Create second escalation group for history
+        $group2 = new \Group();
+        $group2_id = $group2->add([
+            'name' => 'Second escalation group',
+            'entities_id' => 0,
+            'is_recursive' => 1,
+            'is_assign' => 1,
+        ]);
+        $this->assertGreaterThan(0, $group2_id);
+
+        // Create a ticket with the template and mandatory requester filled
+        $ticket = new \Ticket();
+        $ticket_id = $ticket->add([
+            'name' => 'Test ticket for history button',
+            'content' => 'Content for history button test',
+            'itilcategories_id' => $category_id,
+            '_users_id_requester' => [$requester_id],
+            'status' => CommonITILObject::INCOMING,
+        ]);
+        $this->assertGreaterThan(0, $ticket_id);
+
+        // Assign first group to the ticket
+        $group_ticket = new \Group_Ticket();
+        $group_ticket_id = $group_ticket->add([
+            'tickets_id' => $ticket_id,
+            'groups_id' => $group1_id,
+            'type' => CommonITILActor::ASSIGN,
+        ]);
+        $this->assertGreaterThan(0, $group_ticket_id);
+
+        // Escalate to second group (simulate the history button click)
+        // This should create an escalation history entry
+        $group_ticket2 = new \Group_Ticket();
+        $group_ticket2_id = $group_ticket2->add([
+            'tickets_id' => $ticket_id,
+            'groups_id' => $group2_id,
+            'type' => CommonITILActor::ASSIGN,
+        ]);
+        $this->assertGreaterThan(0, $group_ticket2_id);
+
+        // Now test the history button escalation using climb_group (this reproduces the issue)
+        // This simulates exactly what happens when the user clicks the history button
+        $result = PluginEscaladeTicket::climb_group($ticket_id, $group1_id, true);
+
+        // Verify that no error occurred and the escalation was successful
+        // The ticket should now have group1 assigned again
+        $assigned_groups = $group_ticket->find([
+            'tickets_id' => $ticket_id,
+            'type' => CommonITILActor::ASSIGN,
+        ]);
+
+        // Should have only one group assigned (the climb_group removes previous and adds new)
+        $this->assertGreaterThan(0, count($assigned_groups));
+
+        // Check that group1 is now assigned
+        $group1_assigned = $group_ticket->find([
+            'tickets_id' => $ticket_id,
+            'groups_id' => $group1_id,
+            'type' => CommonITILActor::ASSIGN,
+        ]);
+        $this->assertEquals(1, count($group1_assigned));
+
+        // Verify that the requester is still properly assigned (not lost during escalation)
+        $ticket_user = new \Ticket_User();
+        $requesters_after = $ticket_user->find([
+            'tickets_id' => $ticket_id,
+            'type' => CommonITILActor::REQUESTER,
+        ]);
+        $this->assertEquals(1, count($requesters_after));
+        $requester_after = reset($requesters_after);
+        $this->assertEquals($requester_id, $requester_after['users_id']);
+
+        // Clean up
+        $ticket->delete(['id' => $ticket_id], true);
+        $template->delete(['id' => $template_id], true);
+        $category->delete(['id' => $category_id], true);
+        $requester->delete(['id' => $requester_id], true);
+        $group1->delete(['id' => $group1_id], true);
+        $group2->delete(['id' => $group2_id], true);
+    }
 }
