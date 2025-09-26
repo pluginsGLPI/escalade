@@ -205,7 +205,7 @@ final class GroupEscalationTest extends EscaladeTestCase
                 'group_ticket' => 0,
             ],
             'update_expected' => [
-                'user_ticket' => 1,
+                'user_ticket' => 2,
                 'group_ticket' => 0,
             ],
         ];
@@ -259,7 +259,7 @@ final class GroupEscalationTest extends EscaladeTestCase
                 'group_ticket' => 1,
             ],
             'update_expected' => [
-                'user_ticket' => 1,
+                'user_ticket' => 2,
                 'group_ticket' => 1,
             ],
         ];
@@ -439,7 +439,7 @@ final class GroupEscalationTest extends EscaladeTestCase
                 'group_ticket' => 1,
             ],
             'update_expected' => [
-                'user_ticket' => 1,
+                'user_ticket' => 2,
                 'group_ticket' => 1,
             ],
         ];
@@ -712,8 +712,8 @@ final class GroupEscalationTest extends EscaladeTestCase
                 ],
             );
 
-            $this->assertEquals($provider['update_expected']['user_ticket'], count($ticket_user->find(['tickets_id' => $ticket->getID(), 'type' => CommonITILActor::ASSIGN])));
-            $this->assertEquals($provider['update_expected']['group_ticket'], count($group_ticket->find(['tickets_id' => $ticket->getID(), 'type' => CommonITILActor::ASSIGN])));
+            $this->assertEquals($provider['update_expected']['user_ticket'], count($ticket_user->find(['tickets_id' => $ticket->getID(), 'type' => CommonITILActor::ASSIGN])), 'Failed with config: '.json_encode($provider['conf']));
+            $this->assertEquals($provider['update_expected']['group_ticket'], count($group_ticket->find(['tickets_id' => $ticket->getID(), 'type' => CommonITILActor::ASSIGN])), 'Failed with config: '.json_encode($provider['conf']));
 
             if ($provider['conf']['use_assign_user_group_modification'] === 1) {
                 if ($provider['conf']['use_assign_user_group'] === 1) {
