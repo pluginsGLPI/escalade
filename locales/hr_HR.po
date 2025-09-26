@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-18 00:43+0000\n"
+"POT-Creation-Date: 2025-09-26 00:45+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>, 2020,2022-2023\n"
 "Language-Team: Croatian (Croatia) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/hr_HR/)\n"
@@ -31,110 +31,30 @@ msgstr "Komentar"
 msgid "Assign me as an observer"
 msgstr "Dodijeli mi ulogu nadglednika"
 
-#: setup.php:189 front/config.form.php:58 inc/user.class.php:179
-#: inc/group_group.class.php:56
+#: setup.php:189 inc/group_group.class.php:56 inc/user.class.php:179
+#: front/config.form.php:58
 msgid "Escalation"
 msgstr "Eskalacija"
 
-#: js/cloneandlink_ticket.js.php:42
-msgid "Clone and link"
-msgstr "Kloniraj i poveži"
+#: inc/history.class.php:191
+msgid "Reassign the ticket to group"
+msgstr "Ponovo dodijeli nalog grupi"
 
-#: ajax/assign_me.php:35 front/climb_group.php:43
-msgid "missing parameters"
-msgstr "nedostaju parametri"
+#: inc/history.class.php:235
+msgid "full assignation history"
+msgstr "cijela povijest dodijeljivanja zadataka"
 
-#: hook.php:559
-msgid "Group concerned by the escalation"
-msgstr "Dotična grupa eskalacije"
+#: inc/history.class.php:238
+msgid "View full history"
+msgstr "Prikaži cijelu povijest"
 
-#: hook.php:577
-msgid "Number of escalations"
-msgstr "Broj eskalacija"
+#: inc/history.class.php:291
+msgid "Tickets to follow (escalated)"
+msgstr "Nalozi za praćenje (eskalirani)"
 
-#: hook.php:591
-msgid "Number of escalations between two groups"
-msgstr "Broj eskalacija između dviju grupa"
-
-#: hook.php:604 hook.php:623 inc/user.class.php:139
-msgid "Bypass filtering on the groups assignment"
-msgstr "Zaobiđi filtriranje po zadatku grupe"
-
-#: inc/config.class.php:37
-msgid "Configuration Escalade plugin"
-msgstr "Konfiguracija dodatka Escalade"
-
-#: inc/config.class.php:60
-msgid "Remove old assign group on new group assign"
-msgstr "Ukloni staru grupu pri dodijeljivanju novoj grupi"
-
-#: inc/config.class.php:82
-msgid "show group assign history visually"
-msgstr "prikaži povijest grupe visualno"
-
-#: inc/config.class.php:94
-msgid "Escalation history in tasks"
-msgstr "Povijest eskalacija u zadacima"
-
-#: inc/config.class.php:103
-msgid "Remove technician(s) on escalation"
-msgstr "Ukloni tehničare pri eskalaciji"
-
-#: inc/config.class.php:115
-msgid "Ticket status after an escalation"
-msgstr "Stanje naloga nakon eskalacije"
-
-#: inc/config.class.php:127
-msgid "Assign ticket to initial group on solve ticket"
-msgstr "Dodijeli nalog izvornoj grupi pri rješavanju naloga"
-
-#: inc/config.class.php:140
-msgid "Assign the technical manager on ticket category change"
-msgstr "Odredi tehničkog voditelja pri promjeni kategorije naloga"
-
-#: inc/config.class.php:151
-msgid "Assign the technical group on ticket category change"
-msgstr "Odredi tehničku grupu pri promjeni kategorije naloga"
-
-#: inc/config.class.php:163
-msgid "Clone and link tickets"
-msgstr ""
-
-#: inc/config.class.php:173
-msgid "Close linked tickets at the same time"
-msgstr ""
-
-#: inc/config.class.php:192
-msgid "Assign me as observer by default"
-msgstr ""
-
-#: inc/config.class.php:200
-msgid "Use the technician's group"
-msgstr "Koristi grupu tehničara"
-
-#: inc/config.class.php:218
-msgid "at creation time"
-msgstr ""
-
-#: inc/config.class.php:220
-msgid "at modification time"
-msgstr ""
-
-#: inc/config.class.php:266
-msgid "Remove requester(s) on escalation"
-msgstr "Ukloni podnositelje pri eskalaciji"
-
-#: inc/config.class.php:278
-msgid "Display delete button"
-msgstr "Prikaži gumb za brisanje"
-
-#: inc/config.class.php:347
-msgid "Enable filtering on the groups assignment"
-msgstr "Aktiviraj filtriranje po zadatku grupe"
-
-#: inc/config.class.php:390
-msgid "Default (not managed by plugin)"
-msgstr ""
+#: inc/history.class.php:305
+msgid "Tickets to close (escalated)"
+msgstr "Nalozi za zatvaranje (eskalirani)"
 
 #: inc/notification.class.php:71
 msgid "Requester user of the ticket"
@@ -217,22 +137,102 @@ msgstr "Eskaliraj"
 msgid "You must select a group."
 msgstr "Moraš odabrati grupu."
 
-#: inc/history.class.php:191
-msgid "Reassign the ticket to group"
-msgstr "Ponovo dodijeli nalog grupi"
+#: inc/config.class.php:37
+msgid "Configuration Escalade plugin"
+msgstr "Konfiguracija dodatka Escalade"
 
-#: inc/history.class.php:235
-msgid "full assignation history"
-msgstr "cijela povijest dodijeljivanja zadataka"
+#: inc/config.class.php:60
+msgid "Remove old assign group on new group assign"
+msgstr "Ukloni staru grupu pri dodijeljivanju novoj grupi"
 
-#: inc/history.class.php:238
-msgid "View full history"
-msgstr "Prikaži cijelu povijest"
+#: inc/config.class.php:82
+msgid "show group assign history visually"
+msgstr "prikaži povijest grupe visualno"
 
-#: inc/history.class.php:291
-msgid "Tickets to follow (escalated)"
-msgstr "Nalozi za praćenje (eskalirani)"
+#: inc/config.class.php:94
+msgid "Escalation history in tasks"
+msgstr "Povijest eskalacija u zadacima"
 
-#: inc/history.class.php:305
-msgid "Tickets to close (escalated)"
-msgstr "Nalozi za zatvaranje (eskalirani)"
+#: inc/config.class.php:103
+msgid "Remove technician(s) on escalation"
+msgstr "Ukloni tehničare pri eskalaciji"
+
+#: inc/config.class.php:115
+msgid "Ticket status after an escalation"
+msgstr "Stanje naloga nakon eskalacije"
+
+#: inc/config.class.php:127
+msgid "Assign ticket to initial group on solve ticket"
+msgstr "Dodijeli nalog izvornoj grupi pri rješavanju naloga"
+
+#: inc/config.class.php:140
+msgid "Assign the technical manager on ticket category change"
+msgstr "Odredi tehničkog voditelja pri promjeni kategorije naloga"
+
+#: inc/config.class.php:151
+msgid "Assign the technical group on ticket category change"
+msgstr "Odredi tehničku grupu pri promjeni kategorije naloga"
+
+#: inc/config.class.php:163
+msgid "Clone and link tickets"
+msgstr ""
+
+#: inc/config.class.php:173
+msgid "Close linked tickets at the same time"
+msgstr ""
+
+#: inc/config.class.php:192
+msgid "Assign me as observer by default"
+msgstr ""
+
+#: inc/config.class.php:200
+msgid "Use the technician's group"
+msgstr "Koristi grupu tehničara"
+
+#: inc/config.class.php:218
+msgid "at creation time"
+msgstr ""
+
+#: inc/config.class.php:220
+msgid "at modification time"
+msgstr ""
+
+#: inc/config.class.php:266
+msgid "Remove requester(s) on escalation"
+msgstr "Ukloni podnositelje pri eskalaciji"
+
+#: inc/config.class.php:278
+msgid "Display delete button"
+msgstr "Prikaži gumb za brisanje"
+
+#: inc/config.class.php:347
+msgid "Enable filtering on the groups assignment"
+msgstr "Aktiviraj filtriranje po zadatku grupe"
+
+#: inc/config.class.php:390
+msgid "Default (not managed by plugin)"
+msgstr ""
+
+#: inc/user.class.php:139 hook.php:604 hook.php:623
+msgid "Bypass filtering on the groups assignment"
+msgstr "Zaobiđi filtriranje po zadatku grupe"
+
+#: front/climb_group.php:43 ajax/assign_me.php:35
+msgid "missing parameters"
+msgstr "nedostaju parametri"
+
+#: hook.php:559
+msgid "Group concerned by the escalation"
+msgstr "Dotična grupa eskalacije"
+
+#: hook.php:577
+msgid "Number of escalations"
+msgstr "Broj eskalacija"
+
+#: hook.php:591
+msgid "Number of escalations between two groups"
+msgstr "Broj eskalacija između dviju grupa"
+
+#: js/cloneandlink_ticket.js.php:42
+msgid "Clone and link"
+msgstr "Kloniraj i poveži"
