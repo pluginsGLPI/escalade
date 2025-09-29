@@ -142,13 +142,6 @@ class PluginEscaladeTicket
                         }
                     }
                 }
-                if (count($old_users) < count($new_users)) {
-                    $old_ids = array_column($old_users, 'items_id');
-                    $keep_users = array_filter($new_users, function ($user) use ($old_ids) {
-                        return !in_array($user['items_id'], $old_ids);
-                    });
-                    self::removeAssignUsers($item, array_column($keep_users, 'items_id'));
-                }
             }
 
             return $item;
