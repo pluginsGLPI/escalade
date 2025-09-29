@@ -51,7 +51,7 @@ final class TicketTest extends EscaladeTestCase
         $config->getFromDB($conf['id']);
         $this->assertGreaterThan(0, $conf['id']);
 
-        // Test 1: Test avec cloneandlink_ticket = 1 and close_linkedtickets = 1
+        // Test 1: Test with cloneandlink_ticket = 1 and close_linkedtickets = 1
         $this->assertTrue($config->update([
             'cloneandlink_ticket' => 1,
             'close_linkedtickets' => 1,
@@ -59,23 +59,23 @@ final class TicketTest extends EscaladeTestCase
 
         PluginEscaladeConfig::loadInSession();
 
-        // Créer le premier ticket
+        // Create the first ticket
         $ticket = new \Ticket();
         $this->assertEquals(0, count($ticket->find(['name' => 'Escalade Clone and Link Test 1'])));
 
         $t_id = $ticket->add([
             'name' => 'Escalade Clone and Link Test 1',
-            'content' => 'Contenu du ticket de test 1',
+            'content' => 'Content of test ticket 1',
         ]);
         $this->assertGreaterThan(0, $t_id);
 
-        // Exécuter cloneAndLink sur ce ticket
+        // Execute cloneAndLink on this ticket
         PluginEscaladeTicket::cloneAndLink($t_id);
 
-        // Vérifier que le ticket a été cloné
+        // Verify that the ticket has been cloned
         $this->assertEquals(2, count($ticket->find(['name' => 'Escalade Clone and Link Test 1'])));
 
-        // Vérifier que le lien est de type DUPLICATE_WITH
+        // Verify that the link is of type DUPLICATE_WITH
         $ticket_ticket = new \Ticket_Ticket();
         $links = $ticket_ticket->find([
             'tickets_id_1' => $t_id,
@@ -84,7 +84,7 @@ final class TicketTest extends EscaladeTestCase
         $link = reset($links);
         $this->assertEquals(\Ticket_Ticket::DUPLICATE_WITH, $link['link']);
 
-        // Récupérer le ticket cloné
+        // Get the cloned ticket
         $cloned_ticket = new \Ticket();
         $ct = $cloned_ticket->getFromDBByCrit([
             'name' => 'Escalade Clone and Link Test 1',
@@ -93,7 +93,7 @@ final class TicketTest extends EscaladeTestCase
         $this->assertTrue($ct);
         $cloned_id = $cloned_ticket->fields['id'];
 
-        // Changer le statut du ticket parent à SOLVED
+        // Change the parent ticket status to SOLVED
         $parent_ticket = new \Ticket();
         $parent_ticket->getFromDB($t_id);
         $parent_ticket->update([
@@ -101,11 +101,11 @@ final class TicketTest extends EscaladeTestCase
             'status' => CommonITILObject::SOLVED,
         ]);
 
-        // Vérifier que le ticket cloné est aussi résolu (automatiquement par GLPI core)
+        // Verify that the cloned ticket is also solved (automatically by GLPI core)
         $cloned_ticket->getFromDB($cloned_id);
         $this->assertEquals(CommonITILObject::SOLVED, $cloned_ticket->fields['status']);
 
-        // Test2: Test avec cloneandlink_ticket = 1 and close_linkedtickets = 0
+        // Test2: Test with cloneandlink_ticket = 1 and close_linkedtickets = 0
         $this->assertTrue($config->update([
             'cloneandlink_ticket' => 1,
             'close_linkedtickets' => 0,
@@ -113,22 +113,22 @@ final class TicketTest extends EscaladeTestCase
 
         PluginEscaladeConfig::loadInSession();
 
-        // Créer le premier ticket
+        // Create the second ticket
         $ticket = new \Ticket();
         $this->assertEquals(0, count($ticket->find(['name' => 'Escalade Clone and Link Test 2'])));
         $t_id = $ticket->add([
             'name' => 'Escalade Clone and Link Test 2',
-            'content' => 'Contenu du ticket de test 2',
+            'content' => 'Content of test ticket 2',
         ]);
         $this->assertGreaterThan(0, $t_id);
 
-        // Exécuter cloneAndLink sur ce ticket
+        // Execute cloneAndLink on this ticket
         PluginEscaladeTicket::cloneAndLink($t_id);
 
-        // Vérifier que le ticket a été cloné
+        // Verify that the ticket has been cloned
         $this->assertEquals(2, count($ticket->find(['name' => 'Escalade Clone and Link Test 2'])));
 
-        // Vérifier que le lien est de type LINK_TO
+        // Verify that the link is of type LINK_TO
         $ticket_ticket = new \Ticket_Ticket();
         $links = $ticket_ticket->find([
             'tickets_id_1' => $t_id,
@@ -137,7 +137,7 @@ final class TicketTest extends EscaladeTestCase
         $link = reset($links);
         $this->assertEquals(\Ticket_Ticket::LINK_TO, $link['link']);
 
-        // Récupérer le ticket cloné
+        // Get the cloned ticket
         $cloned_ticket = new \Ticket();
         $ct = $cloned_ticket->getFromDBByCrit([
             'name' => 'Escalade Clone and Link Test 2',
@@ -146,7 +146,7 @@ final class TicketTest extends EscaladeTestCase
         $this->assertTrue($ct);
         $cloned_id = $cloned_ticket->fields['id'];
 
-        // Changer le statut du ticket parent à SOLVED
+        // Change the parent ticket status to SOLVED
         $parent_ticket = new \Ticket();
         $parent_ticket->getFromDB($t_id);
         $parent_ticket->update([
@@ -154,7 +154,7 @@ final class TicketTest extends EscaladeTestCase
             'status' => CommonITILObject::SOLVED,
         ]);
 
-        // Vérifier que le ticket cloné n'est pas résolu
+        // Verify that the cloned ticket is not solved
         $cloned_ticket->getFromDB($cloned_id);
         $this->assertNotEquals(CommonITILObject::SOLVED, $cloned_ticket->fields['status']);
     }
