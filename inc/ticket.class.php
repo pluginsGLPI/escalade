@@ -935,7 +935,7 @@ class PluginEscaladeTicket
 
         //add link between them
         $ticket_ticket = new Ticket_Ticket();
-        if ($_SESSION['glpi_plugins']['escalade']['config']['cloneandlink_ticket']) {
+        if ($_SESSION['glpi_plugins']['escalade']['config']['close_linkedtickets']) {
             $link_type = Ticket_Ticket::DUPLICATE_WITH;
         } else {
             $link_type = Ticket_Ticket::LINK_TO;
