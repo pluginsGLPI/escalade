@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-- Fix the relationship when cloning a ticket: if the `close_linkedtickets` option is enabled, the relationship is `DUPLICATED_WITH` otherwise it's `LINK_TO`
+- Fix the relationship when cloning a ticket: if the `Close linked tickets at the same time` option is enabled, the relationship is `DUPLICATED_WITH` otherwise it's `LINK_TO`
 
 ## [2.9.17] - 2025-08-27
 
