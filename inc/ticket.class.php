@@ -41,12 +41,15 @@ class PluginEscaladeTicket
 
     public static function pre_item_update(CommonDBTM $item)
     {
+        $input = $item->input;
         if ($item instanceof CommonITILObject) {
-            if (!$item->prepareInputForUpdate($item->input)) {
+            $input = $item->prepareInputForUpdate($item->input);
+            if (!$input) {
                 return false;
             }
         }
 
+        $item->input = array_merge($input, $item->input);
         $old_groups = [];
         $old_users = [];
 
@@ -139,13 +142,6 @@ class PluginEscaladeTicket
                         }
                     }
                 }
-                if (count($old_users) < count($new_users)) {
-                    $old_ids = array_column($old_users, 'items_id');
-                    $keep_users = array_filter($new_users, function ($user) use ($old_ids) {
-                        return !in_array($user['items_id'], $old_ids);
-                    });
-                    self::removeAssignUsers($item, array_column($keep_users, 'items_id'));
-                }
             }
 
             return $item;
@@ -180,12 +176,14 @@ class PluginEscaladeTicket
                 self::linkedTickets($item, CommonITILObject::CLOSED);
             } elseif (
                 isset($item->input['status'])
-                && $item->input['status'] == CommonITILObject::ASSIGNED
+                && ($item->input['status'] == CommonITILObject::ASSIGNED || $item->input['status'] == CommonITILObject::INCOMING)
                 && isset($item->oldvalues['status'])
                 && $item->oldvalues['status'] == CommonITILObject::SOLVED
             ) {
                 //solution rejected
                 self::AssignLastGroupOnRejectedSolution($item);
+                // reopen linked tickets
+                self::linkedTickets($item, $item->input['status']);
             }
         }
 
@@ -553,24 +551,14 @@ class PluginEscaladeTicket
                     $group->getName() . '</i></p><hr />',
                 ),
             ]);
-            if (
-                $ticket_group->add(
-                    [
-                        'tickets_id'                    => $tickets_id,
-                        'groups_id'                     => $groups_id,
-                        'type'                          => CommonITILActor::ASSIGN,
-                        '_disablenotif'                 => true,
-                        '_plugin_escalade_no_history'   => true,
-                    ],
-                )
-            ) {
-                //notified only the last group assigned
-                $ticket = new Ticket();
-                $ticket->getFromDB($tickets_id);
-
-                $event = "assign_group";
-                NotificationEvent::raiseEvent($event, $ticket);
-            }
+            $ticket = new Ticket();
+            $ticket->update([
+                'id'           => $tickets_id,
+                '_itil_assign' => [
+                    'groups_id' => $groups_id,
+                    '_type'    => 'group',
+                ],
+            ]);
         }
 
         if (!$no_redirect) {
@@ -684,6 +672,11 @@ class PluginEscaladeTicket
                         unset($item->input['_actors'][$types[$type]][$key]);
                     }
                 }
+                foreach ($item->input['_users_id_assign'] as $key => $actor) {
+                    if ($actor == $tu['users_id']) {
+                        unset($item->input['_users_id_assign'][$key]);
+                    }
+                }
             }
         }
 
@@ -782,24 +775,37 @@ class PluginEscaladeTicket
      */
     public static function linkedTickets(CommonDBTM $ticket, $status = CommonITILObject::SOLVED)
     {
-        if ($_SESSION['glpi_plugins']['escalade']['config']['close_linkedtickets']) {
-            $input = [
-                'status' => $status,
-            ];
+        if (!$_SESSION['glpi_plugins']['escalade']['config']['close_linkedtickets']) {
+            return;
+        }
 
-            $tickets = CommonITILObject_CommonITILObject::getAllLinkedTo(Ticket::class, $ticket->getID());
-            if (count($tickets)) {
-                $linkedTicket = new Ticket();
-                foreach ($tickets as $data) {
-                    $input['id'] = $data['items_id_2'];
-                    if (
-                        $linkedTicket->can($input['id'], UPDATE)
-                        && $data['link'] == CommonITILObject_CommonITILObject::LINK_TO
-                    ) {
-                        $linkedTicket->update($input);
-                    }
-                }
+        $tickets = Ticket_Ticket::getLinkedTicketsTo($ticket->getID());
+        if (empty($tickets)) {
+            return;
+        }
+
+        // Pre-define status for solved/closed tickets
+        $has_predefined_status = ($status == CommonITILObject::SOLVED || $status == CommonITILObject::CLOSED);
+        $input_base = $has_predefined_status ? ['status' => $status] : [];
+
+        $linkedTicket = new Ticket();
+
+        foreach ($tickets as $data) {
+            if ($data['link'] !== Ticket_Ticket::LINK_TO || !$linkedTicket->can($data['tickets_id'], UPDATE)) {
+                continue;
             }
+
+            $input = $input_base;
+            $input['id'] = $data['tickets_id'];
+
+            // Determine status only if not predefined
+            if (!$has_predefined_status) {
+                $linkedTicket->getFromDB($data['tickets_id']);
+                $actors = $linkedTicket->getActorsForType(CommonITILActor::ASSIGN);
+                $input['status'] = (count($actors) > 0) ? CommonITILObject::ASSIGNED : CommonITILObject::INCOMING;
+            }
+
+            $linkedTicket->update($input);
         }
     }
 
@@ -921,11 +927,16 @@ class PluginEscaladeTicket
 
         //add link between them
         $ticket_ticket = new Ticket_Ticket();
+        if ($_SESSION['glpi_plugins']['escalade']['config']['close_linkedtickets']) {
+            $link_type = CommonITILObject_CommonITILObject::DUPLICATE_WITH;
+        } else {
+            $link_type = CommonITILObject_CommonITILObject::LINK_TO;
+        }
         if (
             !$ticket_ticket->add([
                 'tickets_id_1' => $tickets_id,
                 'tickets_id_2' => $newID,
-                'link'         => CommonITILObject_CommonITILObject::LINK_TO,
+                'link'         => $link_type,
             ])
         ) {
             Session::addMessageAfterRedirect(__('Error : adding link between the two tickets', 'escalade'), false, ERROR);

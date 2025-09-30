@@ -31,7 +31,6 @@
 namespace GlpiPlugin\Escalade\Tests;
 
 use Auth;
-use PHPUnit\Framework\TestCase;
 use Session;
 
 abstract class EscaladeTestCase extends TestCase
@@ -73,7 +72,53 @@ abstract class EscaladeTestCase extends TestCase
         $_SESSION['glpi_currenttime'] = $ctime;
     }
 
-    public function climbWithTimelineButton(\Ticket $ticket, \Group $group, array $options): void
+    /**
+     * Get the methods for simulating different ways of escalating a ticket.
+     *
+     * @param array $methods Contains the names of the different methods that must be used to simulate an escalation.
+     * eg. ['escalateWithTimelineButton', 'escalateWithHistoryButton'] to simulate the escalation with the timeline and history buttons.
+     *
+     * @return array
+     */
+    public static function escalateTicketMethods(array $methods = []): array
+    {
+        $escalate_methods = [
+            [
+                'method' => 'escalateWithTimelineButton',
+                'itemtype' => \Group::class,
+            ],
+            [
+                'method' => 'escalateWithHistoryButton',
+                'itemtype' => \Group::class,
+            ],
+            [
+                'method' => 'escalateWithSolvedTicket',
+                'itemtype' => \Group::class,
+            ],
+            [
+                'method' => 'escalateWithRejectSolutionTicket',
+                'itemtype' => \Group::class,
+            ],
+            [
+                'method' => 'escalateWithAssignMySelfButton',
+                'itemtype' => \User::class,
+            ],
+        ];
+
+        return array_filter($escalate_methods, function ($escalate_method) use ($methods) {
+            return in_array($escalate_method['method'], $methods);
+        });
+
+    }
+
+    /**
+     * Simulate the escalation of a ticket with the timeline button.
+     *
+     * @param \Ticket $ticket
+     * @param \Group $group
+     * @param array $options
+     */
+    public function escalateWithTimelineButton(\Ticket $ticket, \Group $group, array $options = []): void
     {
         $options['ticket_details'] = array_merge(
             $options['ticket_details'] ?? [],
@@ -81,7 +126,7 @@ abstract class EscaladeTestCase extends TestCase
                 'id' => $ticket->getID(),
             ],
         );
-        $_POST['comment'] = $options['comment'];
+        $_POST['comment'] = $options['comment'] ?? 'Default comment';
         \PluginEscaladeTicket::timelineClimbAction($group->getID(), $ticket->getID(), $options);
         $ticketgroup = new \Group_Ticket();
         $is_escalate = $ticketgroup->getFromDBByCrit([
@@ -100,7 +145,13 @@ abstract class EscaladeTestCase extends TestCase
         }
     }
 
-    public function climbWithHistoryButton(\Ticket $ticket, \Group $group): void
+    /**
+     * Simulate the escalation of a ticket with the history button.
+     *
+     * @param \Ticket $ticket
+     * @param \Group $group
+     */
+    public function escalateWithHistoryButton(\Ticket $ticket, \Group $group): void
     {
         \PluginEscaladeTicket::climb_group($ticket->getID(), $group->getID(), true);
         $ticketgroup = new \Group_Ticket();
@@ -111,10 +162,31 @@ abstract class EscaladeTestCase extends TestCase
         $this->assertTrue($is_escalate);
     }
 
-    public function climbWithSolvedTicket(\Ticket $ticket, \Group $group, array $solution_options = []): void
+    /**
+     * Simulate the escalation of a ticket with a solved ticket.
+     *
+     * @param \Ticket $ticket
+     * @param \Group $group
+     * @param array $solution_options
+     */
+    public function escalateWithSolvedTicket(\Ticket $ticket, \Group $group, array $solution_options = []): void
     {
-        $solution = new \ITILSolution();
-        $solution_id = $solution->add(array_merge([
+        $config = new \PluginEscaladeConfig();
+        $conf = $config->find();
+        $conf = reset($conf);
+        $config->getFromDB($conf['id']);
+        $this->assertGreaterThan(0, $conf['id']);
+
+        // Update escalade config
+        $this->updateItem(
+            \PluginEscaladeConfig::class,
+            1,
+            [
+                'solve_return_group' => 1,
+            ] + $conf,
+        );
+
+        $this->createItem(\ITILSolution::class, array_merge([
             'content' => 'Test Solution',
             'itemtype' => $ticket->getType(),
             'items_id' => $ticket->getID(),
@@ -130,7 +202,14 @@ abstract class EscaladeTestCase extends TestCase
         $this->assertTrue($is_escalate);
     }
 
-    public function climbWithRejectSolutionTicket(\Ticket $ticket, \Group $group, array $followup_options = []): void
+    /**
+     * Simulate the escalation of a ticket with a reject solution ticket.
+     *
+     * @param \Ticket $ticket
+     * @param \Group $group
+     * @param array $followup_options
+     */
+    public function escalateWithRejectSolutionTicket(\Ticket $ticket, \Group $group, array $followup_options = []): void
     {
         $_POST['add_reopen'] = 1;
 
@@ -147,6 +226,33 @@ abstract class EscaladeTestCase extends TestCase
         $is_escalate = $ticketgroup->getFromDBByCrit([
             'tickets_id' => $ticket->getID(),
             'groups_id'  => $group->getID(),
+        ]);
+        $this->assertTrue($is_escalate);
+    }
+
+    /**
+     * Simulate the escalation of a ticket with the assign myself button.
+     *
+     * @param \Ticket $ticket
+     * @param \User $user
+     */
+    public function escalateWithAssignMySelfButton(\Ticket $ticket, \User $user): void
+    {
+        $this->updateItem(
+            \Ticket::class,
+            $ticket->getID(),
+            [
+                '_itil_assign' => [
+                    '_type' => "user",
+                    'users_id' => $user->getID(),
+                    'use_notification' => 1,
+                ],
+            ],
+        );
+        $ticket_user = new \Ticket_User();
+        $is_escalate = $ticket_user->getFromDBByCrit([
+            'tickets_id' => $ticket->getID(),
+            'users_id'  => $user->getID(),
         ]);
         $this->assertTrue($is_escalate);
     }

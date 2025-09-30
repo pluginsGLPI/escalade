@@ -217,9 +217,9 @@ final class UserEscalationTest extends EscaladeTestCase
             ],
         ]));
 
-        // Check if user is disassociated to this ticket and the group replace it
+        // Check if user is associated to this ticket and have dont been removed the other user
         $ticket_user = new \Ticket_User();
-        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $ticket_id, 'type' => \CommonITILActor::ASSIGN])));
+        $this->assertEquals(2, count($ticket_user->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN])));
 
         // Disable remove tech options
         $this->assertTrue($config->update([
@@ -262,7 +262,7 @@ final class UserEscalationTest extends EscaladeTestCase
             ],
         ]));
 
-        // Check if the user and group are associated to this ticket
+        // Check if the user are associated to this ticket
         $ticket_user = new \Ticket_User();
         $this->assertEquals(2, count($ticket_user->find(['tickets_id' => $ticket_id, 'type' => \CommonITILActor::ASSIGN])));
     }
@@ -325,8 +325,8 @@ final class UserEscalationTest extends EscaladeTestCase
 
         // Check if user is disassociated to this ticket and the group replace it
         $ticket_user = new \Ticket_User();
-        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $ticket_id, 'type' => \CommonITILActor::ASSIGN, 'users_id' => $user2->getID()])));
-        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $ticket_id, 'type' => \CommonITILActor::ASSIGN])));
+        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN, 'users_id' => $user2->getID()])));
+        $this->assertEquals(2, count($ticket_user->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN])));
 
         // Disable remove tech options
         $this->assertTrue($config->update([

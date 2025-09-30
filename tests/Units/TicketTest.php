@@ -32,8 +32,10 @@ namespace GlpiPlugin\Escalade\Tests\Units;
 
 use CommonITILActor;
 use CommonITILObject;
+use CommonITILValidation;
 use GlpiPlugin\Escalade\Tests\EscaladeTestCase;
 use ITILCategory;
+use ITILSolution;
 use PluginEscaladeConfig;
 use PluginEscaladeTicket;
 
@@ -48,81 +50,113 @@ final class TicketTest extends EscaladeTestCase
         $conf = reset($conf);
         $config->getFromDB($conf['id']);
         $this->assertGreaterThan(0, $conf['id']);
+
+        // Test 1: Test with cloneandlink_ticket = 1 and close_linkedtickets = 1
         $this->assertTrue($config->update([
+            'cloneandlink_ticket' => 1,
             'close_linkedtickets' => 1,
         ] + $conf));
 
         PluginEscaladeConfig::loadInSession();
 
+        // Create the first ticket
         $ticket = new \Ticket();
-        $this->assertEquals(0, count($ticket->find(['name' => 'Escalade Close cloned ticket test'])));
+        $this->assertEquals(0, count($ticket->find(['name' => 'Escalade Clone and Link Test 1'])));
 
         $t_id = $ticket->add([
-            'name' => 'Escalade Close cloned ticket test',
-            'content' => 'Content ticket 1 test',
+            'name' => 'Escalade Clone and Link Test 1',
+            'content' => 'Content of test ticket 1',
         ]);
+        $this->assertGreaterThan(0, $t_id);
 
+        // Execute cloneAndLink on this ticket
         PluginEscaladeTicket::cloneAndLink($t_id);
 
-        $ticket = new \Ticket();
+        // Verify that the ticket has been cloned
+        $this->assertEquals(2, count($ticket->find(['name' => 'Escalade Clone and Link Test 1'])));
 
-        // Check if ticket cloned
-        $this->assertEquals(2, count($ticket->find(['name' => 'Escalade Close cloned ticket test'])));
+        // Verify that the link is of type DUPLICATE_WITH
+        $ticket_ticket = new \Ticket_Ticket();
+        $links = $ticket_ticket->find([
+            'tickets_id_1' => $t_id,
+        ]);
+        $this->assertCount(1, $links);
+        $link = reset($links);
+        $this->assertEquals(\Ticket_Ticket::DUPLICATE_WITH, $link['link']);
 
-        // Update ticket status
-        $ticket->update([
+        // Get the cloned ticket
+        $cloned_ticket = new \Ticket();
+        $ct = $cloned_ticket->getFromDBByCrit([
+            'name' => 'Escalade Clone and Link Test 1',
+            'NOT' => ['id' => $t_id],
+        ]);
+        $this->assertTrue($ct);
+        $cloned_id = $cloned_ticket->fields['id'];
+
+        // Change the parent ticket status to SOLVED
+        $parent_ticket = new \Ticket();
+        $parent_ticket->getFromDB($t_id);
+        $parent_ticket->update([
             'id' => $t_id,
             'status' => CommonITILObject::SOLVED,
         ]);
 
-        $ticket = new \Ticket();
-        $ticket_cloned = $ticket->getFromDBByCrit([
-            'name' => 'Escalade Close cloned ticket test',
-            'NOT' => ['id' => $t_id],
-        ]);
-        $this->assertTrue($ticket_cloned);
+        // Verify that the cloned ticket is also solved (automatically by GLPI core)
+        $cloned_ticket->getFromDB($cloned_id);
+        $this->assertEquals(CommonITILObject::SOLVED, $cloned_ticket->fields['status']);
 
-        //Check if cloned ticket is also solved
-        $this->assertEquals(CommonITILObject::SOLVED, $ticket->fields['status']);
-
-        // Disable close linked tickets option
+        // Test2: Test with cloneandlink_ticket = 1 and close_linkedtickets = 0
         $this->assertTrue($config->update([
-            'cloneandlink'        => 1,
+            'cloneandlink_ticket' => 1,
             'close_linkedtickets' => 0,
         ] + $conf));
 
         PluginEscaladeConfig::loadInSession();
 
+        // Create the second ticket
         $ticket = new \Ticket();
-        $this->assertEquals(0, count($ticket->find(['name' => 'Escalade Close cloned ticket 2 test'])));
-
+        $this->assertEquals(0, count($ticket->find(['name' => 'Escalade Clone and Link Test 2'])));
         $t_id = $ticket->add([
-            'name' => 'Escalade Close cloned ticket 2 test',
-            'content' => 'Content ticket 2 test',
+            'name' => 'Escalade Clone and Link Test 2',
+            'content' => 'Content of test ticket 2',
         ]);
+        $this->assertGreaterThan(0, $t_id);
 
+        // Execute cloneAndLink on this ticket
         PluginEscaladeTicket::cloneAndLink($t_id);
 
-        $ticket = new \Ticket();
+        // Verify that the ticket has been cloned
+        $this->assertEquals(2, count($ticket->find(['name' => 'Escalade Clone and Link Test 2'])));
 
-        // Check if ticket cloned
-        $this->assertEquals(2, count($ticket->find(['name' => 'Escalade Close cloned ticket 2 test'])));
+        // Verify that the link is of type LINK_TO
+        $ticket_ticket = new \Ticket_Ticket();
+        $links = $ticket_ticket->find([
+            'tickets_id_1' => $t_id,
+        ]);
+        $this->assertCount(1, $links);
+        $link = reset($links);
+        $this->assertEquals(\Ticket_Ticket::LINK_TO, $link['link']);
 
-        // Update ticket status
-        $ticket->update([
+        // Get the cloned ticket
+        $cloned_ticket = new \Ticket();
+        $ct = $cloned_ticket->getFromDBByCrit([
+            'name' => 'Escalade Clone and Link Test 2',
+            'NOT' => ['id' => $t_id],
+        ]);
+        $this->assertTrue($ct);
+        $cloned_id = $cloned_ticket->fields['id'];
+
+        // Change the parent ticket status to SOLVED
+        $parent_ticket = new \Ticket();
+        $parent_ticket->getFromDB($t_id);
+        $parent_ticket->update([
             'id' => $t_id,
             'status' => CommonITILObject::SOLVED,
         ]);
 
-        $ticket = new \Ticket();
-        $ticket_cloned = $ticket->getFromDBByCrit([
-            'name' => 'Escalade Close cloned ticket 2 test',
-            'NOT' => ['id' => $t_id],
-        ]);
-        $this->assertTrue($ticket_cloned);
-
-        //Check if cloned ticket is NOT solved
-        $this->assertNotEquals(CommonITILObject::SOLVED, $ticket->fields['status']);
+        // Verify that the cloned ticket is not solved
+        $cloned_ticket->getFromDB($cloned_id);
+        $this->assertNotEquals(CommonITILObject::SOLVED, $cloned_ticket->fields['status']);
     }
 
     public function testEscalationWithMandatoryFields()
@@ -296,7 +330,10 @@ final class TicketTest extends EscaladeTestCase
         $this->assertTrue($found_new_group, "New group should be assigned after successful escalation");
     }
 
-    public function testEscalateButtonShouldTriggerGroupEscalationAndExecuteRuleOnTicket()
+    /**
+     * Test rule execution when escalating a ticket
+     */
+    public function testTriggerEscalationAndExecuteRuleOnTicket()
     {
         $this->login();
 
@@ -308,27 +345,30 @@ final class TicketTest extends EscaladeTestCase
 
         PluginEscaladeConfig::loadInSession();
 
-        $group_observer = new \Group();
-        $group_observer_id = $group_observer->add([
+        // Create a group
+        $group_observer_id = $this->createItem(\Group::class, [
             'name' => 'Group Observer',
             'entities_id' => 0,
             'is_recursive' => 1,
         ]);
         $this->assertGreaterThan(0, $group_observer_id);
 
-        $group_tech = new \Group();
-        $group_tech_id = $group_tech->add([
+        $group_tech = $this->createItem(\Group::class, [
             'name' => 'Group tech',
             'entities_id' => 0,
             'is_recursive' => 1,
         ]);
-        $this->assertGreaterThan(0, $group_tech_id);
 
-        $rule = new \Rule();
-        $rule_id = $rule->add([
+        // Get the tech user
+        $user_tech = new \User();
+        $user_tech->getFromDBbyName('tech');
+        $this->assertGreaterThan(0, $user_tech->getID());
+
+        // Create a rule to assign the group observer if the group tech or tech user is assigned
+        $rule_id = $this->createItem(\Rule::class, [
             'name' => 'Add RuleTicket',
             'sub_type' => 'RuleTicket',
-            'match' => 'AND',
+            'match' => 'OR',
             'is_active' => 1,
             'condition' => 2,
         ]);
@@ -347,28 +387,37 @@ final class TicketTest extends EscaladeTestCase
             'rules_id' => $rule_id,
             'criteria' => '_groups_id_assign',
             'condition' => 0,
-            'pattern' => $group_tech_id,
+            'pattern' => $group_tech->getID(),
         ]);
 
-        $ticket = new \Ticket();
-        $ticket_id = $ticket->add([
-            'name' => 'Test ticket for escalation',
-            'content' => 'Content for test ticket',
+        $this->createItem(\RuleCriteria::class, [
+            'rules_id' => $rule_id,
+            'criteria' => '_users_id_assign',
+            'condition' => 0,
+            'pattern' => $user_tech->getID(),
         ]);
-        $this->assertGreaterThan(0, $ticket_id);
 
-        $group_ticket = new \Group_Ticket();
-        $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group_tech_id, 'type' => \CommonITILActor::ASSIGN])));
-        $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group_observer_id, 'type' => \CommonITILActor::OBSERVER])));
+        // Test the rule ticket during the escalation
+        foreach ($this->escalateTicketMethods(['escalateWithTimelineButton', 'escalateWithHistoryButton', 'escalateWithAssignMySelfButton']) as $data) {
+            $ticket = $this->createItem(\Ticket::class, [
+                'name' => 'Test ticket for escalation',
+                'content' => 'Content for test ticket',
+            ]);
 
-        $ticket_update = $ticket->update([
-            'id' => $ticket_id,
-            '_groups_id_assign' => [$group_tech_id],
-        ]);
-        $this->assertTrue($ticket_update);
-
-        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group_tech_id, 'type' => \CommonITILActor::ASSIGN])));
-        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group_observer_id, 'type' => \CommonITILActor::OBSERVER])));
+            $group_ticket = new \Group_Ticket();
+            $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group_observer_id, 'type' => \CommonITILActor::OBSERVER])));
+            if ($data['itemtype'] === \Group::class) {
+                $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group_tech->getID(), 'type' => \CommonITILActor::ASSIGN])));
+                $this->{$data['method']}($ticket, $group_tech);
+                $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group_tech->getID(), 'type' => \CommonITILActor::ASSIGN])));
+            } else {
+                $user_ticket = new \Ticket_User();
+                $this->assertEquals(0, count($user_ticket->find(['tickets_id' => $ticket->getID(), 'users_id' => $user_tech->getID(), 'type' => \CommonITILActor::ASSIGN])));
+                $this->{$data['method']}($ticket, $user_tech);
+                $this->assertEquals(1, count($user_ticket->find(['tickets_id' => $ticket->getID(), 'users_id' => $user_tech->getID(), 'type' => \CommonITILActor::ASSIGN])));
+            }
+            $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group_observer_id, 'type' => \CommonITILActor::OBSERVER])));
+        }
     }
 
     public function testTicketUpdateDoesNotChangeITILCategoryAssignedGroup()

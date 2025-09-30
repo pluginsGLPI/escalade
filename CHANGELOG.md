@@ -5,11 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [UNRELEASE]
+## [unreleased]
+
+### Fixed
+
+- Fix the relationship when cloning a ticket: if the `Close linked tickets at the same time` option is enabled, the relationship is `DUPLICATED_WITH` otherwise it's `LINK_TO`
+- Fix tech assignment should not trigger escalation behavior (as defined in the documentation)
+
+## [2.9.17] - 2025-08-27
 
 ### Fixed 
 
 - Rename options related to ticket cloning and closure to avoid ambiguity
+- Fix rule doesn't trigger when user uses "Assign myself" button
 
 ## [2.9.16] - 2025-07-10
 
@@ -21,6 +29,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Fix duplicate notifications being sent during escalation by implementing two additional targets.
 - Fix 8 warnings in the `php-errors.log` file
+- Fix reopening of a cloned ticket when the parent ticket is reopened
 - Fix ticket task not added to timeline during escalation
 
 ## [2.9.14] - 2025-05-28

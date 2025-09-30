@@ -225,7 +225,7 @@ final class TaskMessageTest extends EscaladeTestCase
 
         $_SESSION["glpi_currenttime"] = '2025-01-01 00:00:00';
 
-        $this->climbWithHistoryButton($ticket, $group1);
+        $this->escalateWithHistoryButton($ticket, $group1);
 
         // Check the correct task content
         $ticket_task = new TicketTask();
@@ -240,7 +240,7 @@ final class TaskMessageTest extends EscaladeTestCase
 
         $_SESSION["glpi_currenttime"] = '2025-01-01 01:00:00';
 
-        $this->climbWithTimelineButton($ticket, $group2, [
+        $this->escalateWithTimelineButton($ticket, $group2, [
             'comment' => 'Test comment',
         ]);
 
@@ -259,7 +259,7 @@ final class TaskMessageTest extends EscaladeTestCase
         $_SESSION["glpi_currenttime"] = '2025-01-01 02:00:00';
 
         if ($conf['remove_group'] && $conf['solve_return_group']) {
-            $this->climbWithSolvedTicket($ticket, $group1);
+            $this->escalateWithSolvedTicket($ticket, $group1);
 
             // Check the correct task content
             $ticket_task = new TicketTask();
@@ -274,7 +274,7 @@ final class TaskMessageTest extends EscaladeTestCase
 
             $_SESSION["glpi_currenttime"] = '2025-01-01 03:00:00';
 
-            $this->climbWithRejectSolutionTicket($ticket, $group2);
+            $this->escalateWithRejectSolutionTicket($ticket, $group2);
 
             // Check the correct task content
             $ticket_task = new TicketTask();
