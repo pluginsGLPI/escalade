@@ -124,7 +124,7 @@ final class TaskMessageTest extends EscaladeTestCase
         $this->assertEquals($ticket_group->fields['groups_id'], $group_test_id);
     }
 
-    public static function testTaskGroupEscalationProvider()
+    public static function taskGroupEscalationProvider()
     {
         yield [
             'conf' => [
@@ -192,7 +192,7 @@ final class TaskMessageTest extends EscaladeTestCase
     }
 
     /**
-     * @dataProvider testTaskGroupEscalationProvider
+     * @dataProvider taskGroupEscalationProvider
      */
     public function testTaskGroupEscalation(array $conf)
     {
