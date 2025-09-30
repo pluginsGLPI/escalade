@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
+## [2.9.18] - 2025-30-09
+
 ### Fixed
 
 - Fix template mandatory field validation interference when adding solutions to tickets
@@ -15,7 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [2.9.17] - 2025-08-27
 
-### Fixed 
+### Fixed
 
 - Rename options related to ticket cloning and closure to avoid ambiguity
 - Fix rule doesn't trigger when user uses "Assign myself" button
