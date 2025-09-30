@@ -72,8 +72,7 @@ class PluginEscaladeTicket
             // Special handling for history button escalation to pass template validation
             if (isset($item->input['_no_escalade_template_validation'])) {
                 // Add existing ticket fields temporarily for template validation
-                $existing_fields = Toolbox::addslashes_deep($item->fields);
-                $temp_input = array_merge($existing_fields, $item->input);
+                $temp_input = array_merge($item->fields, $item->input);
 
                 // Ensure required fields are not empty for template validation
                 if (empty($temp_input['content'])) {
