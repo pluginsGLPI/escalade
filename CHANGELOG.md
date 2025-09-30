@@ -7,14 +7,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
+## [2.9.18] - 2025-30-09
+
 ### Fixed
 
+- Fix template mandatory field validation interference when adding solutions to tickets
 - Fix the relationship when cloning a ticket: if the `Close linked tickets at the same time` option is enabled, the relationship is `DUPLICATED_WITH` otherwise it's `LINK_TO`
 - Fix tech assignment should not trigger escalation behavior (as defined in the documentation)
 
 ## [2.9.17] - 2025-08-27
 
-### Fixed 
+### Fixed
 
 - Rename options related to ticket cloning and closure to avoid ambiguity
 - Fix rule doesn't trigger when user uses "Assign myself" button
