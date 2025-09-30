@@ -31,6 +31,7 @@
 namespace GlpiPlugin\Escalade\Tests;
 
 use Auth;
+use PHPUnit\Framework\TestCase;
 use Session;
 
 abstract class EscaladeTestCase extends TestCase
