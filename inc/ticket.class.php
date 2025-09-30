@@ -779,7 +779,7 @@ class PluginEscaladeTicket
             return;
         }
 
-        $tickets = CommonITILObject_CommonITILObject::getLinkedTo(Ticket::class, $ticket->getID());
+        $tickets = Ticket_Ticket::getLinkedTo(Ticket::class, $ticket->getID());
         if (empty($tickets)) {
             return;
         }

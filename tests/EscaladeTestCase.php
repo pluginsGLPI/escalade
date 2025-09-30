@@ -179,15 +179,13 @@ abstract class EscaladeTestCase extends TestCase
         $this->assertGreaterThan(0, $conf['id']);
 
         // Update escalade config
-        $this->updateItem(
-            \PluginEscaladeConfig::class,
-            1,
-            [
-                'solve_return_group' => 1,
-            ] + $conf,
-        );
+        $config->update([
+            'id' => 1,
+            'solve_return_group' => 1,
+        ] + $conf);
 
-        $this->createItem(\ITILSolution::class, array_merge([
+        $solution = new \ITILSolution();
+        $solution_id = $solution->add(array_merge([
             'content' => 'Test Solution',
             'itemtype' => $ticket->getType(),
             'items_id' => $ticket->getID(),
@@ -239,17 +237,14 @@ abstract class EscaladeTestCase extends TestCase
      */
     public function escalateWithAssignMySelfButton(\Ticket $ticket, \User $user): void
     {
-        $this->updateItem(
-            \Ticket::class,
-            $ticket->getID(),
-            [
-                '_itil_assign' => [
-                    '_type' => "user",
-                    'users_id' => $user->getID(),
-                    'use_notification' => 1,
-                ],
+        $ticket->update([
+            'id' => $ticket->getID(),
+            '_itil_assign' => [
+                '_type' => "user",
+                'users_id' => $user->getID(),
+                'use_notification' => 1,
             ],
-        );
+        ]);
         $ticket_user = new \Ticket_User();
         $is_escalate = $ticket_user->getFromDBByCrit([
             'tickets_id' => $ticket->getID(),

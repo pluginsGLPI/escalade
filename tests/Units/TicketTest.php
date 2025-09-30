@@ -346,18 +346,21 @@ final class TicketTest extends EscaladeTestCase
         PluginEscaladeConfig::loadInSession();
 
         // Create a group
-        $group_observer_id = $this->createItem(\Group::class, [
+        $group_observer = new \Group();
+        $group_observer_id = $group_observer->add([
             'name' => 'Group Observer',
             'entities_id' => 0,
             'is_recursive' => 1,
         ]);
         $this->assertGreaterThan(0, $group_observer_id);
 
-        $group_tech = $this->createItem(\Group::class, [
+        $group_tech = new \Group();
+        $group_tech_id = $group_tech->add([
             'name' => 'Group tech',
             'entities_id' => 0,
             'is_recursive' => 1,
         ]);
+        $this->assertGreaterThan(0, $group_tech_id);
 
         // Get the tech user
         $user_tech = new \User();
@@ -365,7 +368,8 @@ final class TicketTest extends EscaladeTestCase
         $this->assertGreaterThan(0, $user_tech->getID());
 
         // Create a rule to assign the group observer if the group tech or tech user is assigned
-        $rule_id = $this->createItem(\Rule::class, [
+        $rule = new \Rule();
+        $rule_id = $rule->add([
             'name' => 'Add RuleTicket',
             'sub_type' => 'RuleTicket',
             'match' => 'OR',
@@ -387,10 +391,11 @@ final class TicketTest extends EscaladeTestCase
             'rules_id' => $rule_id,
             'criteria' => '_groups_id_assign',
             'condition' => 0,
-            'pattern' => $group_tech->getID(),
+            'pattern' => $group_tech_id,
         ]);
 
-        $this->createItem(\RuleCriteria::class, [
+        $rule_criteria2 = new \RuleCriteria();
+        $rule_criteria2->add([
             'rules_id' => $rule_id,
             'criteria' => '_users_id_assign',
             'condition' => 0,
@@ -399,24 +404,29 @@ final class TicketTest extends EscaladeTestCase
 
         // Test the rule ticket during the escalation
         foreach ($this->escalateTicketMethods(['escalateWithTimelineButton', 'escalateWithHistoryButton', 'escalateWithAssignMySelfButton']) as $data) {
-            $ticket = $this->createItem(\Ticket::class, [
+            $ticket = new \Ticket();
+            $ticket_id = $ticket->add([
                 'name' => 'Test ticket for escalation',
                 'content' => 'Content for test ticket',
             ]);
+            $this->assertGreaterThan(0, $ticket_id);
+            $ticket->getFromDB($ticket_id);
 
             $group_ticket = new \Group_Ticket();
-            $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group_observer_id, 'type' => \CommonITILActor::OBSERVER])));
+            $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group_observer_id, 'type' => \CommonITILActor::OBSERVER])));
             if ($data['itemtype'] === \Group::class) {
-                $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group_tech->getID(), 'type' => \CommonITILActor::ASSIGN])));
-                $this->{$data['method']}($ticket, $group_tech);
-                $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group_tech->getID(), 'type' => \CommonITILActor::ASSIGN])));
+                $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group_tech_id, 'type' => \CommonITILActor::ASSIGN])));
+                $group_tech_obj = new \Group();
+                $group_tech_obj->getFromDB($group_tech_id);
+                $this->{$data['method']}($ticket, $group_tech_obj);
+                $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group_tech_id, 'type' => \CommonITILActor::ASSIGN])));
             } else {
                 $user_ticket = new \Ticket_User();
-                $this->assertEquals(0, count($user_ticket->find(['tickets_id' => $ticket->getID(), 'users_id' => $user_tech->getID(), 'type' => \CommonITILActor::ASSIGN])));
+                $this->assertEquals(0, count($user_ticket->find(['tickets_id' => $ticket_id, 'users_id' => $user_tech->getID(), 'type' => \CommonITILActor::ASSIGN])));
                 $this->{$data['method']}($ticket, $user_tech);
-                $this->assertEquals(1, count($user_ticket->find(['tickets_id' => $ticket->getID(), 'users_id' => $user_tech->getID(), 'type' => \CommonITILActor::ASSIGN])));
+                $this->assertEquals(1, count($user_ticket->find(['tickets_id' => $ticket_id, 'users_id' => $user_tech->getID(), 'type' => \CommonITILActor::ASSIGN])));
             }
-            $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group_observer_id, 'type' => \CommonITILActor::OBSERVER])));
+            $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group_observer_id, 'type' => \CommonITILActor::OBSERVER])));
         }
     }
 
