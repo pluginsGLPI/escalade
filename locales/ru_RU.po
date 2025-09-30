@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-11 00:57+0000\n"
+"POT-Creation-Date: 2025-09-26 00:45+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: hamkms, 2025\n"
 "Language-Team: Russian (Russia) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/ru_RU/)\n"
@@ -37,83 +37,10 @@ msgstr "Комментарий"
 msgid "Assign me as an observer"
 msgstr "Назначить меня наблюдателем"
 
-#: js/cloneandlink_ticket.js.php:42
-msgid "Clone and link"
-msgstr "Клонировать и связать"
-
-#: setup.php:189 inc/user.class.php:179 inc/group_group.class.php:56
+#: setup.php:189 inc/group_group.class.php:56 inc/user.class.php:179
 #: front/config.form.php:58
 msgid "Escalation"
 msgstr "Переназначение"
-
-#: hook.php:559
-msgid "Group concerned by the escalation"
-msgstr "Группа, назначенная при эскалации"
-
-#: hook.php:577
-msgid "Number of escalations"
-msgstr "Число переназначений"
-
-#: hook.php:591
-msgid "Number of escalations between two groups"
-msgstr "Число переназначений между двумя группами"
-
-#: hook.php:604 hook.php:623 inc/user.class.php:139
-msgid "Bypass filtering on the groups assignment"
-msgstr "Игнорирование фильтра назначения групп"
-
-#: inc/ticket.class.php:243
-msgid "Solution provided, back to the group"
-msgstr "Решение найдено, возврат к группе"
-
-#: inc/ticket.class.php:309
-msgid "Solution rejected, return to the group"
-msgstr "Решение отклонено, возврат к группе"
-
-#: inc/ticket.class.php:455 inc/ticket.class.php:553
-#, php-format
-msgid "Escalation to the group %s."
-msgstr "Назначить заявку группе %s"
-
-#: inc/ticket.class.php:904
-msgid "Error : get old ticket"
-msgstr "Ошибка получения данных заявки"
-
-#: inc/ticket.class.php:920
-msgid "Error : adding new ticket"
-msgstr "Ошибка добавления заявки"
-
-#: inc/ticket.class.php:933
-msgid "Error : adding link between the two tickets"
-msgstr "Ошибка связывания заявок"
-
-#: inc/ticket.class.php:944 inc/ticket.class.php:986 inc/ticket.class.php:991
-msgid "This ticket has been cloned from the ticket num"
-msgstr "Заявка создана из другой, №"
-
-#: inc/ticket.class.php:950
-msgid "Error : adding followups"
-msgstr "Ошибка добавления комментария"
-
-#: inc/ticket.class.php:961
-msgid "Error : adding actors (user)"
-msgstr "Ошибка добавления пользователя"
-
-#: inc/ticket.class.php:970
-msgid "Error : adding actors (group)"
-msgstr "Ошибка добавления группы"
-
-#: inc/ticket.class.php:980
-msgid "Error : adding documents"
-msgstr "Ошибка добавления документа"
-
-#: inc/ticket.class.php:1099 inc/ticket.class.php:1100
-msgid "Escalate"
-msgstr "Переназначение"
-
-#: inc/ticket.class.php:1217
-msgid "You must select a group."
-msgstr "Вы должны выбрать группу"
 
 #: inc/history.class.php:191
 msgid "Reassign the ticket to group"
@@ -162,6 +89,59 @@ msgstr "Менеджер последней группы эскалации в �
 #: inc/notification.class.php:367
 msgid "Solve date modification"
 msgstr "Изменение даты решения"
+
+#: inc/ticket.class.php:248
+msgid "Solution provided, back to the group"
+msgstr "Решение найдено, возврат к группе"
+
+#: inc/ticket.class.php:314
+msgid "Solution rejected, return to the group"
+msgstr "Решение отклонено, возврат к группе"
+
+#: inc/ticket.class.php:460 inc/ticket.class.php:558
+#, php-format
+msgid "Escalation to the group %s."
+msgstr "Назначить заявку группе %s"
+
+#: inc/ticket.class.php:916
+msgid "Error : get old ticket"
+msgstr "Ошибка получения данных заявки"
+
+#: inc/ticket.class.php:932
+msgid "Error : adding new ticket"
+msgstr "Ошибка добавления заявки"
+
+#: inc/ticket.class.php:945
+msgid "Error : adding link between the two tickets"
+msgstr "Ошибка связывания заявок"
+
+#: inc/ticket.class.php:956 inc/ticket.class.php:998 inc/ticket.class.php:1003
+msgid "This ticket has been cloned from the ticket num"
+msgstr "Заявка создана из другой, №"
+
+#: inc/ticket.class.php:962
+msgid "Error : adding followups"
+msgstr "Ошибка добавления комментария"
+
+#: inc/ticket.class.php:973
+msgid "Error : adding actors (user)"
+msgstr "Ошибка добавления пользователя"
+
+#: inc/ticket.class.php:982
+msgid "Error : adding actors (group)"
+msgstr "Ошибка добавления группы"
+
+#: inc/ticket.class.php:992
+msgid "Error : adding documents"
+msgstr "Ошибка добавления документа"
+
+#: inc/ticket.class.php:1111 inc/ticket.class.php:1112
+msgid "Escalate"
+msgstr "Переназначение"
+
+#: inc/ticket.class.php:1229
+msgid "You must select a group."
+msgstr "Вы должны выбрать группу"
 
 #: inc/config.class.php:37
 msgid "Configuration Escalade plugin"
@@ -239,6 +219,26 @@ msgstr "Разрешить фильтрацию по назначенным гр
 msgid "Default (not managed by plugin)"
 msgstr "По умолчанию (не управляется плагином)"
 
+#: inc/user.class.php:139 hook.php:604 hook.php:623
+msgid "Bypass filtering on the groups assignment"
+msgstr "Игнорирование фильтра назначения групп"
+
 #: front/climb_group.php:43 ajax/assign_me.php:35
 msgid "missing parameters"
 msgstr "Отсутствуют параметры "
+
+#: hook.php:559
+msgid "Group concerned by the escalation"
+msgstr "Группа, назначенная при эскалации"
+
+#: hook.php:577
+msgid "Number of escalations"
+msgstr "Число переназначений"
+
+#: hook.php:591
+msgid "Number of escalations between two groups"
+msgstr "Число переназначений между двумя группами"
+
+#: js/cloneandlink_ticket.js.php:42
+msgid "Clone and link"
+msgstr "Клонировать и связать"
