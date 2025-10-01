@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [unreleased]
+## [2.10.0] - 2025-10-01
+
+### Added
+
+- GLPI 11 compatibility
 
 ## [2.9.18] - 2025-30-09
 
