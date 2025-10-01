@@ -142,7 +142,10 @@ class PluginEscaladeNotification
     public static function getActionTargets(NotificationTarget $target)
     {
         if ($target instanceof NotificationTargetPlanningRecall) {
-            $item = new $target->obj->fields['itemtype']();
+            $item = getItemForItemtype($target->obj->fields['itemtype']);
+            if ($item === false) {
+                return;
+            }
             $item->getFromDB($target->obj->fields['items_id']);
             if ($item instanceof TicketTask) {
                 $ticket = new Ticket();
@@ -213,13 +216,8 @@ class PluginEscaladeNotification
                         if (!isset($manager)) {
                             $manager = 1;
                         }
-
                         $history = new PluginEscaladeHistory();
-                        $history_entries = $history->find([
-                            'tickets_id' => $ticket->getID(),
-                        ], ['date_mod DESC', 'id DESC']);
-
-                        foreach ($history_entries as $found_history) {
+                        foreach ($history->find(['tickets_id' => $ticket->getID()]) as $found_history) {
                             $target->addForGroup($manager, $found_history['groups_id']);
                         }
                         break;

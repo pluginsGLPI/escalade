@@ -28,7 +28,9 @@
  * -------------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
+use Glpi\Exception\Http\AccessDeniedHttpException;
+use Glpi\Exception\Http\BadRequestHttpException;
+
 header("Content-Type: text/html; charset=UTF-8");
 Html::header_nocache();
 
@@ -37,11 +39,11 @@ Session::checkLoginUser();
 $escalade_config = $_SESSION['glpi_plugins']['escalade']['config'];
 
 if (!$escalade_config['cloneandlink_ticket']) {
-    die;
+    throw new AccessDeniedHttpException("The user does not have permission to clone ticket.");
 }
 
 if (!isset($_REQUEST['tickets_id'])) {
-    exit;
+    throw new BadRequestHttpException();
 }
 
 $ticket = new Ticket();
@@ -49,6 +51,6 @@ if ($ticket->getFromDB($_REQUEST['tickets_id'])) {
     if ($ticket->can($_REQUEST['tickets_id'], READ)) {
         PluginEscaladeTicket::cloneAndLink($_REQUEST['tickets_id']);
     } else {
-        Html::displayRightError("The user does not have permission to view this ticket.");
+        throw new AccessDeniedHttpException("The user does not have permission to view this ticket.");
     }
 }

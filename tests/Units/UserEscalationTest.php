@@ -59,6 +59,7 @@ final class UserEscalationTest extends EscaladeTestCase
             'name' => 'Task User change Escalation Test',
             'content' => '',
         ]);
+        $this->assertGreaterThan(0, $t_id);
 
         $ticket_user = new \Ticket_User();
         $this->assertEquals(0, count($ticket_user->find(['tickets_id' => $t_id, 'type' => \CommonITILActor::ASSIGN])));
@@ -68,47 +69,43 @@ final class UserEscalationTest extends EscaladeTestCase
         $this->assertGreaterThan(0, $group1_id);
 
         // Update ticket with just one user
-        $this->assertTrue($ticket->update(
-            [
-                'id' => $t_id,
-                '_actors' => [
-                    'assign' => [
-                        [
-                            'items_id' => $user1->getID(),
-                            'itemtype' => 'User',
-                        ],
+        $this->assertTrue($ticket->update([
+            'id' => $t_id,
+            '_actors' => [
+                'assign' => [
+                    [
+                        'items_id' => $user1->getID(),
+                        'itemtype' => 'User',
                     ],
                 ],
             ],
-        ));
+        ]));
 
         $ticket_user = new \Ticket_User();
         $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $t_id, 'type' => \CommonITILActor::ASSIGN, 'users_id' => $user1->getID()])));
 
-        $this->assertTrue($ticket->update(
-            [
-                'id' => $t_id,
-                '_actors' => [
-                    'assign' => [
-                        [
-                            'items_id' => $user1->getID(),
-                            'itemtype' => 'User',
-                        ],
-                        [
-                            'items_id' => $group1->getID(),
-                            'itemtype' => 'Group',
-                        ],
+        $this->assertTrue($ticket->update([
+            'id' => $t_id,
+            '_actors' => [
+                'assign' => [
+                    [
+                        'items_id' => $user1->getID(),
+                        'itemtype' => 'User',
+                    ],
+                    [
+                        'items_id' => $group1_id,
+                        'itemtype' => 'Group',
                     ],
                 ],
             ],
-        ));
+        ]));
 
         // Check if user is disassociated to this ticket and the group replace it
         $ticket_user = new \Ticket_User();
         $this->assertEquals(0, count($ticket_user->find(['tickets_id' => $t_id, 'type' => \CommonITILActor::ASSIGN])));
 
         $group_ticket = new \Group_Ticket();
-        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $t_id, 'groups_id' => $group1->getID()])));
+        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $t_id, 'groups_id' => $group1_id])));
 
         // Disable remove tech options
         $this->assertTrue($config->update([
@@ -118,61 +115,55 @@ final class UserEscalationTest extends EscaladeTestCase
         PluginEscaladeConfig::loadInSession();
 
         // Add a user and remove the group from this ticket
-        $this->assertTrue($ticket->update(
-            [
-                'id' => $t_id,
-                '_actors' => [
-                    'assign' => [
-                        [
-                            'items_id' => $user1->getID(),
-                            'itemtype' => 'User',
-                        ],
+        $this->assertTrue($ticket->update([
+            'id' => $t_id,
+            '_actors' => [
+                'assign' => [
+                    [
+                        'items_id' => $user1->getID(),
+                        'itemtype' => 'User',
                     ],
                 ],
             ],
-        ));
+        ]));
 
         $ticket_user = new \Ticket_User();
         $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $t_id, 'type' => \CommonITILActor::ASSIGN])));
 
         // Add a group to the ticket
-        $this->assertTrue($ticket->update(
-            [
-                'id' => $t_id,
-                '_actors' => [
-                    'assign' => [
-                        [
-                            'items_id' => $user1->getID(),
-                            'itemtype' => 'User',
-                        ],
-                        [
-                            'items_id' => $group1->getID(),
-                            'itemtype' => 'Group',
-                        ],
+        $this->assertTrue($ticket->update([
+            'id' => $t_id,
+            '_actors' => [
+                'assign' => [
+                    [
+                        'items_id' => $user1->getID(),
+                        'itemtype' => 'User',
+                    ],
+                    [
+                        'items_id' => $group1_id,
+                        'itemtype' => 'Group',
                     ],
                 ],
             ],
-        ));
+        ]));
 
         // Check if the user and group are associated to this ticket
         $ticket_user = new \Ticket_User();
         $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $t_id, 'type' => \CommonITILActor::ASSIGN])));
 
         $group_ticket = new \Group_Ticket();
-        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $t_id, 'groups_id' => $group1->getID()])));
+        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $t_id, 'groups_id' => $group1_id])));
     }
 
     public function testUserEscalationRemovesTechnicianWhenUserIsAdded()
     {
         $this->login();
 
-        $this->updateItem(
-            PluginEscaladeConfig::class,
-            1,
-            [
-                'remove_tech' => 1,
-            ],
-        );
+        $config = new PluginEscaladeConfig();
+        $this->assertTrue($config->update([
+            'id' => 1,
+            'remove_tech' => 1,
+        ]));
 
         PluginEscaladeConfig::loadInSession();
 
@@ -184,125 +175,107 @@ final class UserEscalationTest extends EscaladeTestCase
         $user2->getFromDBbyName('tech');
         $this->assertGreaterThan(0, $user2->getID());
 
-        $ticket = $this->createItem(
-            \Ticket::class,
-            [
-                'name' => 'Task User change Escalation Test',
-                'content' => '',
-            ],
-        );
+        $ticket = new \Ticket();
+        $ticket_id = $ticket->add([
+            'name' => 'Task User change Escalation Test',
+            'content' => '',
+        ]);
+        $this->assertGreaterThan(0, $ticket_id);
 
         $ticket_user = new \Ticket_User();
-        $this->assertEquals(0, count($ticket_user->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN])));
+        $this->assertEquals(0, count($ticket_user->find(['tickets_id' => $ticket_id, 'type' => \CommonITILActor::ASSIGN])));
 
         // Update ticket with just one user
-        $this->updateItem(
-            \Ticket::class,
-            $ticket->getID(),
-            [
-                '_actors' => [
-                    'assign' => [
-                        [
-                            'items_id' => $user1->getID(),
-                            'itemtype' => 'User',
-                        ],
+        $this->assertTrue($ticket->update([
+            'id' => $ticket_id,
+            '_actors' => [
+                'assign' => [
+                    [
+                        'items_id' => $user1->getID(),
+                        'itemtype' => 'User',
                     ],
                 ],
             ],
-        );
+        ]));
 
         $ticket_user = new \Ticket_User();
-        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN, 'users_id' => $user1->getID()])));
+        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $ticket_id, 'type' => \CommonITILActor::ASSIGN, 'users_id' => $user1->getID()])));
 
-        $this->updateItem(
-            \Ticket::class,
-            $ticket->getID(),
-            [
-                '_actors' => [
-                    'assign' => [
-                        [
-                            'items_id' => $user1->getID(),
-                            'itemtype' => 'User',
-                        ],
-                        [
-                            'items_id' => $user2->getID(),
-                            'itemtype' => 'User',
-                        ],
+        $this->assertTrue($ticket->update([
+            'id' => $ticket_id,
+            '_actors' => [
+                'assign' => [
+                    [
+                        'items_id' => $user1->getID(),
+                        'itemtype' => 'User',
+                    ],
+                    [
+                        'items_id' => $user2->getID(),
+                        'itemtype' => 'User',
                     ],
                 ],
             ],
-        );
+        ]));
 
         // Check if user is associated to this ticket and have dont been removed the other user
         $ticket_user = new \Ticket_User();
         $this->assertEquals(2, count($ticket_user->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN])));
 
         // Disable remove tech options
-        $this->updateItem(
-            PluginEscaladeConfig::class,
-            1,
-            [
-                'remove_tech' => 0,
-            ],
-        );
+        $this->assertTrue($config->update([
+            'id' => 1,
+            'remove_tech' => 0,
+        ]));
 
         PluginEscaladeConfig::loadInSession();
 
         // Add a user and remove the group from this ticket
-        $this->updateItem(
-            \Ticket::class,
-            $ticket->getID(),
-            [
-                '_actors' => [
-                    'assign' => [
-                        [
-                            'items_id' => $user1->getID(),
-                            'itemtype' => 'User',
-                        ],
+        $this->assertTrue($ticket->update([
+            'id' => $ticket_id,
+            '_actors' => [
+                'assign' => [
+                    [
+                        'items_id' => $user1->getID(),
+                        'itemtype' => 'User',
                     ],
                 ],
             ],
-        );
+        ]));
 
         $ticket_user = new \Ticket_User();
-        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN])));
+        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $ticket_id, 'type' => \CommonITILActor::ASSIGN])));
 
         // Add a group to the ticket
-        $this->updateItem(
-            \Ticket::class,
-            $ticket->getID(),
-            [
-                '_actors' => [
-                    'assign' => [
-                        [
-                            'items_id' => $user1->getID(),
-                            'itemtype' => 'User',
-                        ],
-                        [
-                            'items_id' => $user2->getID(),
-                            'itemtype' => 'User',
-                        ],
+        $this->assertTrue($ticket->update([
+            'id' => $ticket_id,
+            '_actors' => [
+                'assign' => [
+                    [
+                        'items_id' => $user1->getID(),
+                        'itemtype' => 'User',
+                    ],
+                    [
+                        'items_id' => $user2->getID(),
+                        'itemtype' => 'User',
                     ],
                 ],
             ],
-        );
+        ]));
 
         // Check if the user are associated to this ticket
         $ticket_user = new \Ticket_User();
-        $this->assertEquals(2, count($ticket_user->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN])));
+        $this->assertEquals(2, count($ticket_user->find(['tickets_id' => $ticket_id, 'type' => \CommonITILActor::ASSIGN])));
     }
 
     public function testUserEscalationRemovesTechnicianWhenUserIsAutoAssign()
     {
         $this->login();
 
-        $this->updateItem(
-            PluginEscaladeConfig::class,
-            1,
-            [
-                'remove_tech' => 1,
-            ],
-        );
+        $config = new PluginEscaladeConfig();
+        $this->assertTrue($config->update([
+            'id' => 1,
+            'remove_tech' => 1,
+        ]));
 
         PluginEscaladeConfig::loadInSession();
 
@@ -314,48 +287,41 @@ final class UserEscalationTest extends EscaladeTestCase
         $user2->getFromDBbyName('glpi');
         $this->assertGreaterThan(0, $user2->getID());
 
-        $ticket = $this->createItem(
-            \Ticket::class,
-            [
-                'name' => 'Task User change Escalation Test',
-                'content' => '',
-            ],
-        );
+        $ticket = new \Ticket();
+        $ticket_id = $ticket->add([
+            'name' => 'Task User change Escalation Test',
+            'content' => '',
+        ]);
+        $this->assertGreaterThan(0, $ticket_id);
 
         $ticket_user = new \Ticket_User();
-        $this->assertEquals(0, count($ticket_user->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN])));
+        $this->assertEquals(0, count($ticket_user->find(['tickets_id' => $ticket_id, 'type' => \CommonITILActor::ASSIGN])));
 
         // Update ticket with just one user
-        $this->updateItem(
-            \Ticket::class,
-            $ticket->getID(),
-            [
-                '_actors' => [
-                    'assign' => [
-                        [
-                            'items_id' => $user1->getID(),
-                            'itemtype' => 'User',
-                        ],
+        $this->assertTrue($ticket->update([
+            'id' => $ticket_id,
+            '_actors' => [
+                'assign' => [
+                    [
+                        'items_id' => $user1->getID(),
+                        'itemtype' => 'User',
                     ],
                 ],
             ],
-        );
+        ]));
 
         $ticket_user = new \Ticket_User();
-        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN])));
-        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN, 'users_id' => $user1->getID()])));
+        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $ticket_id, 'type' => \CommonITILActor::ASSIGN])));
+        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $ticket_id, 'type' => \CommonITILActor::ASSIGN, 'users_id' => $user1->getID()])));
 
-        $this->updateItem(
-            \Ticket::class,
-            $ticket->getID(),
-            [
-                '_itil_assign' => [
-                    '_type' => "user",
-                    'users_id' => \Session::getLoginUserID(),
-                    'use_notification' => 1,
-                ],
+        $this->assertTrue($ticket->update([
+            'id' => $ticket_id,
+            '_itil_assign' => [
+                '_type' => "user",
+                'users_id' => \Session::getLoginUserID(),
+                'use_notification' => 1,
             ],
-        );
+        ]));
 
         // Check if user is disassociated to this ticket and the group replace it
         $ticket_user = new \Ticket_User();
@@ -363,51 +329,42 @@ final class UserEscalationTest extends EscaladeTestCase
         $this->assertEquals(2, count($ticket_user->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN])));
 
         // Disable remove tech options
-        $this->updateItem(
-            PluginEscaladeConfig::class,
-            1,
-            [
-                'remove_tech' => 0,
-            ],
-        );
+        $this->assertTrue($config->update([
+            'id' => 1,
+            'remove_tech' => 0,
+        ]));
 
         PluginEscaladeConfig::loadInSession();
 
         // Add a user and remove the group from this ticket
-        $this->updateItem(
-            \Ticket::class,
-            $ticket->getID(),
-            [
-                '_actors' => [
-                    'assign' => [
-                        [
-                            'items_id' => $user1->getID(),
-                            'itemtype' => 'User',
-                        ],
+        $this->assertTrue($ticket->update([
+            'id' => $ticket_id,
+            '_actors' => [
+                'assign' => [
+                    [
+                        'items_id' => $user1->getID(),
+                        'itemtype' => 'User',
                     ],
                 ],
             ],
-        );
+        ]));
 
         $ticket_user = new \Ticket_User();
-        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN])));
-        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN, 'users_id' => $user1->getID()])));
+        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $ticket_id, 'type' => \CommonITILActor::ASSIGN])));
+        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $ticket_id, 'type' => \CommonITILActor::ASSIGN, 'users_id' => $user1->getID()])));
 
         // Assign me to the ticket
-        $this->updateItem(
-            \Ticket::class,
-            $ticket->getID(),
-            [
-                '_itil_assign' => [
-                    '_type' => "user",
-                    'users_id' => \Session::getLoginUserID(),
-                ],
+        $this->assertTrue($ticket->update([
+            'id' => $ticket_id,
+            '_itil_assign' => [
+                '_type' => "user",
+                'users_id' => \Session::getLoginUserID(),
             ],
-        );
+        ]));
 
         // Check if the user and group are associated to this ticket
         $ticket_user = new \Ticket_User();
-        $this->assertEquals(2, count($ticket_user->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN])));
-        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $ticket->getID(), 'type' => \CommonITILActor::ASSIGN, 'users_id' => $user2->getID()])));
+        $this->assertEquals(2, count($ticket_user->find(['tickets_id' => $ticket_id, 'type' => \CommonITILActor::ASSIGN])));
+        $this->assertEquals(1, count($ticket_user->find(['tickets_id' => $ticket_id, 'type' => \CommonITILActor::ASSIGN, 'users_id' => $user2->getID()])));
     }
 }

@@ -29,10 +29,10 @@
  */
 
 use Glpi\Application\View\TemplateRenderer;
-use Glpi\Toolbox\Sanitizer;
+use Glpi\DBAL\QuerySubQuery;
 
 if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
+    throw new Exception("Sorry. You can't access directly to this file");
 }
 
 class PluginEscaladeTicket
@@ -72,8 +72,7 @@ class PluginEscaladeTicket
             // Special handling for history button escalation to pass template validation
             if (isset($item->input['_no_escalade_template_validation'])) {
                 // Add existing ticket fields temporarily for template validation
-                $existing_fields = Toolbox::addslashes_deep($item->fields);
-                $temp_input = array_merge($existing_fields, $item->input);
+                $temp_input = array_merge($item->fields, $item->input);
 
                 // Ensure required fields are not empty for template validation
                 if (empty($temp_input['content'])) {
@@ -297,7 +296,7 @@ class PluginEscaladeTicket
             if ($_SESSION['glpi_plugins']['escalade']['config']['task_history']) {
                 $group = new Group();
                 $group->getFromDB($first_history['groups_id']);
-                PluginEscaladeTask_Manager::setTicketTask([
+                PluginEscaladeTaskmanager::setTicketTask([
                     'tickets_id' => $tickets_id,
                     'is_private' => true,
                     '_no_reopen' => true, //prevent reopening ticket
@@ -364,7 +363,7 @@ class PluginEscaladeTicket
             if ($_SESSION['glpi_plugins']['escalade']['config']['task_history']) {
                 $group = new Group();
                 $group->getFromDB($rejected_history['groups_id']);
-                PluginEscaladeTask_Manager::setTicketTask([
+                PluginEscaladeTaskmanager::setTicketTask([
                     'tickets_id' => $tickets_id,
                     'is_private' => true,
                     'state'      => Planning::INFO,
@@ -514,15 +513,15 @@ class PluginEscaladeTicket
         $ticket->getFromDB($tickets_id);
 
         //default task content
-        $task_content = '<p><i>' . sprintf(__('Escalation to the group %s.', 'escalade'), Sanitizer::unsanitize($group->getName())) . '</i></p><hr />' . Sanitizer::unsanitize($comment);
-        PluginEscaladeTask_Manager::setTicketTask([
+        $task_content = '<p><i>' . sprintf(__('Escalation to the group %s.', 'escalade'), $group->getName()) . '</i></p><hr />' . $comment;
+        PluginEscaladeTaskmanager::setTicketTask([
             'tickets_id' => $tickets_id,
             'is_private' => true,
             'state'      => Planning::INFO,
-            'content'    => Sanitizer::sanitize($task_content),
+            'content'    => $task_content,
         ]);
 
-        PluginEscaladeTask_Manager::addTicketTaskInTimeline();
+        PluginEscaladeTaskmanager::addTicketTaskInTimeline();
     }
 
 
@@ -606,13 +605,13 @@ class PluginEscaladeTicket
         ];
         if (!$group_ticket->find($condition)) {
             $ticket_group = new Group_Ticket();
-            PluginEscaladeTask_Manager::setTicketTask([
+            PluginEscaladeTaskmanager::setTicketTask([
                 'tickets_id' => $tickets_id,
                 'is_private' => true,
                 'state'      => Planning::INFO,
-                // Sanitize before merging with $_POST['comment'] which is already sanitized
-                'content'    => Sanitizer::sanitize(
-                    '<p><i>' . sprintf(__('Escalation to the group %s.', 'escalade'), Sanitizer::unsanitize($group->getName())) . '</i></p><hr />',
+                'content'    => '<p><i>' . sprintf(
+                    __('Escalation to the group %s.', 'escalade'),
+                    $group->getName() . '</i></p><hr />',
                 ),
             ]);
             $ticket = new Ticket();
@@ -843,7 +842,7 @@ class PluginEscaladeTicket
             return;
         }
 
-        $tickets = Ticket_Ticket::getLinkedTicketsTo($ticket->getID());
+        $tickets = Ticket_Ticket::getLinkedTo(Ticket::class, $ticket->getID());
         if (empty($tickets)) {
             return;
         }
@@ -971,12 +970,11 @@ class PluginEscaladeTicket
         $ticket = new Ticket();
         if (!$ticket->getFromDB($tickets_id)) {
             Session::addMessageAfterRedirect(__('Error : get old ticket', 'escalade'), false, ERROR);
-            exit;
+            return;
         }
 
         //set fields
         $fields = $ticket->fields;
-        $fields = array_map(['Toolbox', 'addslashes_deep'], $fields);
         $fields['id']                  = 0;
         $fields['_users_id_requester'] = 0;
         $fields['status']              = CommonITILObject::INCOMING;
@@ -987,15 +985,15 @@ class PluginEscaladeTicket
         //create new ticket (duplicate from previous)
         if (!$newID = $ticket->add($fields)) {
             Session::addMessageAfterRedirect(__('Error : adding new ticket', 'escalade'), false, ERROR);
-            exit;
+            return;
         }
 
         //add link between them
         $ticket_ticket = new Ticket_Ticket();
         if ($_SESSION['glpi_plugins']['escalade']['config']['close_linkedtickets']) {
-            $link_type = Ticket_Ticket::DUPLICATE_WITH;
+            $link_type = CommonITILObject_CommonITILObject::DUPLICATE_WITH;
         } else {
-            $link_type = Ticket_Ticket::LINK_TO;
+            $link_type = CommonITILObject_CommonITILObject::LINK_TO;
         }
         if (
             !$ticket_ticket->add([
@@ -1005,7 +1003,7 @@ class PluginEscaladeTicket
             ])
         ) {
             Session::addMessageAfterRedirect(__('Error : adding link between the two tickets', 'escalade'), false, ERROR);
-            exit;
+            return;
         }
 
         //add a followup to indicate duplication
@@ -1022,7 +1020,7 @@ class PluginEscaladeTicket
             ])
         ) {
             Session::addMessageAfterRedirect(__('Error : adding followups', 'escalade'), false, ERROR);
-            exit;
+            return;
         }
 
         //add actors to the new ticket (without assign)
@@ -1033,7 +1031,7 @@ class PluginEscaladeTicket
       WHERE tickets_id = $tickets_id AND type != 2";
         if (!$res = $DB->doQuery($query_users)) {
             Session::addMessageAfterRedirect(__('Error : adding actors (user)', 'escalade'), false, ERROR);
-            exit;
+            return;
         }
         //groups
         $query_groups = "INSERT INTO glpi_groups_tickets
@@ -1042,7 +1040,7 @@ class PluginEscaladeTicket
       WHERE tickets_id = $tickets_id AND type != 2";
         if (!$res = $DB->doQuery($query_groups)) {
             Session::addMessageAfterRedirect(__('Error : adding actors (group)', "escalade"), false, ERROR);
-            exit;
+            return;
         }
 
         //add documents
@@ -1052,7 +1050,7 @@ class PluginEscaladeTicket
       WHERE items_id = $tickets_id AND itemtype = 'Ticket'";
         if (!$res = $DB->doQuery($query_docs)) {
             Session::addMessageAfterRedirect(__('Error : adding documents', 'escalade'), false, ERROR);
-            exit;
+            return;
         }
 
         //add history to the new ticket
@@ -1271,11 +1269,11 @@ class PluginEscaladeTicket
             $condition['id'] = $groups_id_filtered;
         }
         TemplateRenderer::getInstance()->display('@escalade/escalade_form.html.twig', [
-            'action'          => PLUGIN_ESCALADE_WEBDIR . '/front/ticket.form.php',
-            'ticket'          => $options['parent'],
+            'action'                => plugin_escalade_geturl() . 'front/ticket.form.php',
+            'ticket'                => $options['parent'],
             'assign_me_as_observer' => $config->fields['assign_me_as_observer'],
-            'assigned_groups' => $assigned_groups,
-            'condition'     => $condition,
+            'assigned_groups'       => $assigned_groups,
+            'condition'             => $condition,
         ]);
     }
 
