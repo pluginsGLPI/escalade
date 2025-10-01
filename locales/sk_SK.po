@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-26 00:45+0000\n"
+"POT-Creation-Date: 2025-10-01 00:53+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: feonsu <feonsu@gmail.com>, 2019,2023-2025\n"
 "Language-Team: Slovak (Slovakia) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/sk_SK/)\n"
@@ -83,56 +83,57 @@ msgstr "Manažér poslednej skupiny eskalovanej v požiadavke"
 msgid "Solve date modification"
 msgstr "Zmena dátumu vyriešenia"
 
-#: inc/ticket.class.php:248
+#: inc/ticket.class.php:305
 msgid "Solution provided, back to the group"
 msgstr "Riešenie poskytnuté, späť k skupine"
 
-#: inc/ticket.class.php:314
+#: inc/ticket.class.php:371
 msgid "Solution rejected, return to the group"
 msgstr "Riešenie odmietnuté, návrat k skupine"
 
-#: inc/ticket.class.php:460 inc/ticket.class.php:558
+#: inc/ticket.class.php:517 inc/ticket.class.php:615
 #, php-format
 msgid "Escalation to the group %s."
 msgstr "Eskalácia na skupinu %s."
 
-#: inc/ticket.class.php:916
+#: inc/ticket.class.php:973
 msgid "Error : get old ticket"
 msgstr "Chyba: získavanie starej požiadavky"
 
-#: inc/ticket.class.php:932
+#: inc/ticket.class.php:989
 msgid "Error : adding new ticket"
 msgstr "Chyba: pridávanie novej požiadavky"
 
-#: inc/ticket.class.php:945
+#: inc/ticket.class.php:1007
 msgid "Error : adding link between the two tickets"
 msgstr "Chyba: pridávanie prepojení medzi dvoma požiadavkami"
 
-#: inc/ticket.class.php:956 inc/ticket.class.php:998 inc/ticket.class.php:1003
+#: inc/ticket.class.php:1018 inc/ticket.class.php:1060
+#: inc/ticket.class.php:1065
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Táto požiadavka bola klonovaná z požiadavky č."
 
-#: inc/ticket.class.php:962
+#: inc/ticket.class.php:1024
 msgid "Error : adding followups"
 msgstr "Chyba: pridávanie reakcií"
 
-#: inc/ticket.class.php:973
+#: inc/ticket.class.php:1035
 msgid "Error : adding actors (user)"
 msgstr "Chyba: pridávanie riešiteľov (používateľ)"
 
-#: inc/ticket.class.php:982
+#: inc/ticket.class.php:1044
 msgid "Error : adding actors (group)"
 msgstr "Chyba: pridávanie riešiteľov (skupina)"
 
-#: inc/ticket.class.php:992
+#: inc/ticket.class.php:1054
 msgid "Error : adding documents"
 msgstr "Chyba: pridávanie dokumentov"
 
-#: inc/ticket.class.php:1111 inc/ticket.class.php:1112
+#: inc/ticket.class.php:1173 inc/ticket.class.php:1174
 msgid "Escalate"
 msgstr "Eskalovať"
 
-#: inc/ticket.class.php:1229
+#: inc/ticket.class.php:1291
 msgid "You must select a group."
 msgstr "Musíte vybrať skupinu."
 

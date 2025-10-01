@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-26 00:45+0000\n"
+"POT-Creation-Date: 2025-10-01 00:53+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Davide <spam@habilitas.it>, 2024\n"
 "Language-Team: Italian (Italy) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/it_IT/)\n"
@@ -85,56 +85,57 @@ msgstr ""
 msgid "Solve date modification"
 msgstr "Modifica data di risoluzione"
 
-#: inc/ticket.class.php:248
+#: inc/ticket.class.php:305
 msgid "Solution provided, back to the group"
 msgstr "Soluzione fornita, rimandata al gruppo"
 
-#: inc/ticket.class.php:314
+#: inc/ticket.class.php:371
 msgid "Solution rejected, return to the group"
 msgstr "Soluzione rifiutata, rimandata al gruppo"
 
-#: inc/ticket.class.php:460 inc/ticket.class.php:558
+#: inc/ticket.class.php:517 inc/ticket.class.php:615
 #, php-format
 msgid "Escalation to the group %s."
 msgstr "Scalato al gruppo %s"
 
-#: inc/ticket.class.php:916
+#: inc/ticket.class.php:973
 msgid "Error : get old ticket"
 msgstr "Errore: recupera le chiamate vecchie"
 
-#: inc/ticket.class.php:932
+#: inc/ticket.class.php:989
 msgid "Error : adding new ticket"
 msgstr "Errore: aggiungi nuove chiamate"
 
-#: inc/ticket.class.php:945
+#: inc/ticket.class.php:1007
 msgid "Error : adding link between the two tickets"
 msgstr "Errore: durante il collegamento tra due chiamate"
 
-#: inc/ticket.class.php:956 inc/ticket.class.php:998 inc/ticket.class.php:1003
+#: inc/ticket.class.php:1018 inc/ticket.class.php:1060
+#: inc/ticket.class.php:1065
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Questa chiamata deriva dalla chiamata numero"
 
-#: inc/ticket.class.php:962
+#: inc/ticket.class.php:1024
 msgid "Error : adding followups"
 msgstr "Error: durante l'aggiunta di un commento"
 
-#: inc/ticket.class.php:973
+#: inc/ticket.class.php:1035
 msgid "Error : adding actors (user)"
 msgstr "Errore: durante l'aggiunta di attori (utenti)"
 
-#: inc/ticket.class.php:982
+#: inc/ticket.class.php:1044
 msgid "Error : adding actors (group)"
 msgstr "Errore: durante l'aggiunta di attori (gruppi)"
 
-#: inc/ticket.class.php:992
+#: inc/ticket.class.php:1054
 msgid "Error : adding documents"
 msgstr "Errore aggiungendo documenti"
 
-#: inc/ticket.class.php:1111 inc/ticket.class.php:1112
+#: inc/ticket.class.php:1173 inc/ticket.class.php:1174
 msgid "Escalate"
 msgstr "Scalato"
 
-#: inc/ticket.class.php:1229
+#: inc/ticket.class.php:1291
 msgid "You must select a group."
 msgstr "Devi selezionare un gruppo"
 

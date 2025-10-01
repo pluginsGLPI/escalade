@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-26 00:45+0000\n"
-"PO-Revision-Date: 2025-09-26 00:45+0000\n"
+"POT-Creation-Date: 2025-10-01 00:53+0000\n"
+"PO-Revision-Date: 2025-10-01 00:53+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en_GB\n"
@@ -82,56 +82,57 @@ msgstr "Manager of last group escalated in the ticket"
 msgid "Solve date modification"
 msgstr "Solve date modification"
 
-#: inc/ticket.class.php:248
+#: inc/ticket.class.php:305
 msgid "Solution provided, back to the group"
 msgstr "Solution provided, back to the group"
 
-#: inc/ticket.class.php:314
+#: inc/ticket.class.php:371
 msgid "Solution rejected, return to the group"
 msgstr "Solution rejected, return to the group"
 
-#: inc/ticket.class.php:460 inc/ticket.class.php:558
+#: inc/ticket.class.php:517 inc/ticket.class.php:615
 #, php-format
 msgid "Escalation to the group %s."
 msgstr "Escalation to the group %s."
 
-#: inc/ticket.class.php:916
+#: inc/ticket.class.php:973
 msgid "Error : get old ticket"
 msgstr "Error : get old ticket"
 
-#: inc/ticket.class.php:932
+#: inc/ticket.class.php:989
 msgid "Error : adding new ticket"
 msgstr "Error : adding new ticket"
 
-#: inc/ticket.class.php:945
+#: inc/ticket.class.php:1007
 msgid "Error : adding link between the two tickets"
 msgstr "Error : adding link between the two tickets"
 
-#: inc/ticket.class.php:956 inc/ticket.class.php:998 inc/ticket.class.php:1003
+#: inc/ticket.class.php:1018 inc/ticket.class.php:1060
+#: inc/ticket.class.php:1065
 msgid "This ticket has been cloned from the ticket num"
 msgstr "This ticket has been cloned from the ticket num"
 
-#: inc/ticket.class.php:962
+#: inc/ticket.class.php:1024
 msgid "Error : adding followups"
 msgstr "Error : adding followups"
 
-#: inc/ticket.class.php:973
+#: inc/ticket.class.php:1035
 msgid "Error : adding actors (user)"
 msgstr "Error : adding actors (user)"
 
-#: inc/ticket.class.php:982
+#: inc/ticket.class.php:1044
 msgid "Error : adding actors (group)"
 msgstr "Error : adding actors (group)"
 
-#: inc/ticket.class.php:992
+#: inc/ticket.class.php:1054
 msgid "Error : adding documents"
 msgstr "Error : adding documents"
 
-#: inc/ticket.class.php:1111 inc/ticket.class.php:1112
+#: inc/ticket.class.php:1173 inc/ticket.class.php:1174
 msgid "Escalate"
 msgstr "Escalate"
 
-#: inc/ticket.class.php:1229
+#: inc/ticket.class.php:1291
 msgid "You must select a group."
 msgstr "You must select a group."
 
