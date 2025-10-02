@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-01 00:53+0000\n"
+"POT-Creation-Date: 2025-10-02 00:45+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Nuria Costa <nuria.costa@uvic.cat>, 2025\n"
 "Language-Team: Catalan (Spain) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/ca_ES/)\n"
@@ -17,6 +17,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ca_ES\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: templates/group_group.html.twig
+msgid "List of groups to escalate"
+msgstr ""
 
 #: templates/escalade_form.html.twig
 msgid "Escalate ticket"
@@ -30,8 +34,99 @@ msgstr "Comentari"
 msgid "Assign me as an observer"
 msgstr "Assigna'm com a observador/a"
 
-#: setup.php:189 inc/group_group.class.php:56 inc/user.class.php:179
-#: front/config.form.php:58
+#: templates/user.html.twig hook.php:604 hook.php:623
+msgid "Bypass filtering on the groups assignment"
+msgstr "Evita el filtre a l'assignació de grups"
+
+#: templates/config.html.twig
+msgid "Group assignment"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Remove old assign group on new group assign"
+msgstr "Suprimeix el grup antic en assignar un grup nou"
+
+#: templates/config.html.twig
+msgid "Use the technician's group"
+msgstr "Utilitza el grup del tècnic"
+
+#: templates/config.html.twig
+msgid "Show group assign history visually"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "at creation time"
+msgstr "en el moment de la creació"
+
+#: templates/config.html.twig
+msgid "Assign ticket to initial group on solve ticket"
+msgstr "Assigna el grup inicial del tiquet en resoldre'l"
+
+#: templates/config.html.twig
+msgid "at modification time"
+msgstr "en el moment de la modificació"
+
+#: templates/config.html.twig
+msgid "Assign the technical group on ticket category change"
+msgstr "Assigna el grup tècnic  en canviar la categoria del tiquet"
+
+#: templates/config.html.twig
+msgid "Enable filtering on the groups assignment"
+msgstr "Activa el filtre a l'assignació de grups"
+
+#: templates/config.html.twig
+msgid "User assignment"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Remove technician(s) on escalation"
+msgstr "Elimina el/s tècnic/s quan s'escali el tiquet"
+
+#: templates/config.html.twig
+msgid "Assign the technical manager on ticket category change"
+msgstr "Assigna el/la gestor/a tècnic/a en canviar la categoria del tiquet"
+
+#: templates/config.html.twig
+msgid "Remove requester(s) on escalation"
+msgstr "Elimina el/s sol·licitant/s quan s'escali el tiquet"
+
+#: templates/config.html.twig
+msgid "Assign me as observer by default"
+msgstr "Assigna'm com a observador/a per defecte"
+
+#: templates/config.html.twig
+msgid "Other"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Escalation history in tasks"
+msgstr "Historial d'escalat en tasques"
+
+#: templates/config.html.twig
+msgid "Ticket status after an escalation"
+msgstr "Estat del tiquet després d'escalar-lo"
+
+#: templates/config.html.twig
+msgid "Clone tickets"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Close cloned tickets at the same time"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Nota: This feature (clone tickets) is duplicate with the"
+msgstr ""
+
+#: templates/config.html.twig
+msgid "plugin. This last has priority."
+msgstr ""
+
+#: templates/config.html.twig
+msgid "Display delete button"
+msgstr "Mostra el botó d'eliminació"
+
+#: setup.php:192 inc/group_group.class.php:59 inc/user.class.php:169
 msgid "Escalation"
 msgstr "Escalar"
 
@@ -79,147 +174,75 @@ msgstr "Últim grup on s'ha escalat el tiquet"
 msgid "Manager of last group escalated in the ticket"
 msgstr "Gestor/a de l'últim grup on s'ha escalat el tiquet"
 
-#: inc/notification.class.php:367
+#: inc/notification.class.php:365
 msgid "Solve date modification"
 msgstr "Modifica la data de resolució"
 
-#: inc/ticket.class.php:305
+#: inc/ticket.class.php:304
 msgid "Solution provided, back to the group"
 msgstr "Solució proporcionada, tornar al grup"
 
-#: inc/ticket.class.php:371
+#: inc/ticket.class.php:370
 msgid "Solution rejected, return to the group"
 msgstr "Solució rebutjada, retornar al grup"
 
-#: inc/ticket.class.php:517 inc/ticket.class.php:615
+#: inc/ticket.class.php:516 inc/ticket.class.php:613
 #, php-format
 msgid "Escalation to the group %s."
 msgstr "Escala al grup %s."
 
-#: inc/ticket.class.php:973
+#: inc/ticket.class.php:972
 msgid "Error : get old ticket"
 msgstr "Error: obtenir el tiquet antic"
 
-#: inc/ticket.class.php:989
+#: inc/ticket.class.php:987
 msgid "Error : adding new ticket"
 msgstr "Error: afegint un tiquet nou"
 
-#: inc/ticket.class.php:1007
+#: inc/ticket.class.php:1005
 msgid "Error : adding link between the two tickets"
 msgstr "Error: afegint enllaç entre dos tiquets"
 
-#: inc/ticket.class.php:1018 inc/ticket.class.php:1060
-#: inc/ticket.class.php:1065
+#: inc/ticket.class.php:1016 inc/ticket.class.php:1058
+#: inc/ticket.class.php:1063
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Aquest tiquet està clonat a partir del tiquet número"
 
-#: inc/ticket.class.php:1024
+#: inc/ticket.class.php:1022
 msgid "Error : adding followups"
 msgstr "Error: afegint seguiments"
 
-#: inc/ticket.class.php:1035
+#: inc/ticket.class.php:1033
 msgid "Error : adding actors (user)"
 msgstr "Error: afegint actors (usuaris)"
 
-#: inc/ticket.class.php:1044
+#: inc/ticket.class.php:1042
 msgid "Error : adding actors (group)"
 msgstr "Error: afegint actors (grups)"
 
-#: inc/ticket.class.php:1054
+#: inc/ticket.class.php:1052
 msgid "Error : adding documents"
 msgstr "Error: afegint documents"
 
-#: inc/ticket.class.php:1173 inc/ticket.class.php:1174
+#: inc/ticket.class.php:1171 inc/ticket.class.php:1172
 msgid "Escalate"
 msgstr "Escalar"
 
-#: inc/ticket.class.php:1291
+#: inc/ticket.class.php:1289
 msgid "You must select a group."
 msgstr "Has de seleccionar un grup"
 
-#: inc/config.class.php:37
+#: inc/config.class.php:39
+msgid "Escalade"
+msgstr ""
+
+#: inc/config.class.php:44
 msgid "Configuration Escalade plugin"
 msgstr "Configura el connector Escalade"
 
-#: inc/config.class.php:60
-msgid "Remove old assign group on new group assign"
-msgstr "Suprimeix el grup antic en assignar un grup nou"
-
-#: inc/config.class.php:82
-msgid "show group assign history visually"
-msgstr "mostrar l'historial visual d'assignació de grup "
-
-#: inc/config.class.php:94
-msgid "Escalation history in tasks"
-msgstr "Historial d'escalat en tasques"
-
-#: inc/config.class.php:103
-msgid "Remove technician(s) on escalation"
-msgstr "Elimina el/s tècnic/s quan s'escali el tiquet"
-
-#: inc/config.class.php:115
-msgid "Ticket status after an escalation"
-msgstr "Estat del tiquet després d'escalar-lo"
-
-#: inc/config.class.php:127
-msgid "Assign ticket to initial group on solve ticket"
-msgstr "Assigna el grup inicial del tiquet en resoldre'l"
-
-#: inc/config.class.php:140
-msgid "Assign the technical manager on ticket category change"
-msgstr "Assigna el/la gestor/a tècnic/a en canviar la categoria del tiquet"
-
-#: inc/config.class.php:151
-msgid "Assign the technical group on ticket category change"
-msgstr "Assigna el grup tècnic  en canviar la categoria del tiquet"
-
-#: inc/config.class.php:163
-msgid "Clone and link tickets"
-msgstr ""
-
-#: inc/config.class.php:173
-msgid "Close linked tickets at the same time"
-msgstr ""
-
-#: inc/config.class.php:192
-msgid "Assign me as observer by default"
-msgstr "Assigna'm com a observador/a per defecte"
-
-#: inc/config.class.php:200
-msgid "Use the technician's group"
-msgstr "Utilitza el grup del tècnic"
-
-#: inc/config.class.php:218
-msgid "at creation time"
-msgstr "en el moment de la creació"
-
-#: inc/config.class.php:220
-msgid "at modification time"
-msgstr "en el moment de la modificació"
-
-#: inc/config.class.php:266
-msgid "Remove requester(s) on escalation"
-msgstr "Elimina el/s sol·licitant/s quan s'escali el tiquet"
-
-#: inc/config.class.php:278
-msgid "Display delete button"
-msgstr "Mostra el botó d'eliminació"
-
-#: inc/config.class.php:347
-msgid "Enable filtering on the groups assignment"
-msgstr "Activa el filtre a l'assignació de grups"
-
-#: inc/config.class.php:390
+#: inc/config.class.php:143
 msgid "Default (not managed by plugin)"
 msgstr "Per defecte (no gestionat pel connector)"
-
-#: inc/user.class.php:139 hook.php:604 hook.php:623
-msgid "Bypass filtering on the groups assignment"
-msgstr "Evita el filtre a l'assignació de grups"
-
-#: front/climb_group.php:43 ajax/assign_me.php:35
-msgid "missing parameters"
-msgstr "paràmetres que falten"
 
 #: hook.php:559
 msgid "Group concerned by the escalation"
@@ -233,6 +256,6 @@ msgstr "Nombre d'escalats"
 msgid "Number of escalations between two groups"
 msgstr "Nombre d'escalats entre grups"
 
-#: js/cloneandlink_ticket.js.php:42
+#: public/js/cloneandlink_ticket.js.php:40
 msgid "Clone and link"
 msgstr "Clona i enllaça"
