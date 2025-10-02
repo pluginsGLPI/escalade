@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
+## Fixed
+
+- Fix `tag` deletion before escalation using `Escalate button`
+
 ## [2.9.18] - 2025-30-09
 
 ### Fixed
