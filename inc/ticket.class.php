@@ -54,7 +54,7 @@ class PluginEscaladeTicket
             $tag_item = new PluginTagTagItem();
             $existing_tags = $tag_item->find([
                 'items_id' => $tickets_id,
-                'itemtype' => 'Ticket'
+                'itemtype' => 'Ticket',
             ]);
             if (!empty($existing_tags)) {
                 $tag_ids = array_column($existing_tags, 'plugin_tag_tags_id');
@@ -697,6 +697,7 @@ class PluginEscaladeTicket
             // Preserve existing tags
             self::preserveExistingTags($tickets_id, $update_data);
 
+            $ticket = new Ticket();
             $ticket->update($update_data);
         }
 
@@ -1163,10 +1164,10 @@ class PluginEscaladeTicket
                     '_type'    => 'user',
                 ],
             ];
-            
+
             // Preserve existing tags
             self::preserveExistingTags($tickets_id, $update_data);
-            
+
             $ticket = new Ticket();
             $ticket->update($update_data);
         }
@@ -1386,7 +1387,7 @@ class PluginEscaladeTicket
             if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != -1) {
                 $_form_object['status'] = $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'];
             }
-            
+
             $update_data = $options['ticket_details'] + [
                 '_actors' => PluginEscaladeTicket::getTicketFieldsWithActors($tickets_id, $group_id),
                 '_plugin_escalade_no_history' => true, // Prevent a duplicated task to be added
@@ -1394,10 +1395,10 @@ class PluginEscaladeTicket
                 'groups_id' => $group_id,
                 '_form_object' => $_form_object,
             ];
-            
+
             // Preserve existing tags
             self::preserveExistingTags($tickets_id, $update_data);
-            
+
             $updates_ticket = new Ticket();
             $updates_ticket->update($update_data);
         }
