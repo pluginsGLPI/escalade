@@ -1382,4 +1382,147 @@ final class TicketTest extends EscaladeTestCase
         $group1->delete(['id' => $group1_id], true);
         $group2->delete(['id' => $group2_id], true);
     }
+
+    /**
+     * Test that using the History button escalation works correctly with mandatory "Assigned Group" field
+     */
+    public function testHistoryButtonEscalationWithMandatoryAssignedGroupField()
+    {
+        $this->login();
+
+        // Load Escalade plugin configuration
+        $config = new PluginEscaladeConfig();
+        $conf = $config->find();
+        $conf = reset($conf);
+        $config->getFromDB($conf['id']);
+        $this->assertGreaterThan(0, $conf['id']);
+        PluginEscaladeConfig::loadInSession();
+
+        // Create a ticket template with mandatory "Assigned Group" field (field num 8)
+        $template = $this->createItem(\TicketTemplate::class, [
+            'name' => 'Test template with mandatory assigned group',
+            'entities_id' => 0,
+            'is_recursive' => 1,
+        ]);
+
+        // Add mandatory field for "Groupe de techniciens" (Assigned Group)
+        $mandatory_field = $this->createItem(\TicketTemplateMandatoryField::class, [
+            'tickettemplates_id' => $template->getID(),
+            'num' => 8, // _groups_id_assign field number
+        ]);
+
+        // Also add mandatory requester field to match real-world scenarios
+        $mandatory_field2 = $this->createItem(\TicketTemplateMandatoryField::class, [
+            'tickettemplates_id' => $template->getID(),
+            'num' => 4, // _users_id_requester field number
+        ]);
+
+        // Create a category linked to this template
+        $category = $this->createItem(\ITILCategory::class, [
+            'name' => 'Test category with mandatory assigned group',
+            'tickettemplates_id_incident' => $template->getID(),
+            'is_incident' => 1,
+            'entities_id' => 0,
+            'is_recursive' => 1,
+        ]);
+
+        // Create a requester user
+        $requester = $this->createItem(\User::class, [
+            'name' => 'requester_assigned_group_test',
+            'realname' => 'AssignedGroupTest',
+            'firstname' => 'Requester',
+        ]);
+
+        // Create first escalation group
+        $group1 = $this->createItem(\Group::class, [
+            'name' => 'First assigned group for escalation',
+            'entities_id' => 0,
+            'is_recursive' => 1,
+            'is_assign' => 1,
+        ]);
+
+        // Create second escalation group
+        $group2 = $this->createItem(\Group::class, [
+            'name' => 'Second assigned group for escalation',
+            'entities_id' => 0,
+            'is_recursive' => 1,
+            'is_assign' => 1,
+        ]);
+
+        // Create third group for history button test
+        $group3 = $this->createItem(\Group::class, [
+            'name' => 'Third assigned group for history',
+            'entities_id' => 0,
+            'is_recursive' => 1,
+            'is_assign' => 1,
+        ]);
+
+        // Create a ticket with the template, mandatory requester and mandatory assigned group filled
+        $ticket = $this->createItem(\Ticket::class, [
+            'name' => 'Test ticket with mandatory assigned group',
+            'content' => 'Content for testing mandatory assigned group in history button',
+            'itilcategories_id' => $category->getID(),
+            '_users_id_requester' => [$requester->getID()],
+            '_groups_id_assign' => [$group1->getID()],
+        ]);
+
+        // Verify initial group assignment
+        $group_ticket = new \Group_Ticket();
+        $initial_groups = $group_ticket->find([
+            'tickets_id' => $ticket->getID(),
+            'type' => CommonITILActor::ASSIGN,
+        ]);
+        $this->assertEquals(1, count($initial_groups));
+
+        // Escalate to second group
+        $this->createItem(\Group_Ticket::class, [
+            'tickets_id' => $ticket->getID(),
+            'groups_id' => $group2->getID(),
+            'type' => CommonITILActor::ASSIGN,
+        ]);
+
+        // Escalate to third group to create more history
+        $this->createItem(\Group_Ticket::class, [
+            'tickets_id' => $ticket->getID(),
+            'groups_id' => $group3->getID(),
+            'type' => CommonITILActor::ASSIGN,
+        ]);
+
+        // Now test the history button escalation using climb_group
+        // This reproduces issue #381 where mandatory "Groupe de techniciens" field causes an error
+        PluginEscaladeTicket::climb_group($ticket->getID(), $group1->getID(), true);
+
+        // Verify that no error occurred during the climb_group operation
+        // by checking that group1 is now assigned
+        $group1_assigned = $group_ticket->find([
+            'tickets_id' => $ticket->getID(),
+            'groups_id' => $group1->getID(),
+            'type' => CommonITILActor::ASSIGN,
+        ]);
+        $this->assertGreaterThan(0, count($group1_assigned), 'Group 1 should be assigned after climb_group');
+
+        // Test climbing to group2 (another history group)
+        PluginEscaladeTicket::climb_group($ticket->getID(), $group2->getID(), true);
+
+        $group2_assigned = $group_ticket->find([
+            'tickets_id' => $ticket->getID(),
+            'groups_id' => $group2->getID(),
+            'type' => CommonITILActor::ASSIGN,
+        ]);
+        $this->assertGreaterThan(0, count($group2_assigned), 'Group 2 should be assigned after second climb_group');
+
+        // Verify that the requester is still properly assigned
+        $ticket_user = new \Ticket_User();
+        $requesters_after = $ticket_user->find([
+            'tickets_id' => $ticket->getID(),
+            'type' => CommonITILActor::REQUESTER,
+        ]);
+        $this->assertEquals(1, count($requesters_after));
+        $requester_after = reset($requesters_after);
+        $this->assertEquals($requester->getID(), $requester_after['users_id']);
+
+        // Verify that the ticket still has the correct category with template
+        $ticket->getFromDB($ticket->getID());
+        $this->assertEquals($category->getID(), $ticket->fields['itilcategories_id']);
+    }
 }
