@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-02 00:45+0000\n"
+"POT-Creation-Date: 2025-10-06 00:46+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2015-2016,2018-2021,2023-2025\n"
 "Language-Team: Turkish (Turkey) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/tr_TR/)\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: templates/group_group.html.twig
 msgid "List of groups to escalate"
-msgstr ""
+msgstr "Üste aktarılacak grupların listesi"
 
 #: templates/escalade_form.html.twig
 msgid "Escalate ticket"
@@ -41,7 +41,7 @@ msgstr "Grup atamalarında süzgeçler atlansın"
 
 #: templates/config.html.twig
 msgid "Group assignment"
-msgstr ""
+msgstr "Grup ataması"
 
 #: templates/config.html.twig
 msgid "Remove old assign group on new group assign"
@@ -53,7 +53,7 @@ msgstr "Teknisyenin grubu kullanılsın"
 
 #: templates/config.html.twig
 msgid "Show group assign history visually"
-msgstr ""
+msgstr "Grup atama geçmişini görsel olarak görüntüle"
 
 #: templates/config.html.twig
 msgid "at creation time"
@@ -77,7 +77,7 @@ msgstr "Grup atamaları süzülebilsin"
 
 #: templates/config.html.twig
 msgid "User assignment"
-msgstr ""
+msgstr "Kullanıcı ataması"
 
 #: templates/config.html.twig
 msgid "Remove technician(s) on escalation"
@@ -97,7 +97,7 @@ msgstr "Varsayılan olarak beni gözlemci ata"
 
 #: templates/config.html.twig
 msgid "Other"
-msgstr ""
+msgstr "Diğer"
 
 #: templates/config.html.twig
 msgid "Escalation history in tasks"
@@ -109,19 +109,19 @@ msgstr "Üste aktarma sonrası destek kaydı durumu"
 
 #: templates/config.html.twig
 msgid "Clone tickets"
-msgstr ""
+msgstr "Destek kayıtlarını kopyala"
 
 #: templates/config.html.twig
 msgid "Close cloned tickets at the same time"
-msgstr ""
+msgstr "Kopyalanmış destek kayıtları aynı zamanda kapatılsın"
 
 #: templates/config.html.twig
 msgid "Nota: This feature (clone tickets) is duplicate with the"
-msgstr ""
+msgstr "Not: Bu özellik (destek kayıtlarını kopyalama) uygulama"
 
 #: templates/config.html.twig
 msgid "plugin. This last has priority."
-msgstr ""
+msgstr "eki ile aynıdır. Bunun önceliği vardır."
 
 #: templates/config.html.twig
 msgid "Display delete button"
@@ -235,7 +235,7 @@ msgstr "Bir grup seçmelisiniz."
 
 #: inc/config.class.php:39
 msgid "Escalade"
-msgstr ""
+msgstr "Üste aktar"
 
 #: inc/config.class.php:44
 msgid "Configuration Escalade plugin"
