@@ -28,9 +28,9 @@
  * -------------------------------------------------------------------------
  */
 
-define('GLPI_LOG_DIR', dirname(__DIR__, 3) . '/files/_logs');
-
-include_once dirname(__DIR__, 3) . '/tests/GLPITestCase.php';
-include_once dirname(__DIR__, 3) . '/tests/DbTestCase.php';
-require_once dirname(__DIR__, 3) . '/tests/bootstrap.php';
+require dirname(__DIR__, 3) . '/tests/bootstrap.php';
 require_once __DIR__ . '/EscaladeTestCase.php';
+
+if (!Plugin::isPluginActive("escalade")) {
+    throw new RuntimeException("Plugin escalade is not active in the test database");
+}
