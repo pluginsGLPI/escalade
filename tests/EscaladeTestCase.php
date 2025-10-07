@@ -30,47 +30,87 @@
 
 namespace GlpiPlugin\Escalade\Tests;
 
-use Auth;
-use PHPUnit\Framework\TestCase;
+use DbTestCase;
+use QueuedNotification;
 use Session;
 
-abstract class EscaladeTestCase extends TestCase
+abstract class EscaladeTestCase extends DbTestCase
 {
-    public function setUp(): void
+    public function createGroup(string $group_name = 'TestGroup'): \Group
     {
-        /** @var \DBmysql $DB */
-        global $DB;
-        $DB->beginTransaction();
-        parent::setUp();
+        return $this->createItem(\Group::class, ['name' => $group_name]);
     }
 
-    public function tearDown(): void
+    /**
+     * Create a group and assign users to it
+     *
+     * @param \User|\User[] $users A single user or array of users to assign to the group
+     * @param string $group_name Name of the group to create
+     * @return \Group The created group
+     */
+    public function createGroupAndAssignUsers($users, string $group_name = 'TestGroup'): \Group
     {
-        global $DB;
-        $DB->rollback();
-        parent::tearDown();
+        $group = $this->createGroup($group_name);
+
+        // If it's a single user, convert to array for consistent processing
+        if (!is_array($users)) {
+            $users = [$users];
+        }
+
+        foreach ($users as $user) {
+            $this->createItem(
+                \Group_User::class,
+                [
+                    'users_id' => $user->getID(),
+                    'groups_id' => $group->getID(),
+                ],
+            );
+        }
+
+        return $group;
     }
 
-    protected function login(
-        string $user_name = TU_USER,
-        string $user_pass = TU_PASS,
-        bool $noauto = true,
-        bool $expected = true
-    ): Auth {
-        Session::destroy();
-        Session::start();
-
-        $auth = new Auth();
-        $this->assertEquals($expected, $auth->login($user_name, $user_pass, $noauto));
-
-        return $auth;
-    }
-
-    protected function logOut()
+    public function initConfig(array $conf = [])
     {
-        $ctime = $_SESSION['glpi_currenttime'];
-        Session::destroy();
-        $_SESSION['glpi_currenttime'] = $ctime;
+        $this->login();
+
+        // Initialize session structure FIRST to avoid warnings
+        if (!isset($_SESSION['glpi_plugins'])) {
+            $_SESSION['glpi_plugins'] = [];
+        }
+        if (!isset($_SESSION['glpi_plugins']['escalade'])) {
+            $_SESSION['glpi_plugins']['escalade'] = [];
+        }
+
+        // Load default config into session to avoid warnings during ticket operations
+        $_SESSION['glpi_plugins']['escalade']['config'] = [
+            'use_assign_user_group' => 0,
+            'use_assign_user_group_creation' => 0,
+            'use_assign_user_group_modification' => 0,
+            'remove_tech' => 0,
+            'remove_group' => 0,
+            'remove_requester' => 0,
+            'show_history' => 0,
+            'ticket_last_status' => 0,
+            'solve_return_group' => 0,
+            'task_history' => 0,
+            'cloneandlink_ticket' => 0,
+            'close_linkedtickets' => 0,
+            'reassign_group_from_cat' => 0,
+        ];
+
+        // Update escalade config in database if provided
+        if (!empty($conf)) {
+            $this->updateItem(\PluginEscaladeConfig::class, 1, $conf);
+
+            // Load updated config into session
+            $config = new \PluginEscaladeConfig();
+            $config->getFromDB(1);
+            $_SESSION['glpi_plugins']['escalade']['config'] = array_merge(
+                $_SESSION['glpi_plugins']['escalade']['config'],
+                $config->fields,
+            );
+        }
     }
 
     /**
@@ -109,7 +149,6 @@ abstract class EscaladeTestCase extends TestCase
         return array_filter($escalate_methods, function ($escalate_method) use ($methods) {
             return in_array($escalate_method['method'], $methods);
         });
-
     }
 
     /**
@@ -133,6 +172,7 @@ abstract class EscaladeTestCase extends TestCase
         $is_escalate = $ticketgroup->getFromDBByCrit([
             'tickets_id' => $ticket->getID(),
             'groups_id'  => $group->getID(),
+            'type'       => \CommonITILActor::ASSIGN,
         ]);
         $this->assertTrue($is_escalate);
         if (isset($options['is_observer_checkbox']) && $options['is_observer_checkbox']) {
@@ -159,6 +199,7 @@ abstract class EscaladeTestCase extends TestCase
         $is_escalate = $ticketgroup->getFromDBByCrit([
             'tickets_id' => $ticket->getID(),
             'groups_id'  => $group->getID(),
+            'type'       => \CommonITILActor::ASSIGN,
         ]);
         $this->assertTrue($is_escalate);
     }
@@ -197,6 +238,7 @@ abstract class EscaladeTestCase extends TestCase
         $is_escalate = $ticketgroup->getFromDBByCrit([
             'tickets_id' => $ticket->getID(),
             'groups_id'  => $group->getID(),
+            'type'       => \CommonITILActor::ASSIGN,
         ]);
         $this->assertTrue($is_escalate);
     }
@@ -225,6 +267,7 @@ abstract class EscaladeTestCase extends TestCase
         $is_escalate = $ticketgroup->getFromDBByCrit([
             'tickets_id' => $ticket->getID(),
             'groups_id'  => $group->getID(),
+            'type'       => \CommonITILActor::ASSIGN,
         ]);
         $this->assertTrue($is_escalate);
     }
@@ -237,19 +280,81 @@ abstract class EscaladeTestCase extends TestCase
      */
     public function escalateWithAssignMySelfButton(\Ticket $ticket, \User $user): void
     {
-        $ticket->update([
-            'id' => $ticket->getID(),
-            '_itil_assign' => [
-                '_type' => "user",
-                'users_id' => $user->getID(),
-                'use_notification' => 1,
+        $this->updateItem(
+            \Ticket::class,
+            $ticket->getID(),
+            [
+                '_actors' => [
+                    'assign' => [
+                        [
+                            'items_id' => $user->getID(),
+                            'itemtype' => 'User',
+                            'use_notification' => 1,
+                        ],
+                    ],
+                ],
             ],
-        ]);
+        );
+
         $ticket_user = new \Ticket_User();
         $is_escalate = $ticket_user->getFromDBByCrit([
             'tickets_id' => $ticket->getID(),
             'users_id'  => $user->getID(),
         ]);
         $this->assertTrue($is_escalate);
+    }
+
+    /**
+     * Get the email address for a user
+     *
+     * @param \User $user
+     * @return string
+     */
+    protected function getItemEmail(\User $user): string
+    {
+        $useremail = new \UserEmail();
+        $useremail->getFromDBByCrit([
+            'users_id' => $user->getID(),
+            'is_default' => 1,
+        ]);
+        return $useremail->fields['email'] ?? '';
+    }
+
+    /**
+     * Cleans the notification queue
+     */
+    public function cleanQueuedNotifications()
+    {
+        global $DB;
+        $DB->delete(QueuedNotification::getTable(), [new \Glpi\DBAL\QueryExpression('true')]);
+
+        $queued = new QueuedNotification();
+        $notifications = $queued->find();
+        $this->assertEmpty($notifications, "The notification queue is not empty after cleaning");
+    }
+
+
+
+    /**
+     * Set notification targets for a notification
+     */
+    protected function setNotificationTargets($notification_id, array $targets)
+    {
+        global $DB;
+
+        //Clear targets
+        $DB->delete(\NotificationTarget::getTable(), ['notifications_id' => $notification_id]);
+
+        //Set new targets
+        foreach ($targets as $target) {
+            $this->createItem(\NotificationTarget::class, [
+                'notifications_id' => $notification_id,
+                'type' => \Notification::USER_TYPE,
+                'items_id' => $target,
+            ]);
+        }
+
+        $notification_target = new \NotificationTarget();
+        $this->assertEquals(count($targets), count($notification_target->find(['notifications_id' => $notification_id])), "The number of notification targets doesn't match after addition");
     }
 }
