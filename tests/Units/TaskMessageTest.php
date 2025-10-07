@@ -41,8 +41,7 @@ final class TaskMessageTest extends EscaladeTestCase
 {
     public function testPluginReactivated()
     {
-        $this->login();
-        PluginEscaladeConfig::loadInSession();
+        $this->initConfig();
         $_SESSION['glpilanguage'] = 'en_GB';
         $plugins = new Plugin();
         $plugins->getFromDBbyDir('escalade');
@@ -51,77 +50,76 @@ final class TaskMessageTest extends EscaladeTestCase
 
     public function testGroupEscalation()
     {
-        $this->login();
-        $config = new PluginEscaladeConfig();
-        $conf = $config->find();
-        $conf = reset($conf);
-        $config->getFromDB($conf['id']);
-        $this->assertGreaterThan(0, $conf['id']);
-        PluginEscaladeConfig::loadInSession();
+        $this->initConfig([
+            'remove_tech' => 1,
+        ]);
 
-        $ticket = new \Ticket();
-        $ticket_id = $ticket->add([
+        $ticket = $this->createItem('Ticket', [
             'name' => 'Escalation Test',
             'content' => '',
+            'entities_id' => $this->getTestRootEntity(true),
         ]);
-        $this->assertGreaterThan(0, $ticket_id);
 
-        $user_test = new \User();
-        $user_test_id = $user_test->add([
+        $user_test = $this->createItem('User', [
             'name' => 'Escalation Technician',
+            'entities_id' => $this->getTestRootEntity(true),
         ]);
-        $this->assertGreaterThan(0, $user_test_id);
 
-        $group_test = new \Group();
-        $group_test_id = $group_test->add([
+        $group_test = $this->createItem('Group', [
             'name' => 'Escalation Group',
+            'entities_id' => $this->getTestRootEntity(true),
         ]);
-        $this->assertGreaterThan(0, $group_test_id);
 
         // Update ticket with a technician
-        $this->assertTrue($ticket->update([
-            'id' => $ticket_id,
-            '_actors' => [
-                'assign' => [
-                    [
-                        'items_id' => $user_test_id,
-                        'itemtype' => 'User',
+        $this->updateItem(
+            \Ticket::class,
+            $ticket->getID(),
+            [
+                '_actors' => [
+                    'assign' => [
+                        [
+                            'items_id' => $user_test->getID(),
+                            'itemtype' => 'User',
+                        ],
                     ],
                 ],
             ],
-        ]));
+        );
 
         // Check that the group linked to this ticket is "Test group 1" and that the technician has disappeared.
         $ticket_user = new Ticket_User();
-        $ticket_user->getFromDBByCrit(['tickets_id' => $ticket_id]);
-        $this->assertEquals($ticket_user->fields['users_id'], $user_test_id);
+        $ticket_user->getFromDBByCrit(['tickets_id' => $ticket->getID()]);
+        $this->assertEquals($ticket_user->fields['users_id'], $user_test->getID());
 
         // Update ticket with a group
-        $this->assertTrue($ticket->update([
-            'id' => $ticket_id,
-            '_actors' => [
-                'assign' => [
-                    [
-                        'items_id' => $user_test_id,
-                        'itemtype' => 'User',
-                    ],
-                    [
-                        'items_id' => $group_test_id,
-                        'itemtype' => 'Group',
+        $this->updateItem(
+            \Ticket::class,
+            $ticket->getID(),
+            [
+                '_actors' => [
+                    'assign' => [
+                        [
+                            'items_id' => $user_test->getID(),
+                            'itemtype' => 'User',
+                        ],
+                        [
+                            'items_id' => $group_test->getID(),
+                            'itemtype' => 'Group',
+                        ],
                     ],
                 ],
             ],
-        ]));
+        );
 
         // Check that the group linked to this ticket is "Test group 1" and that the technician has disappeared.
         $ticket_user = new Ticket_User();
-        $t_users = $ticket_user->find(['tickets_id' => $ticket_id]);
+        $t_users = $ticket_user->find(['tickets_id' => $ticket->getID()]);
         $this->assertEquals(count($t_users), 0);
 
         // Check that the group linked to this ticket is "Test group 1" and that the technician has disappeared.
         $ticket_group = new Group_Ticket();
-        $ticket_group->getFromDBByCrit(['tickets_id' => $ticket_id]);
-        $this->assertEquals($ticket_group->fields['groups_id'], $group_test_id);
+        $ticket_group->getFromDBByCrit(['tickets_id' => $ticket->getID()]);
+        $this->assertEquals($ticket_group->fields['groups_id'], $group_test->getID());
     }
 
     public static function taskGroupEscalationProvider()
@@ -191,37 +189,26 @@ final class TaskMessageTest extends EscaladeTestCase
         ];
     }
 
-    /**
-     * @dataProvider taskGroupEscalationProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('taskGroupEscalationProvider')]
     public function testTaskGroupEscalation(array $conf)
     {
-        $this->login();
+        $this->initConfig($conf);
 
-        // Update escalade config
-        $config = new PluginEscaladeConfig();
-        $this->assertTrue($config->update(array_merge(['id' => 1], $conf)));
-
-        PluginEscaladeConfig::loadInSession();
-
-        $ticket = new \Ticket();
-        $ticket_id = $ticket->add([
+        $ticket = $this->createItem('Ticket', [
             'name' => 'Task Group Escalation Test',
             'content' => '',
+            'entities_id' => 0,
         ]);
-        $this->assertGreaterThan(0, $ticket_id);
 
-        $group1 = new \Group();
-        $group1_id = $group1->add([
+        $group1 = $this->createItem('Group', [
             'name' => 'Test group 1',
+            'entities_id' => 0,
         ]);
-        $this->assertGreaterThan(0, $group1_id);
 
-        $group2 = new \Group();
-        $group2_id = $group2->add([
+        $group2 = $this->createItem('Group', [
             'name' => 'Test group 2',
+            'entities_id' => 0,
         ]);
-        $this->assertGreaterThan(0, $group2_id);
 
         $_SESSION["glpi_currenttime"] = '2025-01-01 00:00:00';
 
@@ -229,7 +216,7 @@ final class TaskMessageTest extends EscaladeTestCase
 
         // Check the correct task content
         $ticket_task = new TicketTask();
-        $t_tasks = $ticket_task->find(['tickets_id' => $ticket_id]);
+        $t_tasks = $ticket_task->find(['tickets_id' => $ticket->getID()]);
         if (!$conf['task_history']) {
             $this->assertEquals(0, count($t_tasks));
         } else {
@@ -246,7 +233,7 @@ final class TaskMessageTest extends EscaladeTestCase
 
         // Check the correct task content
         $ticket_task = new TicketTask();
-        $t_tasks = $ticket_task->find(['tickets_id' => $ticket_id]);
+        $t_tasks = $ticket_task->find(['tickets_id' => $ticket->getID()]);
         if (!$conf['task_history']) {
             $this->assertEquals(0, count($t_tasks));
         } else {
@@ -263,7 +250,7 @@ final class TaskMessageTest extends EscaladeTestCase
 
             // Check the correct task content
             $ticket_task = new TicketTask();
-            $t_tasks = $ticket_task->find(['tickets_id' => $ticket_id]);
+            $t_tasks = $ticket_task->find(['tickets_id' => $ticket->getID()]);
             if (!$conf['task_history']) {
                 $this->assertEquals(0, count($t_tasks));
             } else {
@@ -278,7 +265,7 @@ final class TaskMessageTest extends EscaladeTestCase
 
             // Check the correct task content
             $ticket_task = new TicketTask();
-            $t_tasks = $ticket_task->find(['tickets_id' => $ticket_id]);
+            $t_tasks = $ticket_task->find(['tickets_id' => $ticket->getID()]);
             if (!$conf['task_history']) {
                 $this->assertEquals(0, count($t_tasks));
             } else {

@@ -616,10 +616,14 @@ class PluginEscaladeTicket
             ]);
             $ticket = new Ticket();
             $ticket->update([
-                'id'           => $tickets_id,
-                '_itil_assign' => [
-                    'groups_id' => $groups_id,
-                    '_type'    => 'group',
+                'id'      => $tickets_id,
+                '_actors' => [
+                    'assign' => [
+                        [
+                            'items_id' => $groups_id,
+                            'itemtype' => 'Group',
+                        ],
+                    ],
                 ],
             ]);
         }
