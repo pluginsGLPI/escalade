@@ -28,7 +28,7 @@
  * -------------------------------------------------------------------------
  */
 
-define('GLPI_LOG_DIR', __DIR__ . '/files/_logs');
+define('GLPI_LOG_DIR', dirname(__DIR__, 3) . '/files/_logs');
 
 include_once dirname(__DIR__, 3) . '/tests/GLPITestCase.php';
 include_once dirname(__DIR__, 3) . '/tests/DbTestCase.php';
