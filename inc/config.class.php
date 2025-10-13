@@ -84,7 +84,7 @@ class PluginEscaladeConfig extends CommonDBTM
         $this->check($ID, READ);
 
         if (Plugin::isPluginActive('behaviors')) {
-            $behaviorlink = $CFG_GLPI["root_doc"] . "/front/config.form.php?forcetab=PluginBehaviorsConfig%241";
+            $behaviorlink = $CFG_GLPI["root_doc"] . "/front/config.form.php?forcetab=GlpiPlugin\Behaviors\Config%241";
         }
 
         TemplateRenderer::getInstance()->display(

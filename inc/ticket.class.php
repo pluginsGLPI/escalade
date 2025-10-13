@@ -537,9 +537,8 @@ class PluginEscaladeTicket
         }
 
         //check plugin behaviors (for avoid conflict)
-        if (Plugin::isPluginActive('behaviors')) {
-            // @phpstan-ignore-next-line
-            $behavior_config = PluginBehaviorsConfig::getInstance();
+        if (Plugin::isPluginActive('behaviors') && class_exists('GlpiPlugin\Behaviors\Config')) {
+            $behavior_config = GlpiPlugin\Behaviors\Config::getInstance();
             if ($behavior_config->getField('use_assign_user_group') != 0) {
                 return false;
             }
