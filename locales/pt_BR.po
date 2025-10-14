@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-02 00:45+0000\n"
+"POT-Creation-Date: 2025-10-14 00:46+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: pedroalves5770, 2025\n"
 "Language-Team: Portuguese (Brazil) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/pt_BR/)\n"
@@ -197,49 +197,49 @@ msgstr "Solução fornecida, volta para o grupo"
 msgid "Solution rejected, return to the group"
 msgstr "Solução rejeitada, volte para o grupo"
 
-#: inc/ticket.class.php:516 inc/ticket.class.php:613
+#: inc/ticket.class.php:516 inc/ticket.class.php:612
 #, php-format
 msgid "Escalation to the group %s."
 msgstr "Escalonamento para o grupo%s."
 
-#: inc/ticket.class.php:972
+#: inc/ticket.class.php:971
 msgid "Error : get old ticket"
 msgstr "Erro: obter chamado antigo"
 
-#: inc/ticket.class.php:987
+#: inc/ticket.class.php:986
 msgid "Error : adding new ticket"
 msgstr "Erro: adição de novo chamado"
 
-#: inc/ticket.class.php:1005
+#: inc/ticket.class.php:1004
 msgid "Error : adding link between the two tickets"
 msgstr "Erro: adição de relacionamento entre os dois chamados"
 
-#: inc/ticket.class.php:1016 inc/ticket.class.php:1058
-#: inc/ticket.class.php:1063
+#: inc/ticket.class.php:1015 inc/ticket.class.php:1057
+#: inc/ticket.class.php:1062
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Este chamado foi clonado do chamado de número"
 
-#: inc/ticket.class.php:1022
+#: inc/ticket.class.php:1021
 msgid "Error : adding followups"
 msgstr "Erro: adição de acompanhamentos"
 
-#: inc/ticket.class.php:1033
+#: inc/ticket.class.php:1032
 msgid "Error : adding actors (user)"
 msgstr "Erro: adição de atores (usuário)"
 
-#: inc/ticket.class.php:1042
+#: inc/ticket.class.php:1041
 msgid "Error : adding actors (group)"
 msgstr "Erro: adição de atores (grupo)"
 
-#: inc/ticket.class.php:1052
+#: inc/ticket.class.php:1051
 msgid "Error : adding documents"
 msgstr "Erro: adição de documentos"
 
-#: inc/ticket.class.php:1171 inc/ticket.class.php:1172
+#: inc/ticket.class.php:1170 inc/ticket.class.php:1171
 msgid "Escalate"
 msgstr "Escalar"
 
-#: inc/ticket.class.php:1289
+#: inc/ticket.class.php:1288
 msgid "You must select a group."
 msgstr "Você deve selecionar um grupo."
 
