@@ -640,6 +640,12 @@ class PluginEscaladeTicket
                 ),
             ]);
 
+            // Get ticket to retrieve existing data for template validation
+            $ticket = new Ticket();
+            $ticket->getFromDB($tickets_id);
+
+            // Prepare minimal update with only the fields needed to pass template validation
+            // This ensures mandatory fields from templates are satisfied while only changing the assigned group
             $update_data = [
                 'id'           => $tickets_id,
                 '_itil_assign' => [
@@ -652,6 +658,59 @@ class PluginEscaladeTicket
             self::preserveExistingTags($tickets_id, $update_data);
 
             $ticket = new Ticket();
+                // Also use _groups_id_assign to satisfy mandatory field validation
+                '_groups_id_assign' => [$groups_id],
+            ];
+
+            // Add mandatory fields that are commonly required by templates
+            // to prevent "Mandatory fields are not filled" errors
+            $required_fields = ['name', 'content', 'itilcategories_id', 'urgency', 'entities_id', 'type'];
+            foreach ($required_fields as $field) {
+                if (isset($ticket->fields[$field]) && !empty($ticket->fields[$field])) {
+                    $update_data[$field] = $ticket->fields[$field];
+                }
+            }
+
+            // Add existing actors to satisfy mandatory actor fields from template
+            $ticket_user = new \Ticket_User();
+            $ticket_group_model = new \Group_Ticket();
+
+            // Get existing requesters
+            $requesters = $ticket_user->find([
+                'tickets_id' => $tickets_id,
+                'type' => CommonITILActor::REQUESTER,
+            ]);
+            if (!empty($requesters)) {
+                $update_data['_users_id_requester'] = array_column($requesters, 'users_id');
+            }
+
+            // Get existing observers
+            $observers = $ticket_user->find([
+                'tickets_id' => $tickets_id,
+                'type' => CommonITILActor::OBSERVER,
+            ]);
+            if (!empty($observers)) {
+                $update_data['_users_id_observer'] = array_column($observers, 'users_id');
+            }
+
+            // Get existing requester groups
+            $requester_groups = $ticket_group_model->find([
+                'tickets_id' => $tickets_id,
+                'type' => CommonITILActor::REQUESTER,
+            ]);
+            if (!empty($requester_groups)) {
+                $update_data['_groups_id_requester'] = array_column($requester_groups, 'groups_id');
+            }
+
+            // Get existing observer groups
+            $observer_groups = $ticket_group_model->find([
+                'tickets_id' => $tickets_id,
+                'type' => CommonITILActor::OBSERVER,
+            ]);
+            if (!empty($observer_groups)) {
+                $update_data['_groups_id_observer'] = array_column($observer_groups, 'groups_id');
+            }
+
             $ticket->update($update_data);
         }
 
