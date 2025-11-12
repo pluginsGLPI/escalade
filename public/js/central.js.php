@@ -49,7 +49,7 @@ if (
                return;
             }
             $.ajax({ type: "GET",
-               url: CFG_GLPI.root_doc+"/"+GLPI_PLUGINS_PATH.escalade+'/ajax/central.php',
+               url: CFG_GLPI.root_doc + '/plugins/escalade/ajax/central.php',
                async: false,
                success : function(text)
                {
