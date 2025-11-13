@@ -41,7 +41,7 @@ if (
     $locale_linkedtickets = _n('Linked ticket', 'Linked tickets', 2);
 
     $JS = <<<JAVASCRIPT
-   var plugin_url = CFG_GLPI.root_doc+"/"+GLPI_PLUGINS_PATH.escalade;
+   var plugin_url = CFG_GLPI.root_doc + '/plugins/escalade';
 
    addCloneLink = function() {
 
