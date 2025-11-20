@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-14 00:46+0000\n"
+"POT-Creation-Date: 2025-11-20 00:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -190,44 +190,44 @@ msgstr ""
 msgid "Escalation to the group %s."
 msgstr ""
 
-#: inc/ticket.class.php:971
+#: inc/ticket.class.php:975
 msgid "Error : get old ticket"
 msgstr ""
 
-#: inc/ticket.class.php:986
+#: inc/ticket.class.php:990
 msgid "Error : adding new ticket"
 msgstr ""
 
-#: inc/ticket.class.php:1004
+#: inc/ticket.class.php:1008
 msgid "Error : adding link between the two tickets"
 msgstr ""
 
-#: inc/ticket.class.php:1015 inc/ticket.class.php:1057
-#: inc/ticket.class.php:1062
+#: inc/ticket.class.php:1019 inc/ticket.class.php:1061
+#: inc/ticket.class.php:1066
 msgid "This ticket has been cloned from the ticket num"
 msgstr ""
 
-#: inc/ticket.class.php:1021
+#: inc/ticket.class.php:1025
 msgid "Error : adding followups"
 msgstr ""
 
-#: inc/ticket.class.php:1032
+#: inc/ticket.class.php:1036
 msgid "Error : adding actors (user)"
 msgstr ""
 
-#: inc/ticket.class.php:1041
+#: inc/ticket.class.php:1045
 msgid "Error : adding actors (group)"
 msgstr ""
 
-#: inc/ticket.class.php:1051
+#: inc/ticket.class.php:1055
 msgid "Error : adding documents"
 msgstr ""
 
-#: inc/ticket.class.php:1170 inc/ticket.class.php:1171
+#: inc/ticket.class.php:1174 inc/ticket.class.php:1175
 msgid "Escalate"
 msgstr ""
 
-#: inc/ticket.class.php:1288
+#: inc/ticket.class.php:1292
 msgid "You must select a group."
 msgstr ""
 

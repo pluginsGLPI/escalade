@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-14 00:46+0000\n"
+"POT-Creation-Date: 2025-11-13 00:50+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2015-2016,2018-2021,2023-2025\n"
 "Language-Team: Turkish (Turkey) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/tr_TR/)\n"
@@ -192,44 +192,44 @@ msgstr "Çözüm reddedildi, gruba geri git"
 msgid "Escalation to the group %s."
 msgstr "%s grubuna üste aktarma."
 
-#: inc/ticket.class.php:971
+#: inc/ticket.class.php:975
 msgid "Error : get old ticket"
 msgstr "Hata : Eski destek kaydı alma"
 
-#: inc/ticket.class.php:986
+#: inc/ticket.class.php:990
 msgid "Error : adding new ticket"
 msgstr "Hata : Yeni destek kaydı ekleme"
 
-#: inc/ticket.class.php:1004
+#: inc/ticket.class.php:1008
 msgid "Error : adding link between the two tickets"
 msgstr "Hata : İki destek kaydı arasında ilişki ekleme"
 
-#: inc/ticket.class.php:1015 inc/ticket.class.php:1057
-#: inc/ticket.class.php:1062
+#: inc/ticket.class.php:1019 inc/ticket.class.php:1061
+#: inc/ticket.class.php:1066
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Bu destek, destek kaydı numarasından"
 
-#: inc/ticket.class.php:1021
+#: inc/ticket.class.php:1025
 msgid "Error : adding followups"
 msgstr "Hata : İzleme ekleme"
 
-#: inc/ticket.class.php:1032
+#: inc/ticket.class.php:1036
 msgid "Error : adding actors (user)"
 msgstr "Hata : Aktör ekleme (kullanıcı)"
 
-#: inc/ticket.class.php:1041
+#: inc/ticket.class.php:1045
 msgid "Error : adding actors (group)"
 msgstr "Hata : Aktör ekleme (grup)"
 
-#: inc/ticket.class.php:1051
+#: inc/ticket.class.php:1055
 msgid "Error : adding documents"
 msgstr "Hata : Belge ekleme"
 
-#: inc/ticket.class.php:1170 inc/ticket.class.php:1171
+#: inc/ticket.class.php:1174 inc/ticket.class.php:1175
 msgid "Escalate"
 msgstr "Üste aktar"
 
-#: inc/ticket.class.php:1288
+#: inc/ticket.class.php:1292
 msgid "You must select a group."
 msgstr "Bir grup seçmelisiniz."
 

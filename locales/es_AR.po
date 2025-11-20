@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-14 00:46+0000\n"
+"POT-Creation-Date: 2025-11-20 00:47+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Alan Lehoux, 2025\n"
 "Language-Team: Spanish (Argentina) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/es_AR/)\n"
@@ -22,7 +22,7 @@ msgstr ""
 
 #: templates/group_group.html.twig
 msgid "List of groups to escalate"
-msgstr ""
+msgstr "Lista de grupos a escalar"
 
 #: templates/escalade_form.html.twig
 msgid "Escalate ticket"
@@ -42,7 +42,7 @@ msgstr "Omitir filtrado en la asignación de grupos"
 
 #: templates/config.html.twig
 msgid "Group assignment"
-msgstr ""
+msgstr "Asignación de grupo"
 
 #: templates/config.html.twig
 msgid "Remove old assign group on new group assign"
@@ -54,7 +54,7 @@ msgstr "Usar el grupo del técnico"
 
 #: templates/config.html.twig
 msgid "Show group assign history visually"
-msgstr ""
+msgstr "Mostrar historial de asignación de grupo visualmente"
 
 #: templates/config.html.twig
 msgid "at creation time"
@@ -78,7 +78,7 @@ msgstr "Habilitar filtrado en la asignación de grupos"
 
 #: templates/config.html.twig
 msgid "User assignment"
-msgstr ""
+msgstr "Asignación de usuario"
 
 #: templates/config.html.twig
 msgid "Remove technician(s) on escalation"
@@ -98,7 +98,7 @@ msgstr "Asignarme como observador por defecto"
 
 #: templates/config.html.twig
 msgid "Other"
-msgstr ""
+msgstr "Otro"
 
 #: templates/config.html.twig
 msgid "Escalation history in tasks"
@@ -110,19 +110,19 @@ msgstr "Estado del ticket después de un escalamiento"
 
 #: templates/config.html.twig
 msgid "Clone tickets"
-msgstr ""
+msgstr "Clonar tickets"
 
 #: templates/config.html.twig
 msgid "Close cloned tickets at the same time"
-msgstr ""
+msgstr "Cerrar tickets clonados al mismo tiempo"
 
 #: templates/config.html.twig
 msgid "Nota: This feature (clone tickets) is duplicate with the"
-msgstr ""
+msgstr "Nota: Esta funcionalidad (clonar tickets) está duplicada con el"
 
 #: templates/config.html.twig
 msgid "plugin. This last has priority."
-msgstr ""
+msgstr "complemento. Este último tiene prioridad."
 
 #: templates/config.html.twig
 msgid "Display delete button"
@@ -193,50 +193,50 @@ msgstr "Solución rechazada, volver al grupo"
 msgid "Escalation to the group %s."
 msgstr "Escalamiento al grupo %s."
 
-#: inc/ticket.class.php:971
+#: inc/ticket.class.php:975
 msgid "Error : get old ticket"
 msgstr "Error : obtener ticket antiguo"
 
-#: inc/ticket.class.php:986
+#: inc/ticket.class.php:990
 msgid "Error : adding new ticket"
 msgstr "Error : agregando un nuevo ticket"
 
-#: inc/ticket.class.php:1004
+#: inc/ticket.class.php:1008
 msgid "Error : adding link between the two tickets"
 msgstr "Error : agregando vínculo entre los dos tickets"
 
-#: inc/ticket.class.php:1015 inc/ticket.class.php:1057
-#: inc/ticket.class.php:1062
+#: inc/ticket.class.php:1019 inc/ticket.class.php:1061
+#: inc/ticket.class.php:1066
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Este ticket ha sido clonado a partir del ticket n.°"
 
-#: inc/ticket.class.php:1021
+#: inc/ticket.class.php:1025
 msgid "Error : adding followups"
 msgstr "Error : agregando seguimientos"
 
-#: inc/ticket.class.php:1032
+#: inc/ticket.class.php:1036
 msgid "Error : adding actors (user)"
 msgstr "Error : agregando actores (usuario)"
 
-#: inc/ticket.class.php:1041
+#: inc/ticket.class.php:1045
 msgid "Error : adding actors (group)"
 msgstr "Error : agregando actores (grupo)"
 
-#: inc/ticket.class.php:1051
+#: inc/ticket.class.php:1055
 msgid "Error : adding documents"
 msgstr "Error : agregando documentos"
 
-#: inc/ticket.class.php:1170 inc/ticket.class.php:1171
+#: inc/ticket.class.php:1174 inc/ticket.class.php:1175
 msgid "Escalate"
 msgstr "Escalar"
 
-#: inc/ticket.class.php:1288
+#: inc/ticket.class.php:1292
 msgid "You must select a group."
 msgstr "Debés seleccionar un grupo."
 
 #: inc/config.class.php:39
 msgid "Escalade"
-msgstr ""
+msgstr "Escalado"
 
 #: inc/config.class.php:44
 msgid "Configuration Escalade plugin"
