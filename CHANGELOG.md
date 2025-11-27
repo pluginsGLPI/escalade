@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Handle mandatory template fields in history button escalation
+- Fix `tag` deletion before escalation using `Escalate button`
 
 ## [2.9.18] - 2025-30-09
 
