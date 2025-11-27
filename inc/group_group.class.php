@@ -58,7 +58,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation
     {
         if ($item instanceof Group) {
             $ong[] = self::createTabEntry(
-                __("Escalation", "escalade"),
+                __s("Escalation", "escalade"),
                 0,
                 $item::class,
                 self::getIcon(),

@@ -37,8 +37,8 @@ if (
     && Session::haveRight("ticket", CREATE)
     && Session::haveRight("ticket", UPDATE)
 ) {
-    $locale_cloneandlink  = __("Clone and link", "escalade");
-    $locale_linkedtickets = _n('Linked ticket', 'Linked tickets', 2);
+    $locale_cloneandlink  = __s("Clone and link", "escalade");
+    $locale_linkedtickets = _sn('Linked ticket', 'Linked tickets', 2);
 
     $JS = <<<JAVASCRIPT
    var plugin_url = CFG_GLPI.root_doc + '/plugins/escalade';
@@ -54,7 +54,7 @@ if (
       setTimeout( function () {
          if ($("#cloneandlink_ticket").length > 0) { return; }
          var duplicate_html = "<button id='cloneandlink_ticket' class='btn btn-sm btn-ghost-secondary ms-auto'"+
-                "title='{$locale_cloneandlink}'><i class='ti ti-copy me-1'></i>" + __("Clone") +
+                "title='{$locale_cloneandlink}'><i class='ti ti-copy me-1'></i>" + __s("Clone") +
             "</button>";
 
          $("#linked_tickets-heading .accordion-button")

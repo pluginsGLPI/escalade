@@ -36,12 +36,12 @@ class PluginEscaladeConfig extends CommonDBTM
 
     public static function getMenuName()
     {
-        return __('Escalade', 'escalade');
+        return __s('Escalade', 'escalade');
     }
 
     public static function getTypeName($nb = 0)
     {
-        return __("Configuration Escalade plugin", "escalade");
+        return __s("Configuration Escalade plugin", "escalade");
     }
 
     public static function getSearchURL($full = true)
@@ -136,7 +136,7 @@ class PluginEscaladeConfig extends CommonDBTM
                 return [];
         }
 
-        $tab[PluginEscaladeTicket::MANAGED_BY_CORE] = __("Default (not managed by plugin)", "escalade");
+        $tab[PluginEscaladeTicket::MANAGED_BY_CORE] = __s("Default (not managed by plugin)", "escalade");
 
         $i = 1;
         foreach ($item->getAllStatusArray(false) as $status) {

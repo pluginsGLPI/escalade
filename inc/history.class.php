@@ -187,9 +187,9 @@ class PluginEscaladeHistory extends CommonDBTM
                 $rand = mt_rand();
                 // Remplacement du lien par un formulaire
                 echo sprintf("<form action='%s/front/climb_group.php' method='GET' id='history-form-%d'>", $plugin_dir, $rand);
-                echo "<input type='hidden' name='tickets_id' value='" . $tickets_id . "'>";
+                echo "<input type='hidden' name='tickets_id' value='" . (int) $tickets_id . "'>";
                 echo "<input type='hidden' name='groups_id' value='" . $hline['groups_id'] . "'>";
-                echo "<button type='submit' title='" . __("Reassign the ticket to group", "escalade") . "' class='btn btn-icon btn-sm btn-ghost-secondary'>
+                echo "<button type='submit' title='" . __s("Reassign the ticket to group", "escalade") . "' class='btn btn-icon btn-sm btn-ghost-secondary'>
                     <i class='ti ti-arrow-up'></i>
                 </button>";
                 echo "</form>";
@@ -233,10 +233,10 @@ class PluginEscaladeHistory extends CommonDBTM
                 'full_history',
                 $plugin_dir . "/front/popup_histories.php?tickets_id=" . $tickets_id,
                 [
-                    'title' => __("full assignation history", "escalade"),
+                    'title' => __s("full assignation history", "escalade"),
                 ],
             );
-            echo "<a href='#' onclick='full_history.show();' title='" . __("View full history", "escalade") . "'>...</a>";
+            echo "<a href='#' onclick='full_history.show();' title='" . __s("View full history", "escalade") . "'>...</a>";
         }
 
         echo "</div>";
@@ -291,7 +291,7 @@ class PluginEscaladeHistory extends CommonDBTM
         $is_deleted = " `glpi_tickets`.`is_deleted` = 0 ";
 
         if ($type == "notold") {
-            $title = __("Tickets to follow (escalated)", "escalade");
+            $title = __s("Tickets to follow (escalated)", "escalade");
             $status = CommonITILObject::INCOMING . ", " . CommonITILObject::PLANNED . ", "
                    . CommonITILObject::ASSIGNED . ", " . CommonITILObject::WAITING;
 
@@ -305,7 +305,7 @@ class PluginEscaladeHistory extends CommonDBTM
             ON (`glpi_tickets`.`id` = `glpi_groups_tickets`.`tickets_id`
                AND `glpi_groups_tickets`.`type`=2)";
         } else {
-            $title = __("Tickets to close (escalated)", "escalade");
+            $title = __s("Tickets to close (escalated)", "escalade");
             $status = CommonITILObject::SOLVED;
 
             $search_assign = sprintf(" (`glpi_groups_tickets`.`groups_id` IN ('%s'))", $groups);
@@ -382,9 +382,9 @@ class PluginEscaladeHistory extends CommonDBTM
             if ($number) {
                 echo "<tr>";
                 echo "<th></th>";
-                echo "<th>" . __('Requester') . "</th>";
-                echo "<th>" . __('Associated element') . "</th>";
-                echo "<th>" . __('Description') . "</th></tr></thead>";
+                echo "<th>" . __s('Requester') . "</th>";
+                echo "<th>" . __s('Associated element') . "</th>";
+                echo "<th>" . __s('Description') . "</th></tr></thead>";
                 for ($i = 0; $i < $number; $i++) {
                     $ID = $DB->result($result, $i, "id");
                     Ticket::showVeryShort($ID, 'Ticket$2');

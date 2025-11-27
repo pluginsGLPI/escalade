@@ -165,7 +165,7 @@ class PluginEscaladeUser extends CommonDBTM
     {
         if ($item instanceof User) {
             $ong[] = self::createTabEntry(
-                __("Escalation", "escalade"),
+                __s("Escalation", "escalade"),
                 0,
                 $item::class,
                 self::getIcon(),

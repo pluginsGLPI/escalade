@@ -37,7 +37,7 @@ if (
     && (Session::haveRight("ticket", CREATE)
       || Session::haveRight("ticket", UPDATE))
 ) {
-    $locale_group_view = __('Group View');
+    $locale_group_view = __s('Group View');
 
     $JS = <<<JAVASCRIPT
 

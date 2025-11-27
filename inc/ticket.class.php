@@ -299,7 +299,7 @@ class PluginEscaladeTicket
                     'is_private' => true,
                     '_no_reopen' => true, //prevent reopening ticket
                     'state'      => Planning::INFO,
-                    'content'    => __("Solution provided, back to the group", "escalade") . " "
+                    'content'    => __s("Solution provided, back to the group", "escalade") . " "
                         . $group->getName(),
                 ]);
             }
@@ -367,7 +367,7 @@ class PluginEscaladeTicket
                     'tickets_id' => $tickets_id,
                     'is_private' => true,
                     'state'      => Planning::INFO,
-                    'content'    => __("Solution rejected, return to the group", "escalade") . " "
+                    'content'    => __s("Solution rejected, return to the group", "escalade") . " "
                         . $group->getName(),
                 ]);
             }
@@ -516,7 +516,7 @@ class PluginEscaladeTicket
         $ticket->getFromDB($tickets_id);
 
         //default task content
-        $task_content = '<p><i>' . sprintf(__('Escalation to the group %s.', 'escalade'), $group->getName()) . '</i></p><hr />' . $comment;
+        $task_content = '<p><i>' . sprintf(__s('Escalation to the group %s.', 'escalade'), $group->getName()) . '</i></p><hr />' . $comment;
         PluginEscaladeTaskmanager::setTicketTask([
             'tickets_id' => $tickets_id,
             'is_private' => true,
@@ -613,7 +613,7 @@ class PluginEscaladeTicket
                 'is_private' => true,
                 'state'      => Planning::INFO,
                 'content'    => '<p><i>' . sprintf(
-                    __('Escalation to the group %s.', 'escalade'),
+                    __s('Escalation to the group %s.', 'escalade'),
                     $group->getName() . '</i></p><hr />',
                 ),
             ]);
@@ -969,7 +969,7 @@ class PluginEscaladeTicket
         //get old ticket
         $ticket = new Ticket();
         if (!$ticket->getFromDB($tickets_id)) {
-            Session::addMessageAfterRedirect(__('Error : get old ticket', 'escalade'), false, ERROR);
+            Session::addMessageAfterRedirect(__s('Error : get old ticket', 'escalade'), false, ERROR);
             return;
         }
 
@@ -984,7 +984,7 @@ class PluginEscaladeTicket
 
         //create new ticket (duplicate from previous)
         if (!$newID = $ticket->add($fields)) {
-            Session::addMessageAfterRedirect(__('Error : adding new ticket', 'escalade'), false, ERROR);
+            Session::addMessageAfterRedirect(__s('Error : adding new ticket', 'escalade'), false, ERROR);
             return;
         }
 
@@ -1003,7 +1003,7 @@ class PluginEscaladeTicket
                 'link'         => $link_type,
             ])
         ) {
-            Session::addMessageAfterRedirect(__('Error : adding link between the two tickets', 'escalade'), false, ERROR);
+            Session::addMessageAfterRedirect(__s('Error : adding link between the two tickets', 'escalade'), false, ERROR);
             return;
         }
 
@@ -1014,13 +1014,13 @@ class PluginEscaladeTicket
                 'items_id'        => $newID,
                 'itemtype'        => Ticket::class,
                 'users_id'        => Session::getLoginUserID(),
-                'content'         => __("This ticket has been cloned from the ticket num", "escalade") . " "
+                'content'         => __s("This ticket has been cloned from the ticket num", "escalade") . " "
                     . $tickets_id,
                 'is_private'      => true,
                 'requesttypes_id' => 6, //other
             ])
         ) {
-            Session::addMessageAfterRedirect(__('Error : adding followups', 'escalade'), false, ERROR);
+            Session::addMessageAfterRedirect(__s('Error : adding followups', 'escalade'), false, ERROR);
             return;
         }
 
@@ -1031,7 +1031,7 @@ class PluginEscaladeTicket
       FROM glpi_tickets_users
       WHERE tickets_id = {$tickets_id} AND type != 2";
         if (!$res = $DB->doQuery($query_users)) {
-            Session::addMessageAfterRedirect(__('Error : adding actors (user)', 'escalade'), false, ERROR);
+            Session::addMessageAfterRedirect(__s('Error : adding actors (user)', 'escalade'), false, ERROR);
             return;
         }
 
@@ -1041,7 +1041,7 @@ class PluginEscaladeTicket
       FROM glpi_groups_tickets
       WHERE tickets_id = {$tickets_id} AND type != 2";
         if (!$res = $DB->doQuery($query_groups)) {
-            Session::addMessageAfterRedirect(__('Error : adding actors (group)', "escalade"), false, ERROR);
+            Session::addMessageAfterRedirect(__s('Error : adding actors (group)', "escalade"), false, ERROR);
             return;
         }
 
@@ -1051,18 +1051,18 @@ class PluginEscaladeTicket
       FROM glpi_documents_items
       WHERE items_id = {$tickets_id} AND itemtype = 'Ticket'";
         if (!$res = $DB->doQuery($query_docs)) {
-            Session::addMessageAfterRedirect(__('Error : adding documents', 'escalade'), false, ERROR);
+            Session::addMessageAfterRedirect(__s('Error : adding documents', 'escalade'), false, ERROR);
             return;
         }
 
         //add history to the new ticket
         $changes[0] = '0';
-        $changes[1] = __("This ticket has been cloned from the ticket num", "escalade") . " " . $tickets_id;
+        $changes[1] = __s("This ticket has been cloned from the ticket num", "escalade") . " " . $tickets_id;
         $changes[2] = "";
         Log::history($newID, 'Ticket', $changes, 'Ticket');
 
         //add message (ticket cloned) after redirect
-        Session::addMessageAfterRedirect(__("This ticket has been cloned from the ticket num", "escalade")
+        Session::addMessageAfterRedirect(__s("This ticket has been cloned from the ticket num", "escalade")
             . " " . $tickets_id);
 
         //all ok
@@ -1168,8 +1168,8 @@ class PluginEscaladeTicket
                 'type' => 'PluginEscaladeTicket',
                 'class' => 'action-escalation',
                 'icon' => 'ti ti-arrow-up',
-                'label' => __('Escalate', 'escalade'),
-                'short_label' => __('Escalate', 'escalade'),
+                'label' => __s('Escalate', 'escalade'),
+                'short_label' => __s('Escalate', 'escalade'),
                 'item' => new self(),
             ];
         }
@@ -1292,7 +1292,7 @@ class PluginEscaladeTicket
         $options = array_merge($params, $options);
         $group = new Group();
         if ($group_id === 0 || $group->getFromDB($group_id) === false) {
-            Session::addMessageAfterRedirect(__('You must select a group.', 'escalade'), false, ERROR);
+            Session::addMessageAfterRedirect(__s('You must select a group.', 'escalade'), false, ERROR);
         } elseif (!empty($_POST['comment']) && $tickets_id !== 0) {
             if ((bool) $options['is_observer_checkbox']) {
                 $ticket_user = new Ticket_User();

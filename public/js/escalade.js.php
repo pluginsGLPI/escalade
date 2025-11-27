@@ -37,7 +37,7 @@ if (
     && (Session::haveRight("ticket", CREATE)
         || Session::haveRight("ticket", UPDATE))
 ) {
-    $locale_actor = __('Actor');
+    $locale_actor = __s('Actor');
 
     $JS = <<<JAVASCRIPT
 
