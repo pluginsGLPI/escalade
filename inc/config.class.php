@@ -36,12 +36,12 @@ class PluginEscaladeConfig extends CommonDBTM
 
     public static function getMenuName()
     {
-        return __('Escalade', 'escalade');
+        return __s('Escalade', 'escalade');
     }
 
     public static function getTypeName($nb = 0)
     {
-        return __("Configuration Escalade plugin", "escalade");
+        return __s("Configuration Escalade plugin", "escalade");
     }
 
     public static function getSearchURL($full = true)
@@ -58,15 +58,13 @@ class PluginEscaladeConfig extends CommonDBTM
     {
         $links = [];
 
-        $menu = [
+        return [
             'title'   => self::getMenuName(),
             'page'    => self::getSearchURL(false),
             'icon'    => self::getIcon(),
             'options' => [],
             'links'   => $links,
         ];
-
-        return $menu;
     }
 
     /**
@@ -113,11 +111,9 @@ class PluginEscaladeConfig extends CommonDBTM
             && $config->fields['use_filter_assign_group']
         ) {
             $user = new PluginEscaladeUser();
-            if ($user->getFromDBByCrit(['users_id' => $_SESSION['glpiID']])) {
-                //if a bypass is defined for user
-                if ($user->fields['bypass_filter_assign_group']) {
-                    $config->fields['use_filter_assign_group'] = 0;
-                }
+            //if a bypass is defined for user
+            if ($user->getFromDBByCrit(['users_id' => $_SESSION['glpiID']]) && $user->fields['bypass_filter_assign_group']) {
+                $config->fields['use_filter_assign_group'] = 0;
             }
         }
 
@@ -140,7 +136,7 @@ class PluginEscaladeConfig extends CommonDBTM
                 return [];
         }
 
-        $tab[PluginEscaladeTicket::MANAGED_BY_CORE] = __("Default (not managed by plugin)", "escalade");
+        $tab[PluginEscaladeTicket::MANAGED_BY_CORE] = __s("Default (not managed by plugin)", "escalade");
 
         $i = 1;
         foreach ($item->getAllStatusArray(false) as $status) {

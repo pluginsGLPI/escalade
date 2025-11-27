@@ -31,13 +31,12 @@
 namespace GlpiPlugin\Escalade\Tests\Units;
 
 use CommonITILActor;
+use Glpi\DBAL\QueryExpression;
 use GlpiPlugin\Escalade\Tests\EscaladeTestCase;
-use Group;
 use Group_Ticket;
-use NotificationTarget;
-use PluginEscaladeConfig;
+use Notification;
+use PluginEscaladeHistory;
 use PluginEscaladeNotification;
-use PluginEscaladeTicket;
 use QueuedNotification;
 use Ticket;
 use User;
@@ -56,14 +55,15 @@ final class NotificationTest extends EscaladeTestCase
         global $DB;
 
         // Disable all notifications first
-        $DB->update(\Notification::getTable(), ['is_active' => false], [new \Glpi\DBAL\QueryExpression('true')]);
+        $DB->update(Notification::getTable(), ['is_active' => false], [new QueryExpression('true')]);
 
         // Enable only the "assign group" notification
-        $notification = new \Notification();
+        $notification = new Notification();
         if (!$notification->getFromDBByCrit(['itemtype' => 'Ticket', 'event' => 'assign_group'])) {
             $this->markTestSkipped('assign_group notification not found');
         }
-        $this->updateItem(\Notification::class, $notification->getID(), ['is_active' => 1]);
+
+        $this->updateItem(Notification::class, $notification->getID(), ['is_active' => 1]);
 
         // Set our notification target
         $this->setNotificationTargets(
@@ -86,7 +86,7 @@ final class NotificationTest extends EscaladeTestCase
         $this->enableNotifications();
         $this->setupNotificationTargets();
 
-        [$user1, $user2, $user3, $user4] = $this->createItems(\User::class, [
+        [$user1, $user2, $user3, $user4] = $this->createItems(User::class, [
             ['name' => 'User 1_' . uniqid(), '_useremails' => [-1 => 'user1_' . uniqid() . '@example.com']],
             ['name' => 'User 2_' . uniqid(), '_useremails' => [-1 => 'user2_' . uniqid() . '@example.com']],
             ['name' => 'User 3_' . uniqid(), '_useremails' => [-1 => 'user3_' . uniqid() . '@example.com']],
@@ -176,7 +176,7 @@ final class NotificationTest extends EscaladeTestCase
         $this->enableNotifications();
         $this->setupNotificationTargets();
 
-        [$user1, $user2, $user3, $user4] = $this->createItems(\User::class, [
+        [$user1, $user2, $user3, $user4] = $this->createItems(User::class, [
             ['name' => 'User 1_' . uniqid(), '_useremails' => [-1 => 'user1_' . uniqid() . '@example.com']],
             ['name' => 'User 2_' . uniqid(), '_useremails' => [-1 => 'user2_' . uniqid() . '@example.com']],
             ['name' => 'User 3_' . uniqid(), '_useremails' => [-1 => 'user3_' . uniqid() . '@example.com']],
@@ -266,7 +266,7 @@ final class NotificationTest extends EscaladeTestCase
         $this->enableNotifications();
         $this->setupNotificationTargets();
 
-        [$user1, $user2, $user3, $user4] = $this->createItems(\User::class, [
+        [$user1, $user2, $user3, $user4] = $this->createItems(User::class, [
             ['name' => 'User 1_' . uniqid(), '_useremails' => [-1 => 'user1_' . uniqid() . '@example.com']],
             ['name' => 'User 2_' . uniqid(), '_useremails' => [-1 => 'user2_' . uniqid() . '@example.com']],
             ['name' => 'User 3_' . uniqid(), '_useremails' => [-1 => 'user3_' . uniqid() . '@example.com']],
@@ -356,7 +356,7 @@ final class NotificationTest extends EscaladeTestCase
         $this->enableNotifications();
         $this->setupNotificationTargets();
 
-        [$user1, $user2] = $this->createItems(\User::class, [
+        [$user1, $user2] = $this->createItems(User::class, [
             ['name' => 'User 1_' . uniqid(), '_useremails' => [-1 => 'user1_' . uniqid() . '@example.com']],
             ['name' => 'User 2_' . uniqid(), '_useremails' => [-1 => 'user2_' . uniqid() . '@example.com']],
         ]);
@@ -425,7 +425,7 @@ final class NotificationTest extends EscaladeTestCase
             'task_history' => 1,
         ]);
 
-        [$user1, $user2] = $this->createItems(\User::class, [
+        [$user1, $user2] = $this->createItems(User::class, [
             ['name' => 'User 1_' . uniqid(), '_useremails' => [-1 => 'user1_' . uniqid() . '@example.com']],
             ['name' => 'User 2_' . uniqid(), '_useremails' => [-1 => 'user2_' . uniqid() . '@example.com']],
         ]);
@@ -481,12 +481,12 @@ final class NotificationTest extends EscaladeTestCase
         $this->assertEquals($group2->getID(), $final_group['groups_id'], "Should be assigned to group2 after escalation");
 
         // Check escalation history
-        $history = new \PluginEscaladeHistory();
+        $history = new PluginEscaladeHistory();
         $history_entries = $history->find(['tickets_id' => $ticket->getID()]);
         $this->assertGreaterThan(0, count($history_entries), "Should have escalation history entries");
 
         // Check that the most recent history entry corresponds to group2
-        $recent_escalation = \PluginEscaladeHistory::getMostRecentEscalationForTicket($ticket->getID());
+        $recent_escalation = PluginEscaladeHistory::getMostRecentEscalationForTicket($ticket->getID());
         $this->assertNotFalse($recent_escalation, "Should find most recent escalation");
         $this->assertEquals($group2->getID(), $recent_escalation['groups_id'], "Most recent escalation should be to group2");
     }

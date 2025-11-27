@@ -37,7 +37,7 @@ if (
     && (Session::haveRight("ticket", CREATE)
       || Session::haveRight("ticket", UPDATE))
 ) {
-    $locale_group_view = __('Group View');
+    $locale_group_view = __s('Group View');
 
     $JS = <<<JAVASCRIPT
 
@@ -45,7 +45,7 @@ if (
       // intercept tabs changes
       $(document).on('glpi.tab.loaded', function(event) {
           setTimeout(() => {
-            if ($('.nav-link.active:contains($locale_group_view)').length == 0) {
+            if ($('.nav-link.active:contains({$locale_group_view})').length == 0) {
                return;
             }
             $.ajax({ type: "GET",

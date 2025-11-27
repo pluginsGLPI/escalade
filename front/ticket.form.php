@@ -55,7 +55,7 @@ if (isset($_POST['escalate'])) {
 
     if (!$track->can($_POST["tickets_id"], READ)) {
         Session::addMessageAfterRedirect(
-            __('You have been redirected because you no longer have access to this ticket'),
+            __s('You have been redirected because you no longer have access to this ticket'),
             true,
             ERROR,
         );

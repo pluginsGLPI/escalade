@@ -39,9 +39,11 @@ class PluginEscaladeGroup_Group extends CommonDBRelation
 {
     // From CommonDBRelation
     public static $itemtype_1   = 'Group';
+
     public static $items_id_1   = 'groups_id_source';
 
     public static $itemtype_2   = 'Group';
+
     public static $items_id_2   = 'groups_id_destination';
 
     public function getForbiddenStandardMassiveAction()
@@ -56,13 +58,14 @@ class PluginEscaladeGroup_Group extends CommonDBRelation
     {
         if ($item instanceof Group) {
             $ong[] = self::createTabEntry(
-                __("Escalation", "escalade"),
+                __s("Escalation", "escalade"),
                 0,
                 $item::class,
                 self::getIcon(),
             );
             return $ong;
         }
+
         return '';
     }
 
@@ -77,6 +80,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation
             $PluginEscaladeGroup_Group = new PluginEscaladeGroup_Group();
             $PluginEscaladeGroup_Group->manageGroup($item->getID());
         }
+
         return true;
     }
 
@@ -101,7 +105,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation
             if ($nb > 0) {
                 $massiveactionparams = [
                     'num_displayed'    => min($nb, $_SESSION['glpilist_limit']),
-                    'container'        => 'mass' . __CLASS__ . $rand,
+                    'container'        => 'mass' . self::class . $rand,
                     'itemtype'         => 'Group',
                 ];
 
@@ -135,8 +139,9 @@ class PluginEscaladeGroup_Group extends CommonDBRelation
 
     public function getGroups($ticket_id, $removeAlreadyAssigned = true)
     {
-        $groups = $user_groups = $ticket_groups = [];
-
+        $groups = [];
+        $user_groups = [];
+        $ticket_groups = [];
         // get groups for user connected
         $tmp_user_groups  = Group_User::getUserGroups($_SESSION['glpiID']);
         foreach ($tmp_user_groups as $current_group) {
@@ -156,22 +161,23 @@ class PluginEscaladeGroup_Group extends CommonDBRelation
         // To do an escalation, the user must be in a group currently assigned to the ticket
         // or no group is assigned to the ticket
         // TODO : matching with "view all tickets (yes/no) option in profile user"
-        if (!empty($ticket_groups) && count(array_intersect($ticket_groups, $user_groups)) == 0) {
+        if ($ticket_groups !== [] && count(array_intersect($ticket_groups, $user_groups)) == 0) {
             return [];
         }
 
         //get all group which we can climb
         $filtering_group = [];
-        if (count($ticket_groups) > 0) {
+        if ($ticket_groups !== []) {
             $group_group = $this->find(['groups_id_source' => $ticket_groups]);
             foreach ($group_group as $current_group) {
                 $filtering_group[$current_group['groups_id_destination']] = $current_group['groups_id_destination'];
             }
+
             $groups = $filtering_group;
         }
 
         //remove already assigned groups
-        if (!empty($ticket_groups) && $removeAlreadyAssigned) {
+        if ($ticket_groups !== [] && $removeAlreadyAssigned) {
             $groups = array_diff_assoc($groups, $ticket_groups);
         }
 

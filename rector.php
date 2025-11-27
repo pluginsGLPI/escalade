@@ -28,48 +28,32 @@
  * -------------------------------------------------------------------------
  */
 
-class PluginEscaladeTaskmanager
-{
-    private static ?TicketTask $ticket_task = null;
+require_once __DIR__ . '/../../src/Plugin.php';
 
-    public static function setTicketTask(array $input): void
-    {
-        if (!self::$ticket_task instanceof TicketTask) {
-            self::$ticket_task = new TicketTask();
-        }
+use Rector\Caching\ValueObject\Storage\FileCacheStorage;
+use Rector\Config\RectorConfig;
+use Rector\ValueObject\PhpVersion;
 
-        if (!self::canAddEscaladeTicketTask()) {
-            return;
-        }
-
-        if (!empty(self::$ticket_task->input)) {
-            return;
-        }
-
-        self::$ticket_task->input = $input;
-    }
-
-    public static function canAddEscaladeTicketTask(): bool
-    {
-        if (!$_SESSION['glpi_plugins']['escalade']['config']['task_history']) {
-            return false;
-        }
-
-        return !(isset($_SESSION['plugin_escalade']['ticket_creation']) && $_SESSION['plugin_escalade']['ticket_creation']);
-    }
-
-    public static function addTicketTaskInTimeline(): void
-    {
-        if (!self::canAddEscaladeTicketTask()) {
-            return;
-        }
-
-        self::$ticket_task->add(self::$ticket_task->input);
-        self::resetTicketTask();
-    }
-
-    public static function resetTicketTask(): void
-    {
-        self::$ticket_task = new TicketTask();
-    }
-}
+return RectorConfig::configure()
+    ->withPaths([
+        __DIR__ . '/ajax',
+        __DIR__ . '/front',
+        __DIR__ . '/inc',
+        __DIR__ . '/public',
+        __DIR__ . '/tests',
+    ])
+    ->withPhpVersion(PhpVersion::PHP_82)
+    ->withCache(
+        cacheDirectory: __DIR__ . '/var/rector',
+        cacheClass: FileCacheStorage::class,
+    )
+    ->withRootFiles()
+    ->withParallel(timeoutSeconds: 300)
+    ->withImportNames(removeUnusedImports: true)
+    ->withPreparedSets(
+        deadCode: true,
+        codeQuality: true,
+        codingStyle: true,
+    )
+    ->withPhpSets(php82: true) // apply PHP sets up to PHP 8.2
+;

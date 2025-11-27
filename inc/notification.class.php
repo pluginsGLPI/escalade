@@ -31,19 +31,31 @@
 class PluginEscaladeNotification
 {
     public const NTRGT_TICKET_REQUESTER_USER          = 357951;
+
     public const NTRGT_TICKET_REQUESTER_GROUP         = 357952;
+
     public const NTRGT_TICKET_REQUESTER_GROUP_MANAGER = 357953;
+
     public const NTRGT_TICKET_WATCH_USER              = 357954;
+
     public const NTRGT_TICKET_WATCH_GROUP             = 357955;
+
     public const NTRGT_TICKET_WATCH_GROUP_MANAGER     = 357956;
+
     public const NTRGT_TICKET_TECH_GROUP              = 357957;
+
     public const NTRGT_TICKET_TECH_USER               = 357958;
+
     public const NTRGT_TICKET_TECH_GROUP_MANAGER      = 357959;
+
     public const NTRGT_TASK_GROUP                     = 357960;
 
     public const NTRGT_TICKET_ESCALADE_GROUP          = 457951;
+
     public const NTRGT_TICKET_ESCALADE_GROUP_MANAGER  = 457952;
+
     public const NTRGT_TICKET_LAST_ESCALADE_GROUP     = 457953;
+
     public const NTRGT_TICKET_LAST_ESCALADE_GROUP_MANAGER = 457954;
 
     /**
@@ -68,68 +80,68 @@ class PluginEscaladeNotification
             // add new native targets
             $target->addTarget(
                 self::NTRGT_TICKET_REQUESTER_USER,
-                __('Requester user of the ticket', 'escalade'),
+                __s('Requester user of the ticket', 'escalade'),
             );
             $target->addTarget(
                 self::NTRGT_TICKET_REQUESTER_GROUP,
-                __('Requester group'),
+                __s('Requester group'),
             );
             $target->addTarget(
                 self::NTRGT_TICKET_REQUESTER_GROUP_MANAGER,
-                __('Requester group manager'),
+                __s('Requester group manager'),
             );
             $target->addTarget(
                 self::NTRGT_TICKET_WATCH_USER,
-                __('Watcher user'),
+                __s('Watcher user'),
             );
             $target->addTarget(
                 self::NTRGT_TICKET_WATCH_GROUP,
-                __('Watcher group'),
+                __s('Watcher group'),
             );
             $target->addTarget(
                 self::NTRGT_TICKET_WATCH_GROUP_MANAGER,
-                __('Watcher group manager'),
+                __s('Watcher group manager'),
             );
             $target->addTarget(
                 self::NTRGT_TICKET_TECH_GROUP,
-                __('Group in charge of the ticket'),
+                __s('Group in charge of the ticket'),
             );
             $target->addTarget(
                 self::NTRGT_TICKET_TECH_USER,
-                __('Technician in charge of the ticket'),
+                __s('Technician in charge of the ticket'),
             );
             $target->addTarget(
                 self::NTRGT_TICKET_TECH_GROUP_MANAGER,
-                __('Manager of the group in charge of the ticket'),
+                __s('Manager of the group in charge of the ticket'),
             );
             $target->addTarget(
                 self::NTRGT_TASK_GROUP,
-                __('Group in charge of the task'),
+                __s('Group in charge of the task'),
             );
 
             // add plugins targets
             $target->addTarget(
                 self::NTRGT_TICKET_ESCALADE_GROUP,
-                __('Group escalated in the ticket', 'escalade'),
+                __s('Group escalated in the ticket', 'escalade'),
             );
             $target->addTarget(
                 self::NTRGT_TICKET_ESCALADE_GROUP_MANAGER,
-                __('Manager of the group escalated in the ticket', 'escalade'),
+                __s('Manager of the group escalated in the ticket', 'escalade'),
             );
 
             // change label for this core target to avoid confusion with NTRGT_TICKET_REQUESTER_USER
             $target->addTarget(
                 Notification::AUTHOR,
-                __('Requester user of the task/reminder', 'escalade'),
+                __s('Requester user of the task/reminder', 'escalade'),
             );
         } elseif ($target instanceof NotificationTargetCommonITILObject) {
             $target->addTarget(
                 self::NTRGT_TICKET_LAST_ESCALADE_GROUP,
-                __('Last group escalated in the ticket', 'escalade'),
+                __s('Last group escalated in the ticket', 'escalade'),
             );
             $target->addTarget(
                 self::NTRGT_TICKET_LAST_ESCALADE_GROUP_MANAGER,
-                __('Manager of last group escalated in the ticket', 'escalade'),
+                __s('Manager of last group escalated in the ticket', 'escalade'),
             );
         }
     }
@@ -146,6 +158,7 @@ class PluginEscaladeNotification
             if ($item === false) {
                 return;
             }
+
             $item->getFromDB($target->obj->fields['items_id']);
             if ($item instanceof TicketTask) {
                 $ticket = new Ticket();
@@ -180,6 +193,7 @@ class PluginEscaladeNotification
                         if (!isset($manager)) {
                             $manager = 1;
                         }
+
                         if (!isset($group_type)) {
                             $group_type = CommonITILActor::ASSIGN;
                         }
@@ -200,6 +214,7 @@ class PluginEscaladeNotification
                         if (!isset($user_type)) {
                             $user_type = CommonITILActor::ASSIGN;
                         }
+
                         self::addUsersOfTicket($target, $ticket->getID(), $user_type);
                         break;
 
@@ -216,10 +231,12 @@ class PluginEscaladeNotification
                         if (!isset($manager)) {
                             $manager = 1;
                         }
+
                         $history = new PluginEscaladeHistory();
                         foreach ($history->find(['tickets_id' => $ticket->getID()]) as $found_history) {
                             $target->addForGroup($manager, $found_history['groups_id']);
                         }
+
                         break;
                 }
             }
@@ -249,6 +266,7 @@ class PluginEscaladeNotification
                                 $groups[] = $actor['items_id'];
                             }
                         }
+
                         $group_ticket = new Group_Ticket();
                         $current_groups = $group_ticket->find(
                             [
@@ -300,6 +318,7 @@ class PluginEscaladeNotification
                     if ($group_to_notify) {
                         $target->addForGroup($manager, $group_to_notify);
                     }
+
                     break;
             }
         }
@@ -319,7 +338,7 @@ class PluginEscaladeNotification
         NotificationTarget $target,
         $tickets_id = 0,
         $manager = 0,
-        $group_type = CommonITILActor::REQUESTER
+        $group_type = CommonITILActor::REQUESTER,
     ) {
         $group_ticket = new Group_Ticket();
         foreach (
@@ -342,7 +361,7 @@ class PluginEscaladeNotification
     public static function addUsersOfTicket(
         NotificationTarget $target,
         $tickets_id = 0,
-        $user_type = CommonITILActor::REQUESTER
+        $user_type = CommonITILActor::REQUESTER,
     ) {
         $ticket_user = new Ticket_User();
         $user        = new User();
@@ -362,7 +381,7 @@ class PluginEscaladeNotification
     public static function getEvents(NotificationTarget $target)
     {
         if ($target instanceof NotificationTargetTicket) {
-            $target->events['update_solvedate'] = __('Solve date modification', 'escalade');
+            $target->events['update_solvedate'] = __s('Solve date modification', 'escalade');
         }
     }
 }

@@ -28,6 +28,8 @@
  * -------------------------------------------------------------------------
  */
 
+use Glpi\Exception\Http\AccessDeniedHttpException;
+
 Session::checkLoginUser();
 
 if (!Plugin::isPluginActive('escalade')) {
@@ -36,7 +38,7 @@ if (!Plugin::isPluginActive('escalade')) {
 }
 
 if (!$_SESSION['glpi_plugins']['escalade']['config']['show_history']) {
-    throw new Glpi\Exception\Http\AccessDeniedHttpException();
+    throw new AccessDeniedHttpException();
 }
 
 echo "<div id='page'>";

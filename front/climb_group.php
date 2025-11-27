@@ -27,7 +27,7 @@
  * @link      https://github.com/pluginsGLPI/escalade
  * -------------------------------------------------------------------------
  */
-
+use Glpi\Exception\Http\AccessDeniedHttpException;
 use Glpi\Exception\Http\BadRequestHttpException;
 
 Session::checkLoginUser();
@@ -48,7 +48,7 @@ $ticket = new Ticket();
 $ticket->getFromDB((int) $_REQUEST['tickets_id']);
 
 if (!$ticket->canAssign()) {
-    throw new Glpi\Exception\Http\AccessDeniedHttpException();
+    throw new AccessDeniedHttpException();
 }
 
 
