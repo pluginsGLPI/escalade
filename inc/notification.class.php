@@ -319,7 +319,7 @@ class PluginEscaladeNotification
         NotificationTarget $target,
         $tickets_id = 0,
         $manager = 0,
-        $group_type = CommonITILActor::REQUESTER
+        $group_type = CommonITILActor::REQUESTER,
     ) {
         $group_ticket = new Group_Ticket();
         foreach (
@@ -342,7 +342,7 @@ class PluginEscaladeNotification
     public static function addUsersOfTicket(
         NotificationTarget $target,
         $tickets_id = 0,
-        $user_type = CommonITILActor::REQUESTER
+        $user_type = CommonITILActor::REQUESTER,
     ) {
         $ticket_user = new Ticket_User();
         $user        = new User();

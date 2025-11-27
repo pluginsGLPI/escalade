@@ -136,8 +136,8 @@ class PluginEscaladeTicket
                 return isset($actor['itemtype'])
                     && $actor['itemtype'] === 'User'
                     && (
-                        !isset($item->input['_itil_assign']) ||
-                        (isset($actor['items_id']) && $item->input['_itil_assign']['users_id'] != $actor['items_id'])
+                        !isset($item->input['_itil_assign'])
+                        || (isset($actor['items_id']) && $item->input['_itil_assign']['users_id'] != $actor['items_id'])
                     );
             });
         }
@@ -178,8 +178,8 @@ class PluginEscaladeTicket
 
 
             if (
-                (isset($item->input['actortype']) && $item->input['actortype'] == CommonITILActor::ASSIGN) &&
-                (
+                (isset($item->input['actortype']) && $item->input['actortype'] == CommonITILActor::ASSIGN)
+                && (
                     count($old_groups) < count($new_groups)
                 )
             ) {
@@ -301,8 +301,8 @@ class PluginEscaladeTicket
                     'is_private' => true,
                     '_no_reopen' => true, //prevent reopening ticket
                     'state'      => Planning::INFO,
-                    'content'    => __("Solution provided, back to the group", "escalade") . " " .
-                        $group->getName(),
+                    'content'    => __("Solution provided, back to the group", "escalade") . " "
+                        . $group->getName(),
                 ]);
             }
 
@@ -367,8 +367,8 @@ class PluginEscaladeTicket
                     'tickets_id' => $tickets_id,
                     'is_private' => true,
                     'state'      => Planning::INFO,
-                    'content'    => __("Solution rejected, return to the group", "escalade") . " " .
-                        $group->getName(),
+                    'content'    => __("Solution rejected, return to the group", "escalade") . " "
+                        . $group->getName(),
                 ]);
             }
 
@@ -1016,8 +1016,8 @@ class PluginEscaladeTicket
                 'items_id'        => $newID,
                 'itemtype'        => Ticket::class,
                 'users_id'        => Session::getLoginUserID(),
-                'content'         => __("This ticket has been cloned from the ticket num", "escalade") . " " .
-                    $tickets_id,
+                'content'         => __("This ticket has been cloned from the ticket num", "escalade") . " "
+                    . $tickets_id,
                 'is_private'      => true,
                 'requesttypes_id' => 6, //other
             ])
@@ -1063,8 +1063,8 @@ class PluginEscaladeTicket
         Log::history($newID, 'Ticket', $changes, 'Ticket');
 
         //add message (ticket cloned) after redirect
-        Session::addMessageAfterRedirect(__("This ticket has been cloned from the ticket num", "escalade") .
-            " " . $tickets_id);
+        Session::addMessageAfterRedirect(__("This ticket has been cloned from the ticket num", "escalade")
+            . " " . $tickets_id);
 
         //all ok
         echo "{\"success\":true, \"newID\":$newID}";

@@ -61,8 +61,8 @@ class PluginEscaladeHistory extends CommonDBTM
         $history = new self();
         $history->getFromDBByRequest(['ORDER'   => 'date_mod DESC',
             'LIMIT'      => 1,
-            'WHERE' =>
-            [
+            'WHERE'
+            => [
                 'tickets_id' => $tickets_id,
                 'groups_id' => [$groups_id, $previous_groups_id],
                 'groups_id_previous' => [$groups_id, $previous_groups_id],
@@ -289,8 +289,8 @@ class PluginEscaladeHistory extends CommonDBTM
 
         if ($type == "notold") {
             $title = __("Tickets to follow (escalated)", "escalade");
-            $status = CommonITILObject::INCOMING . ", " . CommonITILObject::PLANNED . ", " .
-                   CommonITILObject::ASSIGNED . ", " . CommonITILObject::WAITING;
+            $status = CommonITILObject::INCOMING . ", " . CommonITILObject::PLANNED . ", "
+                   . CommonITILObject::ASSIGNED . ", " . CommonITILObject::WAITING;
 
             $search_assign = " `glpi_plugin_escalade_histories`.`groups_id` IN ('$groups')
             AND (`glpi_groups_tickets`.`groups_id` NOT IN ('$groups')
@@ -320,8 +320,8 @@ class PluginEscaladeHistory extends CommonDBTM
         $query .= $query_join;
 
         $query .= "WHERE $is_deleted AND ( $search_assign )
-                  AND (`status` IN ($status))" .
-                  getEntitiesRestrictRequest("AND", "glpi_tickets");
+                  AND (`status` IN ($status))"
+                  . getEntitiesRestrictRequest("AND", "glpi_tickets");
 
         $query  .= " ORDER BY glpi_tickets.date_mod DESC";
 
@@ -372,9 +372,9 @@ class PluginEscaladeHistory extends CommonDBTM
             echo "<table class='table table-borderless table-striped table-hover card-table'>";
             echo "<thead>";
             echo "<tr><th colspan='4'>";
-            echo "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/ticket.php?" .
-                         Toolbox::append_params($options, '&amp;') . "\">" .
-                         Html::makeTitle($title, $number, $numrows) . "</a>";
+            echo "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/ticket.php?"
+                         . Toolbox::append_params($options, '&amp;') . "\">"
+                         . Html::makeTitle($title, $number, $numrows) . "</a>";
             echo "</th></tr>";
 
             if ($number) {

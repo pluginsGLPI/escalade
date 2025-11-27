@@ -4,3 +4,4 @@ vendor/
 *.min.*
 .phpunit.result.cache
 tests/files/
+var/

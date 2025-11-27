@@ -44,8 +44,8 @@ class PluginEscaladeUser extends CommonDBTM
                 Dropdown::showYesNo("bypass_filter_assign_group", 0, -1, [
                     'width' => '100%',
                 ]);
-                echo "<br><br><input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" .
-                 _sx('button', 'Post') . "\" >";
+                echo "<br><br><input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\""
+                 . _sx('button', 'Post') . "\" >";
                 break;
         }
         return true;
