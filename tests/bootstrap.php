@@ -28,9 +28,9 @@
  * -------------------------------------------------------------------------
  */
 
-require dirname(__DIR__, 3) . '/tests/bootstrap.php';
-require_once __DIR__ . '/EscaladeTestCase.php';
+require __DIR__ . '/../../../tests/bootstrap.php';
+require __DIR__ . '/../vendor/autoload.php';
 
-if (!Plugin::isPluginActive("escalade")) {
-    throw new RuntimeException("Plugin escalade is not active in the test database");
+if (!Plugin::isPluginActive('escalade')) {
+    throw new RuntimeException('Plugin escalade is not active in the test database');
 }

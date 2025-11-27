@@ -30,7 +30,7 @@
 
 namespace GlpiPlugin\Escalade\Tests;
 
-use DbTestCase;
+use Glpi\Tests\DbTestCase;
 use QueuedNotification;
 use Session;
 
