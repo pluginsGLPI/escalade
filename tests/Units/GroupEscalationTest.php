@@ -31,11 +31,17 @@
 namespace GlpiPlugin\Escalade\Tests\Units;
 
 use CommonITILActor;
+use Glpi\DBAL\QueryExpression;
 use GlpiPlugin\Escalade\Tests\EscaladeTestCase;
+use Group_Ticket;
+use Notification;
 use NotificationTarget;
+use PluginEscaladeHistory;
 use PluginEscaladeNotification;
 use QueuedNotification;
 use Ticket;
+use Ticket_User;
+use User;
 
 final class GroupEscalationTest extends EscaladeTestCase
 {
@@ -50,15 +56,15 @@ final class GroupEscalationTest extends EscaladeTestCase
         ]);
 
         // Create two groups with users
-        $user1 = getItemByTypeName(\User::class, 'glpi');
+        $user1 = getItemByTypeName(User::class, 'glpi');
         $this->createGroupAndAssignUsers($user1);
 
-        $user2 = getItemByTypeName(\User::class, 'tech');
+        $user2 = getItemByTypeName(User::class, 'tech');
         $group2 = $this->createGroupAndAssignUsers($user2);
 
         // Create ticket without technician
         $ticket = $this->createItem(
-            \Ticket::class,
+            Ticket::class,
             [
                 'name' => 'Assign Group Escalation Test',
                 'content' => '',
@@ -74,11 +80,11 @@ final class GroupEscalationTest extends EscaladeTestCase
         );
 
         // Check no group linked to the ticket
-        $ticket_group = new \Group_Ticket();
+        $ticket_group = new Group_Ticket();
         $this->assertEquals(0, count($ticket_group->find(['tickets_id' => $ticket->getID()])));
 
         // Update ticket with a technician
-        $this->updateItem(\Ticket::class, $ticket->getID(), [
+        $this->updateItem(Ticket::class, $ticket->getID(), [
             '_actors' => [
                 'requester' => [
                     [
@@ -95,7 +101,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             ],
         ]);
 
-        $ticket_group2 = new \Group_Ticket();
+        $ticket_group2 = new Group_Ticket();
         // Check only one groupe linked to the ticket
         $this->assertEquals(1, count($ticket_group2->find(['tickets_id' => $ticket->getID()])));
 
@@ -105,7 +111,7 @@ final class GroupEscalationTest extends EscaladeTestCase
         // Check group assigned to the ticket
         $this->assertEquals($group2->getID(), $ticket_group2->fields['groups_id']);
 
-        $ticket_user = new \Ticket_User();
+        $ticket_user = new Ticket_User();
         // Check user assigned to the ticket
         $this->assertEquals(2, count($ticket_user->find(['tickets_id' => $ticket->getID()])));
 
@@ -535,8 +541,8 @@ final class GroupEscalationTest extends EscaladeTestCase
 
     public function testTechGroupAttributionAddTicket()
     {
-        $user1 = getItemByTypeName(\User::class, 'glpi');
-        $user2 = getItemByTypeName(\User::class, 'tech');
+        $user1 = getItemByTypeName(User::class, 'glpi');
+        $user2 = getItemByTypeName(User::class, 'tech');
 
         $group1 = $this->createGroupAndAssignUsers($user1);
         $group2 = $this->createGroupAndAssignUsers($user2);
@@ -546,7 +552,7 @@ final class GroupEscalationTest extends EscaladeTestCase
         foreach ($this->testTechGroupAttributionProvider() as $provider) {
             $this->initConfig($provider['conf']);
 
-            $ticket = $this->createItem(\Ticket::class, [
+            $ticket = $this->createItem(Ticket::class, [
                 'name' => 'Assign Group Escalation Test',
                 'content' => '',
                 '_actors' => [
@@ -559,10 +565,10 @@ final class GroupEscalationTest extends EscaladeTestCase
                 ],
             ]);
 
-            $ticket_user = new \Ticket_User();
+            $ticket_user = new Ticket_User();
             $this->assertEquals($provider['add_expected']['user_ticket'], count($ticket_user->find(['tickets_id' => $ticket->getID(), 'type' => CommonITILActor::ASSIGN])));
 
-            $group_ticket = new \Group_Ticket();
+            $group_ticket = new Group_Ticket();
             $this->assertEquals($provider['add_expected']['group_ticket'], count($group_ticket->find(['tickets_id' => $ticket->getID(), 'type' => CommonITILActor::ASSIGN])));
 
             if ($provider['conf']['use_assign_user_group_creation'] === 1) {
@@ -571,6 +577,7 @@ final class GroupEscalationTest extends EscaladeTestCase
                 if ($provider['conf']['use_assign_user_group'] === 1) {
                     $this->assertEquals($group_ticket->fields['groups_id'], $group1->getID(), "Failed with config: " . json_encode($provider['conf']));
                 }
+
                 if ($provider['conf']['use_assign_user_group'] === 2) {
                     $this->assertEquals($group_ticket->fields['groups_id'], $group3->getID(), "Failed with config: " . json_encode($provider['conf']));
                 }
@@ -594,6 +601,7 @@ final class GroupEscalationTest extends EscaladeTestCase
                         'itemtype' => 'Group',
                     ];
                 }
+
                 if ($provider['conf']['use_assign_user_group'] === 2) {
                     $assign[] = [
                         'items_id' => $group3->getID(),
@@ -620,6 +628,7 @@ final class GroupEscalationTest extends EscaladeTestCase
                     $group = $group_ticket->getFromDBByCrit(['tickets_id' => $ticket->getID(), 'type' => CommonITILActor::ASSIGN, 'groups_id' => $group2->getID()]);
                     $this->assertTrue($group);
                 }
+
                 if ($provider['conf']['use_assign_user_group'] === 2) {
                     $group = $group_ticket->getFromDBByCrit(['tickets_id' => $ticket->getID(), 'type' => CommonITILActor::ASSIGN, 'groups_id' => $group4->getID()]);
                     $this->assertTrue($group);
@@ -638,7 +647,7 @@ final class GroupEscalationTest extends EscaladeTestCase
         $group1 = $this->createGroup();
 
         // Create ticket without technician
-        $ticket = $this->createItem(\Ticket::class, [
+        $ticket = $this->createItem(Ticket::class, [
             'name' => 'Assign Group Escalation Test',
             'content' => '',
             '_actors' => [
@@ -651,13 +660,13 @@ final class GroupEscalationTest extends EscaladeTestCase
             ],
         ]);
 
-        $history = new \PluginEscaladeHistory();
+        $history = new PluginEscaladeHistory();
         $this->assertEquals(1, count($history->find(['tickets_id' => $ticket->getID(),])));
         $this->assertEquals(1, count($history->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group1->getID()])));
 
         $group2 = $this->createGroup();
 
-        $this->updateItem(\Ticket::class, $ticket->getID(), [
+        $this->updateItem(Ticket::class, $ticket->getID(), [
             '_actors' => [
                 'assign' => [
                     [
@@ -668,7 +677,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             ],
         ]);
 
-        $history = new \PluginEscaladeHistory();
+        $history = new PluginEscaladeHistory();
         $this->assertEquals(2, count($history->find(['tickets_id' => $ticket->getID()])));
         $this->assertEquals(1, count($history->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group1->getID()])));
         $this->assertEquals(1, count($history->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group2->getID()])));
@@ -678,7 +687,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             'show_history' => 0,
         ]);
 
-        $this->updateItem(\Ticket::class, $ticket->getID(), [
+        $this->updateItem(Ticket::class, $ticket->getID(), [
             '_actors' => [
                 'assign' => [
                     [
@@ -689,7 +698,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             ],
         ]);
 
-        $history = new \PluginEscaladeHistory();
+        $history = new PluginEscaladeHistory();
         $this->assertEquals(2, count($history->find(['tickets_id' => $ticket->getID()])));
         $this->assertEquals(1, count($history->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group1->getID()])));
     }
@@ -716,25 +725,26 @@ final class GroupEscalationTest extends EscaladeTestCase
         $CFG_GLPI['notifications_mailing'] = true;
 
         // Disable all notifications first
-        $DB->update(\Notification::getTable(), ['is_active' => false], [new \Glpi\DBAL\QueryExpression('true')]);
+        $DB->update(Notification::getTable(), ['is_active' => false], [new QueryExpression('true')]);
 
         // Enable only the "assign group" notification
-        $notification = new \Notification();
+        $notification = new Notification();
         if (!$notification->getFromDBByCrit(['itemtype' => 'Ticket', 'event' => 'assign_group'])) {
             $this->markTestSkipped('assign_group notification not found');
         }
+
         $this->assertTrue($notification->update(['id' => $notification->getID(), 'is_active' => 1]));
 
 
         // Set notification targets to "Group in charge of the ticket"
-        $DB->delete(\NotificationTarget::getTable(), ['notifications_id' => $notification->getID()]);
-        $this->createItem(\NotificationTarget::class, [
+        $DB->delete(NotificationTarget::getTable(), ['notifications_id' => $notification->getID()]);
+        $this->createItem(NotificationTarget::class, [
             'notifications_id' => $notification->getID(),
-            'items_id'         => \Notification::ASSIGN_GROUP,
-            'type'             => \Notification::USER_TYPE,
+            'items_id'         => Notification::ASSIGN_GROUP,
+            'type'             => Notification::USER_TYPE,
         ]);
 
-        [$user1, $user2, $user3, $user4] = $this->createItems(\User::class, [
+        [$user1, $user2, $user3, $user4] = $this->createItems(User::class, [
             ['name' => 'User 1_' . uniqid(), '_useremails' => [-1 => 'user1_' . uniqid() . '@example.com']],
             ['name' => 'User 2_' . uniqid(), '_useremails' => [-1 => 'user2_' . uniqid() . '@example.com']],
             ['name' => 'User 3_' . uniqid(), '_useremails' => [-1 => 'user3_' . uniqid() . '@example.com']],
@@ -746,7 +756,7 @@ final class GroupEscalationTest extends EscaladeTestCase
         $group2 = $this->createGroupAndAssignUsers([$user3, $user4], 'test_standard_group_2_' . uniqid());
 
         // Create a ticket assigned to the first group
-        $ticket = $this->createItem(\Ticket::class, [
+        $ticket = $this->createItem(Ticket::class, [
             'name' => 'Test notification standard',
             'content' => 'Contenu de test',
             'entities_id' => $this->getTestRootEntity(true),
@@ -765,7 +775,7 @@ final class GroupEscalationTest extends EscaladeTestCase
 
         // Escalate the ticket to the second group
         $this->updateItem(
-            \Ticket::class,
+            Ticket::class,
             $ticket->getID(),
             [
                 'id' => $ticket->getID(),
@@ -838,13 +848,14 @@ final class GroupEscalationTest extends EscaladeTestCase
         $CFG_GLPI['notifications_mailing'] = true;
 
         // Disable all notifications first
-        $DB->update(\Notification::getTable(), ['is_active' => false], [new \Glpi\DBAL\QueryExpression('true')]);
+        $DB->update(Notification::getTable(), ['is_active' => false], [new QueryExpression('true')]);
 
         // Enable only the "assign group" notification
-        $notification = new \Notification();
+        $notification = new Notification();
         if (!$notification->getFromDBByCrit(['itemtype' => 'Ticket', 'event' => 'assign_group'])) {
             $this->markTestSkipped('assign_group notification not found');
         }
+
         $this->assertTrue($notification->update(['id' => $notification->getID(), 'is_active' => 1]));
 
         // Add our new target
@@ -855,7 +866,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             ],
         );
 
-        [$user1, $user2, $user3, $user4] = $this->createItems(\User::class, [
+        [$user1, $user2, $user3, $user4] = $this->createItems(User::class, [
             ['name' => 'User 1_' . uniqid(), '_useremails' => [-1 => 'user1_' . uniqid() . '@example.com']],
             ['name' => 'User 2_' . uniqid(), '_useremails' => [-1 => 'user2_' . uniqid() . '@example.com']],
             ['name' => 'User 3_' . uniqid(), '_useremails' => [-1 => 'user3_' . uniqid() . '@example.com']],
@@ -867,7 +878,7 @@ final class GroupEscalationTest extends EscaladeTestCase
         $group2 = $this->createGroupAndAssignUsers([$user3, $user4], 'test_escalated_group_2_' . uniqid());
 
         // Create a ticket assigned to the first group
-        $ticket = $this->createItem(\Ticket::class, [
+        $ticket = $this->createItem(Ticket::class, [
             'name' => 'Test notification escalade',
             'content' => 'Contenu de test',
             'entities_id' => $this->getTestRootEntity(true),
@@ -886,7 +897,7 @@ final class GroupEscalationTest extends EscaladeTestCase
 
         // Escalate the ticket to the second group using the same method as the standard test
         // This should trigger the assign_group notification event
-        $this->updateItem(\Ticket::class, $ticket->getID(), [
+        $this->updateItem(Ticket::class, $ticket->getID(), [
             '_actors' => [
                 'assign' => [
                     [

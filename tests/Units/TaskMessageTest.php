@@ -32,8 +32,9 @@ namespace GlpiPlugin\Escalade\Tests\Units;
 
 use GlpiPlugin\Escalade\Tests\EscaladeTestCase;
 use Group_Ticket;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Plugin;
-use PluginEscaladeConfig;
+use Ticket;
 use Ticket_User;
 use TicketTask;
 
@@ -72,7 +73,7 @@ final class TaskMessageTest extends EscaladeTestCase
 
         // Update ticket with a technician
         $this->updateItem(
-            \Ticket::class,
+            Ticket::class,
             $ticket->getID(),
             [
                 '_actors' => [
@@ -93,7 +94,7 @@ final class TaskMessageTest extends EscaladeTestCase
 
         // Update ticket with a group
         $this->updateItem(
-            \Ticket::class,
+            Ticket::class,
             $ticket->getID(),
             [
                 '_actors' => [
@@ -189,7 +190,7 @@ final class TaskMessageTest extends EscaladeTestCase
         ];
     }
 
-    #[\PHPUnit\Framework\Attributes\DataProvider('taskGroupEscalationProvider')]
+    #[DataProvider('taskGroupEscalationProvider')]
     public function testTaskGroupEscalation(array $conf)
     {
         $this->initConfig($conf);

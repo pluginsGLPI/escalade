@@ -58,15 +58,13 @@ class PluginEscaladeConfig extends CommonDBTM
     {
         $links = [];
 
-        $menu = [
+        return [
             'title'   => self::getMenuName(),
             'page'    => self::getSearchURL(false),
             'icon'    => self::getIcon(),
             'options' => [],
             'links'   => $links,
         ];
-
-        return $menu;
     }
 
     /**
@@ -113,11 +111,9 @@ class PluginEscaladeConfig extends CommonDBTM
             && $config->fields['use_filter_assign_group']
         ) {
             $user = new PluginEscaladeUser();
-            if ($user->getFromDBByCrit(['users_id' => $_SESSION['glpiID']])) {
-                //if a bypass is defined for user
-                if ($user->fields['bypass_filter_assign_group']) {
-                    $config->fields['use_filter_assign_group'] = 0;
-                }
+            //if a bypass is defined for user
+            if ($user->getFromDBByCrit(['users_id' => $_SESSION['glpiID']]) && $user->fields['bypass_filter_assign_group']) {
+                $config->fields['use_filter_assign_group'] = 0;
             }
         }
 

@@ -39,15 +39,14 @@ class PluginEscaladeUser extends CommonDBTM
     **/
     public static function showMassiveActionsSubForm(MassiveAction $ma)
     {
-        switch ($ma->getAction()) {
-            case "bypass_filter_assign_group":
-                Dropdown::showYesNo("bypass_filter_assign_group", 0, -1, [
-                    'width' => '100%',
-                ]);
-                echo "<br><br><input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\""
-                 . _sx('button', 'Post') . "\" >";
-                break;
+        if ($ma->getAction() === "bypass_filter_assign_group") {
+            Dropdown::showYesNo("bypass_filter_assign_group", 0, -1, [
+                'width' => '100%',
+            ]);
+            echo '<br><br><input type="submit" name="massiveaction" class="submit" value="'
+             . _sx('button', 'Post') . '" >';
         }
+
         return true;
     }
 
@@ -58,21 +57,19 @@ class PluginEscaladeUser extends CommonDBTM
      **/
     public static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item, array $ids)
     {
-        switch ($ma->getAction()) {
-            case "bypass_filter_assign_group":
-                $escalade_user = new self();
-                $input = $ma->getInput();
-
-                foreach ($ids as $id) {
-                    if ($escalade_user->getFromDBByCrit(['users_id' => $id])) {
-                        $escalade_user->fields['bypass_filter_assign_group'] = $input['bypass_filter_assign_group'];
-                        if ($escalade_user->update($escalade_user->fields)) {
-                            $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_OK);
-                        } else {
-                            $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_KO);
-                        }
+        if ($ma->getAction() === "bypass_filter_assign_group") {
+            $escalade_user = new self();
+            $input = $ma->getInput();
+            foreach ($ids as $id) {
+                if ($escalade_user->getFromDBByCrit(['users_id' => $id])) {
+                    $escalade_user->fields['bypass_filter_assign_group'] = $input['bypass_filter_assign_group'];
+                    if ($escalade_user->update($escalade_user->fields)) {
+                        $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_OK);
+                    } else {
+                        $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_KO);
                     }
                 }
+            }
         }
     }
 
@@ -108,8 +105,10 @@ class PluginEscaladeUser extends CommonDBTM
             if ($first) {
                 return $data['id'];
             }
+
             $rep[] = $data['id'];
         }
+
         return ($first ? 0 : array_pop($rep));
     }
 
@@ -128,7 +127,6 @@ class PluginEscaladeUser extends CommonDBTM
 
     /**
      * @param int $ID
-     * @param array $options
      *
      * @return bool
      */
@@ -159,6 +157,7 @@ class PluginEscaladeUser extends CommonDBTM
             $ID   = $item->getField('id');
             $user->showForm($ID);
         }
+
         return true;
     }
 
@@ -173,6 +172,7 @@ class PluginEscaladeUser extends CommonDBTM
             );
             return $ong;
         }
+
         return '';
     }
 

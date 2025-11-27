@@ -31,19 +31,31 @@
 class PluginEscaladeNotification
 {
     public const NTRGT_TICKET_REQUESTER_USER          = 357951;
+
     public const NTRGT_TICKET_REQUESTER_GROUP         = 357952;
+
     public const NTRGT_TICKET_REQUESTER_GROUP_MANAGER = 357953;
+
     public const NTRGT_TICKET_WATCH_USER              = 357954;
+
     public const NTRGT_TICKET_WATCH_GROUP             = 357955;
+
     public const NTRGT_TICKET_WATCH_GROUP_MANAGER     = 357956;
+
     public const NTRGT_TICKET_TECH_GROUP              = 357957;
+
     public const NTRGT_TICKET_TECH_USER               = 357958;
+
     public const NTRGT_TICKET_TECH_GROUP_MANAGER      = 357959;
+
     public const NTRGT_TASK_GROUP                     = 357960;
 
     public const NTRGT_TICKET_ESCALADE_GROUP          = 457951;
+
     public const NTRGT_TICKET_ESCALADE_GROUP_MANAGER  = 457952;
+
     public const NTRGT_TICKET_LAST_ESCALADE_GROUP     = 457953;
+
     public const NTRGT_TICKET_LAST_ESCALADE_GROUP_MANAGER = 457954;
 
     /**
@@ -146,6 +158,7 @@ class PluginEscaladeNotification
             if ($item === false) {
                 return;
             }
+
             $item->getFromDB($target->obj->fields['items_id']);
             if ($item instanceof TicketTask) {
                 $ticket = new Ticket();
@@ -180,6 +193,7 @@ class PluginEscaladeNotification
                         if (!isset($manager)) {
                             $manager = 1;
                         }
+
                         if (!isset($group_type)) {
                             $group_type = CommonITILActor::ASSIGN;
                         }
@@ -200,6 +214,7 @@ class PluginEscaladeNotification
                         if (!isset($user_type)) {
                             $user_type = CommonITILActor::ASSIGN;
                         }
+
                         self::addUsersOfTicket($target, $ticket->getID(), $user_type);
                         break;
 
@@ -216,10 +231,12 @@ class PluginEscaladeNotification
                         if (!isset($manager)) {
                             $manager = 1;
                         }
+
                         $history = new PluginEscaladeHistory();
                         foreach ($history->find(['tickets_id' => $ticket->getID()]) as $found_history) {
                             $target->addForGroup($manager, $found_history['groups_id']);
                         }
+
                         break;
                 }
             }
@@ -249,6 +266,7 @@ class PluginEscaladeNotification
                                 $groups[] = $actor['items_id'];
                             }
                         }
+
                         $group_ticket = new Group_Ticket();
                         $current_groups = $group_ticket->find(
                             [
@@ -300,6 +318,7 @@ class PluginEscaladeNotification
                     if ($group_to_notify) {
                         $target->addForGroup($manager, $group_to_notify);
                     }
+
                     break;
             }
         }

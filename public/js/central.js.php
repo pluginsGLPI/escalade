@@ -45,7 +45,7 @@ if (
       // intercept tabs changes
       $(document).on('glpi.tab.loaded', function(event) {
           setTimeout(() => {
-            if ($('.nav-link.active:contains($locale_group_view)').length == 0) {
+            if ($('.nav-link.active:contains({$locale_group_view})').length == 0) {
                return;
             }
             $.ajax({ type: "GET",

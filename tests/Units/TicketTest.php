@@ -32,12 +32,16 @@ namespace GlpiPlugin\Escalade\Tests\Units;
 
 use CommonITILActor;
 use CommonITILObject;
+use Entity;
 use GlpiPlugin\Escalade\Tests\EscaladeTestCase;
+use Group;
+use Group_Ticket;
+use Group_User;
 use ITILCategory;
-use ITILSolution;
-use PluginEscaladeConfig;
 use PluginEscaladeTicket;
 use Ticket;
+use Ticket_User;
+use User;
 
 final class TicketTest extends EscaladeTestCase
 {
@@ -96,11 +100,11 @@ final class TicketTest extends EscaladeTestCase
             'tickettemplates_id' => $template_id,
             'num' => 10, // impact field
         ]);
-        $mandatory_field_id = $mandatory_field->getID();
+        $mandatory_field->getID();
 
         // Now try to escalate the ticket without filling the mandatory field
         // First, create a properly configured ticket instance
-        $ticket_instance = new \Ticket();
+        $ticket_instance = new Ticket();
         $this->assertTrue($ticket_instance->getFromDB($ticket_id));
 
         // Prepare the input with missing mandatory field
@@ -111,7 +115,7 @@ final class TicketTest extends EscaladeTestCase
         ];
 
         // Use a mock to test the behavior
-        $mock_ticket = $this->getMockBuilder(\Ticket::class)
+        $mock_ticket = $this->getMockBuilder(Ticket::class)
             ->onlyMethods(['prepareInputForUpdate'])
             ->getMock();
 
@@ -137,7 +141,7 @@ final class TicketTest extends EscaladeTestCase
         $ticket_instance->getFromDB($ticket_id);
 
         // Create a new mock that will pass the prepareInputForUpdate check
-        $mock_ticket_success = $this->getMockBuilder(\Ticket::class)
+        $mock_ticket_success = $this->getMockBuilder(Ticket::class)
             ->onlyMethods(['prepareInputForUpdate'])
             ->getMock();
 
@@ -174,14 +178,14 @@ final class TicketTest extends EscaladeTestCase
         );
 
         // Add the group to actually test the escalation
-        $group_ticket = $this->createItem('Group_Ticket', [
+        $this->createItem('Group_Ticket', [
             'tickets_id' => $ticket_id,
             'groups_id' => $group2_id,
             'type' => CommonITILActor::ASSIGN,
         ]);
 
         // Verify that the group was added
-        $group_ticket_finder = new \Group_Ticket();
+        $group_ticket_finder = new Group_Ticket();
         $assigned_groups = $group_ticket_finder->find([
             'tickets_id' => $ticket_id,
             'type' => CommonITILActor::ASSIGN,
@@ -194,6 +198,7 @@ final class TicketTest extends EscaladeTestCase
                 break;
             }
         }
+
         $this->assertTrue($found_new_group, "New group should be assigned after successful escalation");
     }
 
@@ -220,7 +225,7 @@ final class TicketTest extends EscaladeTestCase
         $group_tech_id = $group_tech->getID();
 
         // Get the tech user
-        $user_tech = new \User();
+        $user_tech = new User();
         $user_tech->getFromDBbyName('tech');
         $this->assertGreaterThan(0, $user_tech->getID());
 
@@ -235,21 +240,21 @@ final class TicketTest extends EscaladeTestCase
         ]);
         $rule_id = $rule->getID();
 
-        $rule_action = $this->createItem('RuleAction', [
+        $this->createItem('RuleAction', [
             'rules_id' => $rule_id,
             'action_type' => 'assign',
             'field' => '_groups_id_observer',
             'value' => $group_observer_id,
         ]);
 
-        $rule_criteria = $this->createItem('RuleCriteria', [
+        $this->createItem('RuleCriteria', [
             'rules_id' => $rule_id,
             'criteria' => '_groups_id_assign',
             'condition' => 0,
             'pattern' => $group_tech_id,
         ]);
 
-        $rule_criteria2 = $this->createItem('RuleCriteria', [
+        $this->createItem('RuleCriteria', [
             'rules_id' => $rule_id,
             'criteria' => '_users_id_assign',
             'condition' => 0,
@@ -265,21 +270,22 @@ final class TicketTest extends EscaladeTestCase
             ]);
             $ticket_id = $ticket->getID();
 
-            $group_ticket = new \Group_Ticket();
-            $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group_observer_id, 'type' => \CommonITILActor::OBSERVER])));
-            if ($data['itemtype'] === \Group::class) {
-                $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group_tech_id, 'type' => \CommonITILActor::ASSIGN])));
-                $group_tech_obj = new \Group();
+            $group_ticket = new Group_Ticket();
+            $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group_observer_id, 'type' => CommonITILActor::OBSERVER])));
+            if ($data['itemtype'] === Group::class) {
+                $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group_tech_id, 'type' => CommonITILActor::ASSIGN])));
+                $group_tech_obj = new Group();
                 $group_tech_obj->getFromDB($group_tech_id);
                 $this->{$data['method']}($ticket, $group_tech_obj);
-                $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group_tech_id, 'type' => \CommonITILActor::ASSIGN])));
+                $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group_tech_id, 'type' => CommonITILActor::ASSIGN])));
             } else {
-                $user_ticket = new \Ticket_User();
-                $this->assertEquals(0, count($user_ticket->find(['tickets_id' => $ticket_id, 'users_id' => $user_tech->getID(), 'type' => \CommonITILActor::ASSIGN])));
+                $user_ticket = new Ticket_User();
+                $this->assertEquals(0, count($user_ticket->find(['tickets_id' => $ticket_id, 'users_id' => $user_tech->getID(), 'type' => CommonITILActor::ASSIGN])));
                 $this->{$data['method']}($ticket, $user_tech);
-                $this->assertEquals(1, count($user_ticket->find(['tickets_id' => $ticket_id, 'users_id' => $user_tech->getID(), 'type' => \CommonITILActor::ASSIGN])));
+                $this->assertEquals(1, count($user_ticket->find(['tickets_id' => $ticket_id, 'users_id' => $user_tech->getID(), 'type' => CommonITILActor::ASSIGN])));
             }
-            $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group_observer_id, 'type' => \CommonITILActor::OBSERVER])));
+
+            $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group_observer_id, 'type' => CommonITILActor::OBSERVER])));
         }
     }
 
@@ -291,7 +297,7 @@ final class TicketTest extends EscaladeTestCase
         ]);
 
         $this->updateItem('Entity', 0, [
-            'auto_assign_mode' => \Entity::AUTO_ASSIGN_CATEGORY_HARDWARE,
+            'auto_assign_mode' => Entity::AUTO_ASSIGN_CATEGORY_HARDWARE,
         ]);
 
         $group1 = $this->createItem('Group', [
@@ -323,48 +329,48 @@ final class TicketTest extends EscaladeTestCase
         ]);
         $ticket_id = $ticket->getID();
 
-        $group_ticket = new \Group_Ticket();
-        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group1_id, 'type' => \CommonITILActor::ASSIGN])));
-        $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group2_id, 'type' => \CommonITILActor::ASSIGN])));
+        $group_ticket = new Group_Ticket();
+        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group1_id, 'type' => CommonITILActor::ASSIGN])));
+        $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group2_id, 'type' => CommonITILActor::ASSIGN])));
 
         $this->updateItem('Ticket', $ticket_id, [
             '_actors' => [
                 'assign' => [
                     [
-                        'itemtype' => \Group::class,
+                        'itemtype' => Group::class,
                         'items_id' => $group1_id,
                     ],
                     [
-                        'itemtype' => \Group::class,
+                        'itemtype' => Group::class,
                         'items_id' => $group2_id,
                     ],
                 ],
             ],
         ]);
 
-        $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group1_id, 'type' => \CommonITILActor::ASSIGN])));
-        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group2_id, 'type' => \CommonITILActor::ASSIGN])));
+        $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group1_id, 'type' => CommonITILActor::ASSIGN])));
+        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group2_id, 'type' => CommonITILActor::ASSIGN])));
 
         $this->updateItem('Ticket', $ticket_id, [
-            'status' => \CommonITILObject::WAITING,
+            'status' => CommonITILObject::WAITING,
         ]);
 
-        $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group1_id, 'type' => \CommonITILActor::ASSIGN])));
-        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group2_id, 'type' => \CommonITILActor::ASSIGN])));
+        $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group1_id, 'type' => CommonITILActor::ASSIGN])));
+        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group2_id, 'type' => CommonITILActor::ASSIGN])));
     }
 
     public function testStatusTicketOption()
     {
         $this->initConfig([
-            'ticket_last_status' => \CommonITILObject::INCOMING,
+            'ticket_last_status' => CommonITILObject::INCOMING,
             'remove_tech' => 0,
         ]);
 
-        $user1 = new \User();
+        $user1 = new User();
         $user1->getFromDBbyName('tech');
         $this->assertGreaterThan(0, $user1->getID());
 
-        $user2 = new \User();
+        $user2 = new User();
         $user2->getFromDBbyName('glpi');
         $this->assertGreaterThan(0, $user2->getID());
 
@@ -383,15 +389,15 @@ final class TicketTest extends EscaladeTestCase
         $ticket_id = $ticket->getID();
 
         $ticket->getFromDB($ticket_id);
-        $this->assertEquals(\CommonITILObject::INCOMING, $ticket->fields['status']);
+        $this->assertEquals(CommonITILObject::INCOMING, $ticket->fields['status']);
 
-        $group_ticket = new \Group_Ticket();
-        $user_ticket = new \Ticket_User();
-        $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket_id, 'type' => \CommonITILActor::ASSIGN])));
-        $this->assertEquals(0, count($user_ticket->find(['tickets_id' => $ticket_id, 'type' => \CommonITILActor::ASSIGN])));
+        $group_ticket = new Group_Ticket();
+        $user_ticket = new Ticket_User();
+        $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket_id, 'type' => CommonITILActor::ASSIGN])));
+        $this->assertEquals(0, count($user_ticket->find(['tickets_id' => $ticket_id, 'type' => CommonITILActor::ASSIGN])));
 
         $this->updateItem(
-            \Ticket::class,
+            Ticket::class,
             $ticket_id,
             [
                 '_actors' => [
@@ -404,14 +410,14 @@ final class TicketTest extends EscaladeTestCase
                 ],
             ],
         );
-        $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket_id, 'type' => \CommonITILActor::ASSIGN])));
-        $this->assertEquals(1, count($user_ticket->find(['tickets_id' => $ticket_id, 'type' => \CommonITILActor::ASSIGN])));
-        $this->assertEquals(1, count($user_ticket->find(['tickets_id' => $ticket_id, 'type' => \CommonITILActor::ASSIGN, 'users_id' => $user1->getID()])));
+        $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket_id, 'type' => CommonITILActor::ASSIGN])));
+        $this->assertEquals(1, count($user_ticket->find(['tickets_id' => $ticket_id, 'type' => CommonITILActor::ASSIGN])));
+        $this->assertEquals(1, count($user_ticket->find(['tickets_id' => $ticket_id, 'type' => CommonITILActor::ASSIGN, 'users_id' => $user1->getID()])));
         $ticket->getFromDB($ticket_id);
-        $this->assertEquals(\CommonITILObject::ASSIGNED, $ticket->fields['status']);
+        $this->assertEquals(CommonITILObject::ASSIGNED, $ticket->fields['status']);
 
         $this->updateItem(
-            \Ticket::class,
+            Ticket::class,
             $ticket_id,
             [
                 '_actors' => [
@@ -428,15 +434,15 @@ final class TicketTest extends EscaladeTestCase
                 ],
             ],
         );
-        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket_id, 'type' => \CommonITILActor::ASSIGN])));
-        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket_id, 'type' => \CommonITILActor::ASSIGN, 'groups_id' => $group_tech_id])));
-        $this->assertEquals(1, count($user_ticket->find(['tickets_id' => $ticket_id, 'type' => \CommonITILActor::ASSIGN])));
-        $this->assertEquals(1, count($user_ticket->find(['tickets_id' => $ticket_id, 'type' => \CommonITILActor::ASSIGN, 'users_id' => $user1->getID()])));
+        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket_id, 'type' => CommonITILActor::ASSIGN])));
+        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket_id, 'type' => CommonITILActor::ASSIGN, 'groups_id' => $group_tech_id])));
+        $this->assertEquals(1, count($user_ticket->find(['tickets_id' => $ticket_id, 'type' => CommonITILActor::ASSIGN])));
+        $this->assertEquals(1, count($user_ticket->find(['tickets_id' => $ticket_id, 'type' => CommonITILActor::ASSIGN, 'users_id' => $user1->getID()])));
         $ticket->getFromDB($ticket_id);
-        $this->assertEquals(\CommonITILObject::INCOMING, $ticket->fields['status']);
+        $this->assertEquals(CommonITILObject::INCOMING, $ticket->fields['status']);
 
         $this->updateItem(
-            \Ticket::class,
+            Ticket::class,
             $ticket_id,
             [
                 '_actors' => [
@@ -458,13 +464,13 @@ final class TicketTest extends EscaladeTestCase
                 ],
             ],
         );
-        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket_id, 'type' => \CommonITILActor::ASSIGN])));
-        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket_id, 'type' => \CommonITILActor::ASSIGN, 'groups_id' => $group_tech_id])));
-        $this->assertEquals(2, count($user_ticket->find(['tickets_id' => $ticket_id, 'type' => \CommonITILActor::ASSIGN])));
-        $this->assertEquals(1, count($user_ticket->find(['tickets_id' => $ticket_id, 'type' => \CommonITILActor::ASSIGN, 'users_id' => $user1->getID()])));
-        $this->assertEquals(1, count($user_ticket->find(['tickets_id' => $ticket_id, 'type' => \CommonITILActor::ASSIGN, 'users_id' => $user2->getID()])));
+        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket_id, 'type' => CommonITILActor::ASSIGN])));
+        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket_id, 'type' => CommonITILActor::ASSIGN, 'groups_id' => $group_tech_id])));
+        $this->assertEquals(2, count($user_ticket->find(['tickets_id' => $ticket_id, 'type' => CommonITILActor::ASSIGN])));
+        $this->assertEquals(1, count($user_ticket->find(['tickets_id' => $ticket_id, 'type' => CommonITILActor::ASSIGN, 'users_id' => $user1->getID()])));
+        $this->assertEquals(1, count($user_ticket->find(['tickets_id' => $ticket_id, 'type' => CommonITILActor::ASSIGN, 'users_id' => $user2->getID()])));
         $ticket->getFromDB($ticket_id);
-        $this->assertEquals(\CommonITILObject::ASSIGNED, $ticket->fields['status']);
+        $this->assertEquals(CommonITILObject::ASSIGNED, $ticket->fields['status']);
     }
 
     private function testAssignGroupToTicketWithCategoryProvider()
@@ -714,19 +720,19 @@ final class TicketTest extends EscaladeTestCase
     {
         $this->initConfig();
 
-        $ticket_user = new \Ticket_User();
-        $ticket_group = new \Group_Ticket();
+        $ticket_user = new Ticket_User();
+        $ticket_group = new Group_Ticket();
 
-        $user1 = new \User();
+        $user1 = new User();
         $user1->getFromDBbyName('glpi');
         $this->assertGreaterThan(0, $user1->getID());
 
-        $user2 = new \User();
+        $user2 = new User();
         $user2->getFromDBbyName('tech');
         $this->assertGreaterThan(0, $user2->getID());
 
         $this->updateItem(
-            \Entity::class,
+            Entity::class,
             $this->getTestRootEntity(true),
             [
                 'id' => 0,
@@ -735,7 +741,7 @@ final class TicketTest extends EscaladeTestCase
         );
 
         [$group1, $group2] = $this->createItems(
-            \Group::class,
+            Group::class,
             [
                 [
                     'name' => 'GLPI Group',
@@ -752,7 +758,7 @@ final class TicketTest extends EscaladeTestCase
         $group2_id = $group2->getID();
 
         $this->createItems(
-            \Group_User::class,
+            Group_User::class,
             [
                 [
                     'users_id' => $user1->getID(),
@@ -846,7 +852,7 @@ final class TicketTest extends EscaladeTestCase
             'tickettemplates_id' => $template_id,
             'num' => 4, // _users_id_requester field number
         ]);
-        $mandatory_field_id = $mandatory_field->getID();
+        $mandatory_field->getID();
 
         // Create a category linked to this template
         $category = $this->createItem('ITILCategory', [
@@ -882,7 +888,7 @@ final class TicketTest extends EscaladeTestCase
         $this->assertEquals(CommonITILObject::ASSIGNED, $ticket->fields['status']);
 
         // Verify that the requester is properly assigned
-        $ticket_user = new \Ticket_User();
+        $ticket_user = new Ticket_User();
         $requesters = $ticket_user->find([
             'tickets_id' => $ticket_id,
             'type' => CommonITILActor::REQUESTER,
@@ -1010,7 +1016,7 @@ final class TicketTest extends EscaladeTestCase
         $this->assertGreaterThan(0, $ticket_id);
 
         // Verify the ticket was created with the requester
-        $ticket_user = new \Ticket_User();
+        $ticket_user = new Ticket_User();
         $requesters = $ticket_user->find([
             'tickets_id' => $ticket_id,
             'type' => CommonITILActor::REQUESTER,
@@ -1213,7 +1219,7 @@ final class TicketTest extends EscaladeTestCase
 
         // Now test the history button escalation using climb_group (this reproduces the issue)
         // This simulates exactly what happens when the user clicks the history button
-        $result = PluginEscaladeTicket::climb_group($ticket_id, $group1_id, true);
+        PluginEscaladeTicket::climb_group($ticket_id, $group1_id, true);
 
         // Verify that no error occurred and the escalation was successful
         // The ticket should now have group1 assigned again
@@ -1234,7 +1240,7 @@ final class TicketTest extends EscaladeTestCase
         $this->assertEquals(1, count($group1_assigned));
 
         // Verify that the requester is still properly assigned (not lost during escalation)
-        $ticket_user = new \Ticket_User();
+        $ticket_user = new Ticket_User();
         $requesters_after = $ticket_user->find([
             'tickets_id' => $ticket_id,
             'type' => CommonITILActor::REQUESTER,

@@ -30,25 +30,40 @@
 
 namespace GlpiPlugin\Escalade\Tests;
 
+use CommonITILActor;
+use Glpi\DBAL\QueryExpression;
 use Glpi\Tests\DbTestCase;
+use Group;
+use Group_Ticket;
+use Group_User;
+use ITILFollowup;
+use ITILSolution;
+use Notification;
+use NotificationTarget;
+use PluginEscaladeConfig;
+use PluginEscaladeTicket;
 use QueuedNotification;
 use Session;
+use Ticket;
+use Ticket_User;
+use User;
+use UserEmail;
 
 abstract class EscaladeTestCase extends DbTestCase
 {
-    public function createGroup(string $group_name = 'TestGroup'): \Group
+    public function createGroup(string $group_name = 'TestGroup'): Group
     {
-        return $this->createItem(\Group::class, ['name' => $group_name]);
+        return $this->createItem(Group::class, ['name' => $group_name]);
     }
 
     /**
      * Create a group and assign users to it
      *
-     * @param \User|\User[] $users A single user or array of users to assign to the group
+     * @param User|User[] $users A single user or array of users to assign to the group
      * @param string $group_name Name of the group to create
-     * @return \Group The created group
+     * @return Group The created group
      */
-    public function createGroupAndAssignUsers($users, string $group_name = 'TestGroup'): \Group
+    public function createGroupAndAssignUsers($users, string $group_name = 'TestGroup'): Group
     {
         $group = $this->createGroup($group_name);
 
@@ -59,7 +74,7 @@ abstract class EscaladeTestCase extends DbTestCase
 
         foreach ($users as $user) {
             $this->createItem(
-                \Group_User::class,
+                Group_User::class,
                 [
                     'users_id' => $user->getID(),
                     'groups_id' => $group->getID(),
@@ -78,6 +93,7 @@ abstract class EscaladeTestCase extends DbTestCase
         if (!isset($_SESSION['glpi_plugins'])) {
             $_SESSION['glpi_plugins'] = [];
         }
+
         if (!isset($_SESSION['glpi_plugins']['escalade'])) {
             $_SESSION['glpi_plugins']['escalade'] = [];
         }
@@ -100,11 +116,11 @@ abstract class EscaladeTestCase extends DbTestCase
         ];
 
         // Update escalade config in database if provided
-        if (!empty($conf)) {
-            $this->updateItem(\PluginEscaladeConfig::class, 1, $conf);
+        if ($conf !== []) {
+            $this->updateItem(PluginEscaladeConfig::class, 1, $conf);
 
             // Load updated config into session
-            $config = new \PluginEscaladeConfig();
+            $config = new PluginEscaladeConfig();
             $config->getFromDB(1);
             $_SESSION['glpi_plugins']['escalade']['config'] = array_merge(
                 $_SESSION['glpi_plugins']['escalade']['config'],
@@ -118,47 +134,39 @@ abstract class EscaladeTestCase extends DbTestCase
      *
      * @param array $methods Contains the names of the different methods that must be used to simulate an escalation.
      * eg. ['escalateWithTimelineButton', 'escalateWithHistoryButton'] to simulate the escalation with the timeline and history buttons.
-     *
-     * @return array
      */
     public static function escalateTicketMethods(array $methods = []): array
     {
         $escalate_methods = [
             [
                 'method' => 'escalateWithTimelineButton',
-                'itemtype' => \Group::class,
+                'itemtype' => Group::class,
             ],
             [
                 'method' => 'escalateWithHistoryButton',
-                'itemtype' => \Group::class,
+                'itemtype' => Group::class,
             ],
             [
                 'method' => 'escalateWithSolvedTicket',
-                'itemtype' => \Group::class,
+                'itemtype' => Group::class,
             ],
             [
                 'method' => 'escalateWithRejectSolutionTicket',
-                'itemtype' => \Group::class,
+                'itemtype' => Group::class,
             ],
             [
                 'method' => 'escalateWithAssignMySelfButton',
-                'itemtype' => \User::class,
+                'itemtype' => User::class,
             ],
         ];
 
-        return array_filter($escalate_methods, function ($escalate_method) use ($methods) {
-            return in_array($escalate_method['method'], $methods);
-        });
+        return array_filter($escalate_methods, fn($escalate_method) => in_array($escalate_method['method'], $methods));
     }
 
     /**
      * Simulate the escalation of a ticket with the timeline button.
-     *
-     * @param \Ticket $ticket
-     * @param \Group $group
-     * @param array $options
      */
-    public function escalateWithTimelineButton(\Ticket $ticket, \Group $group, array $options = []): void
+    public function escalateWithTimelineButton(Ticket $ticket, Group $group, array $options = []): void
     {
         $options['ticket_details'] = array_merge(
             $options['ticket_details'] ?? [],
@@ -167,18 +175,18 @@ abstract class EscaladeTestCase extends DbTestCase
             ],
         );
         $_POST['comment'] = $options['comment'] ?? 'Default comment';
-        \PluginEscaladeTicket::timelineClimbAction($group->getID(), $ticket->getID(), $options);
-        $ticketgroup = new \Group_Ticket();
+        PluginEscaladeTicket::timelineClimbAction($group->getID(), $ticket->getID(), $options);
+        $ticketgroup = new Group_Ticket();
         $is_escalate = $ticketgroup->getFromDBByCrit([
             'tickets_id' => $ticket->getID(),
             'groups_id'  => $group->getID(),
-            'type'       => \CommonITILActor::ASSIGN,
+            'type'       => CommonITILActor::ASSIGN,
         ]);
         $this->assertTrue($is_escalate);
         if (isset($options['is_observer_checkbox']) && $options['is_observer_checkbox']) {
-            $ticket_user = new \Ticket_User();
+            $ticket_user = new Ticket_User();
             $is_observer = $ticket_user->getFromDBByCrit([
-                'type'       => \CommonITILActor::OBSERVER,
+                'type'       => CommonITILActor::OBSERVER,
                 'tickets_id' => $ticket->getID(),
                 'users_id'   => Session::getLoginUserID(),
             ]);
@@ -188,34 +196,28 @@ abstract class EscaladeTestCase extends DbTestCase
 
     /**
      * Simulate the escalation of a ticket with the history button.
-     *
-     * @param \Ticket $ticket
-     * @param \Group $group
      */
-    public function escalateWithHistoryButton(\Ticket $ticket, \Group $group): void
+    public function escalateWithHistoryButton(Ticket $ticket, Group $group): void
     {
-        \PluginEscaladeTicket::climb_group($ticket->getID(), $group->getID(), true);
-        $ticketgroup = new \Group_Ticket();
+        PluginEscaladeTicket::climb_group($ticket->getID(), $group->getID(), true);
+        $ticketgroup = new Group_Ticket();
         $is_escalate = $ticketgroup->getFromDBByCrit([
             'tickets_id' => $ticket->getID(),
             'groups_id'  => $group->getID(),
-            'type'       => \CommonITILActor::ASSIGN,
+            'type'       => CommonITILActor::ASSIGN,
         ]);
         $this->assertTrue($is_escalate);
     }
 
     /**
      * Simulate the escalation of a ticket with a solved ticket.
-     *
-     * @param \Ticket $ticket
-     * @param \Group $group
-     * @param array $solution_options
      */
-    public function escalateWithSolvedTicket(\Ticket $ticket, \Group $group, array $solution_options = []): void
+    public function escalateWithSolvedTicket(Ticket $ticket, Group $group, array $solution_options = []): void
     {
-        $config = new \PluginEscaladeConfig();
+        $config = new PluginEscaladeConfig();
         $conf = $config->find();
         $conf = reset($conf);
+
         $config->getFromDB($conf['id']);
         $this->assertGreaterThan(0, $conf['id']);
 
@@ -225,7 +227,7 @@ abstract class EscaladeTestCase extends DbTestCase
             'solve_return_group' => 1,
         ] + $conf);
 
-        $solution = new \ITILSolution();
+        $solution = new ITILSolution();
         $solution_id = $solution->add(array_merge([
             'content' => 'Test Solution',
             'itemtype' => $ticket->getType(),
@@ -234,27 +236,23 @@ abstract class EscaladeTestCase extends DbTestCase
         ], $solution_options));
         $this->assertGreaterThan(0, $solution_id);
 
-        $ticketgroup = new \Group_Ticket();
+        $ticketgroup = new Group_Ticket();
         $is_escalate = $ticketgroup->getFromDBByCrit([
             'tickets_id' => $ticket->getID(),
             'groups_id'  => $group->getID(),
-            'type'       => \CommonITILActor::ASSIGN,
+            'type'       => CommonITILActor::ASSIGN,
         ]);
         $this->assertTrue($is_escalate);
     }
 
     /**
      * Simulate the escalation of a ticket with a reject solution ticket.
-     *
-     * @param \Ticket $ticket
-     * @param \Group $group
-     * @param array $followup_options
      */
-    public function escalateWithRejectSolutionTicket(\Ticket $ticket, \Group $group, array $followup_options = []): void
+    public function escalateWithRejectSolutionTicket(Ticket $ticket, Group $group, array $followup_options = []): void
     {
         $_POST['add_reopen'] = 1;
 
-        $followup = new \ITILFollowup();
+        $followup = new ITILFollowup();
         $followup_id = $followup->add(array_merge([
             'itemtype'   => 'Ticket',
             'items_id'   => $ticket->getID(),
@@ -263,25 +261,22 @@ abstract class EscaladeTestCase extends DbTestCase
         ], $followup_options));
         $this->assertGreaterThan(0, $followup_id);
 
-        $ticketgroup = new \Group_Ticket();
+        $ticketgroup = new Group_Ticket();
         $is_escalate = $ticketgroup->getFromDBByCrit([
             'tickets_id' => $ticket->getID(),
             'groups_id'  => $group->getID(),
-            'type'       => \CommonITILActor::ASSIGN,
+            'type'       => CommonITILActor::ASSIGN,
         ]);
         $this->assertTrue($is_escalate);
     }
 
     /**
      * Simulate the escalation of a ticket with the assign myself button.
-     *
-     * @param \Ticket $ticket
-     * @param \User $user
      */
-    public function escalateWithAssignMySelfButton(\Ticket $ticket, \User $user): void
+    public function escalateWithAssignMySelfButton(Ticket $ticket, User $user): void
     {
         $this->updateItem(
-            \Ticket::class,
+            Ticket::class,
             $ticket->getID(),
             [
                 '_actors' => [
@@ -296,7 +291,7 @@ abstract class EscaladeTestCase extends DbTestCase
             ],
         );
 
-        $ticket_user = new \Ticket_User();
+        $ticket_user = new Ticket_User();
         $is_escalate = $ticket_user->getFromDBByCrit([
             'tickets_id' => $ticket->getID(),
             'users_id'  => $user->getID(),
@@ -306,13 +301,10 @@ abstract class EscaladeTestCase extends DbTestCase
 
     /**
      * Get the email address for a user
-     *
-     * @param \User $user
-     * @return string
      */
-    protected function getItemEmail(\User $user): string
+    protected function getItemEmail(User $user): string
     {
-        $useremail = new \UserEmail();
+        $useremail = new UserEmail();
         $useremail->getFromDBByCrit([
             'users_id' => $user->getID(),
             'is_default' => 1,
@@ -326,7 +318,7 @@ abstract class EscaladeTestCase extends DbTestCase
     public function cleanQueuedNotifications()
     {
         global $DB;
-        $DB->delete(QueuedNotification::getTable(), [new \Glpi\DBAL\QueryExpression('true')]);
+        $DB->delete(QueuedNotification::getTable(), [new QueryExpression('true')]);
 
         $queued = new QueuedNotification();
         $notifications = $queued->find();
@@ -343,18 +335,18 @@ abstract class EscaladeTestCase extends DbTestCase
         global $DB;
 
         //Clear targets
-        $DB->delete(\NotificationTarget::getTable(), ['notifications_id' => $notification_id]);
+        $DB->delete(NotificationTarget::getTable(), ['notifications_id' => $notification_id]);
 
         //Set new targets
         foreach ($targets as $target) {
-            $this->createItem(\NotificationTarget::class, [
+            $this->createItem(NotificationTarget::class, [
                 'notifications_id' => $notification_id,
-                'type' => \Notification::USER_TYPE,
+                'type' => Notification::USER_TYPE,
                 'items_id' => $target,
             ]);
         }
 
-        $notification_target = new \NotificationTarget();
+        $notification_target = new NotificationTarget();
         $this->assertEquals(count($targets), count($notification_target->find(['notifications_id' => $notification_id])), "The number of notification targets doesn't match after addition");
     }
 }

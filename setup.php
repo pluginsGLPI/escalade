@@ -57,60 +57,42 @@ function plugin_init_escalade()
         if ($DB->tableExists("glpi_plugin_escalade_configs")) {
             //load config in session
             PluginEscaladeConfig::loadInSession();
-            if (isset($_SESSION['glpiID']) || isCommandLine()) {
-                // == Load js scripts ==
-                if (isset($_SESSION['glpi_plugins']['escalade']['config'])) {
-                    $escalade_config = $_SESSION['glpi_plugins']['escalade']['config'];
-
-                    $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/function.js';
-
-                    // on central page
-                    if (strpos($_SERVER['REQUEST_URI'] ?? '', "central.php") !== false) {
-                        //history and climb feature
-                        if ($escalade_config['show_history']) {
-                            $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/central.js.php';
-                        }
-                    }
-
-                    // on ticket page (in edition)
-                    if (
-                        (strpos($_SERVER['REQUEST_URI'] ?? '', "ticket.form.php") !== false
-                        || strpos($_SERVER['REQUEST_URI'] ?? '', "problem.form.php") !== false
-                        || strpos($_SERVER['REQUEST_URI'] ?? '', "change.form.php") !== false) && isset($_GET['id'])
-                    ) {
-                        if (
-                            !$escalade_config['remove_delete_requester_user_btn']
-                            || !$escalade_config['remove_delete_watcher_user_btn']
-                            || !$escalade_config['remove_delete_assign_user_btn']
-                            || !$escalade_config['remove_delete_requester_group_btn']
-                            || !$escalade_config['remove_delete_watcher_group_btn']
-                            || !$escalade_config['remove_delete_assign_group_btn']
-                            || !$escalade_config['remove_delete_assign_supplier_btn']
-                        ) {
-                            //remove btn feature
-                            $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/remove_btn.js.php';
-                        }
-                    }
-
-                    // on ticket page (in edition)
-                    if (
-                        strpos($_SERVER['REQUEST_URI'] ?? '', "ticket.form.php") !== false
-                        && isset($_GET['id'])
-                    ) {
-                        //history and climb feature
-                        if ($escalade_config['show_history']) {
-                            $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/escalade.js.php';
-                        }
-
-                        //clone ticket feature
-                        if ($escalade_config['cloneandlink_ticket']) {
-                            $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/cloneandlink_ticket.js.php';
-                        }
-                    }
-
-                    Plugin::registerClass('PluginEscaladeGroup_Group', ['addtabon' => 'Group']);
-                    Plugin::registerClass('PluginEscaladeUser', ['addtabon' => ['User']]);
+            // == Load js scripts ==
+            if ((isset($_SESSION['glpiID']) || isCommandLine()) && isset($_SESSION['glpi_plugins']['escalade']['config'])) {
+                $escalade_config = $_SESSION['glpi_plugins']['escalade']['config'];
+                $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/function.js';
+                // on central page
+                //history and climb feature
+                if (str_contains($_SERVER['REQUEST_URI'] ?? '', "central.php") && $escalade_config['show_history']) {
+                    $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/central.js.php';
                 }
+
+                // on ticket page (in edition)
+                if (
+                    (str_contains($_SERVER['REQUEST_URI'] ?? '', "ticket.form.php") || str_contains($_SERVER['REQUEST_URI'] ?? '', "problem.form.php") || str_contains($_SERVER['REQUEST_URI'] ?? '', "change.form.php")) && isset($_GET['id']) && (!$escalade_config['remove_delete_requester_user_btn'] || !$escalade_config['remove_delete_watcher_user_btn'] || !$escalade_config['remove_delete_assign_user_btn'] || !$escalade_config['remove_delete_requester_group_btn'] || !$escalade_config['remove_delete_watcher_group_btn'] || !$escalade_config['remove_delete_assign_group_btn'] || !$escalade_config['remove_delete_assign_supplier_btn'])
+                ) {
+                    //remove btn feature
+                    $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/remove_btn.js.php';
+                }
+
+                // on ticket page (in edition)
+                if (
+                    str_contains($_SERVER['REQUEST_URI'] ?? '', "ticket.form.php")
+                    && isset($_GET['id'])
+                ) {
+                    //history and climb feature
+                    if ($escalade_config['show_history']) {
+                        $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/escalade.js.php';
+                    }
+
+                    //clone ticket feature
+                    if ($escalade_config['cloneandlink_ticket']) {
+                        $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/cloneandlink_ticket.js.php';
+                    }
+                }
+
+                Plugin::registerClass('PluginEscaladeGroup_Group', ['addtabon' => 'Group']);
+                Plugin::registerClass('PluginEscaladeUser', ['addtabon' => ['User']]);
             }
         }
 

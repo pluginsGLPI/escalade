@@ -173,19 +173,20 @@ class PluginEscaladeHistory extends CommonDBTM
             if ($group->getFromDB($first_group['groups_id'])) {
                 echo $group->getLink();
             }
+
             echo "</div>";
         }
 
         echo "<div class='escalade'>";
         //parse all lines
         $i = 0;
-        foreach ($found as $key => $hline) {
+        foreach ($found as $hline) {
             echo "<div class='escalade_history'>";
 
             if (! $use_filter_assign_group || isset($filter_groups_id[$hline['groups_id']])) {
                 $rand = mt_rand();
                 // Remplacement du lien par un formulaire
-                echo "<form action='$plugin_dir/front/climb_group.php' method='GET' id='history-form-$rand'>";
+                echo sprintf("<form action='%s/front/climb_group.php' method='GET' id='history-form-%d'>", $plugin_dir, $rand);
                 echo "<input type='hidden' name='tickets_id' value='" . $tickets_id . "'>";
                 echo "<input type='hidden' name='groups_id' value='" . $hline['groups_id'] . "'>";
                 echo "<button type='submit' title='" . __("Reassign the ticket to group", "escalade") . "' class='btn btn-icon btn-sm btn-ghost-secondary'>
@@ -197,7 +198,7 @@ class PluginEscaladeHistory extends CommonDBTM
                     $(document).ready(function () {
                         var form = $('#itil-form');
                         var inputs = form.serializeArray();
-                        var asset_form = $('#history-form-$rand');
+                        var asset_form = $('#history-form-{$rand}');
 
                         if (asset_form.length > 0) {
                             $.each(inputs, function(i, input) {
@@ -251,14 +252,16 @@ class PluginEscaladeHistory extends CommonDBTM
         $link_item = $group->getFormURL();
 
         $link  = $link_item;
-        $link .= (strpos($link, '?') ? '&amp;' : '?') . 'id=' . $group->fields['id'];
+        $link .= (strpos((string) $link, '?') ? '&amp;' : '?') . 'id=' . $group->fields['id'];
         $link .= ($group->isTemplate() ? "&amp;withtemplate=1" : "");
 
-        echo "<a href='$link'";
+        echo sprintf("<a href='%s'", $link);
         if ($full_history) {
-            echo " onclick='self.opener.location.href=\"$link\"; self.close();'";
+            echo sprintf(" onclick='self.opener.location.href=\"%s\"; self.close();'", $link);
         }
+
         echo ">" . $group->getNameID(true) . "</a>";
+        return null;
     }
 
     public static function showCentralList()
@@ -292,8 +295,8 @@ class PluginEscaladeHistory extends CommonDBTM
             $status = CommonITILObject::INCOMING . ", " . CommonITILObject::PLANNED . ", "
                    . CommonITILObject::ASSIGNED . ", " . CommonITILObject::WAITING;
 
-            $search_assign = " `glpi_plugin_escalade_histories`.`groups_id` IN ('$groups')
-            AND (`glpi_groups_tickets`.`groups_id` NOT IN ('$groups')
+            $search_assign = " `glpi_plugin_escalade_histories`.`groups_id` IN ('{$groups}')
+            AND (`glpi_groups_tickets`.`groups_id` NOT IN ('{$groups}')
             OR `glpi_groups_tickets`.`groups_id` IS NULL)";
 
             $query_join = "LEFT JOIN `glpi_plugin_escalade_histories`
@@ -305,7 +308,7 @@ class PluginEscaladeHistory extends CommonDBTM
             $title = __("Tickets to close (escalated)", "escalade");
             $status = CommonITILObject::SOLVED;
 
-            $search_assign = " (`glpi_groups_tickets`.`groups_id` IN ('$groups'))";
+            $search_assign = sprintf(" (`glpi_groups_tickets`.`groups_id` IN ('%s'))", $groups);
 
             $query_join = "LEFT JOIN `glpi_groups_tickets`
             ON (`glpi_tickets`.`id` = `glpi_groups_tickets`.`tickets_id`
@@ -319,8 +322,8 @@ class PluginEscaladeHistory extends CommonDBTM
 
         $query .= $query_join;
 
-        $query .= "WHERE $is_deleted AND ( $search_assign )
-                  AND (`status` IN ($status))"
+        $query .= "WHERE {$is_deleted} AND ( {$search_assign} )
+                  AND (`status` IN ({$status}))"
                   . getEntitiesRestrictRequest("AND", "glpi_tickets");
 
         $query  .= " ORDER BY glpi_tickets.date_mod DESC";
@@ -328,7 +331,7 @@ class PluginEscaladeHistory extends CommonDBTM
         $result  = $DB->doQuery($query);
         $numrows = $DB->numrows($result);
         if (!$numrows) {
-            return;
+            return null;
         }
 
         $query .= " LIMIT 0, 5";
@@ -347,6 +350,7 @@ class PluginEscaladeHistory extends CommonDBTM
             } elseif ($type == 'solved') {
                 $options['criteria'][0]['value']   = 5;
             }
+
             $options['criteria'][0]['link']       = 'AND';
 
             if ($type == 'notold') {
@@ -356,12 +360,10 @@ class PluginEscaladeHistory extends CommonDBTM
                 $options['criteria'][1]['link']       = 'AND';
             }
 
-            $options['criteria'][2]['field']      = 8; // groups_id_assign
-            if ($type == 'notold') {
-                $options['criteria'][2]['searchtype'] = 'notequals';
-            } else {
-                $options['criteria'][2]['searchtype'] = 'equals';
-            }
+            $options['criteria'][2]['field']      = 8;
+            // groups_id_assign
+            $options['criteria'][2]['searchtype'] = $type == 'notold' ? 'notequals' : 'equals';
+
             $options['criteria'][2]['value']      = 'mygroups';
             $options['criteria'][2]['link']       = 'AND';
 
@@ -372,8 +374,8 @@ class PluginEscaladeHistory extends CommonDBTM
             echo "<table class='table table-borderless table-striped table-hover card-table'>";
             echo "<thead>";
             echo "<tr><th colspan='4'>";
-            echo "<a href=\"" . $CFG_GLPI["root_doc"] . "/front/ticket.php?"
-                         . Toolbox::append_params($options, '&amp;') . "\">"
+            echo '<a href="' . $CFG_GLPI["root_doc"] . "/front/ticket.php?"
+                         . Toolbox::append_params($options, '&amp;') . '">'
                          . Html::makeTitle($title, $number, $numrows) . "</a>";
             echo "</th></tr>";
 
@@ -388,6 +390,7 @@ class PluginEscaladeHistory extends CommonDBTM
                     Ticket::showVeryShort($ID, 'Ticket$2');
                 }
             }
+
             echo "</table>";
             echo "</div>";
             echo "</div>";
@@ -395,5 +398,7 @@ class PluginEscaladeHistory extends CommonDBTM
             echo "</div>";
             echo "</div>";
         }
+
+        return null;
     }
 }
