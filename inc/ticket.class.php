@@ -1213,9 +1213,7 @@ class PluginEscaladeTicket
                 }
 
                 $actortype = $actor_types[$type] ?? '';
-                if ($actortype !== '' && $actortype !== '0') {
-                    $ticket_actors[$itemtype][$actortype] = $actors_input;
-                }
+                $ticket_actors[$itemtype][$actortype] = $actors_input;
             }
         }
 

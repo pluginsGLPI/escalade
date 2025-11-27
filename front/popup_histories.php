@@ -1,7 +1,5 @@
 <?php
 
-use Glpi\Exception\Http\AccessDeniedHttpException;
-
 /**
  * -------------------------------------------------------------------------
  * Escalade plugin for GLPI
@@ -29,6 +27,8 @@ use Glpi\Exception\Http\AccessDeniedHttpException;
  * @link      https://github.com/pluginsGLPI/escalade
  * -------------------------------------------------------------------------
  */
+
+use Glpi\Exception\Http\AccessDeniedHttpException;
 
 Session::checkLoginUser();
 
