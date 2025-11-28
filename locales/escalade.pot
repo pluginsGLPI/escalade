@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-20 00:47+0000\n"
+"POT-Creation-Date: 2025-11-28 00:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,7 +33,7 @@ msgstr ""
 msgid "Assign me as an observer"
 msgstr ""
 
-#: templates/user.html.twig hook.php:604 hook.php:623
+#: templates/user.html.twig hook.php:614 hook.php:633
 msgid "Bypass filtering on the groups assignment"
 msgstr ""
 
@@ -125,59 +125,59 @@ msgstr ""
 msgid "Display delete button"
 msgstr ""
 
-#: setup.php:192 inc/group_group.class.php:59 inc/user.class.php:169
+#: setup.php:174 inc/group_group.class.php:61 inc/user.class.php:168
 msgid "Escalation"
 msgstr ""
 
-#: inc/history.class.php:191
+#: inc/history.class.php:192
 msgid "Reassign the ticket to group"
 msgstr ""
 
-#: inc/history.class.php:235
+#: inc/history.class.php:236
 msgid "full assignation history"
 msgstr ""
 
-#: inc/history.class.php:238
+#: inc/history.class.php:239
 msgid "View full history"
 msgstr ""
 
-#: inc/history.class.php:291
+#: inc/history.class.php:294
 msgid "Tickets to follow (escalated)"
 msgstr ""
 
-#: inc/history.class.php:305
+#: inc/history.class.php:308
 msgid "Tickets to close (escalated)"
 msgstr ""
 
-#: inc/notification.class.php:71
+#: inc/notification.class.php:83
 msgid "Requester user of the ticket"
 msgstr ""
 
-#: inc/notification.class.php:113
+#: inc/notification.class.php:125
 msgid "Group escalated in the ticket"
 msgstr ""
 
-#: inc/notification.class.php:117
+#: inc/notification.class.php:129
 msgid "Manager of the group escalated in the ticket"
 msgstr ""
 
-#: inc/notification.class.php:123
+#: inc/notification.class.php:135
 msgid "Requester user of the task/reminder"
 msgstr ""
 
-#: inc/notification.class.php:128
+#: inc/notification.class.php:140
 msgid "Last group escalated in the ticket"
 msgstr ""
 
-#: inc/notification.class.php:132
+#: inc/notification.class.php:144
 msgid "Manager of last group escalated in the ticket"
 msgstr ""
 
-#: inc/notification.class.php:365
+#: inc/notification.class.php:384
 msgid "Solve date modification"
 msgstr ""
 
-#: inc/ticket.class.php:304
+#: inc/ticket.class.php:302
 msgid "Solution provided, back to the group"
 msgstr ""
 
@@ -185,49 +185,49 @@ msgstr ""
 msgid "Solution rejected, return to the group"
 msgstr ""
 
-#: inc/ticket.class.php:516 inc/ticket.class.php:612
+#: inc/ticket.class.php:519 inc/ticket.class.php:616
 #, php-format
 msgid "Escalation to the group %s."
 msgstr ""
 
-#: inc/ticket.class.php:975
+#: inc/ticket.class.php:972
 msgid "Error : get old ticket"
 msgstr ""
 
-#: inc/ticket.class.php:990
+#: inc/ticket.class.php:987
 msgid "Error : adding new ticket"
 msgstr ""
 
-#: inc/ticket.class.php:1008
+#: inc/ticket.class.php:1006
 msgid "Error : adding link between the two tickets"
 msgstr ""
 
-#: inc/ticket.class.php:1019 inc/ticket.class.php:1061
-#: inc/ticket.class.php:1066
+#: inc/ticket.class.php:1017 inc/ticket.class.php:1060
+#: inc/ticket.class.php:1065
 msgid "This ticket has been cloned from the ticket num"
 msgstr ""
 
-#: inc/ticket.class.php:1025
+#: inc/ticket.class.php:1023
 msgid "Error : adding followups"
 msgstr ""
 
-#: inc/ticket.class.php:1036
+#: inc/ticket.class.php:1034
 msgid "Error : adding actors (user)"
 msgstr ""
 
-#: inc/ticket.class.php:1045
+#: inc/ticket.class.php:1044
 msgid "Error : adding actors (group)"
 msgstr ""
 
-#: inc/ticket.class.php:1055
+#: inc/ticket.class.php:1054
 msgid "Error : adding documents"
 msgstr ""
 
-#: inc/ticket.class.php:1174 inc/ticket.class.php:1175
+#: inc/ticket.class.php:1171 inc/ticket.class.php:1172
 msgid "Escalate"
 msgstr ""
 
-#: inc/ticket.class.php:1292
+#: inc/ticket.class.php:1293
 msgid "You must select a group."
 msgstr ""
 
@@ -239,19 +239,19 @@ msgstr ""
 msgid "Configuration Escalade plugin"
 msgstr ""
 
-#: inc/config.class.php:143
+#: inc/config.class.php:139
 msgid "Default (not managed by plugin)"
 msgstr ""
 
-#: hook.php:559
+#: hook.php:568
 msgid "Group concerned by the escalation"
 msgstr ""
 
-#: hook.php:577
+#: hook.php:586
 msgid "Number of escalations"
 msgstr ""
 
-#: hook.php:591
+#: hook.php:600
 msgid "Number of escalations between two groups"
 msgstr ""
 
