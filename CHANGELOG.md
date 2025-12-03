@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Fix compatibility check with Behaviors plugin
 - Fix path to ajax files in javascript files
+- Fix: allow groups from recursive parent entities to be considered when adding a user to a ticket
 
 ## [2.10.0] - 2025-10-01
 
