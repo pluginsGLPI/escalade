@@ -91,7 +91,6 @@ class PluginEscaladeUser extends CommonDBTM
             ],
             'WHERE'  => [
                 'glpi_groups_users.users_id' => $userid,
-                'glpi_groups.entities_id'    => $entity,
             ] + getEntitiesRestrictCriteria('glpi_groups', '', $entity, true, true),
             'ORDER' => "glpi_groups_users.id",
         ];
