@@ -39,6 +39,30 @@ class PluginEscaladeTicket
 {
     public const MANAGED_BY_CORE = -1; // Status managed by core, not by plugin
 
+    /**
+     * Preserve existing tags when updating a ticket
+     * This prevents tags from being removed during escalation operations
+     *
+     * @param int $tickets_id The ticket ID
+     * @param array $update_data The update data array (passed by reference)
+     * @return void
+     */
+    private static function preserveExistingTags(int $tickets_id, array &$update_data): void
+    {
+        // Preserve existing tags if Tag plugin is active
+        if (Plugin::isPluginActive('tag') && class_exists('PluginTagTagItem')) {
+            $tag_item = new PluginTagTagItem();
+            $existing_tags = $tag_item->find([
+                'items_id' => $tickets_id,
+                'itemtype' => 'Ticket',
+            ]);
+            if (!empty($existing_tags)) {
+                $tag_ids = array_column($existing_tags, 'plugin_tag_tags_id');
+                $update_data['_plugin_tag_tag_values'] = $tag_ids;
+            }
+        }
+    }
+
     public static function pre_item_update(CommonDBTM $item)
     {
         // Only process escalation logic if we're dealing with actor assignments
@@ -670,6 +694,10 @@ class PluginEscaladeTicket
                 $update_data['_groups_id_observer'] = array_column($observer_groups, 'groups_id');
             }
 
+            // Preserve existing tags
+            self::preserveExistingTags($tickets_id, $update_data);
+
+            $ticket = new Ticket();
             $ticket->update($update_data);
         }
 
@@ -1129,14 +1157,19 @@ class PluginEscaladeTicket
         ]);
 
         if (empty($found)) {
-            $ticket = new Ticket();
-            $ticket->update([
+            $update_data = [
                 'id'           => $tickets_id,
                 '_itil_assign' => [
                     'users_id' => $_SESSION['glpiID'],
                     '_type'    => 'user',
                 ],
-            ]);
+            ];
+
+            // Preserve existing tags
+            self::preserveExistingTags($tickets_id, $update_data);
+
+            $ticket = new Ticket();
+            $ticket->update($update_data);
         }
     }
 
@@ -1354,16 +1387,20 @@ class PluginEscaladeTicket
             if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != -1) {
                 $_form_object['status'] = $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'];
             }
+
+            $update_data = $options['ticket_details'] + [
+                '_actors' => PluginEscaladeTicket::getTicketFieldsWithActors($tickets_id, $group_id),
+                '_plugin_escalade_no_history' => true, // Prevent a duplicated task to be added
+                'actortype' => CommonITILActor::ASSIGN,
+                'groups_id' => $group_id,
+                '_form_object' => $_form_object,
+            ];
+
+            // Preserve existing tags
+            self::preserveExistingTags($tickets_id, $update_data);
+
             $updates_ticket = new Ticket();
-            $updates_ticket->update(
-                $options['ticket_details'] + [
-                    '_actors' => PluginEscaladeTicket::getTicketFieldsWithActors($tickets_id, $group_id),
-                    '_plugin_escalade_no_history' => true, // Prevent a duplicated task to be added
-                    'actortype' => CommonITILActor::ASSIGN,
-                    'groups_id' => $group_id,
-                    '_form_object' => $_form_object,
-                ],
-            );
+            $updates_ticket->update($update_data);
         }
     }
 }
