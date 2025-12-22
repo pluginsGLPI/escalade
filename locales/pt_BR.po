@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-28 00:47+0000\n"
+"POT-Creation-Date: 2025-12-05 00:51+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: pedroalves5770, 2025\n"
 "Language-Team: Portuguese (Brazil) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/pt_BR/)\n"
@@ -137,7 +137,7 @@ msgstr ""
 msgid "Display delete button"
 msgstr "Mostrar botão excluir"
 
-#: setup.php:174 inc/group_group.class.php:61 inc/user.class.php:168
+#: setup.php:174 inc/group_group.class.php:61 inc/user.class.php:167
 msgid "Escalation"
 msgstr "Escalonamento"
 

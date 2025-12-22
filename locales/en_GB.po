@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-28 00:47+0000\n"
-"PO-Revision-Date: 2025-11-28 00:47+0000\n"
+"POT-Creation-Date: 2025-12-22 00:55+0000\n"
+"PO-Revision-Date: 2025-12-22 00:55+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en_GB\n"
@@ -125,7 +125,7 @@ msgstr "plugin. This last has priority."
 msgid "Display delete button"
 msgstr "Display delete button"
 
-#: setup.php:174 inc/group_group.class.php:61 inc/user.class.php:168
+#: setup.php:174 inc/group_group.class.php:61 inc/user.class.php:167
 msgid "Escalation"
 msgstr "Escalation"
 
