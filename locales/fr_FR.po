@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-28 00:47+0000\n"
+"POT-Creation-Date: 2025-12-22 00:55+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: EpicIT33, 2025\n"
 "Language-Team: French (France) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/fr_FR/)\n"
@@ -26,7 +26,7 @@ msgstr ""
 
 #: templates/group_group.html.twig
 msgid "List of groups to escalate"
-msgstr ""
+msgstr "Liste des groupes à escalader"
 
 #: templates/escalade_form.html.twig
 msgid "Escalate ticket"
@@ -46,7 +46,7 @@ msgstr "Outrepasser le filtrage lors de l'assignation de groupes"
 
 #: templates/config.html.twig
 msgid "Group assignment"
-msgstr ""
+msgstr "groupe d'affectation"
 
 #: templates/config.html.twig
 msgid "Remove old assign group on new group assign"
@@ -58,7 +58,7 @@ msgstr "Prendre le groupe du technicien"
 
 #: templates/config.html.twig
 msgid "Show group assign history visually"
-msgstr ""
+msgstr "Afficher l'historique des affectations des groupes"
 
 #: templates/config.html.twig
 msgid "at creation time"
@@ -82,7 +82,7 @@ msgstr "Activer le filtrage sur les groupes d'attribution"
 
 #: templates/config.html.twig
 msgid "User assignment"
-msgstr ""
+msgstr "affectation d'utilisateur"
 
 #: templates/config.html.twig
 msgid "Remove technician(s) on escalation"
@@ -102,7 +102,7 @@ msgstr "M'assigner en tant qu'observateur par défaut"
 
 #: templates/config.html.twig
 msgid "Other"
-msgstr ""
+msgstr "Autre"
 
 #: templates/config.html.twig
 msgid "Escalation history in tasks"
@@ -114,25 +114,25 @@ msgstr "Statut du ticket après une escalade"
 
 #: templates/config.html.twig
 msgid "Clone tickets"
-msgstr ""
+msgstr "Cloner le tickets"
 
 #: templates/config.html.twig
 msgid "Close cloned tickets at the same time"
-msgstr ""
+msgstr "Fermer les tickets clonés en même temps"
 
 #: templates/config.html.twig
 msgid "Nota: This feature (clone tickets) is duplicate with the"
-msgstr ""
+msgstr "Remarque : cette fonctionnalité (cloner des tickets) est en double avec la fonctionnalité"
 
 #: templates/config.html.twig
 msgid "plugin. This last has priority."
-msgstr ""
+msgstr "plugin. Ce dernier a la priorité."
 
 #: templates/config.html.twig
 msgid "Display delete button"
 msgstr "Afficher le bouton de suppression"
 
-#: setup.php:174 inc/group_group.class.php:61 inc/user.class.php:168
+#: setup.php:174 inc/group_group.class.php:61 inc/user.class.php:167
 msgid "Escalation"
 msgstr "Escalades"
 
@@ -240,7 +240,7 @@ msgstr "Vous devez sélectionner un groupe."
 
 #: inc/config.class.php:39
 msgid "Escalade"
-msgstr ""
+msgstr "Escalade"
 
 #: inc/config.class.php:44
 msgid "Configuration Escalade plugin"
@@ -248,7 +248,7 @@ msgstr "Configuration du plugin Escalade"
 
 #: inc/config.class.php:139
 msgid "Default (not managed by plugin)"
-msgstr ""
+msgstr "Par défaut (non géré par le plugin)"
 
 #: hook.php:568
 msgid "Group concerned by the escalation"
