@@ -248,6 +248,7 @@ class PluginEscaladeTicket
         }
 
         //ticket qualification on cat change
+        // @phpstan-ignore-next-line - Offset 'itilcategories_id' on list<string> in isset() does not exist.
         if (isset($item->updates['itilcategories_id']) || in_array('itilcategories_id', $item->updates)) {
             self::qualification($item);
         }
