@@ -102,10 +102,14 @@ class PluginEscaladeTicket
                 }
 
                 $temp_input['_disablenotif'] = true; // Disable notifications for this validation
+                $item->input['_skip_rules'] = true;
                 $input = $item->prepareInputForUpdate($temp_input);
+                $item->input['_skip_rules'] = false;
                 unset($item->input['_no_escalade_template_validation']); // Clean up flag
             } else {
+                $item->input['_skip_rules'] = true;
                 $input = $item->prepareInputForUpdate($item->input);
+                $item->input['_skip_rules'] = false;
             }
 
             if (!$input) {
