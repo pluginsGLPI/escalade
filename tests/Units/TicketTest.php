@@ -42,6 +42,7 @@ use PluginEscaladeTicket;
 use Ticket;
 use Ticket_User;
 use User;
+use TicketTask;
 
 final class TicketTest extends EscaladeTestCase
 {
@@ -1256,5 +1257,80 @@ final class TicketTest extends EscaladeTestCase
         $requester->delete(['id' => $requester_id], true);
         $group1->delete(['id' => $group1_id], true);
         $group2->delete(['id' => $group2_id], true);
+    }
+
+    public function testRuleCreatesTaskWhenCategoryAssigned()
+    {
+        $this->initConfig();
+
+        // Create a task template that will be added by the rule
+        $task_template = $this->createItem('TaskTemplate', [
+            'name' => 'Rule task template',
+            'content' => '<p>Task created by rule</p>',
+            'entities_id' => 0,
+            'is_recursive' => 1,
+        ]);
+        $task_template_id = $task_template->getID();
+
+        // Create the rule that appends a task template when category is set on update
+        $rule = $this->createItem('Rule', [
+            'name' => 'Create task on category assign',
+            'sub_type' => 'RuleTicket',
+            'match' => 'AND',
+            'is_active' => 1,
+            'condition' => \RuleCommonITILObject::ONUPDATE,
+            'is_recursive' => 1,
+            'entities_id' => 0,
+        ]);
+        $rule_id = $rule->getID();
+
+        $this->createItem('RuleAction', [
+            'rules_id' => $rule_id,
+            'action_type' => 'append',
+            'field' => 'task_template',
+            'value' => $task_template_id,
+        ]);
+
+        // Create a category that will trigger the rule when assigned
+        $category = $this->createItem('ITILCategory', [
+            'name' => 'Category triggering task',
+            'entities_id' => 0,
+            'is_recursive' => 1,
+        ]);
+        $category_id = $category->getID();
+
+        // Ensure the rule triggers only when the ticket category matches the created category
+        $this->createItem('RuleCriteria', [
+            'rules_id' => $rule_id,
+            'criteria' => 'itilcategories_id',
+            'condition' => \Rule::PATTERN_IS,
+            'pattern' => $category_id,
+        ]);
+
+        // Create a ticket without category
+        $ticket = $this->createItem('Ticket', [
+            'name' => 'Ticket for rule test',
+            'content' => 'Content for rule test',
+            'entities_id' => 0,
+        ]);
+        $ticket_id = $ticket->getID();
+
+        $tickettask = new TicketTask();
+        $this->assertEquals(0, count($tickettask->find(['tickets_id' => $ticket_id])));
+
+        // Assign the category (update) - rule should fire and create a single task
+        $this->updateItem('Ticket', $ticket_id, [
+            'id' => $ticket_id,
+            'itilcategories_id' => $category_id,
+        ]);
+
+        $tasks = $tickettask->find(['tickets_id' => $ticket_id]);
+        $this->assertEquals(1, count($tasks));
+
+        // Clean up
+        $ticket->delete(['id' => $ticket_id], true);
+        $task_template->delete(['id' => $task_template_id], true);
+        $category->delete(['id' => $category_id], true);
+        $rule->delete(['id' => $rule_id], true);
     }
 }
