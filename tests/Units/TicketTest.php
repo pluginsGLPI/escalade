@@ -39,6 +39,8 @@ use Group_Ticket;
 use Group_User;
 use ITILCategory;
 use PluginEscaladeTicket;
+use Rule;
+use RuleCommonITILObject;
 use Ticket;
 use Ticket_User;
 use User;
@@ -1278,7 +1280,7 @@ final class TicketTest extends EscaladeTestCase
             'sub_type' => 'RuleTicket',
             'match' => 'AND',
             'is_active' => 1,
-            'condition' => \RuleCommonITILObject::ONUPDATE,
+            'condition' => RuleCommonITILObject::ONUPDATE,
             'is_recursive' => 1,
             'entities_id' => 0,
         ]);
@@ -1303,7 +1305,7 @@ final class TicketTest extends EscaladeTestCase
         $this->createItem('RuleCriteria', [
             'rules_id' => $rule_id,
             'criteria' => 'itilcategories_id',
-            'condition' => \Rule::PATTERN_IS,
+            'condition' => Rule::PATTERN_IS,
             'pattern' => $category_id,
         ]);
 
