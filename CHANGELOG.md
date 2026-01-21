@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-- Fix rules duplication
+- Prevent business rules from triggering twice on tickets
 
 ## [2.10.1] - 2025-12-09
 
