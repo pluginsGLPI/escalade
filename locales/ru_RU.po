@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-05 00:51+0000\n"
+"POT-Creation-Date: 2026-01-22 00:54+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: hamkms, 2025\n"
 "Language-Team: Russian (Russia) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/ru_RU/)\n"
@@ -185,57 +185,57 @@ msgstr "Менеджер последней группы эскалации в �
 msgid "Solve date modification"
 msgstr "Изменение даты решения"
 
-#: inc/ticket.class.php:302
+#: inc/ticket.class.php:307
 msgid "Solution provided, back to the group"
 msgstr "Решение найдено, возврат к группе"
 
-#: inc/ticket.class.php:370
+#: inc/ticket.class.php:375
 msgid "Solution rejected, return to the group"
 msgstr "Решение отклонено, возврат к группе"
 
-#: inc/ticket.class.php:519 inc/ticket.class.php:616
+#: inc/ticket.class.php:524 inc/ticket.class.php:621
 #, php-format
 msgid "Escalation to the group %s."
 msgstr "Назначить заявку группе %s"
 
-#: inc/ticket.class.php:972
+#: inc/ticket.class.php:977
 msgid "Error : get old ticket"
 msgstr "Ошибка получения данных заявки"
 
-#: inc/ticket.class.php:987
+#: inc/ticket.class.php:992
 msgid "Error : adding new ticket"
 msgstr "Ошибка добавления заявки"
 
-#: inc/ticket.class.php:1006
+#: inc/ticket.class.php:1011
 msgid "Error : adding link between the two tickets"
 msgstr "Ошибка связывания заявок"
 
-#: inc/ticket.class.php:1017 inc/ticket.class.php:1060
-#: inc/ticket.class.php:1065
+#: inc/ticket.class.php:1022 inc/ticket.class.php:1065
+#: inc/ticket.class.php:1070
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Заявка создана из другой, №"
 
-#: inc/ticket.class.php:1023
+#: inc/ticket.class.php:1028
 msgid "Error : adding followups"
 msgstr "Ошибка добавления комментария"
 
-#: inc/ticket.class.php:1034
+#: inc/ticket.class.php:1039
 msgid "Error : adding actors (user)"
 msgstr "Ошибка добавления пользователя"
 
-#: inc/ticket.class.php:1044
+#: inc/ticket.class.php:1049
 msgid "Error : adding actors (group)"
 msgstr "Ошибка добавления группы"
 
-#: inc/ticket.class.php:1054
+#: inc/ticket.class.php:1059
 msgid "Error : adding documents"
 msgstr "Ошибка добавления документа"
 
-#: inc/ticket.class.php:1171 inc/ticket.class.php:1172
+#: inc/ticket.class.php:1176 inc/ticket.class.php:1177
 msgid "Escalate"
 msgstr "Переназначение"
 
-#: inc/ticket.class.php:1293
+#: inc/ticket.class.php:1298
 msgid "You must select a group."
 msgstr "Вы должны выбрать группу"
 
