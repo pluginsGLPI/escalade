@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-05 00:51+0000\n"
+"POT-Creation-Date: 2026-01-22 00:54+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2015-2016,2018-2021,2023-2025\n"
 "Language-Team: Turkish (Turkey) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/tr_TR/)\n"
@@ -179,57 +179,57 @@ msgstr "Destek kaydında üste aktarılmış son grubun yöneticisi"
 msgid "Solve date modification"
 msgstr "Tarih değişikliğini çöz"
 
-#: inc/ticket.class.php:302
+#: inc/ticket.class.php:307
 msgid "Solution provided, back to the group"
 msgstr "Çözüm sağlandı, gruba geri git"
 
-#: inc/ticket.class.php:370
+#: inc/ticket.class.php:375
 msgid "Solution rejected, return to the group"
 msgstr "Çözüm reddedildi, gruba geri git"
 
-#: inc/ticket.class.php:519 inc/ticket.class.php:616
+#: inc/ticket.class.php:524 inc/ticket.class.php:621
 #, php-format
 msgid "Escalation to the group %s."
 msgstr "%s grubuna üste aktarma."
 
-#: inc/ticket.class.php:972
+#: inc/ticket.class.php:977
 msgid "Error : get old ticket"
 msgstr "Hata : Eski destek kaydı alma"
 
-#: inc/ticket.class.php:987
+#: inc/ticket.class.php:992
 msgid "Error : adding new ticket"
 msgstr "Hata : Yeni destek kaydı ekleme"
 
-#: inc/ticket.class.php:1006
+#: inc/ticket.class.php:1011
 msgid "Error : adding link between the two tickets"
 msgstr "Hata : İki destek kaydı arasında ilişki ekleme"
 
-#: inc/ticket.class.php:1017 inc/ticket.class.php:1060
-#: inc/ticket.class.php:1065
+#: inc/ticket.class.php:1022 inc/ticket.class.php:1065
+#: inc/ticket.class.php:1070
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Bu destek, destek kaydı numarasından"
 
-#: inc/ticket.class.php:1023
+#: inc/ticket.class.php:1028
 msgid "Error : adding followups"
 msgstr "Hata : İzleme ekleme"
 
-#: inc/ticket.class.php:1034
+#: inc/ticket.class.php:1039
 msgid "Error : adding actors (user)"
 msgstr "Hata : Aktör ekleme (kullanıcı)"
 
-#: inc/ticket.class.php:1044
+#: inc/ticket.class.php:1049
 msgid "Error : adding actors (group)"
 msgstr "Hata : Aktör ekleme (grup)"
 
-#: inc/ticket.class.php:1054
+#: inc/ticket.class.php:1059
 msgid "Error : adding documents"
 msgstr "Hata : Belge ekleme"
 
-#: inc/ticket.class.php:1171 inc/ticket.class.php:1172
+#: inc/ticket.class.php:1176 inc/ticket.class.php:1177
 msgid "Escalate"
 msgstr "Üste aktar"
 
-#: inc/ticket.class.php:1293
+#: inc/ticket.class.php:1298
 msgid "You must select a group."
 msgstr "Bir grup seçmelisiniz."
 

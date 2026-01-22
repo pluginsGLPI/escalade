@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-22 00:55+0000\n"
+"POT-Creation-Date: 2026-01-22 00:54+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: EpicIT33, 2025\n"
 "Language-Team: French (France) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/fr_FR/)\n"
@@ -184,57 +184,57 @@ msgstr "Responsable du dernier groupe escaladé du ticket"
 msgid "Solve date modification"
 msgstr "Date de modification de la résolution"
 
-#: inc/ticket.class.php:302
+#: inc/ticket.class.php:307
 msgid "Solution provided, back to the group"
 msgstr "Solution apportée, retour vers le groupe"
 
-#: inc/ticket.class.php:370
+#: inc/ticket.class.php:375
 msgid "Solution rejected, return to the group"
 msgstr "Solution rejetée, renvoi vers le groupe"
 
-#: inc/ticket.class.php:519 inc/ticket.class.php:616
+#: inc/ticket.class.php:524 inc/ticket.class.php:621
 #, php-format
 msgid "Escalation to the group %s."
 msgstr "Escalade vers le groupe %s."
 
-#: inc/ticket.class.php:972
+#: inc/ticket.class.php:977
 msgid "Error : get old ticket"
 msgstr "Erreur : erreur récupération ancien ticket"
 
-#: inc/ticket.class.php:987
+#: inc/ticket.class.php:992
 msgid "Error : adding new ticket"
 msgstr "Erreur : ajout du nouveau ticket"
 
-#: inc/ticket.class.php:1006
+#: inc/ticket.class.php:1011
 msgid "Error : adding link between the two tickets"
 msgstr "Erreur : ajout lien entre les deux tickets"
 
-#: inc/ticket.class.php:1017 inc/ticket.class.php:1060
-#: inc/ticket.class.php:1065
+#: inc/ticket.class.php:1022 inc/ticket.class.php:1065
+#: inc/ticket.class.php:1070
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Ce ticket a été cloné depuis le ticket n°"
 
-#: inc/ticket.class.php:1023
+#: inc/ticket.class.php:1028
 msgid "Error : adding followups"
 msgstr "Erreur: ajout des suivis"
 
-#: inc/ticket.class.php:1034
+#: inc/ticket.class.php:1039
 msgid "Error : adding actors (user)"
 msgstr "Erreur : ajout des acteurs (utilisateur)"
 
-#: inc/ticket.class.php:1044
+#: inc/ticket.class.php:1049
 msgid "Error : adding actors (group)"
 msgstr "Erreur : ajout des acteurs (groupe)"
 
-#: inc/ticket.class.php:1054
+#: inc/ticket.class.php:1059
 msgid "Error : adding documents"
 msgstr "Erreur : ajout des documents"
 
-#: inc/ticket.class.php:1171 inc/ticket.class.php:1172
+#: inc/ticket.class.php:1176 inc/ticket.class.php:1177
 msgid "Escalate"
 msgstr "Escalader"
 
-#: inc/ticket.class.php:1293
+#: inc/ticket.class.php:1298
 msgid "You must select a group."
 msgstr "Vous devez sélectionner un groupe."
 
