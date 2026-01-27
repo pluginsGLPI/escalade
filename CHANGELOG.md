@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
+## [2.9.19] - 2026-27-01
+
 ### Fixed
 
 - Handle mandatory template fields in history button escalation
