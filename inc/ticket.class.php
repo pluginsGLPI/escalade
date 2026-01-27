@@ -92,7 +92,7 @@ class PluginEscaladeTicket
         }
 
         $input = $item->input;
-        if ($item instanceof CommonITILObject) {
+        if ($item instanceof Ticket) {
             // Special handling for history button escalation to pass template validation
             if (isset($item->input['_no_escalade_template_validation'])) {
                 // Add existing ticket fields temporarily for template validation
@@ -127,10 +127,14 @@ class PluginEscaladeTicket
                 }
 
                 $temp_input['_disablenotif'] = true; // Disable notifications for this validation
+                $temp_input['_skip_rules'] = true;
                 $input = $item->prepareInputForUpdate($temp_input);
                 unset($item->input['_no_escalade_template_validation']); // Clean up flag
             } else {
-                $input = $item->prepareInputForUpdate($item->input);
+                // Pass the _skip_rules flag via a temporary input array to avoid polluting $item->input
+                $tmp_input = $item->input;
+                $tmp_input['_skip_rules'] = true;
+                $input = $item->prepareInputForUpdate($tmp_input);
             }
             if (!$input) {
                 return false;
