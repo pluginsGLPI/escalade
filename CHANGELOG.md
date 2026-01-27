@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Prevent business rules from triggering twice on tickets
 
+## [2.9.19] - 2026-27-01
+
+### Fixed
+
+- Handle mandatory template fields in history button escalation
+- Fix `tag` deletion before escalation using `Escalate button`
+- Fix `label` button color
+
 ## [2.10.1] - 2025-12-09
 
 ### Fixed
