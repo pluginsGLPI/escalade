@@ -1264,7 +1264,7 @@ class PluginEscaladeTicket
         $condition = [
             'is_assign' => 1,
         ];
-        if ($config->fields['use_filter_assign_group'] ?? false && !($user_config->fields['bypass_filter_assign_group'] ?? false)) {
+        if (($config->fields['use_filter_assign_group'] ?? false) && !($user_config->fields['bypass_filter_assign_group'] ?? false)) {
             $condition['id'] = $groups_id_filtered;
         }
         TemplateRenderer::getInstance()->display('@escalade/escalade_form.html.twig', [
