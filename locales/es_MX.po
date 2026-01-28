@@ -1,260 +1,261 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# 
+# Translators:
+# Edwin Elias Alvarez <elias986@yahoo.com>, 2026
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-28 00:55+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2015-09-18 09:48+0000\n"
+"Last-Translator: Edwin Elias Alvarez <elias986@yahoo.com>, 2026\n"
+"Language-Team: Spanish (Mexico) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/es_MX/)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: es_MX\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #: templates/group_group.html.twig
 msgid "List of groups to escalate"
-msgstr ""
+msgstr "Lista de grupos a escalar"
 
 #: templates/escalade_form.html.twig
 msgid "Escalate ticket"
-msgstr ""
+msgstr "Escalar ticket"
 
 #: templates/escalade_form.html.twig
 msgid "Comment"
-msgstr ""
+msgstr "Comentario"
 
 #: templates/escalade_form.html.twig
 msgid "Assign me as an observer"
-msgstr ""
+msgstr "Asignarme como observador"
 
 #: templates/user.html.twig hook.php:614 hook.php:633
 msgid "Bypass filtering on the groups assignment"
-msgstr ""
+msgstr "Omitir filtrado en la asignación de grupos"
 
 #: templates/config.html.twig
 msgid "Group assignment"
-msgstr ""
+msgstr "Asignación de grupo"
 
 #: templates/config.html.twig
 msgid "Remove old assign group on new group assign"
-msgstr ""
+msgstr "Eliminar la asignación antigua del grupo en la nueva asignación"
 
 #: templates/config.html.twig
 msgid "Use the technician's group"
-msgstr ""
+msgstr "Usar el grupo del técnico"
 
 #: templates/config.html.twig
 msgid "Show group assign history visually"
-msgstr ""
+msgstr "Mostrar historial de asignación de grupo visualmente"
 
 #: templates/config.html.twig
 msgid "at creation time"
-msgstr ""
+msgstr "al momento de la creación"
 
 #: templates/config.html.twig
 msgid "Assign ticket to initial group on solve ticket"
-msgstr ""
+msgstr "Asignar el ticket al grupo inicial al resolverlo"
 
 #: templates/config.html.twig
 msgid "at modification time"
-msgstr ""
+msgstr "al momento de la modificación"
 
 #: templates/config.html.twig
 msgid "Assign the technical group on ticket category change"
-msgstr ""
+msgstr "Asignar al grupo técnico al cambiar la categoría del ticket"
 
 #: templates/config.html.twig
 msgid "Enable filtering on the groups assignment"
-msgstr ""
+msgstr "Habilitar filtrado en la asignación de grupos"
 
 #: templates/config.html.twig
 msgid "User assignment"
-msgstr ""
+msgstr "Asignación de usuario"
 
 #: templates/config.html.twig
 msgid "Remove technician(s) on escalation"
-msgstr ""
+msgstr "Quitar técnico(s) en el escalamiento"
 
 #: templates/config.html.twig
 msgid "Assign the technical manager on ticket category change"
-msgstr ""
+msgstr "Asignar al responsable técnico al cambiar la categoría del ticket"
 
 #: templates/config.html.twig
 msgid "Remove requester(s) on escalation"
-msgstr ""
+msgstr "Quitar solicitante(s) en el escalamiento"
 
 #: templates/config.html.twig
 msgid "Assign me as observer by default"
-msgstr ""
+msgstr "Asignarme como observador por defecto"
 
 #: templates/config.html.twig
 msgid "Other"
-msgstr ""
+msgstr "Otro"
 
 #: templates/config.html.twig
 msgid "Escalation history in tasks"
-msgstr ""
+msgstr "Historial de escalamiento en tareas"
 
 #: templates/config.html.twig
 msgid "Ticket status after an escalation"
-msgstr ""
+msgstr "Estado del ticket después de un escalamiento"
 
 #: templates/config.html.twig
 msgid "Clone tickets"
-msgstr ""
+msgstr "Clonar tickets"
 
 #: templates/config.html.twig
 msgid "Close cloned tickets at the same time"
-msgstr ""
+msgstr "Cerrar tickets clonados al mismo tiempo"
 
 #: templates/config.html.twig
 msgid "Nota: This feature (clone tickets) is duplicate with the"
-msgstr ""
+msgstr "Nota: Esta funcionalidad (clonar tickets) está duplicada con el"
 
 #: templates/config.html.twig
 msgid "plugin. This last has priority."
-msgstr ""
+msgstr "complemento. Este último tiene prioridad."
 
 #: templates/config.html.twig
 msgid "Display delete button"
-msgstr ""
+msgstr "Mostrar botón de eliminar"
 
 #: setup.php:174 inc/group_group.class.php:61 inc/user.class.php:167
 msgid "Escalation"
-msgstr ""
+msgstr "Escalado"
 
 #: inc/history.class.php:192
 msgid "Reassign the ticket to group"
-msgstr ""
+msgstr "Reasignar el ticket al grupo"
 
 #: inc/history.class.php:236
 msgid "full assignation history"
-msgstr ""
+msgstr "historial completo de asignaciones"
 
 #: inc/history.class.php:239
 msgid "View full history"
-msgstr ""
+msgstr "Ver historial completo"
 
 #: inc/history.class.php:294
 msgid "Tickets to follow (escalated)"
-msgstr ""
+msgstr "Tickets a seguir (escalados)"
 
 #: inc/history.class.php:308
 msgid "Tickets to close (escalated)"
-msgstr ""
+msgstr "Tickets a cerrar (escalados)"
 
 #: inc/notification.class.php:83
 msgid "Requester user of the ticket"
-msgstr ""
+msgstr "Usuario solicitante del ticket"
 
 #: inc/notification.class.php:125
 msgid "Group escalated in the ticket"
-msgstr ""
+msgstr "Grupo escalado en el ticket"
 
 #: inc/notification.class.php:129
 msgid "Manager of the group escalated in the ticket"
-msgstr ""
+msgstr "Responsable del grupo al que se escaló el ticket"
 
 #: inc/notification.class.php:135
 msgid "Requester user of the task/reminder"
-msgstr ""
+msgstr "Usuario solicitante de la tarea/recordatorio"
 
 #: inc/notification.class.php:140
 msgid "Last group escalated in the ticket"
-msgstr ""
+msgstr "Último grupo escalado en el ticket"
 
 #: inc/notification.class.php:144
 msgid "Manager of last group escalated in the ticket"
-msgstr ""
+msgstr "Responsable del último grupo escalado en el ticket"
 
 #: inc/notification.class.php:384
 msgid "Solve date modification"
-msgstr ""
+msgstr "Modificación de la fecha de solución"
 
 #: inc/ticket.class.php:307
 msgid "Solution provided, back to the group"
-msgstr ""
+msgstr "Solución proporcionada, volver al grupo"
 
 #: inc/ticket.class.php:375
 msgid "Solution rejected, return to the group"
-msgstr ""
+msgstr "Solución rechazada, volver al grupo"
 
 #: inc/ticket.class.php:524 inc/ticket.class.php:621
 #, php-format
 msgid "Escalation to the group %s."
-msgstr ""
+msgstr "Escalamiento al grupo %s."
 
 #: inc/ticket.class.php:977
 msgid "Error : get old ticket"
-msgstr ""
+msgstr "Error : obtener ticket antiguo"
 
 #: inc/ticket.class.php:992
 msgid "Error : adding new ticket"
-msgstr ""
+msgstr "Error : agregando un nuevo ticket"
 
 #: inc/ticket.class.php:1011
 msgid "Error : adding link between the two tickets"
-msgstr ""
+msgstr "Error : agregando vínculo entre los dos tickets"
 
 #: inc/ticket.class.php:1022 inc/ticket.class.php:1065
 #: inc/ticket.class.php:1070
 msgid "This ticket has been cloned from the ticket num"
-msgstr ""
+msgstr "Este ticket ha sido clonado desde el ticket número"
 
 #: inc/ticket.class.php:1028
 msgid "Error : adding followups"
-msgstr ""
+msgstr "Error : agregando seguimientos"
 
 #: inc/ticket.class.php:1039
 msgid "Error : adding actors (user)"
-msgstr ""
+msgstr "Error : agregando actores (usuario)"
 
 #: inc/ticket.class.php:1049
 msgid "Error : adding actors (group)"
-msgstr ""
+msgstr "Error : agregando actores (grupo)"
 
 #: inc/ticket.class.php:1059
 msgid "Error : adding documents"
-msgstr ""
+msgstr "Error : agregando documentos"
 
 #: inc/ticket.class.php:1176 inc/ticket.class.php:1177
 msgid "Escalate"
-msgstr ""
+msgstr "Escalar"
 
 #: inc/ticket.class.php:1298
 msgid "You must select a group."
-msgstr ""
+msgstr "Debés seleccionar un grupo."
 
 #: inc/config.class.php:39
 msgid "Escalade"
-msgstr ""
+msgstr "Escalado"
 
 #: inc/config.class.php:44
 msgid "Configuration Escalade plugin"
-msgstr ""
+msgstr "Configuración del complemento Escalado"
 
 #: inc/config.class.php:139
 msgid "Default (not managed by plugin)"
-msgstr ""
+msgstr "Por defecto (no administrado por el complemento)"
 
 #: hook.php:568
 msgid "Group concerned by the escalation"
-msgstr ""
+msgstr "Grupo involucrado en el escalamiento"
 
 #: hook.php:586
 msgid "Number of escalations"
-msgstr ""
+msgstr "Número de escalamientos"
 
 #: hook.php:600
 msgid "Number of escalations between two groups"
-msgstr ""
+msgstr "Número de escaladas entre dos grupos"
 
 #: public/js/cloneandlink_ticket.js.php:40
 msgid "Clone and link"
-msgstr ""
+msgstr "Clonar y vincular"
