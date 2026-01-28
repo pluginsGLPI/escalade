@@ -1525,4 +1525,77 @@ final class TicketTest extends EscaladeTestCase
         $ticket->getFromDB($ticket->getID());
         $this->assertEquals($category->getID(), $ticket->fields['itilcategories_id']);
     }
+
+    public function testRuleCreatesSingleTaskOnCategoryAssign()
+    {
+        $this->login();
+
+        // Create a task template that will be appended by the rule
+        $task_template = $this->createItem(\TaskTemplate::class, [
+            'name' => 'Rule created task template',
+            'content' => 'Task created by rule',
+            'is_recursive' => 1,
+        ]);
+        $this->assertGreaterThan(0, $task_template->getID());
+
+        // Create an ITIL category that will trigger the rule
+        $category = $this->createItem(\ITILCategory::class, [
+            'name' => 'Category that triggers task rule',
+            'entities_id' => 0,
+            'is_recursive' => 1,
+        ]);
+        $this->assertGreaterThan(0, $category->getID());
+
+        // Create a RuleTicket that appends the task template when the category is set
+        $rule = $this->createItem(\Rule::class, [
+            'name' => 'Create task on category assign',
+            'sub_type' => 'RuleTicket',
+            'match' => 'AND',
+            'is_active' => 1,
+            // Trigger on update (could be ONADD | ONUPDATE but update is enough for this test)
+            'condition' => \RuleTicket::ONUPDATE,
+            'is_recursive' => 1,
+        ]);
+        $this->assertGreaterThan(0, $rule->getID());
+
+        // Add action to append task template
+        $this->createItem(\RuleAction::class, [
+            'rules_id' => $rule->getID(),
+            'action_type' => 'append',
+            'field' => 'task_template',
+            'value' => $task_template->getID(),
+        ]);
+
+        // Add criteria: ticket category must be the created category
+        $this->createItem(\RuleCriteria::class, [
+            'rules_id' => $rule->getID(),
+            'criteria' => 'itilcategories_id',
+            'condition' => \Rule::PATTERN_IS,
+            'pattern' => $category->getID(),
+        ]);
+
+        // Reset rule cache for ticket rules
+        \SingletonRuleList::getInstance("RuleTicket", 0)->load = 0;
+        \SingletonRuleList::getInstance("RuleTicket", 0)->list = [];
+
+        // Create a ticket without category
+        $ticket = $this->createItem(\Ticket::class, [
+            'name' => 'Ticket for rule task creation',
+            'content' => 'Content',
+        ]);
+        $this->assertGreaterThan(0, $ticket->getID());
+
+        // Ensure there is no task before assigning the category
+        $ticket_task = new \TicketTask();
+        $this->assertEquals(0, count($ticket_task->find(['tickets_id' => $ticket->getID()])));
+
+        // Update the ticket to set the category - this should trigger the rule
+        $this->updateItem(\Ticket::class, $ticket->getID(), [
+            'itilcategories_id' => $category->getID(),
+        ]);
+
+        // Verify that exactly one task was created for the ticket
+        $tasks = $ticket_task->find(['tickets_id' => $ticket->getID()]);
+        $this->assertEquals(1, count($tasks), 'Exactly one task should be created when assigning the category');
+    }
 }
