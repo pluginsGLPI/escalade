@@ -33,6 +33,7 @@ namespace GlpiPlugin\Escalade\Tests\Units;
 use CommonITILActor;
 use GlpiPlugin\Escalade\Tests\EscaladeTestCase;
 use Group_User;
+use Notification;
 use NotificationEvent;
 use NotificationTarget;
 use PluginEscaladeConfig;
@@ -843,6 +844,19 @@ final class GroupEscalationTest extends EscaladeTestCase
         // Enable notifications for the test
         $CFG_GLPI['use_notifications'] = 1;
         $CFG_GLPI['notifications_mailing'] = 1;
+
+        // Reset the notification target to its default value, as the unit tests use a local GLPI instance and do not
+        // restore the notification target to its default state.
+        $notification = new \Notification();
+        $notification->getFromDBByCrit(['itemtype' => 'Ticket', 'event' => 'assign_group']);
+
+        // Add our new target
+        $this->setNotificationTargets(
+            $notification->fields['id'],
+            [
+                Notification::ASSIGN_GROUP,
+            ],
+        );
 
         // Create two groups with users
         $group1 = $this->createGroupWithUsers('test_standard_group_1', 2);
