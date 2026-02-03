@@ -1041,10 +1041,11 @@ final class GroupEscalationTest extends EscaladeTestCase
 
         // Create users and add them to the group
         for ($i = 0; $i < $num_users; $i++) {
+            $rand = rand();
             $user_id = $this->createItem(
                 \User::class,
                 [
-                    'name' => "{$name}_user_{$i}",
+                    'name' => "{$name}_user_{$i}_{$rand}",
                 ],
             )->getID();
 
@@ -1052,7 +1053,7 @@ final class GroupEscalationTest extends EscaladeTestCase
                 \UserEmail::class,
                 [
                     'users_id' => $user_id,
-                    'email' => "{$name}_user_{$i}@example.com",
+                    'email' => "{$name}_user_{$i}_{$rand}@example.com",
                 ],
             );
 
@@ -1067,8 +1068,8 @@ final class GroupEscalationTest extends EscaladeTestCase
 
             $users[] = [
                 'id' => $user_id,
-                'name' => "{$name}_user_{$i}",
-                'email' => "{$name}_user_{$i}@example.com",
+                'name' => "{$name}_user_{$i}_{$rand}",
+                'email' => "{$name}_user_{$i}_{$rand}@example.com",
             ];
         }
 

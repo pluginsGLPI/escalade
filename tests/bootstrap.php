@@ -28,54 +28,24 @@
  * -------------------------------------------------------------------------
  */
 
-use Glpi\Cache\CacheManager;
-use Glpi\Cache\SimpleCache;
-use Symfony\Component\Cache\Adapter\ArrayAdapter;
-
 global $CFG_GLPI, $PLUGIN_HOOKS;
 
-ini_set('display_errors', 'On');
-error_reporting(E_ALL);
-
-define('GLPI_ROOT', dirname(__DIR__, 3));
-define('GLPI_LOG_DIR', GLPI_ROOT . '/files/_logs');
+define('GLPI_ROOT', __DIR__ . '/../../../');
+define('GLPI_LOG_DIR', __DIR__ . '/files/_logs');
 
 define('TU_USER', 'glpi');
 define('TU_PASS', 'glpi');
 define('GLPI_LOG_LVL', 'DEBUG');
-
-include(GLPI_ROOT . "/inc/based_config.php");
-
-if (!file_exists(GLPI_CONFIG_DIR . '/config_db.php')) {
-    die("\nConfiguration file for tests not found\n\nrun: bin/console glpi:database:install --config-dir=tests/config ...\n\n");
-}
-
-// Create subdirectories of GLPI_VAR_DIR based on defined constants
-foreach (get_defined_constants() as $constant_name => $constant_value) {
-    if (
-        preg_match('/^GLPI_[\w]+_DIR$/', $constant_name)
-        && preg_match('/^' . preg_quote(GLPI_VAR_DIR, '/') . '\//', $constant_value)
-    ) {
-        is_dir($constant_value) or mkdir($constant_value, 0755, true);
-    }
-}
-
-//init cache
-if (file_exists(GLPI_CONFIG_DIR . DIRECTORY_SEPARATOR . CacheManager::CONFIG_FILENAME)) {
-    // Use configured cache for cache tests
-    $cache_manager = new CacheManager();
-    $GLPI_CACHE = $cache_manager->getCoreCacheInstance();
-} else {
-    // Use "in-memory" cache for other tests
-    $GLPI_CACHE = new SimpleCache(new ArrayAdapter());
-}
 
 require GLPI_ROOT . '/inc/includes.php';
 include_once GLPI_ROOT . '/phpunit/GLPITestCase.php';
 include_once GLPI_ROOT . '/phpunit/DbTestCase.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../setup.php';
-plugin_init_escalade();
+
+if (!Plugin::isPluginActive("escalade")) {
+    throw new RuntimeException("Plugin escalade is not active in the test database");
+}
 
 if (!file_exists(GLPI_LOG_DIR . '/php-errors.log')) {
     file_put_contents(GLPI_LOG_DIR . '/php-errors.log', '');
@@ -84,3 +54,5 @@ if (!file_exists(GLPI_LOG_DIR . '/php-errors.log')) {
 if (!file_exists(GLPI_LOG_DIR . '/sql-errors.log')) {
     file_put_contents(GLPI_LOG_DIR . '/sql-errors.log', '');
 }
+
+plugin_init_escalade();
