@@ -915,7 +915,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             }
         }
 
-        //$this->assertTrue($group1_notified, "No user from the original group received a notification");
+        $this->assertTrue($group1_notified, "No user from the original group received a notification");
         $this->assertTrue($group2_notified, "No user from the new group received a notification");
     }
 
