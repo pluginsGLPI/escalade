@@ -1530,6 +1530,14 @@ final class TicketTest extends EscaladeTestCase
     {
         $this->login();
 
+        // Load Escalade plugin configuration
+        $config = new PluginEscaladeConfig();
+        $conf = $config->find();
+        $conf = reset($conf);
+        $config->getFromDB($conf['id']);
+        $this->assertGreaterThan(0, $conf['id']);
+        PluginEscaladeConfig::loadInSession();
+
         // Create a task template that will be appended by the rule
         $task_template = $this->createItem(\TaskTemplate::class, [
             'name' => 'Rule created task template',
