@@ -199,3 +199,14 @@ function plugin_version_escalade()
         ],
     ];
 }
+
+
+function plugin_escalade_check_prerequisites()
+{
+    if (!is_readable(__DIR__ . '/vendor/autoload.php') || !is_file(__DIR__ . '/vendor/autoload.php')) {
+        echo "Run composer install --no-dev in the plugin directory<br>";
+        return false;
+    }
+
+    return true;
+}
