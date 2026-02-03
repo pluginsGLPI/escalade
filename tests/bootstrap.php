@@ -47,4 +47,12 @@ if (!Plugin::isPluginActive("escalade")) {
     throw new RuntimeException("Plugin escalade is not active in the test database");
 }
 
+if (!file_exists(GLPI_LOG_DIR . '/php-errors.log')) {
+    file_put_contents(GLPI_LOG_DIR . '/php-errors.log', '');
+}
+
+if (!file_exists(GLPI_LOG_DIR . '/sql-errors.log')) {
+    file_put_contents(GLPI_LOG_DIR . '/sql-errors.log', '');
+}
+
 plugin_init_escalade();
