@@ -1035,30 +1035,21 @@ class PluginEscaladeTicket
       SELECT null AS id, {$newID} as tickets_id, users_id, type, use_notification, alternative_email
       FROM glpi_tickets_users
       WHERE tickets_id = {$tickets_id} AND type != 2";
-        if (!$res = $DB->doQuery($query_users)) {
-            Session::addMessageAfterRedirect(__s('Error : adding actors (user)', 'escalade'), false, ERROR);
-            return;
-        }
+        $DB->doQuery($query_users);
 
         //groups
         $query_groups = "INSERT INTO glpi_groups_tickets
       SELECT null AS id, {$newID} as tickets_id, groups_id, type
       FROM glpi_groups_tickets
       WHERE tickets_id = {$tickets_id} AND type != 2";
-        if (!$res = $DB->doQuery($query_groups)) {
-            Session::addMessageAfterRedirect(__s('Error : adding actors (group)', "escalade"), false, ERROR);
-            return;
-        }
+        $DB->doQuery($query_groups);
 
         //add documents
         $query_docs = "INSERT INTO glpi_documents_items (documents_id, items_id, itemtype, entities_id, is_recursive, date_mod)
       SELECT documents_id, {$newID}, 'Ticket', entities_id, is_recursive, date_mod
       FROM glpi_documents_items
       WHERE items_id = {$tickets_id} AND itemtype = 'Ticket'";
-        if (!$res = $DB->doQuery($query_docs)) {
-            Session::addMessageAfterRedirect(__s('Error : adding documents', 'escalade'), false, ERROR);
-            return;
-        }
+        $DB->doQuery($query_docs);
 
         //add history to the new ticket
         $changes[0] = '0';
