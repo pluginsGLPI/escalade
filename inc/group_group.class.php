@@ -161,7 +161,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation
         // To do an escalation, the user must be in a group currently assigned to the ticket
         // or no group is assigned to the ticket
         // TODO : matching with "view all tickets (yes/no) option in profile user"
-        if ($ticket_groups !== [] && count(array_intersect($ticket_groups, $user_groups)) == 0) {
+        if ($ticket_groups !== [] && array_intersect($ticket_groups, $user_groups) === []) {
             return [];
         }
 
@@ -196,7 +196,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation
             $groupname = $group_obj->fields['name'];
         }
 
-        if (count($groups) == 0) {
+        if ($groups === []) {
             Group_User::getUserGroups($_SESSION['glpiID']);
         }
 
