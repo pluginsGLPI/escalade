@@ -421,13 +421,13 @@ final class TicketTest extends EscaladeTestCase
             $observer_count = count($group_ticket->find([
                 'tickets_id' => $ticket_id,
                 'groups_id'  => $group_observer_id,
-                'type'       => \CommonITILActor::OBSERVER
+                'type'       => \CommonITILActor::OBSERVER,
             ]));
 
             $this->assertContains(
                 $observer_count,
                 [0, 1],
-                'Observer group count must be 0 or 1'
+                'Observer group count must be 0 or 1',
             );
 
         }
