@@ -357,7 +357,6 @@ final class TicketTest extends EscaladeTestCase
             'entities_id' => 0,
             'is_recursive' => 1,
         ]);
-        $group_tech_id = $group_tech->getID();
 
         // Get the tech user
         $user_tech = new \User();
