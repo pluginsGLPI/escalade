@@ -39,7 +39,7 @@ class PluginEscaladeHistory extends CommonDBTM
     public static function getFirstLineForTicket($tickets_id)
     {
         $found = self::getFullHistory($tickets_id);
-        if (count($found) == 0) {
+        if (count($found) === 0) {
             return false;
         } else {
             return array_pop($found);
@@ -49,7 +49,7 @@ class PluginEscaladeHistory extends CommonDBTM
     public static function getlastLineForTicket($tickets_id)
     {
         $found = self::getFullHistory($tickets_id);
-        if (count($found) == 0) {
+        if (count($found) === 0) {
             return false;
         } else {
             return array_shift($found);
@@ -222,7 +222,7 @@ class PluginEscaladeHistory extends CommonDBTM
             echo "</div>";
 
             $i++;
-            if ($i == self::HISTORY_LIMIT && !$full_history) {
+            if ($i === self::HISTORY_LIMIT && !$full_history) {
                 break;
             }
         }
