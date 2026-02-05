@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Nuria Costa <nuria.costa@uvic.cat>, 2025
+# Nuria Costa <nuria.costa@uvic.cat>, 2025-2026
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-22 00:54+0000\n"
+"POT-Creation-Date: 2026-02-05 01:04+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
-"Last-Translator: Nuria Costa <nuria.costa@uvic.cat>, 2025\n"
+"Last-Translator: Nuria Costa <nuria.costa@uvic.cat>, 2025-2026\n"
 "Language-Team: Catalan (Spain) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/ca_ES/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: templates/group_group.html.twig
 msgid "List of groups to escalate"
-msgstr ""
+msgstr "Llista de grups a escalar"
 
 #: templates/escalade_form.html.twig
 msgid "Escalate ticket"
@@ -40,7 +40,7 @@ msgstr "Evita el filtre a l'assignació de grups"
 
 #: templates/config.html.twig
 msgid "Group assignment"
-msgstr ""
+msgstr "Assignació de grup"
 
 #: templates/config.html.twig
 msgid "Remove old assign group on new group assign"
@@ -52,7 +52,7 @@ msgstr "Utilitza el grup del tècnic"
 
 #: templates/config.html.twig
 msgid "Show group assign history visually"
-msgstr ""
+msgstr "Mostra visualment l'historial d'assignació de grups"
 
 #: templates/config.html.twig
 msgid "at creation time"
@@ -76,7 +76,7 @@ msgstr "Activa el filtre a l'assignació de grups"
 
 #: templates/config.html.twig
 msgid "User assignment"
-msgstr ""
+msgstr "Assignació d'usuari"
 
 #: templates/config.html.twig
 msgid "Remove technician(s) on escalation"
@@ -96,7 +96,7 @@ msgstr "Assigna'm com a observador/a per defecte"
 
 #: templates/config.html.twig
 msgid "Other"
-msgstr ""
+msgstr "Altres"
 
 #: templates/config.html.twig
 msgid "Escalation history in tasks"
@@ -108,19 +108,19 @@ msgstr "Estat del tiquet després d'escalar-lo"
 
 #: templates/config.html.twig
 msgid "Clone tickets"
-msgstr ""
+msgstr "Clonar tiquets"
 
 #: templates/config.html.twig
 msgid "Close cloned tickets at the same time"
-msgstr ""
+msgstr "Tanca els tiquets clonats alhora"
 
 #: templates/config.html.twig
 msgid "Nota: This feature (clone tickets) is duplicate with the"
-msgstr ""
+msgstr "Nota: Aquesta funció (clonar tiquets) està duplicada amb la"
 
 #: templates/config.html.twig
 msgid "plugin. This last has priority."
-msgstr ""
+msgstr "connector. Aquesta última té prioritat"
 
 #: templates/config.html.twig
 msgid "Display delete button"
@@ -203,8 +203,8 @@ msgstr "Error: afegint un tiquet nou"
 msgid "Error : adding link between the two tickets"
 msgstr "Error: afegint enllaç entre dos tiquets"
 
-#: inc/ticket.class.php:1022 inc/ticket.class.php:1065
-#: inc/ticket.class.php:1070
+#: inc/ticket.class.php:1022 inc/ticket.class.php:1056
+#: inc/ticket.class.php:1061
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Aquest tiquet està clonat a partir del tiquet número"
 
@@ -212,29 +212,17 @@ msgstr "Aquest tiquet està clonat a partir del tiquet número"
 msgid "Error : adding followups"
 msgstr "Error: afegint seguiments"
 
-#: inc/ticket.class.php:1039
-msgid "Error : adding actors (user)"
-msgstr "Error: afegint actors (usuaris)"
-
-#: inc/ticket.class.php:1049
-msgid "Error : adding actors (group)"
-msgstr "Error: afegint actors (grups)"
-
-#: inc/ticket.class.php:1059
-msgid "Error : adding documents"
-msgstr "Error: afegint documents"
-
-#: inc/ticket.class.php:1176 inc/ticket.class.php:1177
+#: inc/ticket.class.php:1167 inc/ticket.class.php:1168
 msgid "Escalate"
 msgstr "Escalar"
 
-#: inc/ticket.class.php:1298
+#: inc/ticket.class.php:1289
 msgid "You must select a group."
 msgstr "Has de seleccionar un grup"
 
 #: inc/config.class.php:39
 msgid "Escalade"
-msgstr ""
+msgstr "Escalar"
 
 #: inc/config.class.php:44
 msgid "Configuration Escalade plugin"

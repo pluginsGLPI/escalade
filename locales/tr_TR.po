@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-22 00:54+0000\n"
+"POT-Creation-Date: 2026-02-05 01:04+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2015-2016,2018-2021,2023-2025\n"
 "Language-Team: Turkish (Turkey) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/tr_TR/)\n"
@@ -204,8 +204,8 @@ msgstr "Hata : Yeni destek kaydı ekleme"
 msgid "Error : adding link between the two tickets"
 msgstr "Hata : İki destek kaydı arasında ilişki ekleme"
 
-#: inc/ticket.class.php:1022 inc/ticket.class.php:1065
-#: inc/ticket.class.php:1070
+#: inc/ticket.class.php:1022 inc/ticket.class.php:1056
+#: inc/ticket.class.php:1061
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Bu destek, destek kaydı numarasından"
 
@@ -213,23 +213,11 @@ msgstr "Bu destek, destek kaydı numarasından"
 msgid "Error : adding followups"
 msgstr "Hata : İzleme ekleme"
 
-#: inc/ticket.class.php:1039
-msgid "Error : adding actors (user)"
-msgstr "Hata : Aktör ekleme (kullanıcı)"
-
-#: inc/ticket.class.php:1049
-msgid "Error : adding actors (group)"
-msgstr "Hata : Aktör ekleme (grup)"
-
-#: inc/ticket.class.php:1059
-msgid "Error : adding documents"
-msgstr "Hata : Belge ekleme"
-
-#: inc/ticket.class.php:1176 inc/ticket.class.php:1177
+#: inc/ticket.class.php:1167 inc/ticket.class.php:1168
 msgid "Escalate"
 msgstr "Üste aktar"
 
-#: inc/ticket.class.php:1298
+#: inc/ticket.class.php:1289
 msgid "You must select a group."
 msgstr "Bir grup seçmelisiniz."
 
