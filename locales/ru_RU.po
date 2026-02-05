@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-22 00:54+0000\n"
+"POT-Creation-Date: 2026-02-05 01:04+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: hamkms, 2025\n"
 "Language-Team: Russian (Russia) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/ru_RU/)\n"
@@ -210,8 +210,8 @@ msgstr "Ошибка добавления заявки"
 msgid "Error : adding link between the two tickets"
 msgstr "Ошибка связывания заявок"
 
-#: inc/ticket.class.php:1022 inc/ticket.class.php:1065
-#: inc/ticket.class.php:1070
+#: inc/ticket.class.php:1022 inc/ticket.class.php:1056
+#: inc/ticket.class.php:1061
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Заявка создана из другой, №"
 
@@ -219,23 +219,11 @@ msgstr "Заявка создана из другой, №"
 msgid "Error : adding followups"
 msgstr "Ошибка добавления комментария"
 
-#: inc/ticket.class.php:1039
-msgid "Error : adding actors (user)"
-msgstr "Ошибка добавления пользователя"
-
-#: inc/ticket.class.php:1049
-msgid "Error : adding actors (group)"
-msgstr "Ошибка добавления группы"
-
-#: inc/ticket.class.php:1059
-msgid "Error : adding documents"
-msgstr "Ошибка добавления документа"
-
-#: inc/ticket.class.php:1176 inc/ticket.class.php:1177
+#: inc/ticket.class.php:1167 inc/ticket.class.php:1168
 msgid "Escalate"
 msgstr "Переназначение"
 
-#: inc/ticket.class.php:1298
+#: inc/ticket.class.php:1289
 msgid "You must select a group."
 msgstr "Вы должны выбрать группу"
 

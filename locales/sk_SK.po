@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-22 00:54+0000\n"
+"POT-Creation-Date: 2026-02-05 01:04+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: feonsu <feonsu@gmail.com>, 2019,2023-2025\n"
 "Language-Team: Slovak (Slovakia) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/sk_SK/)\n"
@@ -203,8 +203,8 @@ msgstr "Chyba: pridávanie novej požiadavky"
 msgid "Error : adding link between the two tickets"
 msgstr "Chyba: pridávanie prepojení medzi dvoma požiadavkami"
 
-#: inc/ticket.class.php:1022 inc/ticket.class.php:1065
-#: inc/ticket.class.php:1070
+#: inc/ticket.class.php:1022 inc/ticket.class.php:1056
+#: inc/ticket.class.php:1061
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Táto požiadavka bola klonovaná z požiadavky č."
 
@@ -212,23 +212,11 @@ msgstr "Táto požiadavka bola klonovaná z požiadavky č."
 msgid "Error : adding followups"
 msgstr "Chyba: pridávanie reakcií"
 
-#: inc/ticket.class.php:1039
-msgid "Error : adding actors (user)"
-msgstr "Chyba: pridávanie riešiteľov (používateľ)"
-
-#: inc/ticket.class.php:1049
-msgid "Error : adding actors (group)"
-msgstr "Chyba: pridávanie riešiteľov (skupina)"
-
-#: inc/ticket.class.php:1059
-msgid "Error : adding documents"
-msgstr "Chyba: pridávanie dokumentov"
-
-#: inc/ticket.class.php:1176 inc/ticket.class.php:1177
+#: inc/ticket.class.php:1167 inc/ticket.class.php:1168
 msgid "Escalate"
 msgstr "Eskalovať"
 
-#: inc/ticket.class.php:1298
+#: inc/ticket.class.php:1289
 msgid "You must select a group."
 msgstr "Musíte vybrať skupinu."
 
