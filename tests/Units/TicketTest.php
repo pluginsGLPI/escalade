@@ -412,6 +412,7 @@ final class TicketTest extends EscaladeTestCase
                 $this->{$data['method']}($ticket, $user_tech);
                 $this->assertEquals(1, count($user_ticket->find(['tickets_id' => $ticket->getID(), 'users_id' => $user_tech->getID(), 'type' => \CommonITILActor::ASSIGN])));
             }
+            $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group_observer_id, 'type' => \CommonITILActor::OBSERVER])));
         }
     }
 
