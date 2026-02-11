@@ -131,10 +131,7 @@ class PluginEscaladeTicket
                 $input = $item->prepareInputForUpdate($temp_input);
                 unset($item->input['_no_escalade_template_validation']); // Clean up flag
             } else {
-                // Pass the _skip_rules flag via a temporary input array to avoid polluting $item->input
-                $tmp_input = $item->input;
-                $tmp_input['_skip_rules'] = true;
-                $input = $item->prepareInputForUpdate($tmp_input);
+                $input = $item->prepareInputForUpdate($item->input);
             }
             if (!$input) {
                 return false;
