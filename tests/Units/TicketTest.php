@@ -414,6 +414,36 @@ final class TicketTest extends EscaladeTestCase
             }
             $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group_observer_id, 'type' => \CommonITILActor::OBSERVER])));
         }
+
+        // Ensures that a rule linked to a category creates a task upon assignment, unless the _skip_rules => true param is enabled.
+
+        $category = $this->createItem(\ITILCategory::class, [
+            'name' => 'Category that triggers task rule',
+            'entities_id' => 0,
+            'is_recursive' => 1,
+        ]);
+
+        $ticket_task = new \TicketTask();
+        $this->assertEquals(0, count($ticket_task->find(['tickets_id' => $ticket->getID()])));
+
+
+        $ticket_skip = $this->createItem(\Ticket::class, [
+            'name' => 'Ticket for rule task creation skip',
+            'content' => 'Content',
+        ]);
+
+        $this->assertGreaterThan(0, $ticket_skip->getID());
+
+        $this->assertEquals(0, count($ticket_task->find(['tickets_id' => $ticket_skip->getID()])));
+
+        $this->updateItem(\Ticket::class, $ticket_skip->getID(), [
+            'itilcategories_id' => $category->getID(),
+            '_skip_rules' => true,
+        ]);
+
+        // Verify that no task was created because rules were skipped
+        $tasks_skip = $ticket_task->find(['tickets_id' => $ticket_skip->getID()]);
+        $this->assertEquals(0, count($tasks_skip), 'No task should be created when executed the category with _skip_rules = true');
     }
 
     public function testTicketUpdateDoesNotChangeITILCategoryAssignedGroup()
