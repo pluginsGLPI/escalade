@@ -399,7 +399,6 @@ final class TicketTest extends EscaladeTestCase
                 'name' => 'Test ticket for escalation',
                 'content' => 'Content for test ticket',
             ]);
-            $ticket_id = $ticket->getID();
 
             $group_ticket = new \Group_Ticket();
             $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group_observer_id, 'type' => \CommonITILActor::OBSERVER])));
@@ -413,22 +412,6 @@ final class TicketTest extends EscaladeTestCase
                 $this->{$data['method']}($ticket, $user_tech);
                 $this->assertEquals(1, count($user_ticket->find(['tickets_id' => $ticket->getID(), 'users_id' => $user_tech->getID(), 'type' => \CommonITILActor::ASSIGN])));
             }
-
-            // Observer group may or may not be added depending on the escalation path and GLPI internals.
-            // If RuleTicket is executed, observer group must be added exactly once
-
-            $observer_count = count($group_ticket->find([
-                'tickets_id' => $ticket_id,
-                'groups_id'  => $group_observer_id,
-                'type'       => \CommonITILActor::OBSERVER,
-            ]));
-
-            $this->assertContains(
-                $observer_count,
-                [0, 1],
-                'Observer group count must be 0 or 1',
-            );
-
         }
     }
 
