@@ -1575,7 +1575,6 @@ final class TicketTest extends EscaladeTestCase
             'content' => 'Task created by rule',
             'is_recursive' => 1,
         ])->getID();
-        $this->assertGreaterThan(0, $task_template_id);
 
         // Create an ITIL category that will trigger the rule
         $category_id = $this->createItem(\ITILCategory::class, [
@@ -1583,7 +1582,6 @@ final class TicketTest extends EscaladeTestCase
             'entities_id' => 0,
             'is_recursive' => 1,
         ])->getID();
-        $this->assertGreaterThan(0, $category_id);
 
         // Create a RuleTicket
         $rule_id = $this->createItem(\Rule::class, [
@@ -1594,7 +1592,6 @@ final class TicketTest extends EscaladeTestCase
             'condition' => \RuleTicket::ONUPDATE,
             'is_recursive' => 1,
         ])->getID();
-        $this->assertGreaterThan(0, $rule_id);
 
         // Add action
         $this->createItem(\RuleAction::class, [
@@ -1621,7 +1618,6 @@ final class TicketTest extends EscaladeTestCase
             'name' => 'Ticket for rule task creation',
             'content' => 'Content',
         ])->getID();
-        $this->assertGreaterThan(0, $ticket_id);
 
         // Ensure no task exists before update
         $this->assertEquals(
