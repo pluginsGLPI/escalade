@@ -565,11 +565,10 @@ final class GroupEscalationTest extends EscaladeTestCase
                 ],
             ]);
 
-            $ticket_user = new Ticket_User();
-            $this->assertEquals($provider['add_expected']['user_ticket'], count($ticket_user->find(['tickets_id' => $ticket->getID(), 'type' => CommonITILActor::ASSIGN])));
+            $this->assertEquals($provider['add_expected']['user_ticket'], countElementsInTable(Ticket_User::getTable(), ['tickets_id' => $ticket->getID(), 'type' => CommonITILActor::ASSIGN]));
 
             $group_ticket = new Group_Ticket();
-            $this->assertEquals($provider['add_expected']['group_ticket'], count($group_ticket->find(['tickets_id' => $ticket->getID(), 'type' => CommonITILActor::ASSIGN])));
+            $this->assertEquals($provider['add_expected']['group_ticket'], countElementsInTable(Group_Ticket::getTable(), ['tickets_id' => $ticket->getID(), 'type' => CommonITILActor::ASSIGN]));
 
             if ($provider['conf']['use_assign_user_group_creation'] === 1) {
                 $group = $group_ticket->getFromDBByCrit(['tickets_id' => $ticket->getID(), 'type' => CommonITILActor::ASSIGN]);
@@ -620,18 +619,18 @@ final class GroupEscalationTest extends EscaladeTestCase
                 ],
             );
 
-            $this->assertEquals($provider['update_expected']['user_ticket'], count($ticket_user->find(['tickets_id' => $ticket->getID(), 'type' => CommonITILActor::ASSIGN])), 'Failed with config: ' . json_encode($provider['conf']));
-            $this->assertEquals($provider['update_expected']['group_ticket'], count($group_ticket->find(['tickets_id' => $ticket->getID(), 'type' => CommonITILActor::ASSIGN])), 'Failed with config: ' . json_encode($provider['conf']));
+            $this->assertEquals($provider['update_expected']['user_ticket'], countElementsInTable(Ticket_User::getTable(), ['tickets_id' => $ticket->getID(), 'type' => CommonITILActor::ASSIGN]), 'Failed with config: ' . json_encode($provider['conf']));
+            $this->assertEquals($provider['update_expected']['group_ticket'], countElementsInTable(Group_Ticket::getTable(), ['tickets_id' => $ticket->getID(), 'type' => CommonITILActor::ASSIGN]), 'Failed with config: ' . json_encode($provider['conf']));
 
             if ($provider['conf']['use_assign_user_group_modification'] === 1) {
                 if ($provider['conf']['use_assign_user_group'] === 1) {
                     $group = $group_ticket->getFromDBByCrit(['tickets_id' => $ticket->getID(), 'type' => CommonITILActor::ASSIGN, 'groups_id' => $group2->getID()]);
-                    $this->assertTrue($group);
+                    $this->assertTrue($group, 'Failed with config: ' . json_encode($provider['conf']));
                 }
 
                 if ($provider['conf']['use_assign_user_group'] === 2) {
                     $group = $group_ticket->getFromDBByCrit(['tickets_id' => $ticket->getID(), 'type' => CommonITILActor::ASSIGN, 'groups_id' => $group4->getID()]);
-                    $this->assertTrue($group);
+                    $this->assertTrue($group, 'Failed with config: ' . json_encode($provider['conf']));
                 }
             }
         }

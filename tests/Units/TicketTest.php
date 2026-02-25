@@ -872,6 +872,8 @@ final class TicketTest extends EscaladeTestCase
             'name' => 'test_requester',
             'realname' => 'Test Requester',
             'firstname' => 'User',
+            '_entities_id' => 0,
+            '_profiles_id' => 4,
         ]);
         $user_id = $user->getID();
 
@@ -1001,7 +1003,8 @@ final class TicketTest extends EscaladeTestCase
         $requester = $this->createItem('User', [
             'name' => 'requester_test',
             'firstname' => 'Requester',
-            'entities_id' => 0,
+            '_entities_id' => 0,
+            '_profiles_id' => 4,
         ]);
         $requester_id = $requester->getID();
         $this->assertGreaterThan(0, $requester_id);
@@ -1164,7 +1167,8 @@ final class TicketTest extends EscaladeTestCase
         $requester = $this->createItem('User', [
             'name' => 'requester_history_test',
             'firstname' => 'Requester',
-            'entities_id' => 0,
+            '_entities_id' => 0,
+            '_profiles_id' => 4,
         ]);
         $requester_id = $requester->getID();
         $this->assertGreaterThan(0, $requester_id);
