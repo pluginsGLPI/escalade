@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+- Fix undefined index
 - Prevent business rules from triggering twice on tickets
 
 ## [2.9.19] - 2026-27-01
