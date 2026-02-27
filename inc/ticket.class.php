@@ -864,7 +864,11 @@ class PluginEscaladeTicket
         $linkedTicket = new Ticket();
 
         foreach ($tickets as $data) {
-            if ($data['link'] !== Ticket_Ticket::LINK_TO || !$linkedTicket->can($data['tickets_id'], UPDATE)) {
+            $ticket_id_missing = empty($data['tickets_id']);
+            $link_invalid = empty($data['link']) || $data['link'] !== Ticket_Ticket::LINK_TO;
+            $no_permission = !$linkedTicket->can($data['tickets_id'], UPDATE);
+
+            if ($ticket_id_missing || $link_invalid || $no_permission) {
                 continue;
             }
 
