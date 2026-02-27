@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Add task visibility option (`task_private`)
+- Fixed JS error
 
 ## [2.9.19] - 2026-27-01
 
