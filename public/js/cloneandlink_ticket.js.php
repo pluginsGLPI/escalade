@@ -54,8 +54,9 @@ if (
       //delay the execution (ajax requestcomplete event fired before dom loading)
       setTimeout( function () {
          if ($("#cloneandlink_ticket").length > 0) { return; }
-         var duplicate_html = "<button id='cloneandlink_ticket' class='btn btn-sm btn-ghost-secondary ms-auto'"+
-                "title='{$locale_cloneandlink}'><i class='ti ti-copy me-1'></i>{$locale_clone}</button>";
+         var duplicate_html = "<button id='cloneandlink_ticket' class='btn btn-sm btn-ghost-secondary ms-auto'" +
+                "title='{$locale_cloneandlink}'><i class='ti ti-copy me-1'></i>" + '{$locale_cloneandlink}' +
+            "</button>";
 
          $("#linked_tickets-heading .accordion-button")
             .append(duplicate_html);
