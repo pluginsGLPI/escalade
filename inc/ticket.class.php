@@ -301,7 +301,7 @@ class PluginEscaladeTicket
                 $group->getFromDB($first_history['groups_id']);
                 PluginEscaladeTaskmanager::setTicketTask([
                     'tickets_id' => $tickets_id,
-                    'is_private' => true,
+                    'is_private' => false, //It allows the end user to see when their ticket is escalated to another areas
                     '_no_reopen' => true, //prevent reopening ticket
                     'state'      => Planning::INFO,
                     'content'    => __s("Solution provided, back to the group", "escalade") . " "
@@ -370,7 +370,7 @@ class PluginEscaladeTicket
                 $group->getFromDB($rejected_history['groups_id']);
                 PluginEscaladeTaskmanager::setTicketTask([
                     'tickets_id' => $tickets_id,
-                    'is_private' => true,
+                    'is_private' => false,
                     'state'      => Planning::INFO,
                     'content'    => __s("Solution rejected, return to the group", "escalade") . " "
                         . $group->getName(),
@@ -524,7 +524,7 @@ class PluginEscaladeTicket
         $task_content = '<p><i>' . sprintf(__s('Escalation to the group %s.', 'escalade'), $group->getName()) . '</i></p><hr />' . $comment;
         PluginEscaladeTaskmanager::setTicketTask([
             'tickets_id' => $tickets_id,
-            'is_private' => true,
+            'is_private' => false,
             'state'      => Planning::INFO,
             'content'    => $task_content,
         ]);
@@ -615,7 +615,7 @@ class PluginEscaladeTicket
             $ticket_group = new Group_Ticket();
             PluginEscaladeTaskmanager::setTicketTask([
                 'tickets_id' => $tickets_id,
-                'is_private' => true,
+                'is_private' => false,
                 'state'      => Planning::INFO,
                 'content'    => '<p><i>' . sprintf(
                     __s('Escalation to the group %s.', 'escalade'),
@@ -1021,7 +1021,7 @@ class PluginEscaladeTicket
                 'users_id'        => Session::getLoginUserID(),
                 'content'         => __s("This ticket has been cloned from the ticket num", "escalade") . " "
                     . $tickets_id,
-                'is_private'      => true,
+                'is_private'      => false,
                 'requesttypes_id' => 6, //other
             ])
         ) {
