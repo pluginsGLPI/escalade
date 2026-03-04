@@ -602,7 +602,7 @@ class PluginEscaladeTicket
      * @param  int $tickets_id the ticket to change
      * @param  int $groups_id  the group to assign
      * @param  bool $no_redirect if true, no redirection after the action
-     * @return false
+     * @return bool true on success, false on error
      */
     public static function climb_group($tickets_id, $groups_id, $no_redirect = false)
     {
@@ -634,9 +634,10 @@ class PluginEscaladeTicket
                     Session::addMessageAfterRedirect(
                         __s('Error: ticket not found', 'escalade'),
                         false,
-                        ERROR
+                        ERROR,
                     );
                 }
+
                 return false;
             }
 
@@ -688,22 +689,18 @@ class PluginEscaladeTicket
             if ($result) {
                 Session::addMessageAfterRedirect(
                     sprintf(__s('Escalation to the group %s.', 'escalade'), $group->getName()),
-                    false,
-                    INFO
                 );
             } else {
                 Session::addMessageAfterRedirect(
                     __s('Error during escalation', 'escalade'),
                     false,
-                    ERROR
+                    ERROR,
                 );
                 return false;
             }
         } else {
             Session::addMessageAfterRedirect(
                 sprintf(__s('Ticket already assigned to group %s', 'escalade'), $group->getName()),
-                false,
-                INFO
             );
         }
 
