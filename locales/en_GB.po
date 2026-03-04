@@ -231,6 +231,19 @@ msgstr "Configuration Escalade plugin"
 msgid "Default (not managed by plugin)"
 msgstr "Default (not managed by plugin)"
 
+#: inc/ticket.class.php:629
+msgid "Ticket not found"
+msgstr "Ticket not found"
+
+#: inc/ticket.class.php:681
+msgid "Error during escalation"
+msgstr "Error during escalation"
+
+#: inc/ticket.class.php:688
+#, php-format
+msgid "Ticket already assigned to group %s"
+msgstr "Ticket already assigned to group %s"
+
 #: hook.php:568
 msgid "Group concerned by the escalation"
 msgstr "Group concerned by the escalation"

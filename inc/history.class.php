@@ -231,9 +231,9 @@ class PluginEscaladeHistory extends CommonDBTM
         if ($nb_histories - 1 > self::HISTORY_LIMIT && !$full_history) {
             echo Ajax::createModalWindow(
                 'full_history',
-                $plugin_dir . "/front/popup_histories.php?tickets_id=" . $tickets_id,
+                $plugin_dir . "front/popup_histories.php?tickets_id=" . $tickets_id,
                 [
-                    'title' => __s("full assignation history", "escalade"),
+                    'title' => __("full assignation history", "escalade"),
                 ],
             );
             echo "<a href='#' onclick='full_history.show();' title='" . __s("View full history", "escalade") . "'>...</a>";

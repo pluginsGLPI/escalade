@@ -597,7 +597,7 @@ class PluginEscaladeTicket
      * @param  int $tickets_id the ticket to change
      * @param  int $groups_id  the group to assign
      * @param  bool $no_redirect if true, no redirection after the action
-     * @return void
+     * @return false
      */
     public static function climb_group($tickets_id, $groups_id, $no_redirect = false)
     {
@@ -623,22 +623,72 @@ class PluginEscaladeTicket
                 ),
             ]);
             $ticket = new Ticket();
-            $ticket->update([
-                'id'      => $tickets_id,
-                '_actors' => [
-                    'assign' => [
-                        [
-                            'items_id' => $groups_id,
-                            'itemtype' => 'Group',
-                        ],
-                    ],
-                ],
+            if (!$ticket->getFromDB($tickets_id)) {
+                if (!$no_redirect) {
+                    Session::addMessageAfterRedirect(
+                        __('Ticket not found', 'escalade'),
+                        false,
+                        ERROR,
+                    );
+                }
+
+                return false;
+            }
+
+            // Temporarily disable template checking
+            $original_skip_template = $_SESSION['glpi_skip_template_check'] ?? false;
+            $_SESSION['glpi_skip_template_check'] = true;
+
+            $group_ticket_new = new Group_Ticket();
+            $add_result = $group_ticket_new->add([
+                'tickets_id' => $tickets_id,
+                'groups_id'  => $groups_id,
+                'type'       => CommonITILActor::ASSIGN,
             ]);
+
+            // Restore original template checking state
+            $_SESSION['glpi_skip_template_check'] = $original_skip_template;
+
+            if ($add_result) {
+                $ticket->updateDateMod($tickets_id);
+
+                if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != self::MANAGED_BY_CORE) {
+                    $input_status = [
+                        'id' => $tickets_id,
+                        'status' => $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'],
+                        '_no_message' => true,
+                    ];
+                    $ticket->updateInDB($input_status);
+                }
+
+                // Remove old assigned users if configured
+                if ($_SESSION['glpi_plugins']['escalade']['config']['remove_group']) {
+                    self::removeAssignUsers($ticket);
+                }
+
+                Session::addMessageAfterRedirect(
+                    sprintf(__s('Escalation to the group %s.', 'escalade'), $group->getName()),
+                );
+
+            } else {
+                Session::addMessageAfterRedirect(
+                    __s('Error during escalation', 'escalade'),
+                    false,
+                    ERROR,
+                );
+                return false;
+            }
+        } else {
+            Session::addMessageAfterRedirect(
+                sprintf(__s('Ticket already assigned to group %s', 'escalade'), $group->getName()),
+            );
         }
 
         if (!$no_redirect) {
             Html::back();
         }
+
+        return true;
     }
 
 
