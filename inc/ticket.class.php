@@ -41,6 +41,11 @@ class PluginEscaladeTicket
 
     public static function pre_item_update(CommonDBTM $item)
     {
+        // If this is an escalation action, do not interfere
+        if (isset($item->input['_escalation_action']) && $item->input['_escalation_action']) {
+            return $item;
+        }
+
         // Only process escalation logic if we're dealing with actor assignments
         // Don't interfere with other updates like solutions, status changes, etc.
         if (!isset($item->input['_actors']) && !isset($item->input['_itil_assign']) && !isset($item->input['actortype'])) {
@@ -612,7 +617,7 @@ class PluginEscaladeTicket
             'type'       => CommonITILActor::ASSIGN,
         ];
         if (!$group_ticket->find($condition)) {
-            $ticket_group = new Group_Ticket();
+            // Add task for escalation history
             PluginEscaladeTaskmanager::setTicketTask([
                 'tickets_id' => $tickets_id,
                 'is_private' => true,
@@ -622,65 +627,83 @@ class PluginEscaladeTicket
                     $group->getName() . '</i></p><hr />',
                 ),
             ]);
+
             $ticket = new Ticket();
             if (!$ticket->getFromDB($tickets_id)) {
                 if (!$no_redirect) {
                     Session::addMessageAfterRedirect(
-                        __('Ticket not found', 'escalade'),
+                        __s('Error: ticket not found', 'escalade'),
                         false,
-                        ERROR,
+                        ERROR
                     );
                 }
-
                 return false;
             }
 
-            // Temporarily disable template checking
-            $original_skip_template = $_SESSION['glpi_skip_template_check'] ?? false;
-            $_SESSION['glpi_skip_template_check'] = true;
+            // Prepare input with all existing ticket data to satisfy mandatory field validation
+            $input = $ticket->fields;
+            $input['id'] = $tickets_id;
 
-            $group_ticket_new = new Group_Ticket();
-            $add_result = $group_ticket_new->add([
+            // Add existing requesters to pass mandatory field validation
+            $ticket_users = new Ticket_User();
+            $existing_requesters = $ticket_users->find([
                 'tickets_id' => $tickets_id,
-                'groups_id'  => $groups_id,
-                'type'       => CommonITILActor::ASSIGN,
+                'type' => CommonITILActor::REQUESTER,
             ]);
+            if (!empty($existing_requesters)) {
+                $input['_users_id_requester'] = array_column($existing_requesters, 'users_id');
+            }
 
-            // Restore original template checking state
-            $_SESSION['glpi_skip_template_check'] = $original_skip_template;
+            // Add existing requester groups
+            $existing_requester_groups = $group_ticket->find([
+                'tickets_id' => $tickets_id,
+                'type' => CommonITILActor::REQUESTER,
+            ]);
+            if (!empty($existing_requester_groups)) {
+                $input['_groups_id_requester'] = array_column($existing_requester_groups, 'groups_id');
+            }
 
-            if ($add_result) {
-                $ticket->updateDateMod($tickets_id);
+            // Add the new group assignment
+            $input['_actors'] = [
+                'assign' => [
+                    [
+                        'items_id' => $groups_id,
+                        'itemtype' => 'Group',
+                    ],
+                ],
+            ];
 
-                if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != self::MANAGED_BY_CORE) {
-                    $input_status = [
-                        'id' => $tickets_id,
-                        'status' => $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'],
-                        '_no_message' => true,
-                    ];
-                    $ticket->updateInDB($input_status);
-                }
+            // Ensure content is not empty for template validation
+            if (empty($input['content'])) {
+                $input['content'] = 'Content preserved during escalation';
+            }
 
-                // Remove old assigned users if configured
-                if ($_SESSION['glpi_plugins']['escalade']['config']['remove_group']) {
-                    self::removeAssignUsers($ticket);
-                }
+            // Mark as escalation action and disable notifications during update
+            $input['_escalation_action'] = true;
+            $input['_disablenotif'] = true;
 
+            // Use ticket->update() to trigger rules while avoiding validation issues
+            $result = $ticket->update($input);
+
+            if ($result) {
                 Session::addMessageAfterRedirect(
                     sprintf(__s('Escalation to the group %s.', 'escalade'), $group->getName()),
+                    false,
+                    INFO
                 );
-
             } else {
                 Session::addMessageAfterRedirect(
                     __s('Error during escalation', 'escalade'),
                     false,
-                    ERROR,
+                    ERROR
                 );
                 return false;
             }
         } else {
             Session::addMessageAfterRedirect(
                 sprintf(__s('Ticket already assigned to group %s', 'escalade'), $group->getName()),
+                false,
+                INFO
             );
         }
 
