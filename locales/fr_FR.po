@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Alexandre DELAUNAY <adelaunay@teclib.com>, 2013
 # alexandre delaunay <delaunay.alexandre@gmail.com>, 2016
@@ -237,6 +237,19 @@ msgstr "Configuration du plugin Escalade"
 #: inc/config.class.php:139
 msgid "Default (not managed by plugin)"
 msgstr "Par défaut (non géré par le plugin)"
+
+#: inc/ticket.class.php:629
+msgid "Ticket not found"
+msgstr "Ticket non trouvé"
+
+#: inc/ticket.class.php:681
+msgid "Error during escalation"
+msgstr "Erreur lors de l'escalade"
+
+#: inc/ticket.class.php:688
+#, php-format
+msgid "Ticket already assigned to group %s"
+msgstr "Ticket déjà assigné au groupe %s"
 
 #: hook.php:568
 msgid "Group concerned by the escalation"

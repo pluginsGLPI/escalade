@@ -41,6 +41,11 @@ class PluginEscaladeTicket
 
     public static function pre_item_update(CommonDBTM $item)
     {
+        // If this is an escalation action, do not interfere
+        if (isset($item->input['_escalation_action']) && $item->input['_escalation_action']) {
+            return $item;
+        }
+
         // Only process escalation logic if we're dealing with actor assignments
         // Don't interfere with other updates like solutions, status changes, etc.
         if (!isset($item->input['_actors']) && !isset($item->input['_itil_assign']) && !isset($item->input['actortype'])) {
@@ -597,7 +602,7 @@ class PluginEscaladeTicket
      * @param  int $tickets_id the ticket to change
      * @param  int $groups_id  the group to assign
      * @param  bool $no_redirect if true, no redirection after the action
-     * @return void
+     * @return bool true on success, false on error
      */
     public static function climb_group($tickets_id, $groups_id, $no_redirect = false)
     {
@@ -612,7 +617,7 @@ class PluginEscaladeTicket
             'type'       => CommonITILActor::ASSIGN,
         ];
         if (!$group_ticket->find($condition)) {
-            $ticket_group = new Group_Ticket();
+            // Add task for escalation history
             PluginEscaladeTaskmanager::setTicketTask([
                 'tickets_id' => $tickets_id,
                 'is_private' => true,
@@ -622,23 +627,88 @@ class PluginEscaladeTicket
                     $group->getName() . '</i></p><hr />',
                 ),
             ]);
+
             $ticket = new Ticket();
-            $ticket->update([
-                'id'      => $tickets_id,
-                '_actors' => [
-                    'assign' => [
-                        [
-                            'items_id' => $groups_id,
-                            'itemtype' => 'Group',
-                        ],
+            if (!$ticket->getFromDB($tickets_id)) {
+                if (!$no_redirect) {
+                    Session::addMessageAfterRedirect(
+                        __s('Error: ticket not found', 'escalade'),
+                        false,
+                        ERROR,
+                    );
+                }
+
+                return false;
+            }
+
+            // Prepare input with all existing ticket data to satisfy mandatory field validation
+            $input = $ticket->fields;
+            $input['id'] = $tickets_id;
+
+            // Add existing requesters to pass mandatory field validation
+            $ticket_users = new Ticket_User();
+            $existing_requesters = $ticket_users->find([
+                'tickets_id' => $tickets_id,
+                'type' => CommonITILActor::REQUESTER,
+            ]);
+            if (!empty($existing_requesters)) {
+                $input['_users_id_requester'] = array_column($existing_requesters, 'users_id');
+            }
+
+            // Add existing requester groups
+            $existing_requester_groups = $group_ticket->find([
+                'tickets_id' => $tickets_id,
+                'type' => CommonITILActor::REQUESTER,
+            ]);
+            if (!empty($existing_requester_groups)) {
+                $input['_groups_id_requester'] = array_column($existing_requester_groups, 'groups_id');
+            }
+
+            // Add the new group assignment
+            $input['_actors'] = [
+                'assign' => [
+                    [
+                        'items_id' => $groups_id,
+                        'itemtype' => 'Group',
                     ],
                 ],
-            ]);
+            ];
+
+            // Ensure content is not empty for template validation
+            if (empty($input['content'])) {
+                $input['content'] = 'Content preserved during escalation';
+            }
+
+            // Mark as escalation action and disable notifications during update
+            $input['_escalation_action'] = true;
+            $input['_disablenotif'] = true;
+
+            // Use ticket->update() to trigger rules while avoiding validation issues
+            $result = $ticket->update($input);
+
+            if ($result) {
+                Session::addMessageAfterRedirect(
+                    sprintf(__s('Escalation to the group %s.', 'escalade'), $group->getName()),
+                );
+            } else {
+                Session::addMessageAfterRedirect(
+                    __s('Error during escalation', 'escalade'),
+                    false,
+                    ERROR,
+                );
+                return false;
+            }
+        } else {
+            Session::addMessageAfterRedirect(
+                sprintf(__s('Ticket already assigned to group %s', 'escalade'), $group->getName()),
+            );
         }
 
         if (!$no_redirect) {
             Html::back();
         }
+
+        return true;
     }
 
 
