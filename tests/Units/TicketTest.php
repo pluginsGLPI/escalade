@@ -288,7 +288,11 @@ final class TicketTest extends EscaladeTestCase
                 $this->assertEquals(1, count($user_ticket->find(['tickets_id' => $ticket_id, 'users_id' => $user_tech->getID(), 'type' => CommonITILActor::ASSIGN])));
             }
 
-            $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group_observer_id, 'type' => CommonITILActor::OBSERVER])));
+            if ($data['method'] == 'escalateWithHistoryButton') {
+                $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group_observer_id, 'type' => CommonITILActor::OBSERVER])));
+            } else {
+                $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group_observer_id, 'type' => CommonITILActor::OBSERVER])));
+            }
         }
     }
 
