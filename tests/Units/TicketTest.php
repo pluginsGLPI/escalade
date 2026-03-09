@@ -414,6 +414,37 @@ final class TicketTest extends EscaladeTestCase
             }
             $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group_observer_id, 'type' => \CommonITILActor::OBSERVER])));
         }
+
+        // Ensures that a rule linked to a category creates a task upon assignment, unless the _skip_rules => true param is enabled.
+
+        $category = $this->createItem(\ITILCategory::class, [
+            'name' => 'Category that triggers task rule',
+            'entities_id' => 0,
+            'is_recursive' => 1,
+        ]);
+
+        $this->assertEquals(
+            0,
+            countElementsInTable(\TicketTask::getTable(), ['tickets_id' => $ticket->getID()]),
+        );
+        $ticket_skip_id = $this->createItem(\Ticket::class, [
+            'name' => 'Ticket for rule task creation skip',
+            'content' => 'Content',
+        ])->getID();
+        $this->assertEquals(
+            0,
+            countElementsInTable(\TicketTask::getTable(), ['tickets_id' => $ticket_skip_id]),
+        );
+        $this->updateItem(\Ticket::class, $ticket_skip_id, [
+            'itilcategories_id' => $category->getID(),
+            '_skip_rules' => true,
+        ]);
+        // Verify that no task was created because rules were skipped
+        $this->assertEquals(
+            0,
+            countElementsInTable(\TicketTask::getTable(), ['tickets_id' => $ticket_skip_id]),
+            'No task should be created when executed the category with _skip_rules = true',
+        );
     }
 
     public function testTicketUpdateDoesNotChangeITILCategoryAssignedGroup()
@@ -1525,4 +1556,86 @@ final class TicketTest extends EscaladeTestCase
         $ticket->getFromDB($ticket->getID());
         $this->assertEquals($category->getID(), $ticket->fields['itilcategories_id']);
     }
+
+    public function testRuleCreatesSingleTaskOnCategoryAssign()
+    {
+        $this->login();
+
+        // Load Escalade plugin configuration
+        $config = new PluginEscaladeConfig();
+        $conf = $config->find();
+        $conf = reset($conf);
+        $config->getFromDB($conf['id']);
+        $this->assertGreaterThan(0, $conf['id']);
+        PluginEscaladeConfig::loadInSession();
+
+        // Create a task template that will be appended by the rule
+        $task_template_id = $this->createItem(\TaskTemplate::class, [
+            'name' => 'Rule created task template',
+            'content' => 'Task created by rule',
+            'is_recursive' => 1,
+        ])->getID();
+
+        // Create an ITIL category that will trigger the rule
+        $category_id = $this->createItem(\ITILCategory::class, [
+            'name' => 'Category that triggers task rule',
+            'entities_id' => 0,
+            'is_recursive' => 1,
+        ])->getID();
+
+        // Create a RuleTicket
+        $rule_id = $this->createItem(\Rule::class, [
+            'name' => 'Create task on category assign',
+            'sub_type' => 'RuleTicket',
+            'match' => 'AND',
+            'is_active' => 1,
+            'condition' => \RuleTicket::ONUPDATE,
+            'is_recursive' => 1,
+        ])->getID();
+
+        // Add action
+        $this->createItem(\RuleAction::class, [
+            'rules_id' => $rule_id,
+            'action_type' => 'append',
+            'field' => 'task_template',
+            'value' => $task_template_id,
+        ]);
+
+        // Add criteria
+        $this->createItem(\RuleCriteria::class, [
+            'rules_id' => $rule_id,
+            'criteria' => 'itilcategories_id',
+            'condition' => \Rule::PATTERN_IS,
+            'pattern' => $category_id,
+        ]);
+
+        // Reset rule cache
+        \SingletonRuleList::getInstance("RuleTicket", 0)->load = 0;
+        \SingletonRuleList::getInstance("RuleTicket", 0)->list = [];
+
+        // Create ticket
+        $ticket_id = $this->createItem(\Ticket::class, [
+            'name' => 'Ticket for rule task creation',
+            'content' => 'Content',
+        ])->getID();
+
+        // Ensure no task exists before update
+        $this->assertEquals(
+            0,
+            countElementsInTable(\TicketTask::getTable(), ['tickets_id' => $ticket_id]),
+        );
+
+        // Trigger rule by updating category
+        $this->updateItem(\Ticket::class, $ticket_id, [
+            'itilcategories_id' => $category_id,
+        ]);
+
+        // Verify exactly one task was created
+        $this->assertEquals(
+            1,
+            countElementsInTable(\TicketTask::getTable(), ['tickets_id' => $ticket_id]),
+            'Exactly one task should be created when assigning the category',
+        );
+    }
+
 }
