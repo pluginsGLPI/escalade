@@ -501,6 +501,7 @@ class PluginEscaladeTicket
         // group so GLPI detects old groups as deleted and rules see the final state.
         // getFromDB() is required first so isNewItem() returns false and deleted-actor
         // detection runs. _plugin_escalade_rules_only skips escalade logic in pre_item_update.
+        // Safety net in case updateActors() above did not already remove old groups.
         if ($_SESSION['glpi_plugins']['escalade']['config']['remove_group'] == true) {
             $all_actors = self::getTicketFieldsWithActors($tickets_id, $groups_id);
 
@@ -512,10 +513,12 @@ class PluginEscaladeTicket
                     if ($actor['itemtype'] !== 'Group') {
                         return true;
                     }
+
                     if ($actor['items_id'] == $groups_id && !$seen_new_group) {
                         $seen_new_group = true;
                         return true;
                     }
+
                     return false;
                 },
             ));
@@ -530,10 +533,6 @@ class PluginEscaladeTicket
                 'actortype'                   => CommonITILActor::ASSIGN,
                 'groups_id'                   => $groups_id,
             ]);
-        }
-
-        // Safety net in case updateActors() above did not already remove old groups.
-        if ($_SESSION['glpi_plugins']['escalade']['config']['remove_group'] == true) {
             self::removeAssignGroups($tickets_id, $groups_id);
         }
 
