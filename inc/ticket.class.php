@@ -47,6 +47,11 @@ class PluginEscaladeTicket
             return $item;
         }
 
+        // Rules-only pass triggered by processAfterAddGroup: skip escalade logic entirely.
+        if (isset($item->input['_plugin_escalade_rules_only'])) {
+            return $item;
+        }
+
         // Special case: If we have _itil_assign without actortype, we need to distinguish between:
         // 1. "Associate myself" button - many fields merged from ticket form
         // 2. History button escalation (climb_group) - specific structure with groups_id and _type = 'group'
@@ -492,8 +497,42 @@ class PluginEscaladeTicket
         $tickets_id = $item->fields['tickets_id'];
         $groups_id = $item->fields['groups_id'];
 
-        //remove old groups (keep last assigned)
+        // Fire business rules before removing old groups: pass _actors with only the new
+        // group so GLPI detects old groups as deleted and rules see the final state.
+        // getFromDB() is required first so isNewItem() returns false and deleted-actor
+        // detection runs. _plugin_escalade_rules_only skips escalade logic in pre_item_update.
+        // Safety net in case updateActors() above did not already remove old groups.
         if ($_SESSION['glpi_plugins']['escalade']['config']['remove_group'] == true) {
+            $all_actors = self::getTicketFieldsWithActors($tickets_id, $groups_id);
+
+            // Keep only the new group in the assign list (drop old ones).
+            $seen_new_group = false;
+            $all_actors['assign'] = array_values(array_filter(
+                $all_actors['assign'],
+                function (array $actor) use ($groups_id, &$seen_new_group): bool {
+                    if ($actor['itemtype'] !== 'Group') {
+                        return true;
+                    }
+
+                    if ($actor['items_id'] == $groups_id && !$seen_new_group) {
+                        $seen_new_group = true;
+                        return true;
+                    }
+
+                    return false;
+                },
+            ));
+
+            $ticket_for_rules = new Ticket();
+            $ticket_for_rules->getFromDB($tickets_id);
+            $ticket_for_rules->update([
+                'id'                          => $tickets_id,
+                '_actors'                     => $all_actors,
+                '_plugin_escalade_rules_only' => true,
+                '_disablenotif'               => true,
+                'actortype'                   => CommonITILActor::ASSIGN,
+                'groups_id'                   => $groups_id,
+            ]);
             self::removeAssignGroups($tickets_id, $groups_id);
         }
 
