@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-05 01:04+0000\n"
+"POT-Creation-Date: 2026-03-16 01:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,26 +16,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: templates/group_group.html.twig
-msgid "List of groups to escalate"
-msgstr ""
-
-#: templates/escalade_form.html.twig
-msgid "Escalate ticket"
-msgstr ""
-
-#: templates/escalade_form.html.twig
-msgid "Comment"
-msgstr ""
-
-#: templates/escalade_form.html.twig
-msgid "Assign me as an observer"
-msgstr ""
-
-#: templates/user.html.twig hook.php:614 hook.php:633
-msgid "Bypass filtering on the groups assignment"
-msgstr ""
 
 #: templates/config.html.twig
 msgid "Group assignment"
@@ -125,28 +105,98 @@ msgstr ""
 msgid "Display delete button"
 msgstr ""
 
-#: setup.php:174 inc/group_group.class.php:61 inc/user.class.php:167
+#: templates/user.html.twig hook.php:614 hook.php:633
+msgid "Bypass filtering on the groups assignment"
+msgstr ""
+
+#: templates/escalade_form.html.twig
+msgid "Escalate ticket"
+msgstr ""
+
+#: templates/escalade_form.html.twig
+msgid "Comment"
+msgstr ""
+
+#: templates/escalade_form.html.twig
+msgid "Assign me as an observer"
+msgstr ""
+
+#: templates/group_group.html.twig
+msgid "List of groups to escalate"
+msgstr ""
+
+#: hook.php:568
+msgid "Group concerned by the escalation"
+msgstr ""
+
+#: hook.php:586
+msgid "Number of escalations"
+msgstr ""
+
+#: hook.php:600
+msgid "Number of escalations between two groups"
+msgstr ""
+
+#: public/js/cloneandlink_ticket.js.php:40
+msgid "Clone and link"
+msgstr ""
+
+#: inc/ticket.class.php:312
+msgid "Solution provided, back to the group"
+msgstr ""
+
+#: inc/ticket.class.php:380
+msgid "Solution rejected, return to the group"
+msgstr ""
+
+#: inc/ticket.class.php:563 inc/ticket.class.php:660
+#, php-format
+msgid "Escalation to the group %s."
+msgstr ""
+
+#: inc/ticket.class.php:1016
+msgid "Error : get old ticket"
+msgstr ""
+
+#: inc/ticket.class.php:1031
+msgid "Error : adding new ticket"
+msgstr ""
+
+#: inc/ticket.class.php:1050
+msgid "Error : adding link between the two tickets"
+msgstr ""
+
+#: inc/ticket.class.php:1061 inc/ticket.class.php:1095
+#: inc/ticket.class.php:1100
+msgid "This ticket has been cloned from the ticket num"
+msgstr ""
+
+#: inc/ticket.class.php:1067
+msgid "Error : adding followups"
+msgstr ""
+
+#: inc/ticket.class.php:1206 inc/ticket.class.php:1207
+msgid "Escalate"
+msgstr ""
+
+#: inc/ticket.class.php:1328
+msgid "You must select a group."
+msgstr ""
+
+#: inc/config.class.php:39
+msgid "Escalade"
+msgstr ""
+
+#: inc/config.class.php:44
+msgid "Configuration Escalade plugin"
+msgstr ""
+
+#: inc/config.class.php:139
+msgid "Default (not managed by plugin)"
+msgstr ""
+
+#: inc/group_group.class.php:61 inc/user.class.php:167 setup.php:174
 msgid "Escalation"
-msgstr ""
-
-#: inc/history.class.php:192
-msgid "Reassign the ticket to group"
-msgstr ""
-
-#: inc/history.class.php:236
-msgid "full assignation history"
-msgstr ""
-
-#: inc/history.class.php:239
-msgid "View full history"
-msgstr ""
-
-#: inc/history.class.php:294
-msgid "Tickets to follow (escalated)"
-msgstr ""
-
-#: inc/history.class.php:308
-msgid "Tickets to close (escalated)"
 msgstr ""
 
 #: inc/notification.class.php:83
@@ -177,72 +227,22 @@ msgstr ""
 msgid "Solve date modification"
 msgstr ""
 
-#: inc/ticket.class.php:307
-msgid "Solution provided, back to the group"
+#: inc/history.class.php:192
+msgid "Reassign the ticket to group"
 msgstr ""
 
-#: inc/ticket.class.php:375
-msgid "Solution rejected, return to the group"
+#: inc/history.class.php:236
+msgid "full assignation history"
 msgstr ""
 
-#: inc/ticket.class.php:524 inc/ticket.class.php:621
-#, php-format
-msgid "Escalation to the group %s."
+#: inc/history.class.php:239
+msgid "View full history"
 msgstr ""
 
-#: inc/ticket.class.php:977
-msgid "Error : get old ticket"
+#: inc/history.class.php:294
+msgid "Tickets to follow (escalated)"
 msgstr ""
 
-#: inc/ticket.class.php:992
-msgid "Error : adding new ticket"
-msgstr ""
-
-#: inc/ticket.class.php:1011
-msgid "Error : adding link between the two tickets"
-msgstr ""
-
-#: inc/ticket.class.php:1022 inc/ticket.class.php:1056
-#: inc/ticket.class.php:1061
-msgid "This ticket has been cloned from the ticket num"
-msgstr ""
-
-#: inc/ticket.class.php:1028
-msgid "Error : adding followups"
-msgstr ""
-
-#: inc/ticket.class.php:1167 inc/ticket.class.php:1168
-msgid "Escalate"
-msgstr ""
-
-#: inc/ticket.class.php:1289
-msgid "You must select a group."
-msgstr ""
-
-#: inc/config.class.php:39
-msgid "Escalade"
-msgstr ""
-
-#: inc/config.class.php:44
-msgid "Configuration Escalade plugin"
-msgstr ""
-
-#: inc/config.class.php:139
-msgid "Default (not managed by plugin)"
-msgstr ""
-
-#: hook.php:568
-msgid "Group concerned by the escalation"
-msgstr ""
-
-#: hook.php:586
-msgid "Number of escalations"
-msgstr ""
-
-#: hook.php:600
-msgid "Number of escalations between two groups"
-msgstr ""
-
-#: public/js/cloneandlink_ticket.js.php:40
-msgid "Clone and link"
+#: inc/history.class.php:308
+msgid "Tickets to close (escalated)"
 msgstr ""
