@@ -55,7 +55,7 @@ Elle ajoute les fonctionnalités suivantes :
    <homepage>https://github.com/pluginsGLPI/escalade</homepage>
    <download>https://github.com/pluginsGLPI/escalade/releases</download>
    <issues>https://github.com/pluginsGLPI/escalade/issues</issues>
-   <readme>https://glpi-plugins.readthedocs.io/en/latest/escalade/index.html</readme>
+   <readme>https://help.glpi-project.org/doc-plugins/escalade</readme>
    <authors>
       <author>Alexandre Delaunay</author>
       <author>Teclib'</author>
