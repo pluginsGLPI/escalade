@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-16 01:14+0000\n"
+"POT-Creation-Date: 2026-03-17 01:06+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: feonsu <feonsu@gmail.com>, 2019,2023-2026\n"
 "Language-Team: Slovak (Slovakia) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/sk_SK/)\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: templates/config.html.twig
 msgid "Group assignment"
-msgstr ""
+msgstr "Priradenie skupiny"
 
 #: templates/config.html.twig
 msgid "Remove old assign group on new group assign"
@@ -32,7 +32,7 @@ msgstr "Použiť skupinu technika"
 
 #: templates/config.html.twig
 msgid "Show group assign history visually"
-msgstr ""
+msgstr "Vizuálne zobraziť históriu priradenia skupín"
 
 #: templates/config.html.twig
 msgid "at creation time"
@@ -56,7 +56,7 @@ msgstr "Povoliť filtrovanie pri priraďovaní skupín"
 
 #: templates/config.html.twig
 msgid "User assignment"
-msgstr ""
+msgstr "Priradenie používateľa"
 
 #: templates/config.html.twig
 msgid "Remove technician(s) on escalation"
@@ -76,7 +76,7 @@ msgstr "Priradiť mňa ako pozorovateľa predvolene"
 
 #: templates/config.html.twig
 msgid "Other"
-msgstr ""
+msgstr "Iné"
 
 #: templates/config.html.twig
 msgid "Escalation history in tasks"
@@ -92,15 +92,15 @@ msgstr "Klonovať požiadavky"
 
 #: templates/config.html.twig
 msgid "Close cloned tickets at the same time"
-msgstr ""
+msgstr "Súčasne uzavrieť aj klonované požiadavky"
 
 #: templates/config.html.twig
 msgid "Nota: This feature (clone tickets) is duplicate with the"
-msgstr ""
+msgstr "Poznámka: Táto funkcia (klonovanie tiketov) sa duplikuje s pluginom"
 
 #: templates/config.html.twig
 msgid "plugin. This last has priority."
-msgstr ""
+msgstr "Posledný menovaný má prednosť."
 
 #: templates/config.html.twig
 msgid "Display delete button"
@@ -124,7 +124,7 @@ msgstr "Priradiť mňa ako pozorovateľa"
 
 #: templates/group_group.html.twig
 msgid "List of groups to escalate"
-msgstr ""
+msgstr "Zoznam skupín na eskaláciu"
 
 #: hook.php:568
 msgid "Group concerned by the escalation"
@@ -186,7 +186,7 @@ msgstr "Musíte vybrať skupinu."
 
 #: inc/config.class.php:39
 msgid "Escalade"
-msgstr ""
+msgstr "Eskalácia"
 
 #: inc/config.class.php:44
 msgid "Configuration Escalade plugin"
