@@ -304,7 +304,7 @@ final class TaskMessageTest extends EscaladeTestCase
             'entities_id' => 0,
         ]);
 
-        $group = $this->createItem('Group', [
+        $this->createItem('Group', [
             'name' => 'Task private group',
             'entities_id' => 0,
         ]);
