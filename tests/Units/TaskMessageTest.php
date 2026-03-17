@@ -329,8 +329,6 @@ final class TaskMessageTest extends EscaladeTestCase
             ],
         );
 
-        $this->escalateWithHistoryButton($ticket, $group);
-
         $ticket_task = new TicketTask();
         $ticket_tasks = $ticket_task->find(['tickets_id' => $ticket->getID()]);
 
