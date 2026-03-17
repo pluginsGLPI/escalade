@@ -391,8 +391,6 @@ function plugin_escalade_install()
         $migration->migrationOneTable('glpi_plugin_escalade_users');
     }
 
-    return true;
-
     //Update to 2.10.2
     // add new fields
     if (!$DB->fieldExists('glpi_plugin_escalade_configs', 'task_private')) {
@@ -404,6 +402,8 @@ function plugin_escalade_install()
         );
         $migration->migrationOneTable('glpi_plugin_escalade_configs');
     }
+
+    return true;
 }
 
 /**
