@@ -520,11 +520,18 @@ class PluginEscaladeTicket
         $ticket = new Ticket();
         $ticket->getFromDB($tickets_id);
 
+        $config = new PluginEscaladeConfig();
+        $config->getFromDB($_SESSION['glpiactive_entity']);
+
+        if (!$config->fields['task_private']) {
+            $is_private = false;
+        }
+
         //default task content
         $task_content = '<p><i>' . sprintf(__s('Escalation to the group %s.', 'escalade'), $group->getName()) . '</i></p><hr />' . $comment;
         PluginEscaladeTaskmanager::setTicketTask([
             'tickets_id' => $tickets_id,
-            'is_private' => true,
+            'is_private' => $is_private ?? true,
             'state'      => Planning::INFO,
             'content'    => $task_content,
         ]);

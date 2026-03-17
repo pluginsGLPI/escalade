@@ -85,12 +85,13 @@ function plugin_escalade_install()
          `use_filter_assign_group`                 INT NOT NULL,
          `ticket_last_status`                      INT NOT NULL,
          `remove_requester`                        INT NOT NULL,
+         `task_private`                            INT NOT NULL,
          PRIMARY KEY (`id`)
       ) ENGINE=InnoDB DEFAULT CHARSET={$default_charset} COLLATE={$default_collation} ROW_FORMAT=DYNAMIC;";
         $DB->doQuery($query);
 
         $query = "INSERT INTO glpi_plugin_escalade_configs
-      VALUES (NULL, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, '" . Ticket::WAITING . "',0)";
+      VALUES (NULL, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, '" . Ticket::WAITING . "',0, 1)";
         $DB->doQuery($query);
     }
 
@@ -391,6 +392,18 @@ function plugin_escalade_install()
     }
 
     return true;
+
+    //Update to 2.10.2
+    // add new fields
+    if (!$DB->fieldExists('glpi_plugin_escalade_configs', 'task_private')) {
+        $migration->addField(
+            'glpi_plugin_escalade_configs',
+            'task_private',
+            'integer',
+            ['after' => 'remove_requester'],
+        );
+        $migration->migrationOneTable('glpi_plugin_escalade_configs');
+    }
 }
 
 /**
