@@ -309,6 +309,26 @@ final class TaskMessageTest extends EscaladeTestCase
             'entities_id' => 0,
         ]);
 
+        $group2 = $this->createItem('Group', [
+            'name' => 'Task private group 2',
+            'entities_id' => 0,
+        ]);
+
+        $this->updateItem(
+            Ticket::class,
+            $ticket->getID(),
+            [
+                '_actors' => [
+                    'assign' => [
+                        [
+                            'items_id' => $group2->getID(),
+                            'itemtype' => 'Group',
+                        ],
+                    ],
+                ],
+            ],
+        );
+
         $this->escalateWithHistoryButton($ticket, $group);
 
         $ticket_task = new TicketTask();
