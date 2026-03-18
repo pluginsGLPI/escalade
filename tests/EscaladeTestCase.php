@@ -113,6 +113,7 @@ abstract class EscaladeTestCase extends DbTestCase
             'cloneandlink_ticket' => 0,
             'close_linkedtickets' => 0,
             'reassign_group_from_cat' => 0,
+            'task_private' => 1,
         ];
 
         // Update escalade config in database if provided

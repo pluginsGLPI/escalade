@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed routing issue caused by incorrect trailing slash
 - Fix to rule execution based on group deletion
 
+### Added
+
+- Add task visibility option (`task_private`)
+
 ## [2.9.19] - 2026-27-01
 
 ### Fixed
