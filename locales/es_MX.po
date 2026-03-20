@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-13 01:04+0000\n"
+"POT-Creation-Date: 2026-03-20 01:06+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Edwin Elias Alvarez <elias986@yahoo.com>, 2026\n"
 "Language-Team: Spanish (Mexico) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/es_MX/)\n"
@@ -83,6 +83,10 @@ msgid "Escalation history in tasks"
 msgstr "Historial de escalamiento en tareas"
 
 #: templates/config.html.twig
+msgid "Escalation task is private ?"
+msgstr "¿La tarea de escalamiento es privada?"
+
+#: templates/config.html.twig
 msgid "Ticket status after an escalation"
 msgstr "Estado del ticket después de un escalamiento"
 
@@ -106,7 +110,7 @@ msgstr "complemento. Este último tiene prioridad."
 msgid "Display delete button"
 msgstr "Mostrar botón de eliminar"
 
-#: templates/user.html.twig hook.php:614 hook.php:633
+#: templates/user.html.twig hook.php:627 hook.php:646
 msgid "Bypass filtering on the groups assignment"
 msgstr "Omitir filtrado en la asignación de grupos"
 
@@ -126,15 +130,15 @@ msgstr "Asignarme como observador"
 msgid "List of groups to escalate"
 msgstr "Lista de grupos a escalar"
 
-#: hook.php:568
+#: hook.php:581
 msgid "Group concerned by the escalation"
 msgstr "Grupo involucrado en el escalamiento"
 
-#: hook.php:586
+#: hook.php:599
 msgid "Number of escalations"
 msgstr "Número de escalamientos"
 
-#: hook.php:600
+#: hook.php:613
 msgid "Number of escalations between two groups"
 msgstr "Número de escaladas entre dos grupos"
 
