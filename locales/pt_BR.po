@@ -168,7 +168,7 @@ msgstr "Solução rejeitada, volte para o grupo"
 #: inc/ticket.class.php:563 inc/ticket.class.php:660
 #, php-format
 msgid "Escalation to the group %s."
-msgstr "Escalonamento para o grupo%s."
+msgstr "Escalonamento para o grupo %s."
 
 #: inc/ticket.class.php:1016
 msgid "Error : get old ticket"
@@ -249,7 +249,7 @@ msgstr "Reatribuir o ticket ao grupo"
 
 #: inc/history.class.php:236
 msgid "full assignation history"
-msgstr "histórico de atribuição completo"
+msgstr "Histórico de atribuição completo"
 
 #: inc/history.class.php:239
 msgid "View full history"
@@ -261,4 +261,4 @@ msgstr "Chamados para seguir (escalonados)"
 
 #: inc/history.class.php:308
 msgid "Tickets to close (escalated)"
-msgstr "Chamados para fechar (escalonado)"
+msgstr "Chamados para fechar (escalonados)"
