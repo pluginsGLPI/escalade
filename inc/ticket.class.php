@@ -652,27 +652,7 @@ class PluginEscaladeTicket
         ];
         if (!$group_ticket->find($condition)) {
             $ticket_group = new Group_Ticket();
-            PluginEscaladeTaskmanager::setTicketTask([
-                'tickets_id' => $tickets_id,
-                'is_private' => true,
-                'state'      => Planning::INFO,
-                'content'    => '<p><i>' . sprintf(
-                    __s('Escalation to the group %s.', 'escalade'),
-                    $group->getName() . '</i></p><hr />',
-                ),
-            ]);
-            $ticket = new Ticket();
-            $ticket->update([
-                'id'      => $tickets_id,
-                '_actors' => [
-                    'assign' => [
-                        [
-                            'items_id' => $groups_id,
-                            'itemtype' => 'Group',
-                        ],
-                    ],
-                ],
-            ]);
+            $ticket_group->add($condition);
         }
 
         if (!$no_redirect) {
