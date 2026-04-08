@@ -12,8 +12,8 @@
       </short>
       <long>
          <cs>
-Tento zásuvný modul zjednodušuje eskalaci požadavku na jiné skupiny.   
-Přidává následující funkce: 
+Tento zásuvný modul zjednodušuje eskalaci požadavku na jiné skupiny.
+Přidává následující funkce:
 
 * Zobrazení vizuální historie přiřazení požadavku skupinám.
 * Zrychlená eskalace na skupinu nacházející se v historii.
@@ -22,11 +22,11 @@ Přidává následující funkce:
 * Rychlé klonování požadavku.
 * Současné uzavření klonovaných požadavků.
 * Vzetí první nebo poslední skupiny technika (při změně požadavku).
-* Nové tlačítko pro zrychlené přiřazení požadavku sám sobě. 
+* Nové tlačítko pro zrychlené přiřazení požadavku sám sobě.
          </cs>
          <en>
-This plugin simplifies the ticket escalation to different groups.   
-It adds the following features : 
+This plugin simplifies the ticket escalation to different groups.
+It adds the following features :
 
 * Display a visual history of the assignement groups on a ticket.
 * Rapid escalation to a group present in history.
@@ -35,10 +35,10 @@ It adds the following features :
 * Fast cloning of ticket.
 * Closing cloned tickets simultaneously.
 * Take the first or last group of technician (on ticket modification).
-* New button for rapid self-assignment of a ticket. 
+* New button for rapid self-assignment of a ticket.
          </en>
          <fr>
-Cette extension permet de simplifier l'escalade de ticket vers des groupes différents.   
+Cette extension permet de simplifier l'escalade de ticket vers des groupes différents.
 Elle ajoute les fonctionnalités suivantes :
 
 * Affichage d'un historique visuel de l'assignation des groupes sur un ticket.
@@ -61,6 +61,11 @@ Elle ajoute les fonctionnalités suivantes :
       <author>Teclib'</author>
    </authors>
    <versions>
+       <version>
+           <num>2.10.2</num>
+           <compatibility>~11.0.0</compatibility>
+           <download_url>https://github.com/pluginsGLPI/escalade/releases/download/2.10.2/glpi-escalade-2.10.2.tar.bz2</download_url>
+       </version>
       <version>
          <num>2.9.19</num>
          <compatibility>~10.0.11</compatibility>
@@ -304,11 +309,11 @@ Elle ajoute les fonctionnalités suivantes :
       <version>
           <num>2.0.2</num>
           <compatibility>0.84</compatibility>
-      </version>  
+      </version>
       <version>
           <num>1.2</num>
           <compatibility>0.83</compatibility>
-      </version>  
+      </version>
    </versions>
    <langs>
       <lang>cs_CZ</lang>
