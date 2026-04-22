@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-23 01:10+0000\n"
-"PO-Revision-Date: 2026-03-23 01:10+0000\n"
+"POT-Creation-Date: 2026-04-22 01:20+0000\n"
+"PO-Revision-Date: 2026-04-22 01:20+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en_GB\n"
@@ -16,6 +16,26 @@ msgstr ""
 "Content-Type: text/plain; charset=ASCII\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: templates/user.html.twig hook.php:627 hook.php:646
+msgid "Bypass filtering on the groups assignment"
+msgstr "Bypass filtering on the groups assignment"
+
+#: templates/group_group.html.twig
+msgid "List of groups to escalate"
+msgstr "List of groups to escalate"
+
+#: templates/escalade_form.html.twig
+msgid "Escalate ticket"
+msgstr "Escalate ticket"
+
+#: templates/escalade_form.html.twig
+msgid "Comment"
+msgstr "Comment"
+
+#: templates/escalade_form.html.twig
+msgid "Assign me as an observer"
+msgstr "Assign me as an observer"
 
 #: templates/config.html.twig
 msgid "Group assignment"
@@ -109,25 +129,13 @@ msgstr "plugin. This last has priority."
 msgid "Display delete button"
 msgstr "Display delete button"
 
-#: templates/user.html.twig hook.php:627 hook.php:646
-msgid "Bypass filtering on the groups assignment"
-msgstr "Bypass filtering on the groups assignment"
+#: public/js/cloneandlink_ticket.js.php:40
+msgid "Clone and link"
+msgstr "Clone and link"
 
-#: templates/escalade_form.html.twig
-msgid "Escalate ticket"
-msgstr "Escalate ticket"
-
-#: templates/escalade_form.html.twig
-msgid "Comment"
-msgstr "Comment"
-
-#: templates/escalade_form.html.twig
-msgid "Assign me as an observer"
-msgstr "Assign me as an observer"
-
-#: templates/group_group.html.twig
-msgid "List of groups to escalate"
-msgstr "List of groups to escalate"
+#: setup.php:174 inc/user.class.php:167 inc/group_group.class.php:61
+msgid "Escalation"
+msgstr "Escalation"
 
 #: hook.php:581
 msgid "Group concerned by the escalation"
@@ -141,9 +149,25 @@ msgstr "Number of escalations"
 msgid "Number of escalations between two groups"
 msgstr "Number of escalations between two groups"
 
-#: public/js/cloneandlink_ticket.js.php:40
-msgid "Clone and link"
-msgstr "Clone and link"
+#: inc/history.class.php:192
+msgid "Reassign the ticket to group"
+msgstr "Reassign the ticket to group"
+
+#: inc/history.class.php:236
+msgid "full assignation history"
+msgstr "full assignation history"
+
+#: inc/history.class.php:239
+msgid "View full history"
+msgstr "View full history"
+
+#: inc/history.class.php:294
+msgid "Tickets to follow (escalated)"
+msgstr "Tickets to follow (escalated)"
+
+#: inc/history.class.php:308
+msgid "Tickets to close (escalated)"
+msgstr "Tickets to close (escalated)"
 
 #: inc/ticket.class.php:312
 msgid "Solution provided, back to the group"
@@ -187,22 +211,6 @@ msgstr "Escalate"
 msgid "You must select a group."
 msgstr "You must select a group."
 
-#: inc/config.class.php:39
-msgid "Escalade"
-msgstr "Escalade"
-
-#: inc/config.class.php:44
-msgid "Configuration Escalade plugin"
-msgstr "Configuration Escalade plugin"
-
-#: inc/config.class.php:139
-msgid "Default (not managed by plugin)"
-msgstr "Default (not managed by plugin)"
-
-#: inc/group_group.class.php:61 inc/user.class.php:167 setup.php:174
-msgid "Escalation"
-msgstr "Escalation"
-
 #: inc/notification.class.php:83
 msgid "Requester user of the ticket"
 msgstr "Requester user of the ticket"
@@ -231,22 +239,14 @@ msgstr "Manager of last group escalated in the ticket"
 msgid "Solve date modification"
 msgstr "Solve date modification"
 
-#: inc/history.class.php:192
-msgid "Reassign the ticket to group"
-msgstr "Reassign the ticket to group"
+#: inc/config.class.php:39
+msgid "Escalade"
+msgstr "Escalade"
 
-#: inc/history.class.php:236
-msgid "full assignation history"
-msgstr "full assignation history"
+#: inc/config.class.php:44
+msgid "Configuration Escalade plugin"
+msgstr "Configuration Escalade plugin"
 
-#: inc/history.class.php:239
-msgid "View full history"
-msgstr "View full history"
-
-#: inc/history.class.php:294
-msgid "Tickets to follow (escalated)"
-msgstr "Tickets to follow (escalated)"
-
-#: inc/history.class.php:308
-msgid "Tickets to close (escalated)"
-msgstr "Tickets to close (escalated)"
+#: inc/config.class.php:139
+msgid "Default (not managed by plugin)"
+msgstr "Default (not managed by plugin)"

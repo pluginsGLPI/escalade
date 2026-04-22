@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-19 01:10+0000\n"
+"POT-Creation-Date: 2026-04-10 01:18+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Nuria Costa <nuria.costa@uvic.cat>, 2025-2026\n"
 "Language-Team: Catalan (Spain) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/ca_ES/)\n"
@@ -17,6 +17,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ca_ES\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: templates/user.html.twig hook.php:627 hook.php:646
+msgid "Bypass filtering on the groups assignment"
+msgstr "Evita el filtre a l'assignació de grups"
+
+#: templates/group_group.html.twig
+msgid "List of groups to escalate"
+msgstr "Llista de grups a escalar"
+
+#: templates/escalade_form.html.twig
+msgid "Escalate ticket"
+msgstr "Escala el tiquet"
+
+#: templates/escalade_form.html.twig
+msgid "Comment"
+msgstr "Comentari"
+
+#: templates/escalade_form.html.twig
+msgid "Assign me as an observer"
+msgstr "Assigna'm com a observador/a"
 
 #: templates/config.html.twig
 msgid "Group assignment"
@@ -110,25 +130,13 @@ msgstr "connector. Aquesta última té prioritat"
 msgid "Display delete button"
 msgstr "Mostra el botó d'eliminació"
 
-#: templates/user.html.twig hook.php:627 hook.php:646
-msgid "Bypass filtering on the groups assignment"
-msgstr "Evita el filtre a l'assignació de grups"
+#: public/js/cloneandlink_ticket.js.php:40
+msgid "Clone and link"
+msgstr "Clona i enllaça"
 
-#: templates/escalade_form.html.twig
-msgid "Escalate ticket"
-msgstr "Escala el tiquet"
-
-#: templates/escalade_form.html.twig
-msgid "Comment"
-msgstr "Comentari"
-
-#: templates/escalade_form.html.twig
-msgid "Assign me as an observer"
-msgstr "Assigna'm com a observador/a"
-
-#: templates/group_group.html.twig
-msgid "List of groups to escalate"
-msgstr "Llista de grups a escalar"
+#: setup.php:174 inc/user.class.php:167 inc/group_group.class.php:61
+msgid "Escalation"
+msgstr "Escalar"
 
 #: hook.php:581
 msgid "Group concerned by the escalation"
@@ -142,9 +150,25 @@ msgstr "Nombre d'escalats"
 msgid "Number of escalations between two groups"
 msgstr "Nombre d'escalats entre grups"
 
-#: public/js/cloneandlink_ticket.js.php:40
-msgid "Clone and link"
-msgstr "Clona i enllaça"
+#: inc/history.class.php:192
+msgid "Reassign the ticket to group"
+msgstr "Reassigna el tiquet al grup"
+
+#: inc/history.class.php:236
+msgid "full assignation history"
+msgstr "historial complet d'assignació"
+
+#: inc/history.class.php:239
+msgid "View full history"
+msgstr "Veure tot l'historial"
+
+#: inc/history.class.php:294
+msgid "Tickets to follow (escalated)"
+msgstr "Tiquets per seguir (escalats)"
+
+#: inc/history.class.php:308
+msgid "Tickets to close (escalated)"
+msgstr "Tiquets per tancar (escalats)"
 
 #: inc/ticket.class.php:312
 msgid "Solution provided, back to the group"
@@ -188,22 +212,6 @@ msgstr "Escalar"
 msgid "You must select a group."
 msgstr "Has de seleccionar un grup"
 
-#: inc/config.class.php:39
-msgid "Escalade"
-msgstr "Escalar"
-
-#: inc/config.class.php:44
-msgid "Configuration Escalade plugin"
-msgstr "Configura el connector Escalade"
-
-#: inc/config.class.php:139
-msgid "Default (not managed by plugin)"
-msgstr "Per defecte (no gestionat pel connector)"
-
-#: inc/group_group.class.php:61 inc/user.class.php:167 setup.php:174
-msgid "Escalation"
-msgstr "Escalar"
-
 #: inc/notification.class.php:83
 msgid "Requester user of the ticket"
 msgstr "Sol·licitant del tiquet"
@@ -232,22 +240,14 @@ msgstr "Gestor/a de l'últim grup on s'ha escalat el tiquet"
 msgid "Solve date modification"
 msgstr "Modifica la data de resolució"
 
-#: inc/history.class.php:192
-msgid "Reassign the ticket to group"
-msgstr "Reassigna el tiquet al grup"
+#: inc/config.class.php:39
+msgid "Escalade"
+msgstr "Escalar"
 
-#: inc/history.class.php:236
-msgid "full assignation history"
-msgstr "historial complet d'assignació"
+#: inc/config.class.php:44
+msgid "Configuration Escalade plugin"
+msgstr "Configura el connector Escalade"
 
-#: inc/history.class.php:239
-msgid "View full history"
-msgstr "Veure tot l'historial"
-
-#: inc/history.class.php:294
-msgid "Tickets to follow (escalated)"
-msgstr "Tiquets per seguir (escalats)"
-
-#: inc/history.class.php:308
-msgid "Tickets to close (escalated)"
-msgstr "Tiquets per tancar (escalats)"
+#: inc/config.class.php:139
+msgid "Default (not managed by plugin)"
+msgstr "Per defecte (no gestionat pel connector)"

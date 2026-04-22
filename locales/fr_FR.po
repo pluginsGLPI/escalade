@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-19 01:10+0000\n"
+"POT-Creation-Date: 2026-04-10 01:18+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: EpicIT33, 2025\n"
 "Language-Team: French (France) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/fr_FR/)\n"
@@ -23,6 +23,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: fr_FR\n"
 "Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#: templates/user.html.twig hook.php:627 hook.php:646
+msgid "Bypass filtering on the groups assignment"
+msgstr "Outrepasser le filtrage lors de l'assignation de groupes"
+
+#: templates/group_group.html.twig
+msgid "List of groups to escalate"
+msgstr "Liste des groupes à escalader"
+
+#: templates/escalade_form.html.twig
+msgid "Escalate ticket"
+msgstr "Escalader le ticket"
+
+#: templates/escalade_form.html.twig
+msgid "Comment"
+msgstr "Commentaire"
+
+#: templates/escalade_form.html.twig
+msgid "Assign me as an observer"
+msgstr "M'assigner en tant qu'observateur"
 
 #: templates/config.html.twig
 msgid "Group assignment"
@@ -116,25 +136,13 @@ msgstr "plugin. Ce dernier a la priorité."
 msgid "Display delete button"
 msgstr "Afficher le bouton de suppression"
 
-#: templates/user.html.twig hook.php:627 hook.php:646
-msgid "Bypass filtering on the groups assignment"
-msgstr "Outrepasser le filtrage lors de l'assignation de groupes"
+#: public/js/cloneandlink_ticket.js.php:40
+msgid "Clone and link"
+msgstr "Cloner et lier"
 
-#: templates/escalade_form.html.twig
-msgid "Escalate ticket"
-msgstr "Escalader le ticket"
-
-#: templates/escalade_form.html.twig
-msgid "Comment"
-msgstr "Commentaire"
-
-#: templates/escalade_form.html.twig
-msgid "Assign me as an observer"
-msgstr "M'assigner en tant qu'observateur"
-
-#: templates/group_group.html.twig
-msgid "List of groups to escalate"
-msgstr "Liste des groupes à escalader"
+#: setup.php:174 inc/user.class.php:167 inc/group_group.class.php:61
+msgid "Escalation"
+msgstr "Escalades"
 
 #: hook.php:581
 msgid "Group concerned by the escalation"
@@ -148,9 +156,25 @@ msgstr "Nombre d'escalades"
 msgid "Number of escalations between two groups"
 msgstr "Nombre d'escalades entre deux groupes"
 
-#: public/js/cloneandlink_ticket.js.php:40
-msgid "Clone and link"
-msgstr "Cloner et lier"
+#: inc/history.class.php:192
+msgid "Reassign the ticket to group"
+msgstr "Réassigner le ticket au groupe"
+
+#: inc/history.class.php:236
+msgid "full assignation history"
+msgstr "historique d'assignation complet"
+
+#: inc/history.class.php:239
+msgid "View full history"
+msgstr "Afficher l'historique complet"
+
+#: inc/history.class.php:294
+msgid "Tickets to follow (escalated)"
+msgstr "Tickets à suivre (escaladés)"
+
+#: inc/history.class.php:308
+msgid "Tickets to close (escalated)"
+msgstr "Tickets à clôturer (escaladés)"
 
 #: inc/ticket.class.php:312
 msgid "Solution provided, back to the group"
@@ -194,22 +218,6 @@ msgstr "Escalader"
 msgid "You must select a group."
 msgstr "Vous devez sélectionner un groupe."
 
-#: inc/config.class.php:39
-msgid "Escalade"
-msgstr "Escalade"
-
-#: inc/config.class.php:44
-msgid "Configuration Escalade plugin"
-msgstr "Configuration du plugin Escalade"
-
-#: inc/config.class.php:139
-msgid "Default (not managed by plugin)"
-msgstr "Par défaut (non géré par le plugin)"
-
-#: inc/group_group.class.php:61 inc/user.class.php:167 setup.php:174
-msgid "Escalation"
-msgstr "Escalades"
-
 #: inc/notification.class.php:83
 msgid "Requester user of the ticket"
 msgstr "Utilisateur demandeur du ticket"
@@ -238,22 +246,14 @@ msgstr "Responsable du dernier groupe escaladé du ticket"
 msgid "Solve date modification"
 msgstr "Date de modification de la résolution"
 
-#: inc/history.class.php:192
-msgid "Reassign the ticket to group"
-msgstr "Réassigner le ticket au groupe"
+#: inc/config.class.php:39
+msgid "Escalade"
+msgstr "Escalade"
 
-#: inc/history.class.php:236
-msgid "full assignation history"
-msgstr "historique d'assignation complet"
+#: inc/config.class.php:44
+msgid "Configuration Escalade plugin"
+msgstr "Configuration du plugin Escalade"
 
-#: inc/history.class.php:239
-msgid "View full history"
-msgstr "Afficher l'historique complet"
-
-#: inc/history.class.php:294
-msgid "Tickets to follow (escalated)"
-msgstr "Tickets à suivre (escaladés)"
-
-#: inc/history.class.php:308
-msgid "Tickets to close (escalated)"
-msgstr "Tickets à clôturer (escaladés)"
+#: inc/config.class.php:139
+msgid "Default (not managed by plugin)"
+msgstr "Par défaut (non géré par le plugin)"
