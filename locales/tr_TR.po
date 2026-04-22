@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-23 01:10+0000\n"
+"POT-Creation-Date: 2026-04-10 01:18+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2015-2016,2018-2021,2023-2026\n"
 "Language-Team: Turkish (Turkey) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/tr_TR/)\n"
@@ -18,6 +18,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: tr_TR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: templates/user.html.twig hook.php:627 hook.php:646
+msgid "Bypass filtering on the groups assignment"
+msgstr "Grup atamalarında süzgeçler atlansın"
+
+#: templates/group_group.html.twig
+msgid "List of groups to escalate"
+msgstr "Üste aktarılacak grupların listesi"
+
+#: templates/escalade_form.html.twig
+msgid "Escalate ticket"
+msgstr "Destek kaydını üste aktar"
+
+#: templates/escalade_form.html.twig
+msgid "Comment"
+msgstr "Açıklama"
+
+#: templates/escalade_form.html.twig
+msgid "Assign me as an observer"
+msgstr "Beni gözlemci olarak ata"
 
 #: templates/config.html.twig
 msgid "Group assignment"
@@ -111,25 +131,13 @@ msgstr "eki ile aynıdır. Bunun önceliği vardır."
 msgid "Display delete button"
 msgstr "Sil düğmesi görüntülensin"
 
-#: templates/user.html.twig hook.php:627 hook.php:646
-msgid "Bypass filtering on the groups assignment"
-msgstr "Grup atamalarında süzgeçler atlansın"
+#: public/js/cloneandlink_ticket.js.php:40
+msgid "Clone and link"
+msgstr "Kopyala ve ilişkilendir"
 
-#: templates/escalade_form.html.twig
-msgid "Escalate ticket"
-msgstr "Destek kaydını üste aktar"
-
-#: templates/escalade_form.html.twig
-msgid "Comment"
-msgstr "Açıklama"
-
-#: templates/escalade_form.html.twig
-msgid "Assign me as an observer"
-msgstr "Beni gözlemci olarak ata"
-
-#: templates/group_group.html.twig
-msgid "List of groups to escalate"
-msgstr "Üste aktarılacak grupların listesi"
+#: setup.php:174 inc/user.class.php:167 inc/group_group.class.php:61
+msgid "Escalation"
+msgstr "Üste aktarma"
 
 #: hook.php:581
 msgid "Group concerned by the escalation"
@@ -143,9 +151,25 @@ msgstr "Üste aktarma sayısı"
 msgid "Number of escalations between two groups"
 msgstr "İki grup arasındaki üste aktarma sayısı"
 
-#: public/js/cloneandlink_ticket.js.php:40
-msgid "Clone and link"
-msgstr "Kopyala ve ilişkilendir"
+#: inc/history.class.php:192
+msgid "Reassign the ticket to group"
+msgstr "Destek kaydını bir gruba ata"
+
+#: inc/history.class.php:236
+msgid "full assignation history"
+msgstr "Tam atama geçmişi"
+
+#: inc/history.class.php:239
+msgid "View full history"
+msgstr "Tam geçmişi görüntüle"
+
+#: inc/history.class.php:294
+msgid "Tickets to follow (escalated)"
+msgstr "İzlenecek destek kayıtları (üste aktarılmış)"
+
+#: inc/history.class.php:308
+msgid "Tickets to close (escalated)"
+msgstr "Kapatılacak destek kayıtları (üste aktarılmış)"
 
 #: inc/ticket.class.php:312
 msgid "Solution provided, back to the group"
@@ -189,22 +213,6 @@ msgstr "Üste aktar"
 msgid "You must select a group."
 msgstr "Bir grup seçmelisiniz."
 
-#: inc/config.class.php:39
-msgid "Escalade"
-msgstr "Üste aktar"
-
-#: inc/config.class.php:44
-msgid "Configuration Escalade plugin"
-msgstr "Üste aktarma eklentisi yapılandırması"
-
-#: inc/config.class.php:139
-msgid "Default (not managed by plugin)"
-msgstr "Varsayılan (eklenti tarafından yönetilmez)"
-
-#: inc/group_group.class.php:61 inc/user.class.php:167 setup.php:174
-msgid "Escalation"
-msgstr "Üste aktarma"
-
 #: inc/notification.class.php:83
 msgid "Requester user of the ticket"
 msgstr "Destek kaydı isteğinde bulunan kullanıcı"
@@ -233,22 +241,14 @@ msgstr "Destek kaydında üste aktarılmış son grubun yöneticisi"
 msgid "Solve date modification"
 msgstr "Tarih değişikliğini çöz"
 
-#: inc/history.class.php:192
-msgid "Reassign the ticket to group"
-msgstr "Destek kaydını bir gruba ata"
+#: inc/config.class.php:39
+msgid "Escalade"
+msgstr "Üste aktar"
 
-#: inc/history.class.php:236
-msgid "full assignation history"
-msgstr "Tam atama geçmişi"
+#: inc/config.class.php:44
+msgid "Configuration Escalade plugin"
+msgstr "Üste aktarma eklentisi yapılandırması"
 
-#: inc/history.class.php:239
-msgid "View full history"
-msgstr "Tam geçmişi görüntüle"
-
-#: inc/history.class.php:294
-msgid "Tickets to follow (escalated)"
-msgstr "İzlenecek destek kayıtları (üste aktarılmış)"
-
-#: inc/history.class.php:308
-msgid "Tickets to close (escalated)"
-msgstr "Kapatılacak destek kayıtları (üste aktarılmış)"
+#: inc/config.class.php:139
+msgid "Default (not managed by plugin)"
+msgstr "Varsayılan (eklenti tarafından yönetilmez)"
