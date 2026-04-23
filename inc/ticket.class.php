@@ -651,7 +651,6 @@ class PluginEscaladeTicket
             'type'       => CommonITILActor::ASSIGN,
         ];
         if (!$group_ticket->find($condition)) {
-            $ticket_group = new Group_Ticket();
             PluginEscaladeTaskmanager::setTicketTask([
                 'tickets_id' => $tickets_id,
                 'is_private' => true,
@@ -661,17 +660,18 @@ class PluginEscaladeTicket
                     $group->getName() . '</i></p><hr />',
                 ),
             ]);
+
+            // FIX: pass the FULL actor state (requester + observer + assign),
+            // otherwise GLPI 11 core (CommonITILObject::transformActorsInput)
+            // interprets the missing keys as "no requesters / no observers"
+            // and wipes them from the ticket regardless of the
+            // "Remove requester(s) on escalation" plugin config.
             $ticket = new Ticket();
             $ticket->update([
-                'id'      => $tickets_id,
-                '_actors' => [
-                    'assign' => [
-                        [
-                            'items_id' => $groups_id,
-                            'itemtype' => 'Group',
-                        ],
-                    ],
-                ],
+                'id'        => $tickets_id,
+                '_actors'   => self::getTicketFieldsWithActors($tickets_id, $groups_id),
+                'actortype' => CommonITILActor::ASSIGN,
+                'groups_id' => $groups_id,
             ]);
         }
 
