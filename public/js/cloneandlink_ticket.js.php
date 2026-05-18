@@ -38,6 +38,7 @@ if (
     && Session::haveRight("ticket", UPDATE)
 ) {
     $locale_cloneandlink  = __s("Clone and link", "escalade");
+    $locale_clone  = __s("Clone");
     $locale_linkedtickets = _sn('Linked ticket', 'Linked tickets', 2);
 
     $JS = <<<JAVASCRIPT
@@ -54,8 +55,7 @@ if (
       setTimeout( function () {
          if ($("#cloneandlink_ticket").length > 0) { return; }
          var duplicate_html = "<button id='cloneandlink_ticket' class='btn btn-sm btn-ghost-secondary ms-auto'"+
-                "title='{$locale_cloneandlink}'><i class='ti ti-copy me-1'></i>" + __s("Clone") +
-            "</button>";
+                "title='{$locale_cloneandlink}'><i class='ti ti-copy me-1'></i>{$locale_clone}</button>";
 
          $("#linked_tickets-heading .accordion-button")
             .append(duplicate_html);
