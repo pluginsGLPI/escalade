@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+- Fix undefined index
 - Prevent deletion of actors during escalation.
 - Fix Uncaught ReferenceError: __s is not defined
 
