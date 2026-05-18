@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-05 01:04+0000\n"
+"POT-Creation-Date: 2026-04-10 01:18+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: hamkms, 2025\n"
 "Language-Team: Russian (Russia) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/ru_RU/)\n"
@@ -24,6 +24,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ru_RU\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: templates/user.html.twig hook.php:627 hook.php:646
+msgid "Bypass filtering on the groups assignment"
+msgstr "Игнорирование фильтра назначения групп"
 
 #: templates/group_group.html.twig
 msgid "List of groups to escalate"
@@ -40,10 +44,6 @@ msgstr "Комментарий"
 #: templates/escalade_form.html.twig
 msgid "Assign me as an observer"
 msgstr "Назначить меня наблюдателем"
-
-#: templates/user.html.twig hook.php:614 hook.php:633
-msgid "Bypass filtering on the groups assignment"
-msgstr "Игнорирование фильтра назначения групп"
 
 #: templates/config.html.twig
 msgid "Group assignment"
@@ -110,6 +110,10 @@ msgid "Escalation history in tasks"
 msgstr "История переназначения в задачах"
 
 #: templates/config.html.twig
+msgid "Escalation task is private ?"
+msgstr ""
+
+#: templates/config.html.twig
 msgid "Ticket status after an escalation"
 msgstr "Статус заявки после переназначения"
 
@@ -133,9 +137,25 @@ msgstr ""
 msgid "Display delete button"
 msgstr "Показывать кнопку удаления"
 
-#: setup.php:174 inc/group_group.class.php:61 inc/user.class.php:167
+#: public/js/cloneandlink_ticket.js.php:40
+msgid "Clone and link"
+msgstr "Клонировать и связать"
+
+#: setup.php:174 inc/user.class.php:167 inc/group_group.class.php:61
 msgid "Escalation"
 msgstr "Переназначение"
+
+#: hook.php:581
+msgid "Group concerned by the escalation"
+msgstr "Группа, назначенная при эскалации"
+
+#: hook.php:599
+msgid "Number of escalations"
+msgstr "Число переназначений"
+
+#: hook.php:613
+msgid "Number of escalations between two groups"
+msgstr "Число переназначений между двумя группами"
 
 #: inc/history.class.php:192
 msgid "Reassign the ticket to group"
@@ -156,6 +176,48 @@ msgstr "Заявки к просмотру"
 #: inc/history.class.php:308
 msgid "Tickets to close (escalated)"
 msgstr "Заявки к закрытию"
+
+#: inc/ticket.class.php:312
+msgid "Solution provided, back to the group"
+msgstr "Решение найдено, возврат к группе"
+
+#: inc/ticket.class.php:380
+msgid "Solution rejected, return to the group"
+msgstr "Решение отклонено, возврат к группе"
+
+#: inc/ticket.class.php:563 inc/ticket.class.php:660
+#, php-format
+msgid "Escalation to the group %s."
+msgstr "Назначить заявку группе %s"
+
+#: inc/ticket.class.php:1016
+msgid "Error : get old ticket"
+msgstr "Ошибка получения данных заявки"
+
+#: inc/ticket.class.php:1031
+msgid "Error : adding new ticket"
+msgstr "Ошибка добавления заявки"
+
+#: inc/ticket.class.php:1050
+msgid "Error : adding link between the two tickets"
+msgstr "Ошибка связывания заявок"
+
+#: inc/ticket.class.php:1061 inc/ticket.class.php:1095
+#: inc/ticket.class.php:1100
+msgid "This ticket has been cloned from the ticket num"
+msgstr "Заявка создана из другой, №"
+
+#: inc/ticket.class.php:1067
+msgid "Error : adding followups"
+msgstr "Ошибка добавления комментария"
+
+#: inc/ticket.class.php:1206 inc/ticket.class.php:1207
+msgid "Escalate"
+msgstr "Переназначение"
+
+#: inc/ticket.class.php:1328
+msgid "You must select a group."
+msgstr "Вы должны выбрать группу"
 
 #: inc/notification.class.php:83
 msgid "Requester user of the ticket"
@@ -185,48 +247,6 @@ msgstr "Менеджер последней группы эскалации в �
 msgid "Solve date modification"
 msgstr "Изменение даты решения"
 
-#: inc/ticket.class.php:307
-msgid "Solution provided, back to the group"
-msgstr "Решение найдено, возврат к группе"
-
-#: inc/ticket.class.php:375
-msgid "Solution rejected, return to the group"
-msgstr "Решение отклонено, возврат к группе"
-
-#: inc/ticket.class.php:524 inc/ticket.class.php:621
-#, php-format
-msgid "Escalation to the group %s."
-msgstr "Назначить заявку группе %s"
-
-#: inc/ticket.class.php:977
-msgid "Error : get old ticket"
-msgstr "Ошибка получения данных заявки"
-
-#: inc/ticket.class.php:992
-msgid "Error : adding new ticket"
-msgstr "Ошибка добавления заявки"
-
-#: inc/ticket.class.php:1011
-msgid "Error : adding link between the two tickets"
-msgstr "Ошибка связывания заявок"
-
-#: inc/ticket.class.php:1022 inc/ticket.class.php:1056
-#: inc/ticket.class.php:1061
-msgid "This ticket has been cloned from the ticket num"
-msgstr "Заявка создана из другой, №"
-
-#: inc/ticket.class.php:1028
-msgid "Error : adding followups"
-msgstr "Ошибка добавления комментария"
-
-#: inc/ticket.class.php:1167 inc/ticket.class.php:1168
-msgid "Escalate"
-msgstr "Переназначение"
-
-#: inc/ticket.class.php:1289
-msgid "You must select a group."
-msgstr "Вы должны выбрать группу"
-
 #: inc/config.class.php:39
 msgid "Escalade"
 msgstr ""
@@ -238,19 +258,3 @@ msgstr "Конфигурация плагина Escalade"
 #: inc/config.class.php:139
 msgid "Default (not managed by plugin)"
 msgstr "По умолчанию (не управляется плагином)"
-
-#: hook.php:568
-msgid "Group concerned by the escalation"
-msgstr "Группа, назначенная при эскалации"
-
-#: hook.php:586
-msgid "Number of escalations"
-msgstr "Число переназначений"
-
-#: hook.php:600
-msgid "Number of escalations between two groups"
-msgstr "Число переназначений между двумя группами"
-
-#: public/js/cloneandlink_ticket.js.php:40
-msgid "Clone and link"
-msgstr "Клонировать и связать"

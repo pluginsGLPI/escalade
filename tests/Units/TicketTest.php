@@ -30,6 +30,8 @@
 
 namespace GlpiPlugin\Escalade\Tests\Units;
 
+use Calendar;
+use CalendarSegment;
 use CommonITILActor;
 use CommonITILObject;
 use Entity;
@@ -41,6 +43,8 @@ use ITILCategory;
 use PluginEscaladeTicket;
 use Rule;
 use RuleCommonITILObject;
+use SLA;
+use SLM;
 use Ticket;
 use Ticket_User;
 use User;
@@ -1338,5 +1342,121 @@ final class TicketTest extends EscaladeTestCase
         $task_template->delete(['id' => $task_template_id], true);
         $category->delete(['id' => $category_id], true);
         $rule->delete(['id' => $rule_id], true);
+    }
+
+    public function testSlaRuleDuringEscalation(): void
+    {
+        $this->initConfig([
+            'remove_group' => 1,
+            'show_history'  => 1,
+        ]);
+
+        $entity_id = getItemByTypeName('Entity', '_test_root_entity', true);
+
+        $calendar = $this->createItem(Calendar::class, ['name' => __FUNCTION__]);
+        $this->createItems(CalendarSegment::class, [
+            ['calendars_id' => $calendar->getID(), 'day' => 1, 'begin' => '08:00:00', 'end' => '18:00:00'],
+            ['calendars_id' => $calendar->getID(), 'day' => 2, 'begin' => '08:00:00', 'end' => '18:00:00'],
+            ['calendars_id' => $calendar->getID(), 'day' => 3, 'begin' => '08:00:00', 'end' => '18:00:00'],
+            ['calendars_id' => $calendar->getID(), 'day' => 4, 'begin' => '08:00:00', 'end' => '18:00:00'],
+            ['calendars_id' => $calendar->getID(), 'day' => 5, 'begin' => '08:00:00', 'end' => '18:00:00'],
+        ]);
+
+        $slm = $this->createItem(SLM::class, [
+            'name'         => __FUNCTION__,
+            'entities_id'  => $entity_id,
+            'is_recursive' => true,
+            'calendars_id' => $calendar->getID(),
+        ]);
+        $sla_tto = $this->createItem(SLA::class, [
+            'name'            => __FUNCTION__ . ' TTO',
+            'entities_id'     => $entity_id,
+            'is_recursive'    => true,
+            'type'            => SLM::TTO,
+            'number_time'     => 4,
+            'definition_time' => 'hour',
+            'slms_id'         => $slm->getID(),
+        ]);
+
+        $group1 = $this->createGroup('Groupe 1');
+        $group2 = $this->createGroup('Groupe 2');
+
+        // Rule 1 (ONADD): if assigned group IS "Groupe 1" → assign SLA TTO
+        $rule_add = $this->createItem('Rule', [
+            'name'        => __FUNCTION__ . ' assign SLA on add',
+            'sub_type'    => 'RuleTicket',
+            'match'       => 'AND',
+            'is_active'   => 1,
+            'condition'   => RuleCommonITILObject::ONADD,
+            'entities_id' => $entity_id,
+        ]);
+        $this->createItem('RuleCriteria', [
+            'rules_id'  => $rule_add->getID(),
+            'criteria'  => '_groups_id_assign',
+            'condition' => Rule::PATTERN_IS,
+            'pattern'   => $group1->getID(),
+        ]);
+        $this->createItem('RuleAction', [
+            'rules_id'    => $rule_add->getID(),
+            'action_type' => 'assign',
+            'field'       => 'slas_id_tto',
+            'value'       => $sla_tto->getID(),
+        ]);
+
+        // Rule 2 (ONUPDATE): if assigned group IS NOT "Groupe 1" → set SLA TTO to 0
+        $rule_update = $this->createItem('Rule', [
+            'name'        => __FUNCTION__ . ' remove SLA on update',
+            'sub_type'    => 'RuleTicket',
+            'match'       => 'AND',
+            'is_active'   => 1,
+            'condition'   => RuleCommonITILObject::ONUPDATE,
+            'entities_id' => $entity_id,
+        ]);
+        $this->createItem('RuleCriteria', [
+            'rules_id'  => $rule_update->getID(),
+            'criteria'  => '_groups_id_assign',
+            'condition' => Rule::PATTERN_IS_NOT,
+            'pattern'   => $group1->getID(),
+        ]);
+        $this->createItem('RuleAction', [
+            'rules_id'    => $rule_update->getID(),
+            'action_type' => 'assign',
+            'field'       => 'slas_id_tto',
+            'value'       => 0,
+        ]);
+
+        foreach ($this->escalateTicketMethods(['escalateWithTimelineButton', 'escalateWithHistoryButton']) as $data) {
+            // Create ticket with Groupe 1 → SLA TTO should be set by Rule 1
+            $ticket = $this->createItem('Ticket', [
+                'name'        => __FUNCTION__,
+                'content'     => __FUNCTION__,
+                'entities_id' => $entity_id,
+                '_actors'     => [
+                    'assign' => [
+                        ['itemtype' => 'Group', 'items_id' => $group1->getID()],
+                    ],
+                ],
+            ]);
+
+            $ticket->getFromDB($ticket->getID());
+            $this->assertEquals(
+                $sla_tto->getID(),
+                $ticket->fields['slas_id_tto'],
+                'SLA TTO should be assigned on ticket creation with Groupe 1',
+            );
+
+            // Escalate to Groupe 2 → Rule 2 should remove SLA TTO
+            $this->{$data['method']}($ticket, $group2);
+
+            $ticket->getFromDB($ticket->getID());
+            $this->assertEquals(
+                0,
+                $ticket->fields['slas_id_tto'],
+                sprintf(
+                    'SLA TTO should be removed after escalation to Groupe 2 via %s',
+                    $data['method'],
+                ),
+            );
+        }
     }
 }

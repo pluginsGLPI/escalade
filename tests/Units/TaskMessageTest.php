@@ -276,4 +276,65 @@ final class TaskMessageTest extends EscaladeTestCase
             }
         }
     }
+
+    public static function taskPrivateProvider(): iterable
+    {
+        yield [
+            'task_private' => 0,
+            'expected_is_private' => 0,
+        ];
+
+        yield [
+            'task_private' => 1,
+            'expected_is_private' => 1,
+        ];
+    }
+
+    #[DataProvider('taskPrivateProvider')]
+    public function testTaskPrivateFlagOnEscalationTask(int $task_private, int $expected_is_private): void
+    {
+        $this->initConfig([
+            'task_history' => 1,
+            'task_private' => $task_private,
+        ]);
+
+        $ticket = $this->createItem('Ticket', [
+            'name' => 'Task private escalation test',
+            'content' => '',
+            'entities_id' => 0,
+        ]);
+
+        $this->createItem('Group', [
+            'name' => 'Task private group',
+            'entities_id' => 0,
+        ]);
+
+        $group2 = $this->createItem('Group', [
+            'name' => 'Task private group 2',
+            'entities_id' => 0,
+        ]);
+
+        $this->updateItem(
+            Ticket::class,
+            $ticket->getID(),
+            [
+                '_actors' => [
+                    'assign' => [
+                        [
+                            'items_id' => $group2->getID(),
+                            'itemtype' => 'Group',
+                        ],
+                    ],
+                ],
+            ],
+        );
+
+        $ticket_task = new TicketTask();
+        $ticket_tasks = $ticket_task->find(['tickets_id' => $ticket->getID()]);
+
+        $this->assertCount(1, $ticket_tasks);
+
+        $last_task = end($ticket_tasks);
+        $this->assertSame($expected_is_private, (int) $last_task['is_private']);
+    }
 }

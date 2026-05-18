@@ -194,6 +194,13 @@
                     field_options
                 ) }}
 
+                {{ fields.sliderField(
+                    'task_private',
+                    config["task_private"],
+                    __("Escalation task is private ?", "escalade"),
+                    field_options
+                ) }}
+
                 {{ fields.dropdownArrayField(
                     'ticket_last_status',
                     config["ticket_last_status"],

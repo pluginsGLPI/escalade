@@ -186,7 +186,7 @@ class PluginEscaladeHistory extends CommonDBTM
             if (! $use_filter_assign_group || isset($filter_groups_id[$hline['groups_id']])) {
                 $rand = mt_rand();
                 // Remplacement du lien par un formulaire
-                echo sprintf("<form action='%s/front/climb_group.php' method='GET' id='history-form-%d'>", $plugin_dir, $rand);
+                echo sprintf("<form action='%sfront/climb_group.php' method='GET' id='history-form-%d'>", $plugin_dir, $rand);
                 echo "<input type='hidden' name='tickets_id' value='" . (int) $tickets_id . "'>";
                 echo "<input type='hidden' name='groups_id' value='" . $hline['groups_id'] . "'>";
                 echo "<button type='submit' title='" . __s("Reassign the ticket to group", "escalade") . "' class='btn btn-icon btn-sm btn-ghost-secondary'>

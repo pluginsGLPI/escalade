@@ -5,12 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+
 ## [UNRELEASED]
 
 ### Fixed
 
 - Fix undefined index
+- Prevent deletion of actors during escalation.
+- Fix Uncaught ReferenceError: __s is not defined
+
+## [2.10.2] - 2026-04-07
+
+### Fixed
+
 - Prevent business rules from triggering twice on tickets
+- Fixed routing issue caused by incorrect trailing slash
+- Fix to rule execution based on group deletion
+
+### Added
+
+- Add task visibility option (`task_private`)
 
 ## [2.9.19] - 2026-27-01
 
