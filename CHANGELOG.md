@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Prevent deletion of actors during escalation.
+- Fix Uncaught ReferenceError: __s is not defined
 
 ## [2.10.2] - 2026-04-07
 
