@@ -207,8 +207,12 @@ class PluginEscaladeHistory extends CommonDBTM {
 
       if ($type == "notold") {
          $title = __("Tickets to follow (escalated)", "escalade");
-         $status = CommonITILObject::INCOMING.", ".CommonITILObject::PLANNED.", ".
-                   CommonITILObject::ASSIGNED.", ".CommonITILObject::WAITING;
+         $status = [
+             CommonITILObject::INCOMING,
+             CommonITILObject::PLANNED,
+             CommonITILObject::ASSIGNED,
+             CommonITILObject::WAITING,
+         ];
 
          $criteria['WHERE']['glpi_plugin_escalade_histories.groups_id'] = $_SESSION['glpigroups'];
          $criteria['WHERE'][] = [
