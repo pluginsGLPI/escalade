@@ -106,7 +106,7 @@ function plugin_escalade_install() {
          'remove_delete_watcher_group_btn' => 1,
          'remove_delete_assign_group_btn' => 0,
          'remove_delete_assign_supplier_btn' => 1,
-         'use_filter_assign_group' => 1,
+         'use_filter_assign_group' => 0,
          'ticket_last_status' => Ticket::WAITING,
          'remove_requester' => 0
       ]);
