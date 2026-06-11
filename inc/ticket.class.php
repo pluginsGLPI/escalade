@@ -796,7 +796,7 @@ class PluginEscaladeTicket {
       //add documents
       $res = $DB->insert('glpi_documents_items', new QuerySubQuery([
          'SELECT' => [
-            new QueryExpression("'' AS " . $DB::quoteName('id')),
+            new QueryExpression($DB::quoteValue('') . " AS " . $DB::quoteName('id')),
             'documents_id',
             new QueryExpression($DB::quoteValue($newID) . " AS " . $DB::quoteName('items_id')),
             new QueryExpression($DB::quoteValue('Ticket') . " AS " . $DB::quoteName('itemtype')),
