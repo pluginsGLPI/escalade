@@ -778,7 +778,7 @@ class PluginEscaladeTicket {
       //groups
       $res = $DB->insert('glpi_tickets_user', new QuerySubQuery([
          'SELECT' => [
-            new QueryExpression("'' AS " . $DB::quoteName('id')),
+            new QueryExpression($DB::quoteValue('') . " AS " . $DB::quoteName('id')),
             new QueryExpression($DB::quoteValue($newID) . " AS " . $DB::quoteName('tickets_id')),
                'groups_id', 'type'
          ],
