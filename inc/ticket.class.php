@@ -761,7 +761,7 @@ class PluginEscaladeTicket {
       //users
       $res = $DB->insert('glpi_tickets_user', new QuerySubQuery([
          'SELECT' => [
-            new QueryExpression("'' AS " . $DB::quoteName('id')),
+            new QueryExpression($DB::quoteValue('') . " AS " . $DB::quoteName('id')),
             new QueryExpression($DB::quoteValue($newID) . " AS " . $DB::quoteName('tickets_id')),
             'users_id', 'type', 'use_notification', 'alternative_email'
          ],
