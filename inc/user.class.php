@@ -93,7 +93,7 @@ class PluginEscaladeUser extends CommonDBTM {
       ];
 
       if ($filter) {
-         $criteria['WHERE'][] = new QueryExpression($filter);
+         $criteria['WHERE'][] = $filter;
       }
 
       $it = $DB->request($criteria);
