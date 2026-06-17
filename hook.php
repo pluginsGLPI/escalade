@@ -578,7 +578,7 @@ function plugin_escalade_getAddSearchOptions($itemtype)
         $sopt[1881]['table']         = 'glpi_groups';
         $sopt[1881]['field']         = 'completename';
         $sopt[1881]['datatype']      = 'dropdown';
-        $sopt[1881]['name']          = __s("Group concerned by the escalation", "escalade");
+        $sopt[1881]['name']          = __("Group concerned by the escalation", "escalade");
         $sopt[1881]['forcegroupby']  = true;
         $sopt[1881]['massiveaction'] = false;
         $sopt[1881]['condition']     = ['is_assign' => 1];
@@ -596,7 +596,7 @@ function plugin_escalade_getAddSearchOptions($itemtype)
             'id'                 => '1991',
             'table'              => 'glpi_plugin_escalade_histories',
             'field'              => 'id',
-            'name'               => __s("Number of escalations", "escalade"),
+            'name'               => __("Number of escalations", "escalade"),
             'forcegroupby'       => true,
             'usehaving'          => true,
             'datatype'           => 'count',
@@ -610,7 +610,7 @@ function plugin_escalade_getAddSearchOptions($itemtype)
             'id'                 => '1992',
             'table'              => 'glpi_plugin_escalade_histories',
             'field'              => 'counter',
-            'name'               => __s("Number of escalations between two groups", "escalade"),
+            'name'               => __("Number of escalations between two groups", "escalade"),
             'datatype'           => 'integer',
             'joinparams'         => [
                 'jointype'           => 'child',
