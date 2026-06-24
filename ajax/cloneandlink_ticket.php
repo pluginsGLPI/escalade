@@ -44,6 +44,7 @@ if (!isset($_REQUEST['tickets_id'])) {
     exit;
 }
 
+$ticket = new Ticket();
 
 if ($ticket->getFromDB($_REQUEST['tickets_id'])) {
     if (
