@@ -416,6 +416,27 @@ class PluginEscaladeTicket
         }
     }
 
+    /**
+     * Check whether the current call stack originates from the creation of an ITIL
+     * object (Ticket, Change, Problem).
+     *
+     *
+     * @return bool
+     */
+    private static function isRunningDuringItilCreation(): bool
+    {
+        foreach (debug_backtrace() as $backtrace) {
+            if (
+                $backtrace['function'] == "add"
+                && ($backtrace['object'] instanceof CommonITILObject)
+            ) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
     /**
      *  remove old groups to a ticket when a new group assigned
@@ -480,14 +501,8 @@ class PluginEscaladeTicket
 
         // check if group assignment is made during ticket creation
         // in this case, skip following steps as it cannot be considered as a group escalation
-        $backtraces   = debug_backtrace();
-        foreach ($backtraces as $backtrace) {
-            if (
-                $backtrace['function'] == "add"
-                && ($backtrace['object'] instanceof CommonITILObject)
-            ) {
-                return;
-            }
+        if (self::isRunningDuringItilCreation()) {
+            return;
         }
 
         //add a task to inform the escalation (pass if solution)
@@ -519,7 +534,11 @@ class PluginEscaladeTicket
         // The config is checked in the function.
         self::removeAssignUsers($item);
 
-        if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != self::MANAGED_BY_CORE) {
+        // Assigning a group during ticket creation is not an escalation, so the
+        // "status after an escalation" option must override the status only if it is not during ticket creation.
+        if (!self::isRunningDuringItilCreation()
+            && $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != self::MANAGED_BY_CORE
+        ) {
             $ticket = new Ticket();
             $ticket->update([
                 'id'     => $tickets_id,
