@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
+### Fixed
+
+- change status after escalation on update only
+
 ## [2.9.19] - 2026-27-01
 
 ### Fixed
