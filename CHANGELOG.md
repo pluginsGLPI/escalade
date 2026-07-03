@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Fix escape chars
 
+### Fixed
+
+- change status after escalation on update only
+
 ## [2.9.19] - 2026-27-01
 
 ### Fixed

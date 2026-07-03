@@ -818,6 +818,111 @@ final class GroupEscalationTest extends EscaladeTestCase
         $this->assertEquals(1, count($history->find(['tickets_id' => $t_id, 'groups_id' => $group1_id])));
     }
 
+    public function testStatusAfterEscalationIsNotAppliedOnTicketCreation()
+    {
+        $this->login();
+
+        // Force a specific status after an escalation.
+        $this->updateItem(
+            PluginEscaladeConfig::class,
+            1,
+            ['ticket_last_status' => \CommonITILObject::WAITING],
+        );
+        PluginEscaladeConfig::loadInSession();
+
+        $group = $this->createItem(\Group::class, ['name' => 'Creation escalation group']);
+
+        // Create a ticket that is assigned to a group right away.
+        $ticket = $this->createItem(
+            \Ticket::class,
+            [
+                'name'    => 'Status after escalation on creation',
+                'content' => 'content',
+                '_actors' => [
+                    'assign' => [
+                        [
+                            'items_id' => $group->getID(),
+                            'itemtype' => 'Group',
+                        ],
+                    ],
+                ],
+            ],
+        );
+
+        // The escalation status (WAITING) must not have been forced on creation.
+        $this->assertNotEquals(
+            \CommonITILObject::WAITING,
+            (int) $ticket->fields['status'],
+            'The "status after an escalation" option must not be applied on ticket creation',
+        );
+
+        // A ticket created with an assigned group is simply "assigned".
+        $this->assertEquals(\CommonITILObject::ASSIGNED, (int) $ticket->fields['status']);
+    }
+
+    public function testStatusAfterEscalationIsAppliedOnRealEscalation()
+    {
+        $this->login();
+
+        // Force a specific status after an escalation.
+        $this->updateItem(
+            PluginEscaladeConfig::class,
+            1,
+            ['ticket_last_status' => \CommonITILObject::WAITING],
+        );
+        PluginEscaladeConfig::loadInSession();
+
+        $group1 = $this->createItem(\Group::class, ['name' => 'Escalation group 1']);
+        $group2 = $this->createItem(\Group::class, ['name' => 'Escalation group 2']);
+
+        // Create a ticket assigned to the first group (creation, not an escalation).
+        $ticket = $this->createItem(
+            \Ticket::class,
+            [
+                'name'    => 'Status after real escalation',
+                'content' => 'content',
+                '_actors' => [
+                    'assign' => [
+                        [
+                            'items_id' => $group1->getID(),
+                            'itemtype' => 'Group',
+                        ],
+                    ],
+                ],
+            ],
+        );
+
+        $this->assertNotEquals(\CommonITILObject::WAITING, (int) $ticket->fields['status']);
+
+        // Escalate the existing ticket to a second group: this IS an escalation,
+        // so the configured status must now be applied.
+        $this->updateItem(
+            \Ticket::class,
+            $ticket->getID(),
+            [
+                '_actors' => [
+                    'assign' => [
+                        [
+                            'items_id' => $group1->getID(),
+                            'itemtype' => 'Group',
+                        ],
+                        [
+                            'items_id' => $group2->getID(),
+                            'itemtype' => 'Group',
+                        ],
+                    ],
+                ],
+            ],
+        );
+
+        $this->assertTrue($ticket->getFromDB($ticket->getID()));
+        $this->assertEquals(
+            \CommonITILObject::WAITING,
+            (int) $ticket->fields['status'],
+            'The "status after an escalation" option must be applied on a real escalation',
+        );
+    }
+
     /**
      * Test that the standard target "Group in charge of the ticket"
      * sends notifications to users of both groups (old and new) during an escalation
