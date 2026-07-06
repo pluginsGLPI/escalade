@@ -108,10 +108,6 @@ class PluginEscaladeGroup_Group extends CommonDBRelation
                     'container'        => 'mass' . self::class . $rand,
                     'itemtype'         => 'Group',
                 ];
-
-                if ($nb > 10) {
-                    $massiveactionparams['ontop'] = false;
-                }
             }
         }
 

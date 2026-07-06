@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+### Fixed
+
+- Fix massive action modal not showing when a group has more than 10 associated groups
+
 ## [2.10.4] - 2026-06-24
 
 - Fix escape chars
