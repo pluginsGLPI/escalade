@@ -1005,6 +1005,9 @@ class PluginEscaladeTicket
         /** @var DBmysql $DB */
         global $DB;
 
+        // Enforce integer type before interpolation in the raw SQL below (SQL injection guard)
+        $tickets_id = (int) $tickets_id;
+
         //get old ticket
         $ticket = new Ticket();
         if (!$ticket->getFromDB($tickets_id)) {

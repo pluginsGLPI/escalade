@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Fix massive action modal not showing when a group has more than 10 associated groups
+- Strengthen input validation and access checks on ticket escalation actions
 
 ## [2.10.4] - 2026-06-24
 

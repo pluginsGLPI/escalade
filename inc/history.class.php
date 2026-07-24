@@ -246,7 +246,7 @@ class PluginEscaladeHistory extends CommonDBTM
     {
 
         if (!$group->can($group->fields['id'], READ)) {
-            return $group->getNameID(true);
+            return '';
         }
 
         $link_item = $group->getFormURL();

@@ -36,4 +36,9 @@ if (! isset($_REQUEST['tickets_id'])) {
     throw new BadRequestHttpException();
 }
 
-PluginEscaladeTicket::assign_me((int) $_REQUEST['tickets_id']);
+$tickets_id = (int) $_REQUEST['tickets_id'];
+
+$ticket = new Ticket();
+$ticket->check($tickets_id, UPDATE);
+
+PluginEscaladeTicket::assign_me($tickets_id);
