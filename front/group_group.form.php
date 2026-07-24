@@ -36,12 +36,13 @@ Html::header("escalade", $_SERVER["PHP_SELF"], "plugins", "escalade", "group_gro
 
 if (Session::haveRight('group', UPDATE)) {
     if (isset($_POST['addgroup'])) {
-        $group = new Group();
+        $group_source = new Group();
+        $group_destination = new Group();
         if (
-            !$group->getFromDB((int) $_POST['groups_id_source'])
-            || !Session::haveAccessToEntity($group->getEntityID())
-            || !$group->getFromDB((int) $_POST['groups_id_destination'])
-            || !Session::haveAccessToEntity($group->getEntityID())
+            !$group_source->getFromDB((int) $_POST['groups_id_source'])
+            || !Session::haveAccessToEntity($group_source->getEntityID())
+            || !$group_destination->getFromDB((int) $_POST['groups_id_destination'])
+            || !Session::haveAccessToEntity($group_destination->getEntityID())
         ) {
             throw new AccessDeniedHttpException();
         }
