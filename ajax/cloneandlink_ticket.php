@@ -46,11 +46,13 @@ if (!isset($_REQUEST['tickets_id'])) {
     throw new BadRequestHttpException();
 }
 
+$tickets_id = (int) $_REQUEST['tickets_id'];
+
 $ticket = new Ticket();
 
-if ($ticket->getFromDB($_REQUEST['tickets_id'])) {
+if ($ticket->getFromDB($tickets_id)) {
     if (
-        !$ticket->can($_REQUEST['tickets_id'], READ)
+        !$ticket->can($tickets_id, READ)
         || !Ticket::canCreate()
     ) {
         throw new AccessDeniedHttpException(
@@ -58,5 +60,5 @@ if ($ticket->getFromDB($_REQUEST['tickets_id'])) {
         );
     }
 
-    PluginEscaladeTicket::cloneAndLink($_REQUEST['tickets_id']);
+    PluginEscaladeTicket::cloneAndLink($tickets_id);
 }

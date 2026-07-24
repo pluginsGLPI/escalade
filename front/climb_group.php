@@ -27,7 +27,7 @@
  * @link      https://github.com/pluginsGLPI/escalade
  * -------------------------------------------------------------------------
  */
-use Glpi\Exception\Http\AccessDeniedHttpException;
+
 use Glpi\Exception\Http\BadRequestHttpException;
 
 Session::checkLoginUser();
@@ -44,12 +44,9 @@ if (
     throw new BadRequestHttpException();
 }
 
+$tickets_id = (int) $_REQUEST['tickets_id'];
+
 $ticket = new Ticket();
-$ticket->getFromDB((int) $_REQUEST['tickets_id']);
+$ticket->check($tickets_id, UPDATE);
 
-if (!$ticket->canAssign()) {
-    throw new AccessDeniedHttpException();
-}
-
-
-PluginEscaladeTicket::climb_group((int) $_REQUEST['tickets_id'], (int) $_REQUEST['groups_id']);
+PluginEscaladeTicket::climb_group($tickets_id, (int) $_REQUEST['groups_id']);

@@ -41,8 +41,13 @@ if (!$_SESSION['glpi_plugins']['escalade']['config']['show_history']) {
     throw new AccessDeniedHttpException();
 }
 
+$tickets_id = (int) $_REQUEST['tickets_id'];
+
+$ticket = new Ticket();
+$ticket->check($tickets_id, READ);
+
 echo "<div id='page'>";
-PluginEscaladeHistory::getHistory((int) $_REQUEST['tickets_id'], true);
+PluginEscaladeHistory::getHistory($tickets_id, true);
 echo "</div>";
 
 Html::popFooter();
