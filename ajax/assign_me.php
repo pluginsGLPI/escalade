@@ -39,6 +39,6 @@ if (! isset($_REQUEST['tickets_id'])) {
 $tickets_id = (int) $_REQUEST['tickets_id'];
 
 $ticket = new Ticket();
-$ticket->check($tickets_id, UPDATE);
+$ticket->check($tickets_id, Ticket::ASSIGN);
 
 PluginEscaladeTicket::assign_me($tickets_id);

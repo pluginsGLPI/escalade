@@ -38,7 +38,7 @@ if (isset($_POST['escalate'])) {
     $tickets_id = (int) $_POST['tickets_id'];
 
     $ticket = new Ticket();
-    $ticket->check($tickets_id, UPDATE);
+    $ticket->check($tickets_id, Ticket::ASSIGN);
 
     PluginEscaladeTicket::timelineClimbAction($group_id, $tickets_id, $_POST);
 

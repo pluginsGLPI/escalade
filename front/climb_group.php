@@ -47,6 +47,6 @@ if (
 $tickets_id = (int) $_REQUEST['tickets_id'];
 
 $ticket = new Ticket();
-$ticket->check($tickets_id, UPDATE);
+$ticket->check($tickets_id, Ticket::ASSIGN);
 
 PluginEscaladeTicket::climb_group($tickets_id, (int) $_REQUEST['groups_id']);
