@@ -34,5 +34,10 @@ Html::header_nocache();
 Session::checkLoginUser();
 
 if (isset($_REQUEST['tickets_id'])) {
-    PluginEscaladeHistory::getHistory($_REQUEST['tickets_id']);
+    $tickets_id = (int) $_REQUEST['tickets_id'];
+
+    $ticket = new Ticket();
+    $ticket->check($tickets_id, READ);
+
+    PluginEscaladeHistory::getHistory($tickets_id);
 }
