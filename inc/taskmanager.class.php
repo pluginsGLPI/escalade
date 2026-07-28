@@ -55,7 +55,7 @@ class PluginEscaladeTaskmanager
             return false;
         }
 
-        return !(isset($_SESSION['plugin_escalade']['ticket_creation']) && $_SESSION['plugin_escalade']['ticket_creation']);
+        return !isset($_SESSION['plugin_escalade']['ticket_creation']) || !$_SESSION['plugin_escalade']['ticket_creation'];
     }
 
     public static function addTicketTaskInTimeline(): void

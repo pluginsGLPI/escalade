@@ -50,6 +50,7 @@ $config = $baseline([
     __DIR__ . '/front',
     __DIR__ . '/inc',
     __DIR__ . '/public',
+    __DIR__ . '/tests',
 ]);
 
 return $config;
