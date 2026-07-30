@@ -28,6 +28,8 @@
  * -------------------------------------------------------------------------
  */
 
+use Glpi\Exception\Http\AccessDeniedHttpException;
+
 Session::checkLoginUser();
 
 /** @var array $CFG_GLPI */
@@ -38,7 +40,9 @@ if (isset($_POST['escalate'])) {
     $tickets_id = (int) $_POST['tickets_id'];
 
     $ticket = new Ticket();
-    $ticket->check($tickets_id, Ticket::ASSIGN);
+    if (!$ticket->canAssign()) {
+        throw new AccessDeniedHttpException();
+    }
 
     PluginEscaladeTicket::timelineClimbAction($group_id, $tickets_id, $_POST);
 

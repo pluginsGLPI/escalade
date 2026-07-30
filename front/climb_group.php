@@ -29,6 +29,7 @@
  */
 
 use Glpi\Exception\Http\BadRequestHttpException;
+use Glpi\Exception\Http\AccessDeniedHttpException;
 
 Session::checkLoginUser();
 
@@ -47,6 +48,8 @@ if (
 $tickets_id = (int) $_REQUEST['tickets_id'];
 
 $ticket = new Ticket();
-$ticket->check($tickets_id, Ticket::ASSIGN);
+if (!$ticket->canAssign()) {
+    throw new AccessDeniedHttpException();
+}
 
 PluginEscaladeTicket::climb_group($tickets_id, (int) $_REQUEST['groups_id']);
