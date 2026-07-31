@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-- Fix errors rights checks during escalation
+- Fix errors in rights checks during escalation
 
 ## [2.10.5] - 2026-07-28
 
