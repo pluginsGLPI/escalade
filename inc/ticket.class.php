@@ -1102,29 +1102,6 @@ class PluginEscaladeTicket
         echo sprintf('{"success":true, "newID":%s}', $newID);
     }
 
-
-    public static function assign_me($tickets_id)
-    {
-
-        $tu = new Ticket_User();
-        $found = $tu->find([
-            'tickets_id' => $tickets_id,
-            'users_id'   => $_SESSION['glpiID'],
-            'type'       => CommonITILActor::ASSIGN,
-        ]);
-
-        if (empty($found)) {
-            $ticket = new Ticket();
-            $ticket->update([
-                'id'           => $tickets_id,
-                '_itil_assign' => [
-                    'users_id' => $_SESSION['glpiID'],
-                    '_type'    => 'user',
-                ],
-            ]);
-        }
-    }
-
     public static function filter_actors(array $params = []): array
     {
         $itemtype = $params['params']['itemtype'];
