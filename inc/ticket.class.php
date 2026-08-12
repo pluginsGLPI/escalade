@@ -535,22 +535,19 @@ class PluginEscaladeTicket
         $tickets_id = $item->fields['tickets_id'];
         $groups_id = $item->fields['groups_id'];
 
-        // Normal GLPI group assignment is not an Escalade action.
-        // Only the Escalade reassignment button or visual history action
-        // may run removal/history/task logic.
-        if (
-            empty($_SESSION['plugin_escalade']['is_escalation'])
-            && empty($_SESSION['plugin_escalade']['climb_group'])
-        ) {
-            return $item;
-        }
-
         // Fire business rules before removing old groups: pass _actors with only the new
         // group so GLPI detects old groups as deleted and rules see the final state.
         // getFromDB() is required first so isNewItem() returns false and deleted-actor
         // detection runs. _plugin_escalade_rules_only skips escalade logic in pre_item_update.
         // Safety net in case updateActors() above did not already remove old groups.
-        if ($_SESSION['glpi_plugins']['escalade']['config']['remove_group'] == true) {
+        if (
+            $_SESSION['glpi_plugins']['escalade']['config']['remove_group'] == true
+            && (
+                !empty($_SESSION['plugin_escalade']['is_escalation'])
+                || !empty($_SESSION['plugin_escalade']['climb_group'])
+                || !empty($_SESSION['plugin_escalade']['auto_group_assignment'])
+            )
+        ) {
 
             // Save ALL currently assigned groups in Escalade history before
             // the reassignment removes them. Normal GLPI assignments are not
@@ -689,6 +686,18 @@ class PluginEscaladeTicket
         $keep_users_id = $_SESSION['plugin_escalade']['keep_new_assign_users'][$tickets_id] ?? false;
         unset($_SESSION['plugin_escalade']['keep_new_assign_users'][$tickets_id]);
         self::removeAssignUsers($item, $keep_users_id);
+        // Keep the initial assigned group in Escalade history when the
+        // ticket is created. Normal manual group additions must not be
+        // treated as Escalade reassignments.
+        if (
+            !empty($_SESSION['plugin_escalade']['ticket_creation'])
+            && $_SESSION['glpi_plugins']['escalade']['config']['show_history'] == true
+        ) {
+            $item->input['actortype'] = $item->fields['type'];
+            PluginEscaladeTicket::addHistoryOnAddGroup($item);
+        }
+
+        // The config is checked in the function.
 
         if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != self::MANAGED_BY_CORE) {
             $ticket = new Ticket();
@@ -1010,12 +1019,19 @@ class PluginEscaladeTicket
             //prevent user removal
             $_SESSION['plugin_escalade']['keep_users'][$item->fields['users_id']]
                 = $item->fields['users_id'];
-            //add new group to ticket
-            $group_ticket->add([
-                'tickets_id' => $tickets_id,
-                'groups_id'  => $groups_id,
-                'type'       => CommonITILActor::ASSIGN,
-            ]);
+
+            // Mark this group assignment as an automatic Escalade assignment.
+            $_SESSION['plugin_escalade']['auto_group_assignment'] = true;
+
+            try {
+                $group_ticket->add([
+                    'tickets_id' => $tickets_id,
+                    'groups_id'  => $groups_id,
+                    'type'       => CommonITILActor::ASSIGN,
+                ]);
+            } finally {
+                unset($_SESSION['plugin_escalade']['auto_group_assignment']);
+            }
         } elseif ($_SESSION['glpi_plugins']['escalade']['config']['remove_tech']) {
             self::removeAssignGroups($tickets_id);
         }
