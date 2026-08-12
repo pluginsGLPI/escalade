@@ -535,12 +535,123 @@ class PluginEscaladeTicket
         $tickets_id = $item->fields['tickets_id'];
         $groups_id = $item->fields['groups_id'];
 
+        // Normal GLPI group assignment is not an Escalade action.
+        // Only the Escalade reassignment button or visual history action
+        // may run removal/history/task logic.
+        if (
+            empty($_SESSION['plugin_escalade']['is_escalation'])
+            && empty($_SESSION['plugin_escalade']['climb_group'])
+        ) {
+            return $item;
+        }
+
         // Fire business rules before removing old groups: pass _actors with only the new
         // group so GLPI detects old groups as deleted and rules see the final state.
         // getFromDB() is required first so isNewItem() returns false and deleted-actor
         // detection runs. _plugin_escalade_rules_only skips escalade logic in pre_item_update.
         // Safety net in case updateActors() above did not already remove old groups.
         if ($_SESSION['glpi_plugins']['escalade']['config']['remove_group'] == true) {
+
+            // Save ALL currently assigned groups in Escalade history before
+            // the reassignment removes them. Normal GLPI assignments are not
+            // written to Escalade history until a real reassignment happens.
+            if ($_SESSION['glpi_plugins']['escalade']['config']['show_history'] == true) {
+                $group_ticket_history = new Group_Ticket();
+                $assigned_before = $group_ticket_history->find([
+                    'tickets_id' => $tickets_id,
+                    'type'       => CommonITILActor::ASSIGN,
+                ]);
+
+                // Keep assignment order stable.
+                uasort(
+                    $assigned_before,
+                    static function (array $a, array $b): int {
+                        return ((int) $a['id']) <=> ((int) $b['id']);
+                    },
+                );
+
+                $history = new PluginEscaladeHistory();
+
+                // Find the group already represented as the current group
+                // in Escalade history. Do not add it twice.
+                $existing_history = $history->find(
+                    ['tickets_id' => $tickets_id],
+                    ['date_mod DESC', 'id DESC'],
+                );
+
+                $last_history = reset($existing_history);
+                $previous_history_group = $last_history !== false
+                    ? (int) $last_history['groups_id']
+                    : 0;
+
+                // Add all groups that are about to disappear.
+                foreach ($assigned_before as $assigned_group) {
+                    $previous_group_id = (int) $assigned_group['groups_id'];
+
+                    // The new destination group will be written last.
+                    if ($previous_group_id === (int) $groups_id) {
+                        continue;
+                    }
+
+                    // This group is already the current entry in history.
+                    if ($previous_group_id === $previous_history_group) {
+                        continue;
+                    }
+
+                    $counter = 0;
+
+                    if ($previous_history_group > 0) {
+                        $last_same_history = PluginEscaladeHistory::getLastHistoryForTicketAndGroup(
+                            $tickets_id,
+                            $previous_group_id,
+                            $previous_history_group,
+                        );
+
+                        if (
+                            $last_same_history !== false
+                            && count($last_same_history->fields) > 0
+                        ) {
+                            $counter = ((int) $last_same_history->fields['counter']) + 1;
+                        }
+                    }
+
+                    $history->add([
+                        'tickets_id'         => $tickets_id,
+                        'groups_id'          => $previous_group_id,
+                        'groups_id_previous' => $previous_history_group,
+                        'counter'            => $counter,
+                    ]);
+
+                    $previous_history_group = $previous_group_id;
+                }
+
+                // The destination group MUST be the newest history row.
+                // getHistory() treats the newest row as the active group.
+                $counter = 0;
+
+                if ($previous_history_group > 0) {
+                    $last_same_history = PluginEscaladeHistory::getLastHistoryForTicketAndGroup(
+                        $tickets_id,
+                        $groups_id,
+                        $previous_history_group,
+                    );
+
+                    if (
+                        $last_same_history !== false
+                        && count($last_same_history->fields) > 0
+                    ) {
+                        $counter = ((int) $last_same_history->fields['counter']) + 1;
+                    }
+                }
+
+                $history->add([
+                    'tickets_id'         => $tickets_id,
+                    'groups_id'          => $groups_id,
+                    'groups_id_previous' => $previous_history_group,
+                    'counter'            => $counter,
+                ]);
+            }
+
             $all_actors = self::getTicketFieldsWithActors($tickets_id, $groups_id);
 
             // Keep only the new group in the assign list (drop old ones).
@@ -587,10 +698,8 @@ class PluginEscaladeTicket
             ]);
         }
 
-        if ($_SESSION['glpi_plugins']['escalade']['config']['show_history'] == true) {
-            $item->input['actortype'] = $item->fields['type'];
-            PluginEscaladeTicket::addHistoryOnAddGroup($item);
-        }
+        // Escalade history is recorded before old assigned groups are removed.
+        // This allows all previous groups to remain visible in visual history.
 
         $comment = $_POST['comment'] ?? '';
         $group = new Group();
@@ -707,12 +816,22 @@ class PluginEscaladeTicket
             // and wipes them from the ticket regardless of the
             // "Remove requester(s) on escalation" plugin config.
             $ticket = new Ticket();
-            $ticket->update([
-                'id'        => $tickets_id,
-                '_actors'   => self::getTicketFieldsWithActors($tickets_id, $groups_id),
-                'actortype' => CommonITILActor::ASSIGN,
-                'groups_id' => $groups_id,
-            ]);
+
+            // Mark this assignment as an actual Escalade reassignment.
+            // processAfterAddGroup() also runs for normal GLPI group assignments,
+            // so old groups must only be removed for this specific action.
+            $_SESSION['plugin_escalade']['climb_group'] = true;
+
+            try {
+                $ticket->update([
+                    'id'        => $tickets_id,
+                    '_actors'   => self::getTicketFieldsWithActors($tickets_id, $groups_id),
+                    'actortype' => CommonITILActor::ASSIGN,
+                    'groups_id' => $groups_id,
+                ]);
+            } finally {
+                unset($_SESSION['plugin_escalade']['climb_group']);
+            }
         }
 
         if (!$no_redirect) {
