@@ -46,7 +46,6 @@ use User;
 
 final class GroupEscalationTest extends EscaladeTestCase
 {
-
     /**
      * Standard GLPI group assignment must not remove previously assigned groups.
      */
@@ -826,9 +825,9 @@ final class GroupEscalationTest extends EscaladeTestCase
         ]);
 
         $history = new PluginEscaladeHistory();
-        $this->assertEquals(1, count($history->find(['tickets_id' => $ticket->getID()])));
+        $this->assertEquals(2, count($history->find(['tickets_id' => $ticket->getID()])));
         $this->assertEquals(1, count($history->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group1->getID()])));
-        $this->assertEquals(0, count($history->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group2->getID()])));
+        $this->assertEquals(1, count($history->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group2->getID()])));
 
         // Update escalade config
         $this->initConfig([
@@ -847,7 +846,7 @@ final class GroupEscalationTest extends EscaladeTestCase
         ]);
 
         $history = new PluginEscaladeHistory();
-        $this->assertEquals(1, count($history->find(['tickets_id' => $ticket->getID()])));
+        $this->assertEquals(2, count($history->find(['tickets_id' => $ticket->getID()])));
         $this->assertEquals(1, count($history->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group1->getID()])));
     }
 

@@ -161,13 +161,36 @@ class PluginEscaladeHistory extends CommonDBTM
 
         $history = new self();
         $found = $history->find(
-        ['tickets_id' => $tickets_id],
-        ['date_mod DESC', 'id DESC'],
-    );
+            ['tickets_id' => $tickets_id],
+            ['date_mod DESC', 'id DESC'],
+        );
         $nb_histories = count($found);
 
         //remove first line (current assign)
         $first_group = array_shift($found);
+
+        // Do not display a group as a previous assignment while it is still
+        // assigned to the ticket. Its history entry stays in the database and
+        // becomes visible after a real reassignment removes the group.
+        $group_ticket = new Group_Ticket();
+        $currently_assigned = $group_ticket->find([
+            'tickets_id' => $tickets_id,
+            'type'       => CommonITILActor::ASSIGN,
+        ]);
+
+        $currently_assigned_ids = array_map(
+            static fn(array $actor): int => (int) $actor['groups_id'],
+            $currently_assigned,
+        );
+
+        $found = array_filter(
+            $found,
+            static fn(array $history_entry): bool => !in_array(
+                (int) $history_entry['groups_id'],
+                $currently_assigned_ids,
+                true,
+            ),
+        );
 
         if ($full_history) {
             //show 1st group
