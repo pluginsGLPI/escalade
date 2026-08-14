@@ -194,7 +194,8 @@ class PluginEscaladeTicket
                     $item->input['status'] = $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'];
                 }
 
-                self::removeAssignUsers($item);
+                // Deferred to pre_item_add (Ticket_User/Group_Ticket): removing here re-enters and loops.
+                $_SESSION['plugin_escalade']['pending_remove_assign_users'][$item->getID()] = true;
             } elseif (count($old_groups) === count($new_groups)) {
                 $old_group_ids = [];
                 foreach ($old_groups as $old_group) {
@@ -224,7 +225,6 @@ class PluginEscaladeTicket
      */
     public static function item_update(CommonDBTM $item)
     {
-
         if ($_SESSION['glpi_plugins']['escalade']['config']['remove_group']) {
             //solve ticket
             if (isset($item->input['status']) && $item->input['status'] == CommonITILObject::SOLVED) {
@@ -266,6 +266,30 @@ class PluginEscaladeTicket
         if (in_array('solvedate', $item->updates)) {
             NotificationEvent::raiseEvent('update_solvedate', $item);
         }
+    }
+
+    /**
+     * Consume pre_item_update()'s pending removal flag before the new tech is inserted (delete-before-add).
+     * @param Ticket_User $item the actor being added
+     */
+    public static function pre_item_add_ticket_user(Ticket_User $item)
+    {
+        if (($item->input['type'] ?? null) != CommonITILActor::ASSIGN) {
+            return $item;
+        }
+
+        $tickets_id = $item->input['tickets_id'] ?? null;
+        if ($tickets_id && !empty($_SESSION['plugin_escalade']['pending_remove_assign_users'][$tickets_id])) {
+            unset($_SESSION['plugin_escalade']['pending_remove_assign_users'][$tickets_id]);
+            self::removeAssignUsers($item);
+
+            // Protect this tech from the group's removeAssignUsers() call coming right after.
+            if (isset($item->input['users_id'])) {
+                $_SESSION['plugin_escalade']['keep_new_assign_users'][$tickets_id][] = $item->input['users_id'];
+            }
+        }
+
+        return $item;
     }
 
 
@@ -536,8 +560,10 @@ class PluginEscaladeTicket
             self::removeAssignGroups($tickets_id, $groups_id);
         }
 
-        // The config is checked in the function.
-        self::removeAssignUsers($item);
+        // Safety net for qualification()'s category-based reassignment, which bypasses pre_item_add hooks.
+        $keep_users_id = $_SESSION['plugin_escalade']['keep_new_assign_users'][$tickets_id] ?? false;
+        unset($_SESSION['plugin_escalade']['keep_new_assign_users'][$tickets_id]);
+        self::removeAssignUsers($item, $keep_users_id);
 
         if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != self::MANAGED_BY_CORE) {
             $ticket = new Ticket();
@@ -736,10 +762,10 @@ class PluginEscaladeTicket
             return;
         }
 
-        $tickets_id = $item->input['id'] ?? $item->fields['id'];
-
-        if ($item instanceof Group_Ticket) {
+        if ($item instanceof Group_Ticket || $item instanceof Ticket_User) {
             $tickets_id = $item->input['tickets_id'] ?? $item->fields['tickets_id'];
+        } else {
+            $tickets_id = $item->input['id'] ?? $item->fields['id'];
         }
 
         $where_keep = [

@@ -532,6 +532,22 @@ function plugin_escalade_pre_item_add_group_ticket($item)
             'group_id' => $item->input['groups_id'],
             'timestamp' => time(),
         ];
+
+        // Fallback for group-only reassignment (no new tech to consume the pending flag).
+        $tickets_id = $item->input['tickets_id'];
+        if (!empty($_SESSION['plugin_escalade']['pending_remove_assign_users'][$tickets_id])) {
+            unset($_SESSION['plugin_escalade']['pending_remove_assign_users'][$tickets_id]);
+            PluginEscaladeTicket::removeAssignUsers($item);
+        }
+    }
+
+    return $item;
+}
+
+function plugin_escalade_pre_item_add_ticket_user($item)
+{
+    if ($item instanceof Ticket_User) {
+        return PluginEscaladeTicket::pre_item_add_ticket_user($item);
     }
 
     return $item;

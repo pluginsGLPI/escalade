@@ -1459,4 +1459,177 @@ final class TicketTest extends EscaladeTestCase
             );
         }
     }
+
+    /**
+     * Regression test for the Gateway Timeout / infinite loop reported when a ticket's
+     * assigned technician and assigned group are changed in the same action (ticket #45821).
+     */
+    public function testSimultaneousGroupAndTechAssignmentDoesNotLoop()
+    {
+        $this->initConfig([
+            'remove_tech' => 1,
+        ]);
+
+        $old_tech = new User();
+        $old_tech->getFromDBbyName('tech');
+        $this->assertGreaterThan(0, $old_tech->getID());
+
+        $new_tech = new User();
+        $new_tech->getFromDBbyName('glpi');
+        $this->assertGreaterThan(0, $new_tech->getID());
+
+        $group = $this->createItem('Group', [
+            'name' => 'Group for simultaneous assignment test',
+            'entities_id' => 0,
+            'is_recursive' => 1,
+        ]);
+
+        $ticket = $this->createItem('Ticket', [
+            'name' => 'Test ticket',
+            'content' => 'Content',
+            'entities_id' => 0,
+        ]);
+        $ticket_id = $ticket->getID();
+
+        // Initial state: a technician assigned, no group.
+        $this->updateItem(Ticket::class, $ticket_id, [
+            '_actors' => [
+                'assign' => [
+                    [
+                        'items_id' => $old_tech->getID(),
+                        'itemtype' => 'User',
+                    ],
+                ],
+            ],
+        ]);
+
+        // Reassign: new group and new technician submitted together.
+        $this->updateItem(Ticket::class, $ticket_id, [
+            '_actors' => [
+                'assign' => [
+                    [
+                        'items_id' => $group->getID(),
+                        'itemtype' => 'Group',
+                    ],
+                    [
+                        'items_id' => $new_tech->getID(),
+                        'itemtype' => 'User',
+                    ],
+                ],
+            ],
+        ]);
+
+        $this->assertEquals(
+            1,
+            countElementsInTable(Group_Ticket::getTable(), ['tickets_id' => $ticket_id, 'type' => CommonITILActor::ASSIGN]),
+        );
+        $this->assertEquals(
+            1,
+            countElementsInTable(Ticket_User::getTable(), ['tickets_id' => $ticket_id, 'type' => CommonITILActor::ASSIGN]),
+        );
+        $this->assertEquals(
+            0,
+            countElementsInTable(Ticket_User::getTable(), ['tickets_id' => $ticket_id, 'type' => CommonITILActor::ASSIGN, 'users_id' => $old_tech->getID()]),
+            'Old technician should have been removed',
+        );
+        $this->assertEquals(
+            1,
+            countElementsInTable(Ticket_User::getTable(), ['tickets_id' => $ticket_id, 'type' => CommonITILActor::ASSIGN, 'users_id' => $new_tech->getID()]),
+            'New technician should be assigned',
+        );
+    }
+
+    /**
+     * Ensures the old-actor removal is deferred to the pre_item_add hook of the new actor
+     * (Ticket_User/Group_Ticket) and no longer performed synchronously in pre_item_update(),
+     * which was the cause of the reentrancy loop, while still happening strictly before the
+     * new actor is added (delete-before-add notification ordering).
+     */
+    public function testOldAssignRemovalIsDeferredUntilNewActorIsAdded()
+    {
+        $this->initConfig([
+            'remove_tech' => 1,
+        ]);
+
+        $tech = new User();
+        $tech->getFromDBbyName('tech');
+        $this->assertGreaterThan(0, $tech->getID());
+
+        $group = $this->createItem('Group', [
+            'name' => 'Group for deferred removal test',
+            'entities_id' => 0,
+            'is_recursive' => 1,
+        ]);
+
+        $ticket = $this->createItem('Ticket', [
+            'name' => 'Test ticket',
+            'content' => 'Content',
+            'entities_id' => 0,
+        ]);
+        $ticket_id = $ticket->getID();
+
+        $this->updateItem(Ticket::class, $ticket_id, [
+            '_actors' => [
+                'assign' => [
+                    [
+                        'items_id' => $tech->getID(),
+                        'itemtype' => 'User',
+                    ],
+                ],
+            ],
+        ]);
+
+        $ticket_instance = new Ticket();
+        $this->assertTrue($ticket_instance->getFromDB($ticket_id));
+
+        $mock_ticket = $this->getMockBuilder(Ticket::class)
+            ->onlyMethods(['prepareInputForUpdate'])
+            ->getMock();
+        $mock_ticket->method('prepareInputForUpdate')->willReturnArgument(0);
+        $mock_ticket->fields = $ticket_instance->fields;
+        $mock_ticket->input = [
+            'id' => $ticket_id,
+            '_actors' => [
+                'assign' => [
+                    [
+                        'items_id' => $group->getID(),
+                        'itemtype' => 'Group',
+                    ],
+                ],
+            ],
+        ];
+
+        PluginEscaladeTicket::pre_item_update($mock_ticket);
+
+        $this->assertTrue(
+            !empty($_SESSION['plugin_escalade']['pending_remove_assign_users'][$ticket_id]),
+            'pre_item_update() should flag the old assign removal as pending instead of performing it',
+        );
+        $this->assertEquals(
+            1,
+            countElementsInTable(Ticket_User::getTable(), ['tickets_id' => $ticket_id, 'type' => CommonITILActor::ASSIGN]),
+            'The old technician must still be assigned right after pre_item_update()',
+        );
+
+        // Simulate the new group about to be added: the fallback hook must consume the
+        // pending flag and remove the old technician before the Group_Ticket row exists.
+        $group_ticket = new Group_Ticket();
+        $group_ticket->input = [
+            'tickets_id' => $ticket_id,
+            'groups_id'  => $group->getID(),
+            'type'       => CommonITILActor::ASSIGN,
+        ];
+        plugin_escalade_pre_item_add_group_ticket($group_ticket);
+
+        $this->assertEquals(
+            0,
+            countElementsInTable(Ticket_User::getTable(), ['tickets_id' => $ticket_id, 'type' => CommonITILActor::ASSIGN]),
+            'The old technician must be removed before the new group is added',
+        );
+        $this->assertArrayNotHasKey(
+            $ticket_id,
+            $_SESSION['plugin_escalade']['pending_remove_assign_users'] ?? [],
+            'The pending flag must be consumed once removal is done',
+        );
+    }
 }

@@ -114,6 +114,7 @@ function plugin_init_escalade()
         $PLUGIN_HOOKS['pre_item_add']['escalade'] = [
             'Group_Ticket' => 'plugin_escalade_pre_item_add_group_ticket',
             'Ticket'       => 'plugin_escalade_pre_item_add_ticket',
+            'Ticket_User'  => 'plugin_escalade_pre_item_add_ticket_user',
         ];
         $PLUGIN_HOOKS['post_prepareadd']['escalade'] = [
             'Ticket'       => 'plugin_escalade_post_prepareadd_ticket',
