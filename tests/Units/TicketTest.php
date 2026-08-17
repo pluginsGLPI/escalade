@@ -1632,4 +1632,38 @@ final class TicketTest extends EscaladeTestCase
             'The pending flag must be consumed once removal is done',
         );
     }
+
+    /**
+     * Covers the case where the follow-up pre_item_add hook never fires.
+     */
+    public function testPendingRemoveAssignUsersFlagIsClearedWhenFollowUpNeverHappens()
+    {
+        $ticket_id = 999999;
+        $_SESSION['plugin_escalade']['pending_remove_assign_users'][$ticket_id] = true;
+
+        PluginEscaladeTicket::clearPendingRemoveAssignUsers($ticket_id);
+
+        $this->assertArrayNotHasKey(
+            $ticket_id,
+            $_SESSION['plugin_escalade']['pending_remove_assign_users'] ?? [],
+            'The pending flag must not survive past the request when the follow-up add never happens',
+        );
+    }
+
+    /**
+     * Same guard as above, for the case where processAfterAddGroup() never fires.
+     */
+    public function testKeepNewAssignUsersFlagIsClearedWhenFollowUpNeverHappens()
+    {
+        $ticket_id = 999999;
+        $_SESSION['plugin_escalade']['keep_new_assign_users'][$ticket_id] = [42];
+
+        PluginEscaladeTicket::clearKeepNewAssignUsers($ticket_id);
+
+        $this->assertArrayNotHasKey(
+            $ticket_id,
+            $_SESSION['plugin_escalade']['keep_new_assign_users'] ?? [],
+            'The keep-users flag must not survive past the request when the follow-up group add never happens',
+        );
+    }
 }

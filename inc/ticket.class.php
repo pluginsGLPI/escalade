@@ -195,7 +195,10 @@ class PluginEscaladeTicket
                 }
 
                 // Deferred to pre_item_add (Ticket_User/Group_Ticket): removing here re-enters and loops.
-                $_SESSION['plugin_escalade']['pending_remove_assign_users'][$item->getID()] = true;
+                $tickets_id = $item->getID();
+                $_SESSION['plugin_escalade']['pending_remove_assign_users'][$tickets_id] = true;
+                // Clears the flag even if the follow-up add never happens.
+                register_shutdown_function(static fn() => self::clearPendingRemoveAssignUsers($tickets_id));
             } elseif (count($old_groups) === count($new_groups)) {
                 $old_group_ids = [];
                 foreach ($old_groups as $old_group) {
@@ -286,12 +289,23 @@ class PluginEscaladeTicket
             // Protect this tech from the group's removeAssignUsers() call coming right after.
             if (isset($item->input['users_id'])) {
                 $_SESSION['plugin_escalade']['keep_new_assign_users'][$tickets_id][] = $item->input['users_id'];
+                // Clears the flag even if processAfterAddGroup() never fires.
+                register_shutdown_function(static fn() => self::clearKeepNewAssignUsers($tickets_id));
             }
         }
 
         return $item;
     }
 
+    public static function clearPendingRemoveAssignUsers(int $tickets_id): void
+    {
+        unset($_SESSION['plugin_escalade']['pending_remove_assign_users'][$tickets_id]);
+    }
+
+    public static function clearKeepNewAssignUsers(int $tickets_id): void
+    {
+        unset($_SESSION['plugin_escalade']['keep_new_assign_users'][$tickets_id]);
+    }
 
     /**
      * When a ticket is solved, if group histories exists, assign the first group on the ticket
