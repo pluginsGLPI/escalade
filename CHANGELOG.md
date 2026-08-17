@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+### Fixed
+
+- Fix infinite loop / Gateway Timeout when a ticket's assigned technician and assigned group are changed simultaneously, caused by a synchronous actor removal during `pre_item_update()`
+
 ## [2.10.6] - 2026-07-31
 
 ### Fixed
