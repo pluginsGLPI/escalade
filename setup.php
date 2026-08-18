@@ -32,9 +32,9 @@ use Glpi\Plugin\Hooks;
 
 define('PLUGIN_ESCALADE_VERSION', '2.10.6');
 // Minimal GLPI version, inclusive
-define("PLUGIN_ESCALADE_MIN_GLPI", "11.0.0");
+define("PLUGIN_ESCALADE_MIN_GLPI", "12.0.0");
 // Maximum GLPI version, exclusive
-define("PLUGIN_ESCALADE_MAX_GLPI", "11.0.99");
+define("PLUGIN_ESCALADE_MAX_GLPI", "12.0.99");
 
 if (!defined("PLUGIN_ESCALADE_DIR")) {
     define("PLUGIN_ESCALADE_DIR", Plugin::getPhpDir("escalade"));
