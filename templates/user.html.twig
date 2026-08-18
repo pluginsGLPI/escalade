@@ -29,7 +29,6 @@
 {% import "components/form/fields_macros.html.twig" as fields %}
 
 <form method="post" action="{{ formurl }}">
-    <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}">
     {{ fields.dropdownYesNo(
         'use_filter_assign_group',
         this['use_filter_assign_group'],

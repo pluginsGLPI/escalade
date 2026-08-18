@@ -42,7 +42,7 @@ class PluginEscaladeTaskmanager
             return;
         }
 
-        if (!empty(self::$ticket_task->input)) {
+        if (self::$ticket_task->input !== [] && self::$ticket_task->input !== false) {
             return;
         }
 
