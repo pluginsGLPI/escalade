@@ -484,7 +484,7 @@ class PluginEscaladeTicket
         $previous_groups_id = 0;
         $counter            = 0;
 
-        if (count($group_ticket->fields) > 0) {
+        if ($group_ticket->fields !== []) {
             $previous_groups_id = $group_ticket->fields['groups_id'];
 
             $last_history_groups = PluginEscaladeHistory::getLastHistoryForTicketAndGroup($tickets_id, $groups_id, $previous_groups_id);
