@@ -587,16 +587,6 @@ class PluginEscaladeTicket
         $keep_users_id = $_SESSION['plugin_escalade']['keep_new_assign_users'][$tickets_id] ?? false;
         unset($_SESSION['plugin_escalade']['keep_new_assign_users'][$tickets_id]);
         self::removeAssignUsers($item, $keep_users_id);
-        // Keep the initial assigned group in Escalade history when the
-        // ticket is created. Normal manual group additions must not be
-        // treated as Escalade reassignments.
-        if (
-            !empty($_SESSION['plugin_escalade']['ticket_creation'])
-            && $_SESSION['glpi_plugins']['escalade']['config']['show_history'] == true
-        ) {
-            $item->input['actortype'] = $item->fields['type'];
-            PluginEscaladeTicket::addHistoryOnAddGroup($item);
-        }
 
 
         if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != self::MANAGED_BY_CORE) {
