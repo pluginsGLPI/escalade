@@ -79,21 +79,18 @@ final class GroupEscalationTest extends EscaladeTestCase
             'type' => CommonITILActor::ASSIGN,
         ]);
 
-        $group_ticket = new Group_Ticket();
-        $assigned_groups = $group_ticket->find([
+        $this->assertEquals(2, countElementsInTable(Group_Ticket::getTable(), [
             'tickets_id' => $ticket->getID(),
             'type' => CommonITILActor::ASSIGN,
-        ]);
+        ]));
 
-        $this->assertCount(2, $assigned_groups);
-
-        $this->assertCount(1, $group_ticket->find([
+        $this->assertEquals(1, countElementsInTable(Group_Ticket::getTable(), [
             'tickets_id' => $ticket->getID(),
             'groups_id' => $group1->getID(),
             'type' => CommonITILActor::ASSIGN,
         ]));
 
-        $this->assertCount(1, $group_ticket->find([
+        $this->assertEquals(1, countElementsInTable(Group_Ticket::getTable(), [
             'tickets_id' => $ticket->getID(),
             'groups_id' => $group2->getID(),
             'type' => CommonITILActor::ASSIGN,
@@ -140,7 +137,7 @@ final class GroupEscalationTest extends EscaladeTestCase
 
         $group_ticket = new Group_Ticket();
 
-        $this->assertCount(3, $group_ticket->find([
+        $this->assertEquals(3, countElementsInTable(Group_Ticket::getTable(), [
             'tickets_id' => $ticket->getID(),
             'type' => CommonITILActor::ASSIGN,
         ]));
@@ -165,12 +162,16 @@ final class GroupEscalationTest extends EscaladeTestCase
         }
 
         // Only the destination group must remain assigned.
+        $this->assertEquals(1, countElementsInTable(Group_Ticket::getTable(), [
+            'tickets_id' => $ticket->getID(),
+            'type' => CommonITILActor::ASSIGN,
+        ]));
+
         $assigned_groups = $group_ticket->find([
             'tickets_id' => $ticket->getID(),
             'type' => CommonITILActor::ASSIGN,
         ]);
 
-        $this->assertCount(1, $assigned_groups);
         $assigned_group = reset($assigned_groups);
         $this->assertEquals($group4->getID(), $assigned_group['groups_id']);
 
@@ -228,8 +229,9 @@ final class GroupEscalationTest extends EscaladeTestCase
         );
 
         // Check no group linked to the ticket
-        $ticket_group = new Group_Ticket();
-        $this->assertEquals(0, count($ticket_group->find(['tickets_id' => $ticket->getID()])));
+        $this->assertEquals(0, countElementsInTable(Group_Ticket::getTable(), [
+            'tickets_id' => $ticket->getID(),
+        ]));
 
         // Update ticket with a technician
         $this->updateItem(Ticket::class, $ticket->getID(), [
@@ -250,8 +252,10 @@ final class GroupEscalationTest extends EscaladeTestCase
         ]);
 
         $ticket_group2 = new Group_Ticket();
-        // Check only one groupe linked to the ticket
-        $this->assertEquals(1, count($ticket_group2->find(['tickets_id' => $ticket->getID()])));
+        // Check only one group linked to the ticket
+        $this->assertEquals(1, countElementsInTable(Group_Ticket::getTable(), [
+            'tickets_id' => $ticket->getID(),
+        ]));
 
         $ticket_group2->getFromDBByCrit([
             'tickets_id' => $ticket->getID(),
