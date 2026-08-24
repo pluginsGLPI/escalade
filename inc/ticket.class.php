@@ -540,7 +540,16 @@ class PluginEscaladeTicket
         // getFromDB() is required first so isNewItem() returns false and deleted-actor
         // detection runs. _plugin_escalade_rules_only skips escalade logic in pre_item_update.
         // Safety net in case updateActors() above did not already remove old groups.
-        if ($_SESSION['glpi_plugins']['escalade']['config']['remove_group'] == true) {
+        if (
+            $_SESSION['glpi_plugins']['escalade']['config']['remove_group'] == true
+            && (
+                !empty($_SESSION['plugin_escalade']['is_escalation'])
+                || !empty($_SESSION['plugin_escalade']['climb_group'])
+                || !empty($_SESSION['plugin_escalade']['auto_group_assignment'])
+                || !empty($_SESSION['plugin_escalade']['category_group_reassignment'])
+            )
+        ) {
+
             $all_actors = self::getTicketFieldsWithActors($tickets_id, $groups_id);
 
             // Keep only the new group in the assign list (drop old ones).
@@ -578,6 +587,7 @@ class PluginEscaladeTicket
         $keep_users_id = $_SESSION['plugin_escalade']['keep_new_assign_users'][$tickets_id] ?? false;
         unset($_SESSION['plugin_escalade']['keep_new_assign_users'][$tickets_id]);
         self::removeAssignUsers($item, $keep_users_id);
+
 
         if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != self::MANAGED_BY_CORE) {
             $ticket = new Ticket();
@@ -707,12 +717,22 @@ class PluginEscaladeTicket
             // and wipes them from the ticket regardless of the
             // "Remove requester(s) on escalation" plugin config.
             $ticket = new Ticket();
-            $ticket->update([
-                'id'        => $tickets_id,
-                '_actors'   => self::getTicketFieldsWithActors($tickets_id, $groups_id),
-                'actortype' => CommonITILActor::ASSIGN,
-                'groups_id' => $groups_id,
-            ]);
+
+            // Mark this assignment as an actual Escalade reassignment.
+            // processAfterAddGroup() also runs for normal GLPI group assignments,
+            // so old groups must only be removed for this specific action.
+            $_SESSION['plugin_escalade']['climb_group'] = true;
+
+            try {
+                $ticket->update([
+                    'id'        => $tickets_id,
+                    '_actors'   => self::getTicketFieldsWithActors($tickets_id, $groups_id),
+                    'actortype' => CommonITILActor::ASSIGN,
+                    'groups_id' => $groups_id,
+                ]);
+            } finally {
+                unset($_SESSION['plugin_escalade']['climb_group']);
+            }
         }
 
         if (!$no_redirect) {
@@ -891,12 +911,19 @@ class PluginEscaladeTicket
             //prevent user removal
             $_SESSION['plugin_escalade']['keep_users'][$item->fields['users_id']]
                 = $item->fields['users_id'];
-            //add new group to ticket
-            $group_ticket->add([
-                'tickets_id' => $tickets_id,
-                'groups_id'  => $groups_id,
-                'type'       => CommonITILActor::ASSIGN,
-            ]);
+
+            // Mark this group assignment as an automatic Escalade assignment.
+            $_SESSION['plugin_escalade']['auto_group_assignment'] = true;
+
+            try {
+                $group_ticket->add([
+                    'tickets_id' => $tickets_id,
+                    'groups_id'  => $groups_id,
+                    'type'       => CommonITILActor::ASSIGN,
+                ]);
+            } finally {
+                unset($_SESSION['plugin_escalade']['auto_group_assignment']);
+            }
         } elseif ($_SESSION['glpi_plugins']['escalade']['config']['remove_tech']) {
             self::removeAssignGroups($tickets_id);
         }
@@ -992,7 +1019,14 @@ class PluginEscaladeTicket
             $group_found = $group_ticket->find($group_condition);
             if (empty($group_found)) {
                 //add group to ticket
-                $group_ticket->add($group_condition);
+                $_SESSION['plugin_escalade']['category_group_reassignment'] = true;
+
+                try {
+                    $group_ticket->add($group_condition);
+                } finally {
+                    unset($_SESSION['plugin_escalade']['category_group_reassignment']);
+                }
+
                 //remove old group if needed
                 if ($_SESSION['glpi_plugins']['escalade']['config']['remove_group'] && isset($item->input['_groups_id_assign'])) {
                     foreach ($item->input['_groups_id_assign'] as $idActor => $actor) {

@@ -37,6 +37,7 @@ use Group_Ticket;
 use Notification;
 use NotificationTarget;
 use PluginEscaladeHistory;
+use PluginEscaladeTicket;
 use PluginEscaladeNotification;
 use QueuedNotification;
 use Ticket;
@@ -45,6 +46,154 @@ use User;
 
 final class GroupEscalationTest extends EscaladeTestCase
 {
+    /**
+     * Standard GLPI group assignment must not remove previously assigned groups.
+     */
+    public function testStandardGroupAssignmentKeepsExistingGroups(): void
+    {
+        $this->initConfig([
+            'remove_group' => 1,
+            'show_history' => 1,
+        ]);
+
+        $group1 = $this->createGroup('standard_group_1_' . uniqid());
+        $group2 = $this->createGroup('standard_group_2_' . uniqid());
+
+        $ticket = $this->createItem(Ticket::class, [
+            'name' => 'Standard group assignment regression test',
+            'content' => '',
+            '_actors' => [
+                'assign' => [
+                    [
+                        'items_id' => $group1->getID(),
+                        'itemtype' => 'Group',
+                    ],
+                ],
+            ],
+        ]);
+
+        // Simulate adding another group from the standard GLPI actors field.
+        $this->createItem(Group_Ticket::class, [
+            'tickets_id' => $ticket->getID(),
+            'groups_id' => $group2->getID(),
+            'type' => CommonITILActor::ASSIGN,
+        ]);
+
+        $this->assertEquals(2, countElementsInTable(Group_Ticket::getTable(), [
+            'tickets_id' => $ticket->getID(),
+            'type' => CommonITILActor::ASSIGN,
+        ]));
+
+        $this->assertEquals(1, countElementsInTable(Group_Ticket::getTable(), [
+            'tickets_id' => $ticket->getID(),
+            'groups_id' => $group1->getID(),
+            'type' => CommonITILActor::ASSIGN,
+        ]));
+
+        $this->assertEquals(1, countElementsInTable(Group_Ticket::getTable(), [
+            'tickets_id' => $ticket->getID(),
+            'groups_id' => $group2->getID(),
+            'type' => CommonITILActor::ASSIGN,
+        ]));
+    }
+
+    /**
+     * A real Escalade reassignment must remove old groups while preserving
+     * every previously assigned group in the visual assignment history.
+     */
+    public function testEscaladeReassignmentPreservesAllGroupsInHistory(): void
+    {
+        $this->initConfig([
+            'remove_group' => 1,
+            'show_history' => 1,
+        ]);
+
+        $group1 = $this->createGroup('history_group_1_' . uniqid());
+        $group2 = $this->createGroup('history_group_2_' . uniqid());
+        $group3 = $this->createGroup('history_group_3_' . uniqid());
+        $group4 = $this->createGroup('history_destination_' . uniqid());
+
+        $ticket = $this->createItem(Ticket::class, [
+            'name' => 'Multiple group history regression test',
+            'content' => '',
+            '_actors' => [
+                'assign' => [
+                    [
+                        'items_id' => $group1->getID(),
+                        'itemtype' => 'Group',
+                    ],
+                ],
+            ],
+        ]);
+
+        // Add groups through the normal GLPI assignment mechanism.
+        foreach ([$group2, $group3] as $group) {
+            $this->createItem(Group_Ticket::class, [
+                'tickets_id' => $ticket->getID(),
+                'groups_id' => $group->getID(),
+                'type' => CommonITILActor::ASSIGN,
+            ]);
+        }
+
+        $group_ticket = new Group_Ticket();
+
+        $this->assertEquals(3, countElementsInTable(Group_Ticket::getTable(), [
+            'tickets_id' => $ticket->getID(),
+            'type' => CommonITILActor::ASSIGN,
+        ]));
+
+        // Simulate the real Escalade button.
+        $_SESSION['plugin_escalade']['is_escalation'] = true;
+        $_POST['comment'] = 'Regression test escalation';
+
+        try {
+            PluginEscaladeTicket::timelineClimbAction(
+                $group4->getID(),
+                $ticket->getID(),
+                [
+                    'ticket_details' => [
+                        'id' => $ticket->getID(),
+                    ],
+                ],
+            );
+        } finally {
+            unset($_SESSION['plugin_escalade']['is_escalation']);
+            unset($_POST['comment']);
+        }
+
+        // Only the destination group must remain assigned.
+        $this->assertEquals(1, countElementsInTable(Group_Ticket::getTable(), [
+            'tickets_id' => $ticket->getID(),
+            'type' => CommonITILActor::ASSIGN,
+        ]));
+
+        $assigned_groups = $group_ticket->find([
+            'tickets_id' => $ticket->getID(),
+            'type' => CommonITILActor::ASSIGN,
+        ]);
+
+        $assigned_group = reset($assigned_groups);
+        $this->assertEquals($group4->getID(), $assigned_group['groups_id']);
+
+        // All groups involved in the reassignment must remain visible
+        // in Escalade history.
+        $history = new PluginEscaladeHistory();
+
+        foreach ([$group1, $group2, $group3, $group4] as $group) {
+            $this->assertGreaterThanOrEqual(
+                1,
+                count($history->find([
+                    'tickets_id' => $ticket->getID(),
+                    'groups_id' => $group->getID(),
+                ])),
+                sprintf(
+                    'Group %d is missing from Escalade history',
+                    $group->getID(),
+                ),
+            );
+        }
+    }
+
     public function testTechGroupAttributionUpdateTicket()
     {
         $this->initConfig([
@@ -80,8 +229,9 @@ final class GroupEscalationTest extends EscaladeTestCase
         );
 
         // Check no group linked to the ticket
-        $ticket_group = new Group_Ticket();
-        $this->assertEquals(0, count($ticket_group->find(['tickets_id' => $ticket->getID()])));
+        $this->assertEquals(0, countElementsInTable(Group_Ticket::getTable(), [
+            'tickets_id' => $ticket->getID(),
+        ]));
 
         // Update ticket with a technician
         $this->updateItem(Ticket::class, $ticket->getID(), [
@@ -102,8 +252,10 @@ final class GroupEscalationTest extends EscaladeTestCase
         ]);
 
         $ticket_group2 = new Group_Ticket();
-        // Check only one groupe linked to the ticket
-        $this->assertEquals(1, count($ticket_group2->find(['tickets_id' => $ticket->getID()])));
+        // Check only one group linked to the ticket
+        $this->assertEquals(1, countElementsInTable(Group_Ticket::getTable(), [
+            'tickets_id' => $ticket->getID(),
+        ]));
 
         $ticket_group2->getFromDBByCrit([
             'tickets_id' => $ticket->getID(),
