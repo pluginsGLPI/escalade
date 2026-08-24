@@ -535,31 +535,10 @@ class PluginEscaladeTicket
         $tickets_id = $item->fields['tickets_id'];
         $groups_id = $item->fields['groups_id'];
 
-        // Fire business rules before removing old groups: pass _actors with only the new
-        // group so GLPI detects old groups as deleted and rules see the final state.
-        // getFromDB() is required first so isNewItem() returns false and deleted-actor
-        // detection runs. _plugin_escalade_rules_only skips escalade logic in pre_item_update.
-        // Safety net in case updateActors() above did not already remove old groups.
+        // Safety net for entry points (auto assign group, category-based reassignment)
+        // that add a group without already removing the old one themselves.
         if ($_SESSION['glpi_plugins']['escalade']['config']['remove_group'] == true) {
             $all_actors = self::getTicketFieldsWithActors($tickets_id, $groups_id);
-
-            // Keep only the new group in the assign list (drop old ones).
-            $seen_new_group = false;
-            $all_actors['assign'] = array_values(array_filter(
-                $all_actors['assign'],
-                function (array $actor) use ($groups_id, &$seen_new_group): bool {
-                    if ($actor['itemtype'] !== 'Group') {
-                        return true;
-                    }
-
-                    if ($actor['items_id'] == $groups_id && !$seen_new_group) {
-                        $seen_new_group = true;
-                        return true;
-                    }
-
-                    return false;
-                },
-            ));
 
             $ticket_for_rules = new Ticket();
             $ticket_for_rules->getFromDB($tickets_id);
@@ -1265,6 +1244,11 @@ class PluginEscaladeTicket
                 $actortype = $actor_types[$type] ?? '';
                 $ticket_actors[$itemtype][$actortype] = $actors_input;
             }
+        }
+
+        // Diff-only when remove_group: lets core delete the old group(s) and add the new one in a single call.
+        if ($_SESSION['glpi_plugins']['escalade']['config']['remove_group'] == true) {
+            $ticket_actors['Group']['assign'] = [];
         }
 
         $ticket_actors['Group']['assign'][] = [

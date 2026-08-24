@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Fix infinite loop / Gateway Timeout when a ticket's assigned technician and assigned group are changed simultaneously, caused by a synchronous actor removal during `pre_item_update()`
+- Simplify group reassignment to a single actor diff, relying on GLPI core's status preservation on simultaneous actor removal/addition
 
 ## [2.10.6] - 2026-07-31
 

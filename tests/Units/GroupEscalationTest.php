@@ -702,10 +702,7 @@ final class GroupEscalationTest extends EscaladeTestCase
         $this->assertEquals(1, count($history->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group1->getID()])));
     }
 
-    /**
-     * Test that the standard target "Group in charge of the ticket"
-     * sends notifications to users of both groups (old and new) during an escalation
-     */
+    // The "Group in charge of the ticket" target only notifies the newly assigned group on escalation.
     public function testStandardGroupNotification()
     {
         global $CFG_GLPI, $DB;
@@ -799,11 +796,10 @@ final class GroupEscalationTest extends EscaladeTestCase
             $notification_recipients[] = $notif['recipient'];
         }
 
-        // Check that users from both groups received notifications
+        // Only the new group's users should be notified; the old group was removed.
         $group1_user_emails = [$this->getItemEmail($user1), $this->getItemEmail($user2)];
         $group2_user_emails = [$this->getItemEmail($user3), $this->getItemEmail($user4)];
 
-        // At least one user from each group should have received a notification
         $group1_notified = false;
         $group2_notified = false;
 
@@ -821,7 +817,7 @@ final class GroupEscalationTest extends EscaladeTestCase
             }
         }
 
-        $this->assertTrue($group1_notified, "No user from the original group received a notification");
+        $this->assertFalse($group1_notified, "A user from the removed group should not receive a notification");
         $this->assertTrue($group2_notified, "No user from the new group received a notification");
     }
 
