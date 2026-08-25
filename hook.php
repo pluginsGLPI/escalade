@@ -523,6 +523,7 @@ function plugin_escalade_pre_item_add_group_ticket($item)
     if (
         $item instanceof Group_Ticket
         && $item->input['type'] == CommonITILActor::ASSIGN
+        && empty($item->input['_plugin_escalade_rules_only'])
     ) {
         if (!isset($_SESSION['plugin_escalade']['current_group_assignment'])) {
             $_SESSION['plugin_escalade']['current_group_assignment'] = [];
