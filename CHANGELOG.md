@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Fix infinite loop / Gateway Timeout when a ticket's assigned technician and assigned group are changed simultaneously, caused by a synchronous actor removal during `pre_item_update()`
 - Fixed group reassignment to remove previously assigned groups only when using the Escalade reassignment action
+- Fixed `_plugin_escalade_rules_only` being ignored on group assignments, so callers could not opt out of escalade's automatic processing
 
 ## [2.10.6] - 2026-07-31
 
