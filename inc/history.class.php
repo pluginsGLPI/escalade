@@ -304,9 +304,9 @@ class PluginEscaladeHistory extends CommonDBTM
         global $CFG_GLPI, $DB;
 
         if (
-            ! Session::haveRight("ticket", Ticket::READALL)
-            && ! Session::haveRight("ticket", Ticket::READASSIGN)
-            && ! Session::haveRight("ticket", CREATE)
+            ! Session::haveRight(Ticket::$rightname, Ticket::READALL)
+            && ! Session::haveRight(Ticket::$rightname, Ticket::READASSIGN)
+            && ! Session::haveRight(Ticket::$rightname, CREATE)
             && ! Session::haveRight("ticketvalidation", TicketValidation::VALIDATEREQUEST
                                                       & TicketValidation::VALIDATEINCIDENT)
         ) {

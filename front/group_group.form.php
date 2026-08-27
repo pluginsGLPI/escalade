@@ -34,7 +34,7 @@ Session::checkLoginUser();
 
 Html::header("escalade", $_SERVER["PHP_SELF"], "plugins", "escalade", "group_group");
 
-if (Session::haveRight('group', UPDATE)) {
+if (Session::haveRight(Group::$rightname, UPDATE)) {
     if (isset($_POST['addgroup'])) {
         $group_source = new Group();
         $group_destination = new Group();

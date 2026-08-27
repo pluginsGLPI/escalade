@@ -560,24 +560,6 @@ class PluginEscaladeTicket
 
             $all_actors = self::getTicketFieldsWithActors($tickets_id, $groups_id);
 
-            // Keep only the new group in the assign list (drop old ones).
-            $seen_new_group = false;
-            $all_actors['assign'] = array_values(array_filter(
-                $all_actors['assign'],
-                function (array $actor) use ($groups_id, &$seen_new_group): bool {
-                    if ($actor['itemtype'] !== 'Group') {
-                        return true;
-                    }
-
-                    if ($actor['items_id'] == $groups_id && !$seen_new_group) {
-                        $seen_new_group = true;
-                        return true;
-                    }
-
-                    return false;
-                },
-            ));
-
             $ticket_for_rules = new Ticket();
             $ticket_for_rules->getFromDB($tickets_id);
             $ticket_for_rules->update([
@@ -1307,6 +1289,11 @@ class PluginEscaladeTicket
                 $actortype = $actor_types[$type] ?? '';
                 $ticket_actors[$itemtype][$actortype] = $actors_input;
             }
+        }
+
+        // Diff-only when remove_group: lets core delete the old group(s) and add the new one in a single call.
+        if ($_SESSION['glpi_plugins']['escalade']['config']['remove_group'] == true) {
+            $ticket_actors['Group']['assign'] = [];
         }
 
         $ticket_actors['Group']['assign'][] = [
