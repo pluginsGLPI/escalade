@@ -134,7 +134,7 @@ function plugin_init_escalade()
         }
 
         // == Interface links ==
-        if (Session::haveRight('config', UPDATE)) {
+        if (Session::haveRight(Config::$rightname, UPDATE)) {
             $PLUGIN_HOOKS['config_page']['escalade'] = 'front/config.form.php';
 
             $PLUGIN_HOOKS['menu_toadd']['escalade'] = [

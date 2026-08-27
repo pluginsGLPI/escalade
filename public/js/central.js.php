@@ -34,8 +34,8 @@ header("Content-type: application/javascript");
 //not executed in self-service interface & right verification
 if (
     $_SESSION['glpiactiveprofile']['interface'] == "central"
-    && (Session::haveRight("ticket", CREATE)
-      || Session::haveRight("ticket", UPDATE))
+    && (Session::haveRight(Ticket::$rightname, CREATE)
+      || Session::haveRight(Ticket::$rightname, UPDATE))
 ) {
     $locale_group_view = __s('Group View');
 

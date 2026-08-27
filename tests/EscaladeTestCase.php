@@ -237,7 +237,7 @@ abstract class EscaladeTestCase extends DbTestCase
         $solution = new ITILSolution();
         $solution_id = $solution->add(array_merge([
             'content' => 'Test Solution',
-            'itemtype' => $ticket->getType(),
+            'itemtype' => $ticket::class,
             'items_id' => $ticket->getID(),
             'users_id' => Session::getLoginUserID(),
         ], $solution_options));
