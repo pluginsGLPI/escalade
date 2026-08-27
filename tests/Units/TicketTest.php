@@ -480,6 +480,61 @@ final class TicketTest extends EscaladeTestCase
         $this->assertEquals(CommonITILObject::ASSIGNED, $ticket->fields['status']);
     }
 
+    // Pins core's status preservation on simultaneous actor removal/addition for MANAGED_BY_CORE.
+    public function testStatusPreservedOnGroupReassignmentWhenManagedByCore()
+    {
+        $this->initConfig([
+            'remove_group' => 1,
+            'ticket_last_status' => PluginEscaladeTicket::MANAGED_BY_CORE,
+        ]);
+
+        $group1 = $this->createItem('Group', [
+            'name' => 'Group reassign 1_' . uniqid(),
+            'entities_id' => 0,
+            'is_recursive' => 1,
+        ]);
+        $group2 = $this->createItem('Group', [
+            'name' => 'Group reassign 2_' . uniqid(),
+            'entities_id' => 0,
+            'is_recursive' => 1,
+        ]);
+
+        $ticket = $this->createItem('Ticket', [
+            'name' => 'Test ticket for status preservation',
+            'content' => 'Content',
+            'entities_id' => 0,
+            '_actors' => [
+                'assign' => [
+                    [
+                        'items_id' => $group1->getID(),
+                        'itemtype' => 'Group',
+                    ],
+                ],
+            ],
+        ]);
+        $ticket_id = $ticket->getID();
+        $ticket->getFromDB($ticket_id);
+        $this->assertEquals(CommonITILObject::ASSIGNED, $ticket->fields['status']);
+
+        $this->updateItem(Ticket::class, $ticket_id, [
+            '_actors' => [
+                'assign' => [
+                    [
+                        'items_id' => $group2->getID(),
+                        'itemtype' => 'Group',
+                    ],
+                ],
+            ],
+        ]);
+
+        $group_ticket = new Group_Ticket();
+        $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group1->getID(), 'type' => CommonITILActor::ASSIGN])));
+        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group2->getID(), 'type' => CommonITILActor::ASSIGN])));
+
+        $ticket->getFromDB($ticket_id);
+        $this->assertEquals(CommonITILObject::ASSIGNED, $ticket->fields['status']);
+    }
+
     private function testAssignGroupToTicketWithCategoryProvider()
     {
         yield [

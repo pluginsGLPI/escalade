@@ -64,9 +64,9 @@ class PluginEscaladeUser extends CommonDBTM
                 if ($escalade_user->getFromDBByCrit(['users_id' => $id])) {
                     $escalade_user->fields['bypass_filter_assign_group'] = $input['bypass_filter_assign_group'];
                     if ($escalade_user->update($escalade_user->fields)) {
-                        $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_OK);
+                        $ma->itemDone($item::class, $id, MassiveAction::ACTION_OK);
                     } else {
-                        $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_KO);
+                        $ma->itemDone($item::class, $id, MassiveAction::ACTION_KO);
                     }
                 }
             }

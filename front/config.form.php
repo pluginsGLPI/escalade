@@ -42,15 +42,15 @@ if (!Plugin::isPluginActive('escalade')) {
 $config = new PluginEscaladeConfig();
 
 if (isset($_POST["add"])) {
-    Session::checkRight("config", CREATE);
+    Session::checkRight(Config::$rightname, CREATE);
     $newID = $config->add($_POST);
     Html::back();
 } elseif (isset($_POST["update"])) {
-    Session::checkRight("config", UPDATE);
+    Session::checkRight(Config::$rightname, UPDATE);
     $config->update($_POST);
     Html::back();
 } elseif (isset($_POST["delete"])) {
-    Session::checkRight("config", DELETE);
+    Session::checkRight(Config::$rightname, DELETE);
     $config->delete($_POST, true);
     Html::redirect("./config.form.php");
 } else {
