@@ -48,7 +48,7 @@ if (
 $tickets_id = (int) $_REQUEST['tickets_id'];
 
 $ticket = new Ticket();
-if (!$ticket->can($tickets_id, UPDATE)) {
+if (!$ticket->getFromDB($tickets_id) || !$ticket->checkEntity(true) || !$ticket->canAssign()) {
     throw new AccessDeniedHttpException();
 }
 
