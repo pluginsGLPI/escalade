@@ -40,7 +40,8 @@ if (isset($_POST['escalate'])) {
     $tickets_id = (int) $_POST['tickets_id'];
 
     $ticket = new Ticket();
-    if (!$ticket->getFromDB($tickets_id) || !$ticket->canAssign()) {
+
+    if (!$ticket->getFromDB($tickets_id) || !$ticket->canAssign() || !$ticket->checkEntity(true)) {
         throw new AccessDeniedHttpException();
     }
 
