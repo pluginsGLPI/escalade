@@ -44,7 +44,7 @@ if (isset($_POST['escalate'])) {
     }
 
     // Same right check as in PluginEscaladeTicket::addToTimeline()
-    if (!$ticket->canAssign()) {
+    if (!$ticket->canAssign() || !$ticket->checkEntity(true)) {
         Html::displayRightError();
     }
 
