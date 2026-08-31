@@ -532,6 +532,14 @@ class PluginEscaladeTicket
 
     public static function processAfterAddGroup(Group_Ticket $item)
     {
+        // Explicit opt-out for callers that assign a technician group on their own
+        // (other plugins, scripts). Same meaning as in pre_item_update(): escalade
+        // skips its logic entirely, so no group cleanup, no technician unassignment,
+        // no history entry and no automatic status change for this assignment.
+        if (!empty($item->input['_plugin_escalade_rules_only'])) {
+            return;
+        }
+
         $tickets_id = $item->fields['tickets_id'];
         $groups_id = $item->fields['groups_id'];
 

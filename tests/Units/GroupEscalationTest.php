@@ -98,6 +98,107 @@ final class GroupEscalationTest extends EscaladeTestCase
     }
 
     /**
+     * Without the opt-out flag, adding a technician group triggers the escalade
+     * processing: the previously assigned technician is unassigned.
+     */
+    public function testGroupAssignmentWithoutOptOutRemovesTechnician(): void
+    {
+        $this->initConfig([
+            'remove_tech'  => 1,
+            'show_history' => 1,
+        ]);
+
+        $tech = getItemByTypeName(User::class, 'tech');
+        $group = $this->createGroup('no_opt_out_group_' . uniqid());
+
+        $ticket = $this->createItem(Ticket::class, [
+            'name' => 'Group assignment without opt-out',
+            'content' => '',
+            '_actors' => [
+                'assign' => [
+                    [
+                        'items_id' => $tech->getID(),
+                        'itemtype' => 'User',
+                    ],
+                ],
+            ],
+        ]);
+
+        $group_ticket = new Group_Ticket();
+        $this->assertNotFalse($group_ticket->add([
+            'tickets_id' => $ticket->getID(),
+            'groups_id'  => $group->getID(),
+            'type'       => CommonITILActor::ASSIGN,
+        ]));
+
+        $this->assertEquals(0, countElementsInTable(Ticket_User::getTable(), [
+            'tickets_id' => $ticket->getID(),
+            'users_id'   => $tech->getID(),
+            'type'       => CommonITILActor::ASSIGN,
+        ]));
+
+        $this->assertEquals(1, countElementsInTable('glpi_plugin_escalade_histories', [
+            'tickets_id' => $ticket->getID(),
+        ]));
+    }
+
+    /**
+     * A caller that assigns a technician group on its own can opt out of the
+     * escalade processing with _plugin_escalade_rules_only: the technician stays
+     * assigned and no escalation history entry is created.
+     */
+    public function testGroupAssignmentWithOptOutKeepsTechnician(): void
+    {
+        $this->initConfig([
+            'remove_tech'  => 1,
+            'show_history' => 1,
+        ]);
+
+        $tech = getItemByTypeName(User::class, 'tech');
+        $group = $this->createGroup('opt_out_group_' . uniqid());
+
+        $ticket = $this->createItem(Ticket::class, [
+            'name' => 'Group assignment with opt-out',
+            'content' => '',
+            '_actors' => [
+                'assign' => [
+                    [
+                        'items_id' => $tech->getID(),
+                        'itemtype' => 'User',
+                    ],
+                ],
+            ],
+        ]);
+
+        $group_ticket = new Group_Ticket();
+        $this->assertNotFalse($group_ticket->add([
+            'tickets_id'                  => $ticket->getID(),
+            'groups_id'                   => $group->getID(),
+            'type'                        => CommonITILActor::ASSIGN,
+            '_plugin_escalade_rules_only' => true,
+        ]));
+
+        // The group is still linked to the ticket...
+        $this->assertEquals(1, countElementsInTable(Group_Ticket::getTable(), [
+            'tickets_id' => $ticket->getID(),
+            'groups_id'  => $group->getID(),
+            'type'       => CommonITILActor::ASSIGN,
+        ]));
+
+        // ... but escalade did not unassign the technician.
+        $this->assertEquals(1, countElementsInTable(Ticket_User::getTable(), [
+            'tickets_id' => $ticket->getID(),
+            'users_id'   => $tech->getID(),
+            'type'       => CommonITILActor::ASSIGN,
+        ]));
+
+        // ... and did not record an escalation.
+        $this->assertEquals(0, countElementsInTable('glpi_plugin_escalade_histories', [
+            'tickets_id' => $ticket->getID(),
+        ]));
+    }
+
+    /**
      * A real Escalade reassignment must remove old groups while preserving
      * every previously assigned group in the visual assignment history.
      */
