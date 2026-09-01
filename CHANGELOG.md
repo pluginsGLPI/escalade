@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Fix flaky escalation test on solve/reject-solution data sets
 - CI: fix Psalm cache directory, drop the stray `glpi-project/tools` composer dependency, declare a unique composer autoloader suffix
+- Simplify group reassignment to a single actor diff, relying on GLPI core's status preservation on simultaneous actor removal/addition
+
 
 ## [2.10.8] 2026-09-11
 
@@ -32,7 +34,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed group reassignment to remove previously assigned groups only when using the Escalade reassignment action
 - Fixed `_plugin_escalade_rules_only` being ignored on group assignments, so callers could not opt out of escalade's automatic processing
 - Use item-scoped access check on escalation routes
-- Simplify group reassignment to a single actor diff, relying on GLPI core's status preservation on simultaneous actor removal/addition
 
 ## [2.10.6] - 2026-07-31
 

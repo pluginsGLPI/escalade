@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "esnext",
+        "moduleResolution": "node",
+        "importHelpers": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "allowUmdGlobalAccess": true,
+        "esModuleInterop": true,
+        "types": ["node"]
+    },
+    "include": ["tests/e2e/**/*.ts"]
+}
