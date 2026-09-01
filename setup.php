@@ -30,7 +30,7 @@
 
 use Glpi\Plugin\Hooks;
 
-define('PLUGIN_ESCALADE_VERSION', '2.10.7');
+define('PLUGIN_ESCALADE_VERSION', '2.11.0');
 // Minimal GLPI version, inclusive
 define("PLUGIN_ESCALADE_MIN_GLPI", "12.0.0");
 // Maximum GLPI version, exclusive
@@ -172,7 +172,7 @@ function plugin_init_escalade()
 function plugin_version_escalade()
 {
     return [
-        'name'           => __s("Escalation", "escalade"),
+        'name'           => "Escalation",
         'version'        => PLUGIN_ESCALADE_VERSION,
         'author'         => "<a href='http://www.teclib.com'>Teclib'</a>",
         'homepage'       => "https://github.com/pluginsGLPI/escalade",

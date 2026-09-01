@@ -40,6 +40,7 @@ use Group;
 use Group_Ticket;
 use Group_User;
 use ITILCategory;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PluginEscaladeTicket;
 use Rule;
 use RuleCommonITILObject;
@@ -52,6 +53,7 @@ use TicketTask;
 
 final class TicketTest extends EscaladeTestCase
 {
+    #[AllowMockObjectsWithoutExpectations]
     public function testEscalationWithMandatoryFields()
     {
         $this->initConfig();
@@ -1600,6 +1602,7 @@ final class TicketTest extends EscaladeTestCase
      * which was the cause of the reentrancy loop, while still happening strictly before the
      * new actor is added (delete-before-add notification ordering).
      */
+    #[AllowMockObjectsWithoutExpectations]
     public function testOldAssignRemovalIsDeferredUntilNewActorIsAdded()
     {
         $this->initConfig([
