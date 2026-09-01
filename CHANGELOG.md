@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - GLPI 12 compatibility
+  
+### Fixed
+
+- Simplify group reassignment to a single actor diff, relying on GLPI core's status preservation on simultaneous actor removal/addition
 
 ## [2.10.7] - 2026-08-31
 
@@ -19,7 +23,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed group reassignment to remove previously assigned groups only when using the Escalade reassignment action
 - Fixed `_plugin_escalade_rules_only` being ignored on group assignments, so callers could not opt out of escalade's automatic processing
 - Use item-scoped access check on escalation routes
-- Simplify group reassignment to a single actor diff, relying on GLPI core's status preservation on simultaneous actor removal/addition
 
 ## [2.10.6] - 2026-07-31
 
