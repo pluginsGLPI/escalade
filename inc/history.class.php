@@ -272,7 +272,7 @@ class PluginEscaladeHistory extends CommonDBTM
     public static function showGroupLink($group, $full_history = false)
     {
 
-        if (!$group->can($group->fields['id'], READ)) {
+        if (!Session::haveRight(Group::$rightname, READ)) {
             return '';
         }
 
@@ -287,7 +287,7 @@ class PluginEscaladeHistory extends CommonDBTM
             echo sprintf(" onclick='self.opener.location.href=\"%s\"; self.close();'", $link);
         }
 
-        echo ">" . $group->getNameID(true) . "</a>";
+        echo ">" . $group->getNameID() . "</a>";
         return null;
     }
 
