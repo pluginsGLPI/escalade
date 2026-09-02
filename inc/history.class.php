@@ -41,9 +41,8 @@ class PluginEscaladeHistory extends CommonDBTM
         $found = self::getFullHistory($tickets_id);
         if (count($found) === 0) {
             return false;
-        } else {
-            return array_pop($found);
         }
+        return array_pop($found);
     }
 
     public static function getlastLineForTicket($tickets_id)
@@ -51,9 +50,8 @@ class PluginEscaladeHistory extends CommonDBTM
         $found = self::getFullHistory($tickets_id);
         if (count($found) === 0) {
             return false;
-        } else {
-            return array_shift($found);
         }
+        return array_shift($found);
     }
 
     public static function getLastHistoryForTicketAndGroup($tickets_id, $groups_id, $previous_groups_id)

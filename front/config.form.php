@@ -30,9 +30,7 @@
 
 Session::checkLoginUser();
 
-if (! isset($_GET["id"])) {
-    $_GET["id"] = 0;
-}
+$_GET["id"] ??= 0;
 
 if (!Plugin::isPluginActive('escalade')) {
     echo "Plugin not installed or activated";
