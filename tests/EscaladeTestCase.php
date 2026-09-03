@@ -89,14 +89,9 @@ abstract class EscaladeTestCase extends DbTestCase
     {
         $this->login();
 
-        // Initialize session structure FIRST to avoid warnings
-        if (!isset($_SESSION['glpi_plugins'])) {
-            $_SESSION['glpi_plugins'] = [];
-        }
+        $_SESSION['glpi_plugins'] ??= [];
 
-        if (!isset($_SESSION['glpi_plugins']['escalade'])) {
-            $_SESSION['glpi_plugins']['escalade'] = [];
-        }
+        $_SESSION['glpi_plugins']['escalade'] ??= [];
 
         // Load default config into session to avoid warnings during ticket operations
         $_SESSION['glpi_plugins']['escalade']['config'] = [
@@ -243,7 +238,7 @@ abstract class EscaladeTestCase extends DbTestCase
         $solution = new ITILSolution();
         $solution_id = $solution->add(array_merge([
             'content' => 'Test Solution',
-            'itemtype' => $ticket->getType(),
+            'itemtype' => $ticket::class,
             'items_id' => $ticket->getID(),
             'users_id' => Session::getLoginUserID(),
         ], $solution_options));

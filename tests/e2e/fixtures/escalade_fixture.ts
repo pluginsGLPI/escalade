@@ -1,5 +1,3 @@
-<?php
-
 /**
  * -------------------------------------------------------------------------
  * Escalade plugin for GLPI
@@ -28,48 +26,4 @@
  * -------------------------------------------------------------------------
  */
 
-class PluginEscaladeTaskmanager
-{
-    private static ?TicketTask $ticket_task = null;
-
-    public static function setTicketTask(array $input): void
-    {
-        if (!self::$ticket_task instanceof TicketTask) {
-            self::$ticket_task = new TicketTask();
-        }
-
-        if (!self::canAddEscaladeTicketTask()) {
-            return;
-        }
-
-        if (self::$ticket_task->input !== [] && self::$ticket_task->input !== false) {
-            return;
-        }
-
-        self::$ticket_task->input = $input;
-    }
-
-    public static function canAddEscaladeTicketTask(): bool
-    {
-        if (!$_SESSION['glpi_plugins']['escalade']['config']['task_history']) {
-            return false;
-        }
-
-        return !isset($_SESSION['plugin_escalade']['ticket_creation']) || !$_SESSION['plugin_escalade']['ticket_creation'];
-    }
-
-    public static function addTicketTaskInTimeline(): void
-    {
-        if (!self::canAddEscaladeTicketTask()) {
-            return;
-        }
-
-        self::$ticket_task->add(self::$ticket_task->input);
-        self::resetTicketTask();
-    }
-
-    public static function resetTicketTask(): void
-    {
-        self::$ticket_task = new TicketTask();
-    }
-}
+export * from '../../../../../tests/e2e/fixtures/glpi_fixture';

@@ -34,7 +34,6 @@
 <div class="card">
     <div class="card-body">
         <form name='form' action='{{ action }}' method='post'>
-            <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}">
             <input type="hidden" name="id" value="{{ id }}">
 
             <div class="hr-text mt-2">
@@ -61,7 +60,6 @@
 
                 {% set display_remove_group_options = not config["remove_group"] ? 'd-none' : '' %}
                 {% set display_tech_group_options = not config["use_assign_user_group"] ? 'd-none' : '' %}
-                {% set display_hidden_field = (not config["remove_group"] and config["use_assign_user_group"]) or (config["remove_group"] and not config["use_assign_user_group"]) ? '' : 'd-none' %}
 
                 <div class="row">
                     <div class="col-1"></div>
@@ -79,47 +77,37 @@
                     <div class="col-1"></div>
                 </div>
 
-                {{ fields.sliderField(
-                    'show_history',
-                    config["show_history"],
-                    __("Show group assign history visually", "escalade"),
-                    field_options|merge({'add_field_class': display_remove_group_options})
-                ) }}
+                <div class="col-12 col-sm-6">
+                    {{ fields.sliderField(
+                        'show_history',
+                        config["show_history"],
+                        __("Show group assign history visually", "escalade"),
+                        field_options|merge({'field_class': 'col-12', 'add_field_class': display_remove_group_options})
+                    ) }}
 
-                {{ fields.hiddenField(
-                    'splitfield',
-                    '',
-                    '',
-                    field_options|merge({'add_field_class': display_hidden_field})
-                ) }}
+                    {{ fields.sliderField(
+                        'solve_return_group',
+                        config["solve_return_group"],
+                        __("Assign ticket to initial group on solve ticket", "escalade"),
+                        field_options|merge({'field_class': 'col-12', 'add_field_class': display_remove_group_options})
+                    ) }}
+                </div>
 
-                {{ fields.sliderField(
-                    'use_assign_user_group_creation',
-                    config["use_assign_user_group_creation"],
-                    __('at creation time', 'escalade'),
-                    field_options|merge({'add_field_class': display_tech_group_options})
-                ) }}
+                <div class="col-12 col-sm-6">
+                    {{ fields.sliderField(
+                        'use_assign_user_group_creation',
+                        config["use_assign_user_group_creation"],
+                        __('at creation time', 'escalade'),
+                        field_options|merge({'field_class': 'col-12', 'add_field_class': display_tech_group_options})
+                    ) }}
 
-                {{ fields.sliderField(
-                    'solve_return_group',
-                    config["solve_return_group"],
-                    __("Assign ticket to initial group on solve ticket", "escalade"),
-                    field_options|merge({'add_field_class': display_remove_group_options})
-                ) }}
-
-                {{ fields.hiddenField(
-                    'splitfield',
-                    '',
-                    '',
-                    field_options|merge({'add_field_class': display_hidden_field})
-                ) }}
-
-                {{ fields.sliderField(
-                    'use_assign_user_group_modification',
-                    config["use_assign_user_group_modification"],
-                    __('at modification time', 'escalade'),
-                    field_options|merge({'add_field_class': display_tech_group_options})
-                ) }}
+                    {{ fields.sliderField(
+                        'use_assign_user_group_modification',
+                        config["use_assign_user_group_modification"],
+                        __('at modification time', 'escalade'),
+                        field_options|merge({'field_class': 'col-12', 'add_field_class': display_tech_group_options})
+                    ) }}
+                </div>
 
                 <div class="row">
                     <div class="col-1"></div>
@@ -342,10 +330,8 @@
 <script>
     $(document).ready(function() {
         const remove_group_checkbox = document.querySelector('[name="remove_group"][type="checkbox"]');
-        const remove_group_elements = document.querySelectorAll('[for*="show-history"], [for*="solve-return-group"]');
+        const remove_group_elements = document.querySelectorAll('[for*="show_history"], [for*="solve_return_group"]');
         remove_group_checkbox.addEventListener('click', function() {
-            const selectValue = document.querySelector('[name="use_assign_user_group"]').value;
-            hide_show_hidden_fields(selectValue);
             remove_group_elements.forEach(function(element) {
                 const parentDiv = element.closest('.form-field');
                 if (parentDiv.classList.contains('d-none')) {
@@ -365,8 +351,7 @@
         });
     })
     function hide_technician_group(val) {
-        const technician_group_elements = document.querySelectorAll('[for*="use-assign-user-group-modification"], [for*="use-assign-user-group-creation"]');
-        hide_show_hidden_fields(val);
+        const technician_group_elements = document.querySelectorAll('[for*="use_assign_user_group_modification"], [for*="use_assign_user_group_creation"]');
         technician_group_elements.forEach(function(element) {
             const parentDiv = element.closest('.form-field');
             if (parentDiv.classList.contains('d-none')) {
@@ -387,20 +372,5 @@
                 }
             }
         });
-    }
-    function hide_show_hidden_fields(val) {
-        const remove_group_checkbox = document.querySelector('[name="remove_group"][type="checkbox"]');
-        const hidden_elements = document.querySelectorAll('[for*="splitfield"]');
-        if ((!remove_group_checkbox.checked && val == 0) || (remove_group_checkbox.checked && val != 0)) {
-            hidden_elements.forEach(function(element) {
-                const parentDiv = element.closest('.form-field');
-                parentDiv.classList.add('d-none');
-            });
-        } else {
-            hidden_elements.forEach(function(element) {
-                const parentDiv = element.closest('.form-field');
-                parentDiv.classList.remove('d-none');
-            });
-        }
     }
 </script>

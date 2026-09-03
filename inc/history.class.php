@@ -41,9 +41,9 @@ class PluginEscaladeHistory extends CommonDBTM
         $found = self::getFullHistory($tickets_id);
         if (count($found) === 0) {
             return false;
-        } else {
-            return array_pop($found);
         }
+
+        return array_pop($found);
     }
 
     public static function getlastLineForTicket($tickets_id)
@@ -51,9 +51,9 @@ class PluginEscaladeHistory extends CommonDBTM
         $found = self::getFullHistory($tickets_id);
         if (count($found) === 0) {
             return false;
-        } else {
-            return array_shift($found);
         }
+
+        return array_shift($found);
     }
 
     public static function getLastHistoryForTicketAndGroup($tickets_id, $groups_id, $previous_groups_id)
@@ -272,7 +272,7 @@ class PluginEscaladeHistory extends CommonDBTM
     public static function showGroupLink($group, $full_history = false)
     {
 
-        if (!$group->can($group->fields['id'], READ)) {
+        if (!Session::haveRight(Group::$rightname, READ)) {
             return '';
         }
 
@@ -287,7 +287,7 @@ class PluginEscaladeHistory extends CommonDBTM
             echo sprintf(" onclick='self.opener.location.href=\"%s\"; self.close();'", $link);
         }
 
-        echo ">" . $group->getNameID(true) . "</a>";
+        echo ">" . $group->getNameID() . "</a>";
         return null;
     }
 
@@ -304,9 +304,9 @@ class PluginEscaladeHistory extends CommonDBTM
         global $CFG_GLPI, $DB;
 
         if (
-            ! Session::haveRight("ticket", Ticket::READALL)
-            && ! Session::haveRight("ticket", Ticket::READASSIGN)
-            && ! Session::haveRight("ticket", CREATE)
+            ! Session::haveRight(Ticket::$rightname, Ticket::READALL)
+            && ! Session::haveRight(Ticket::$rightname, Ticket::READASSIGN)
+            && ! Session::haveRight(Ticket::$rightname, CREATE)
             && ! Session::haveRight("ticketvalidation", TicketValidation::VALIDATEREQUEST
                                                       & TicketValidation::VALIDATEINCIDENT)
         ) {
