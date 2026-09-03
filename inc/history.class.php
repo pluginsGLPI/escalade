@@ -42,6 +42,7 @@ class PluginEscaladeHistory extends CommonDBTM
         if (count($found) === 0) {
             return false;
         }
+
         return array_pop($found);
     }
 
@@ -51,6 +52,7 @@ class PluginEscaladeHistory extends CommonDBTM
         if (count($found) === 0) {
             return false;
         }
+
         return array_shift($found);
     }
 
