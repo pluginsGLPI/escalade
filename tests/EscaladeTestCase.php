@@ -59,7 +59,7 @@ abstract class EscaladeTestCase extends DbTestCase
         $_SESSION['glpi_currenttime'] = $ctime;
     }
 
-        public function initConfig(array $conf = [])
+    public function initConfig(array $conf = [])
     {
         $this->login();
 
