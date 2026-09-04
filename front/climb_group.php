@@ -46,7 +46,7 @@ if (
 $ticket = new Ticket();
 $ticket->getFromDB((int) $_REQUEST['tickets_id']);
 
-if (!$ticket->canAssign()) {
+if (!$ticket->canAssign() || !$ticket->checkEntity(true)) {
     Html::displayRightError();
 }
 
