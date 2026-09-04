@@ -33,6 +33,7 @@ namespace GlpiPlugin\Escalade\Tests;
 use Auth;
 use Session;
 use DbTestCase;
+use PluginEscaladeConfig;
 
 abstract class EscaladeTestCase extends DbTestCase
 {
@@ -56,6 +57,51 @@ abstract class EscaladeTestCase extends DbTestCase
         $ctime = $_SESSION['glpi_currenttime'];
         Session::destroy();
         $_SESSION['glpi_currenttime'] = $ctime;
+    }
+
+        public function initConfig(array $conf = [])
+    {
+        $this->login();
+
+        // Initialize session structure FIRST to avoid warnings
+        if (!isset($_SESSION['glpi_plugins'])) {
+            $_SESSION['glpi_plugins'] = [];
+        }
+
+        if (!isset($_SESSION['glpi_plugins']['escalade'])) {
+            $_SESSION['glpi_plugins']['escalade'] = [];
+        }
+
+        // Load default config into session to avoid warnings during ticket operations
+        $_SESSION['glpi_plugins']['escalade']['config'] = [
+            'use_assign_user_group' => 0,
+            'use_assign_user_group_creation' => 0,
+            'use_assign_user_group_modification' => 0,
+            'remove_tech' => 0,
+            'remove_group' => 0,
+            'remove_requester' => 0,
+            'show_history' => 0,
+            'ticket_last_status' => 0,
+            'solve_return_group' => 0,
+            'task_history' => 0,
+            'cloneandlink_ticket' => 0,
+            'close_linkedtickets' => 0,
+            'reassign_group_from_cat' => 0,
+            'task_private' => 1,
+        ];
+
+        // Update escalade config in database if provided
+        if ($conf !== []) {
+            $this->updateItem(PluginEscaladeConfig::class, 1, $conf);
+
+            // Load updated config into session
+            $config = new PluginEscaladeConfig();
+            $config->getFromDB(1);
+            $_SESSION['glpi_plugins']['escalade']['config'] = array_merge(
+                $_SESSION['glpi_plugins']['escalade']['config'],
+                $config->fields,
+            );
+        }
     }
 
     /**
