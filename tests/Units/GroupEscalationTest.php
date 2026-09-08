@@ -30,6 +30,7 @@
 
 namespace GlpiPlugin\Escalade\Tests\Units;
 
+use Group;
 use CommonITILActor;
 use Glpi\DBAL\QueryExpression;
 use GlpiPlugin\Escalade\Tests\EscaladeTestCase;
@@ -37,7 +38,6 @@ use Group_Ticket;
 use Notification;
 use NotificationTarget;
 use PluginEscaladeHistory;
-use PluginEscaladeTicket;
 use PluginEscaladeNotification;
 use QueuedNotification;
 use Ticket;
@@ -47,7 +47,7 @@ use User;
 final class GroupEscalationTest extends EscaladeTestCase
 {
     /**
-     * Standard GLPI group assignment must not remove previously assigned groups.
+     * Standard GLPI group assignment must remove previously assigned groups.
      */
     public function testStandardGroupAssignmentKeepsExistingGroups(): void
     {
@@ -66,11 +66,16 @@ final class GroupEscalationTest extends EscaladeTestCase
                 'assign' => [
                     [
                         'items_id' => $group1->getID(),
-                        'itemtype' => 'Group',
+                        'itemtype' => Group::class,
                     ],
                 ],
             ],
         ]);
+
+        $this->assertEquals(1, countElementsInTable(Group_Ticket::getTable(), [
+            'tickets_id' => $ticket->getID(),
+            'type' => CommonITILActor::ASSIGN,
+        ]));
 
         // Simulate adding another group from the standard GLPI actors field.
         $this->createItem(Group_Ticket::class, [
@@ -79,12 +84,12 @@ final class GroupEscalationTest extends EscaladeTestCase
             'type' => CommonITILActor::ASSIGN,
         ]);
 
-        $this->assertEquals(2, countElementsInTable(Group_Ticket::getTable(), [
+        $this->assertEquals(1, countElementsInTable(Group_Ticket::getTable(), [
             'tickets_id' => $ticket->getID(),
             'type' => CommonITILActor::ASSIGN,
         ]));
 
-        $this->assertEquals(1, countElementsInTable(Group_Ticket::getTable(), [
+        $this->assertEquals(0, countElementsInTable(Group_Ticket::getTable(), [
             'tickets_id' => $ticket->getID(),
             'groups_id' => $group1->getID(),
             'type' => CommonITILActor::ASSIGN,
@@ -238,29 +243,18 @@ final class GroupEscalationTest extends EscaladeTestCase
 
         $group_ticket = new Group_Ticket();
 
-        $this->assertEquals(3, countElementsInTable(Group_Ticket::getTable(), [
+        $this->assertEquals(1, countElementsInTable(Group_Ticket::getTable(), [
             'tickets_id' => $ticket->getID(),
             'type' => CommonITILActor::ASSIGN,
         ]));
 
         // Simulate the real Escalade button.
-        $_SESSION['plugin_escalade']['is_escalation'] = true;
-        $_POST['comment'] = 'Regression test escalation';
-
-        try {
-            PluginEscaladeTicket::timelineClimbAction(
-                $group4->getID(),
-                $ticket->getID(),
-                [
-                    'ticket_details' => [
-                        'id' => $ticket->getID(),
-                    ],
-                ],
-            );
-        } finally {
-            unset($_SESSION['plugin_escalade']['is_escalation']);
-            unset($_POST['comment']);
-        }
+        $this->escalateWithTimelineButton($ticket, $group4, [
+            'ticket_details' => [
+                'id' => $ticket->getID(),
+            ],
+            'comment' => 'Regression test escalation',
+        ]);
 
         // Only the destination group must remain assigned.
         $this->assertEquals(1, countElementsInTable(Group_Ticket::getTable(), [

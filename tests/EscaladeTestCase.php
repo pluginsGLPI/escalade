@@ -177,17 +177,11 @@ abstract class EscaladeTestCase extends DbTestCase
         );
         $_POST['comment'] = $options['comment'] ?? 'Default comment';
 
-        $_SESSION['plugin_escalade']['is_escalation'] = true;
-
-        try {
-            PluginEscaladeTicket::timelineClimbAction(
-                $group->getID(),
-                $ticket->getID(),
-                $options,
-            );
-        } finally {
-            unset($_SESSION['plugin_escalade']['is_escalation']);
-        }
+        PluginEscaladeTicket::timelineClimbAction(
+            $group->getID(),
+            $ticket->getID(),
+            $options,
+        );
 
         $ticketgroup = new Group_Ticket();
         $is_escalate = $ticketgroup->getFromDBByCrit([

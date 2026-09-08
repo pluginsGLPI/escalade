@@ -45,14 +45,8 @@ if (isset($_POST['escalate'])) {
         throw new AccessDeniedHttpException();
     }
 
-    // Mark this operation as a real escalation from the Escalade form.
-    $_SESSION['plugin_escalade']['is_escalation'] = true;
 
-    try {
-        PluginEscaladeTicket::timelineClimbAction($group_id, $tickets_id, $_POST);
-    } finally {
-        unset($_SESSION['plugin_escalade']['is_escalation']);
-    }
+    PluginEscaladeTicket::timelineClimbAction($group_id, $tickets_id, $_POST);
 
     $track = new Ticket();
 

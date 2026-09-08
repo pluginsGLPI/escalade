@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [UNRELEASED]
 
+### Fixed
+
+- Fix group escalation when using actor fields
+
 ## [2.10.7] - 2026-08-31
 
 ### Fixed

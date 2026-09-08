@@ -355,14 +355,14 @@ final class TicketTest extends EscaladeTestCase
             ],
         ]);
 
-        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group1_id, 'type' => CommonITILActor::ASSIGN])));
+        $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group1_id, 'type' => CommonITILActor::ASSIGN])));
         $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group2_id, 'type' => CommonITILActor::ASSIGN])));
 
         $this->updateItem('Ticket', $ticket_id, [
             'status' => CommonITILObject::WAITING,
         ]);
 
-        $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group1_id, 'type' => CommonITILActor::ASSIGN])));
+        $this->assertEquals(0, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group1_id, 'type' => CommonITILActor::ASSIGN])));
         $this->assertEquals(1, count($group_ticket->find(['tickets_id' => $ticket_id, 'groups_id' => $group2_id, 'type' => CommonITILActor::ASSIGN])));
     }
 
