@@ -32,9 +32,9 @@ use Glpi\Plugin\Hooks;
 
 define('PLUGIN_ESCALADE_VERSION', '2.10.7');
 // Minimal GLPI version, inclusive
-define("PLUGIN_ESCALADE_MIN_GLPI", "11.0.0");
+define("PLUGIN_ESCALADE_MIN_GLPI", "12.0.0");
 // Maximum GLPI version, exclusive
-define("PLUGIN_ESCALADE_MAX_GLPI", "11.0.99");
+define("PLUGIN_ESCALADE_MAX_GLPI", "12.0.99");
 
 if (!defined("PLUGIN_ESCALADE_DIR")) {
     define("PLUGIN_ESCALADE_DIR", Plugin::getPhpDir("escalade"));
@@ -134,7 +134,7 @@ function plugin_init_escalade()
         }
 
         // == Interface links ==
-        if (Session::haveRight('config', UPDATE)) {
+        if (Session::haveRight(Config::$rightname, UPDATE)) {
             $PLUGIN_HOOKS['config_page']['escalade'] = 'front/config.form.php';
 
             $PLUGIN_HOOKS['menu_toadd']['escalade'] = [
@@ -172,7 +172,7 @@ function plugin_init_escalade()
 function plugin_version_escalade()
 {
     return [
-        'name'           => __s("Escalation", "escalade"),
+        'name'           => "Escalation",
         'version'        => PLUGIN_ESCALADE_VERSION,
         'author'         => "<a href='http://www.teclib.com'>Teclib'</a>",
         'homepage'       => "https://github.com/pluginsGLPI/escalade",

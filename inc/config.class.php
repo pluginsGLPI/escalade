@@ -32,7 +32,7 @@ use Glpi\Application\View\TemplateRenderer;
 
 class PluginEscaladeConfig extends CommonDBTM
 {
-    public static $rightname  = 'config';
+    public static string $rightname  = 'config';
 
     public static function getMenuName()
     {

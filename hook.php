@@ -329,9 +329,7 @@ function plugin_escalade_install()
             $tickets_id = $data['tickets_id'];
             unset($data['tickets_id']);
 
-            if (!isset($histories[$tickets_id])) {
-                $histories[$tickets_id] = [];
-            }
+            $histories[$tickets_id] ??= [];
 
             $histories[$tickets_id][] = $data;
         }
@@ -525,9 +523,7 @@ function plugin_escalade_pre_item_add_group_ticket($item)
         && $item->input['type'] == CommonITILActor::ASSIGN
         && empty($item->input['_plugin_escalade_rules_only'])
     ) {
-        if (!isset($_SESSION['plugin_escalade']['current_group_assignment'])) {
-            $_SESSION['plugin_escalade']['current_group_assignment'] = [];
-        }
+        $_SESSION['plugin_escalade']['current_group_assignment'] ??= [];
 
         $_SESSION['plugin_escalade']['current_group_assignment'][$item->input['tickets_id']] = [
             'group_id' => $item->input['groups_id'],

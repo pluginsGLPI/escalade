@@ -10,6 +10,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Fix group escalation when using actor fields
+  
+### Added
+
+- GLPI 12 compatibility
+  
+### Fixed
+
+- Simplify group reassignment to a single actor diff, relying on GLPI core's status preservation on simultaneous actor removal/addition
 
 ## [2.10.7] - 2026-08-31
 

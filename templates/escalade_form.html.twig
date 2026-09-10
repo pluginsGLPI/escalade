@@ -37,7 +37,6 @@
               data-track-changes="true" data-submit-once>
 
             <input type="hidden" name="tickets_id" value="{{ ticket.getID() }}" />
-            <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}" />
 
             <div class="escalation card-header">
                 <h3 class="card-title"> {{ __('Escalate ticket', 'escalade') }}</h3>
