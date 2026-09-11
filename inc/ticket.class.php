@@ -1371,15 +1371,19 @@ class PluginEscaladeTicket
                 $_form_object['status'] = $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'];
             }
 
+            // The updated ticket must be the authorized one, never the one named by the submitted details
+            unset($options['ticket_details']['id']);
+
             $updates_ticket = new Ticket();
             $updates_ticket->update(
-                $options['ticket_details'] + [
+                [
+                    'id' => $tickets_id,
                     '_actors' => PluginEscaladeTicket::getTicketFieldsWithActors($tickets_id, $group_id),
-                    '_plugin_escalade_no_history' => true, // Prevent a duplicated task to be added
+                    '_plugin_escalade_no_history' => true,
                     'actortype' => CommonITILActor::ASSIGN,
                     'groups_id' => $group_id,
                     '_form_object' => $_form_object,
-                ],
+                ] + $options['ticket_details'],
             );
         }
     }
