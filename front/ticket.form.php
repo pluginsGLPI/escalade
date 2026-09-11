@@ -45,6 +45,10 @@ if (isset($_POST['escalate'])) {
         throw new AccessDeniedHttpException();
     }
 
+    // The submitted form details are only applied when the user may update the ticket itself
+    if (!$ticket->canUpdateItem()) {
+        unset($_POST['ticket_details']);
+    }
 
     PluginEscaladeTicket::timelineClimbAction($group_id, $tickets_id, $_POST);
 

@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Fix group escalation when using actor fields
+- Fix the escalation form updating the ticket referenced by the submitted form data instead of the escalated ticket
+- Fix the escalation form applying the submitted ticket fields for users who are not allowed to update the ticket
 
 ## [2.10.7] - 2026-08-31
 
