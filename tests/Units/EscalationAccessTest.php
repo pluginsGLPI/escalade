@@ -30,7 +30,10 @@
 
 namespace GlpiPlugin\Escalade\Tests\Units;
 
+use CommonITILActor;
 use GlpiPlugin\Escalade\Tests\EscaladeTestCase;
+use Group_Ticket;
+use PluginEscaladeTicket;
 use ProfileRight;
 use Ticket;
 
@@ -63,6 +66,55 @@ final class EscalationAccessTest extends EscaladeTestCase
         $this->assertTrue(
             $ticket->canAssign() && $ticket->checkEntity(),
             'A user with only the ASSIGN right must be allowed to reach escalation routes',
+        );
+    }
+
+    public function testSubmittedTicketDetailsCannotRetargetAnotherTicket(): void
+    {
+        $this->initConfig();
+        $escalated_ticket = $this->createItem(Ticket::class, ['name' => 'Escalated ticket', 'content' => '']);
+        $other_ticket = $this->createItem(Ticket::class, ['name' => 'Other ticket', 'content' => '']);
+        $group = $this->createGroup('RetargetTestGroup');
+
+        $_POST['comment'] = 'Escalation comment';
+        PluginEscaladeTicket::timelineClimbAction(
+            $group->getID(),
+            $escalated_ticket->getID(),
+            [
+                'ticket_details' => [
+                    'id'   => $other_ticket->getID(),
+                    'name' => 'Renamed by the submitted details',
+                ],
+            ],
+        );
+
+        $this->assertEquals('Other ticket', $this->loadTicket($other_ticket->getID())->fields['name']);
+        $this->assertEquals(
+            'Renamed by the submitted details',
+            $this->loadTicket($escalated_ticket->getID())->fields['name'],
+        );
+
+        $group_ticket = new Group_Ticket();
+        $this->assertTrue($group_ticket->getFromDBByCrit([
+            'tickets_id' => $escalated_ticket->getID(),
+            'groups_id'  => $group->getID(),
+            'type'       => CommonITILActor::ASSIGN,
+        ]));
+
+        unset($_POST['comment']);
+    }
+
+    public function testAssignOnlyUserCannotApplySubmittedTicketDetails(): void
+    {
+        $this->initConfig();
+        $tickets_id = $this->createItem(Ticket::class, ['name' => 'Escalation access test', 'content' => ''])->getID();
+
+        $this->setTechnicianTicketRight(Ticket::ASSIGN);
+        $this->login('tech', 'tech');
+
+        $this->assertFalse(
+            $this->loadTicket($tickets_id)->canUpdateItem(),
+            'A user with only the ASSIGN right must not have the submitted details applied to the ticket',
         );
     }
 
