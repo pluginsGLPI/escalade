@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+### Fixed
+
+- Fix the escalation form updating the ticket referenced by the submitted form data instead of the escalated ticket
+- Fix the escalation form applying the submitted ticket fields for users who are not allowed to update the ticket
+
 ## [2.9.21] - 2026-09-07
 
 ### Fixed

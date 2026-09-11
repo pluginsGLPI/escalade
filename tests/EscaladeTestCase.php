@@ -33,10 +33,16 @@ namespace GlpiPlugin\Escalade\Tests;
 use Auth;
 use Session;
 use DbTestCase;
+use Group;
 use PluginEscaladeConfig;
 
 abstract class EscaladeTestCase extends DbTestCase
 {
+    public function createGroup(string $group_name = 'TestGroup'): Group
+    {
+        return $this->createItem(Group::class, ['name' => $group_name]);
+    }
+
     protected function login(
         string $user_name = TU_USER,
         string $user_pass = TU_PASS,
