@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-18 00:32+0000\n"
+"POT-Creation-Date: 2026-09-09 01:55+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: feonsu <feonsu@gmail.com>, 2019,2023-2026\n"
 "Language-Team: Slovak (Slovakia) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/sk_SK/)\n"
@@ -17,6 +17,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: sk_SK\n"
 "Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);\n"
+
+#: templates/group_group.html.twig
+msgid "List of groups to escalate"
+msgstr "Zoznam skupín na eskaláciu"
 
 #: templates/config.html.twig
 msgid "Group assignment"
@@ -110,11 +114,7 @@ msgstr "Posledný menovaný má prednosť."
 msgid "Display delete button"
 msgstr "Zobraziť tlačidlo mazania"
 
-#: templates/group_group.html.twig
-msgid "List of groups to escalate"
-msgstr "Zoznam skupín na eskaláciu"
-
-#: templates/user.html.twig hook.php:643 hook.php:662
+#: templates/user.html.twig hook.php:644 hook.php:663
 msgid "Bypass filtering on the groups assignment"
 msgstr "Vynechať filtrovanie pri priraďovaní skupín"
 
@@ -130,25 +130,53 @@ msgstr "Komentár"
 msgid "Assign me as an observer"
 msgstr "Priradiť mňa ako pozorovateľa"
 
-#: hook.php:597
-msgid "Group concerned by the escalation"
-msgstr "Skupina, ktorej sa týkajú eskalácie"
-
-#: hook.php:615
-msgid "Number of escalations"
-msgstr "Počet eskalácií"
-
-#: hook.php:629
-msgid "Number of escalations between two groups"
-msgstr "Počet eskalácií medzi dvoma skupinami"
-
-#: public/js/cloneandlink_ticket.js.php:40
-msgid "Clone and link"
-msgstr "Klonovať a prepojiť"
-
 #: setup.php:175 inc/user.class.php:167 inc/group_group.class.php:61
 msgid "Escalation"
 msgstr "Eskalácie"
+
+#: hook.php:598
+msgid "Group concerned by the escalation"
+msgstr "Skupina, ktorej sa týkajú eskalácie"
+
+#: hook.php:616
+msgid "Number of escalations"
+msgstr "Počet eskalácií"
+
+#: hook.php:630
+msgid "Number of escalations between two groups"
+msgstr "Počet eskalácií medzi dvoma skupinami"
+
+#: inc/config.class.php:39
+msgid "Escalade"
+msgstr "Eskalácia"
+
+#: inc/config.class.php:44
+msgid "Configuration Escalade plugin"
+msgstr "Konfigurácia pluginu Eskalácie"
+
+#: inc/config.class.php:139
+msgid "Default (not managed by plugin)"
+msgstr "Predvolené (nespravované pluginom)"
+
+#: inc/history.class.php:219
+msgid "Reassign the ticket to group"
+msgstr "Znovu priradiť požiadavku skupine"
+
+#: inc/history.class.php:263
+msgid "full assignation history"
+msgstr "úplná história priradenia"
+
+#: inc/history.class.php:266
+msgid "View full history"
+msgstr "Zobraziť úplnú históriu"
+
+#: inc/history.class.php:321
+msgid "Tickets to follow (escalated)"
+msgstr "Požiadavky na sledovanie (eskalované)"
+
+#: inc/history.class.php:335
+msgid "Tickets to close (escalated)"
+msgstr "Požiadavky na uzavretie (eskalované)"
 
 #: inc/notification.class.php:83
 msgid "Requester user of the ticket"
@@ -186,68 +214,40 @@ msgstr "Riešenie poskytnuté, späť k skupine"
 msgid "Solution rejected, return to the group"
 msgstr "Riešenie odmietnuté, návrat k skupine"
 
-#: inc/ticket.class.php:603 inc/ticket.class.php:699
+#: inc/ticket.class.php:612 inc/ticket.class.php:708
 #, php-format
 msgid "Escalation to the group %s."
 msgstr "Eskalácia na skupinu %s."
 
-#: inc/ticket.class.php:1054
+#: inc/ticket.class.php:1066
 msgid "Error : get old ticket"
 msgstr "Chyba: získavanie starej požiadavky"
 
-#: inc/ticket.class.php:1069
+#: inc/ticket.class.php:1081
 msgid "Error : adding new ticket"
 msgstr "Chyba: pridávanie novej požiadavky"
 
-#: inc/ticket.class.php:1088
+#: inc/ticket.class.php:1100
 msgid "Error : adding link between the two tickets"
 msgstr "Chyba: pridávanie prepojení medzi dvoma požiadavkami"
 
-#: inc/ticket.class.php:1099 inc/ticket.class.php:1133
-#: inc/ticket.class.php:1138
+#: inc/ticket.class.php:1111 inc/ticket.class.php:1145
+#: inc/ticket.class.php:1150
 msgid "This ticket has been cloned from the ticket num"
 msgstr "Táto požiadavka bola klonovaná z požiadavky č."
 
-#: inc/ticket.class.php:1105
+#: inc/ticket.class.php:1117
 msgid "Error : adding followups"
 msgstr "Chyba: pridávanie reakcií"
 
-#: inc/ticket.class.php:1221 inc/ticket.class.php:1222
+#: inc/ticket.class.php:1233 inc/ticket.class.php:1234
 msgid "Escalate"
 msgstr "Eskalovať"
 
-#: inc/ticket.class.php:1343
+#: inc/ticket.class.php:1355
 msgid "You must select a group."
 msgstr "Musíte vybrať skupinu."
 
-#: inc/history.class.php:192
-msgid "Reassign the ticket to group"
-msgstr "Znovu priradiť požiadavku skupine"
-
-#: inc/history.class.php:236
-msgid "full assignation history"
-msgstr "úplná história priradenia"
-
-#: inc/history.class.php:239
-msgid "View full history"
-msgstr "Zobraziť úplnú históriu"
-
-#: inc/history.class.php:294
-msgid "Tickets to follow (escalated)"
-msgstr "Požiadavky na sledovanie (eskalované)"
-
-#: inc/history.class.php:308
-msgid "Tickets to close (escalated)"
-msgstr "Požiadavky na uzavretie (eskalované)"
-
-#: inc/config.class.php:39
-msgid "Escalade"
-msgstr "Eskalácia"
-
-#: inc/config.class.php:44
-msgid "Configuration Escalade plugin"
-msgstr "Konfigurácia pluginu Eskalácie"
-
-#: inc/config.class.php:139
-msgid "Default (not managed by plugin)"
-msgstr "Predvolené (nespravované pluginom)"
+#: public/js/cloneandlink_ticket.js.php:40
+msgid "Clone and link"
+msgstr "Klonovať a prepojiť"
