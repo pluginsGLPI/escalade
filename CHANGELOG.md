@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+### Fixed
+
+- Fix flaky escalation test on solve/reject-solution data sets
+
 ## [2.10.8] 2026-09-11
 
 ### Fixed

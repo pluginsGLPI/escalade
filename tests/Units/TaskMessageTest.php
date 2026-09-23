@@ -197,7 +197,7 @@ final class TaskMessageTest extends EscaladeTestCase
 
         $ticket = $this->createItem('Ticket', [
             'name' => 'Task Group Escalation Test',
-            'content' => '',
+            'content' => 'Task Group Escalation Test',
             'entities_id' => 0,
         ]);
 
