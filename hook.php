@@ -170,8 +170,10 @@ function plugin_escalade_install()
         $DB->doQuery($query);
     }
 
+    $escalade_fields = $DB->listFields('glpi_plugin_escalade_configs');
+
     // Update for 0.84 status
-    if ($DB->tableExists('glpi_plugin_escalade_configs')) {
+    if ($DB->tableExists('glpi_plugin_escalade_configs') && $escalade_fields['ticket_last_status']['Type'] != 'int') {
         foreach ($DB->request("glpi_plugin_escalade_configs") as $data) {
             switch ($data['ticket_last_status']) {
                 case 'solved':
