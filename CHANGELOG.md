@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Fix flaky escalation test on solve/reject-solution data sets
+- Fix ticket status config being reset to default after each plugin update
 
 ## [2.10.8] 2026-09-11
 
