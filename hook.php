@@ -171,31 +171,18 @@ function plugin_escalade_install()
     }
 
     // Update for 0.84 status
-    if ($DB->tableExists('glpi_plugin_escalade_configs')) {
-        foreach ($DB->request("glpi_plugin_escalade_configs") as $data) {
-            switch ($data['ticket_last_status']) {
-                case 'solved':
-                    $status = Ticket::SOLVED;
-                    break;
-                case 'waiting':
-                    $status = Ticket::WAITING;
-                    break;
-                case 'closed':
-                    $status = Ticket::CLOSED;
-                    break;
-                case 'assign':
-                    $status = Ticket::ASSIGNED;
-                    break;
-                case 'new':
-                    $status = Ticket::INCOMING;
-                    break;
-                case 'plan':
-                    $status = Ticket::PLANNED;
-                    break;
-                default:
-                    $status = PluginEscaladeTicket::MANAGED_BY_CORE;
-                    break;
-            }
+    $escalade_fields = $DB->listFields('glpi_plugin_escalade_configs');
+    if ($DB->tableExists('glpi_plugin_escalade_configs') && $escalade_fields['ticket_last_status']['Type'] != 'int') {
+        foreach ($DB->request(['FROM' => 'glpi_plugin_escalade_configs']) as $data) {
+            $statusMap = [
+                'solved'  => Ticket::SOLVED,
+                'waiting' => Ticket::WAITING,
+                'closed'  => Ticket::CLOSED,
+                'assign'  => Ticket::ASSIGNED,
+                'new'     => Ticket::INCOMING,
+                'plan'    => Ticket::PLANNED,
+            ];
+            $status = $statusMap[$data['ticket_last_status']] ?? PluginEscaladeTicket::MANAGED_BY_CORE;
             $query = "UPDATE `glpi_plugin_escalade_configs`
                    SET `ticket_last_status` = '" . $status . "'
                    WHERE `id` = '" . $data['id'] . "'";
