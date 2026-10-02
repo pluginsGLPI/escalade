@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+- Add a "Remove old assign group on new group assign" checkbox to the escalation form, defaulting to the plugin setting
+
+
 ### Fixed
 
 - Fix flaky escalation test on solve/reject-solution data sets
