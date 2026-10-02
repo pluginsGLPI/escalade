@@ -203,6 +203,62 @@ final class GroupEscalationTest extends EscaladeTestCase
         ]));
     }
 
+    public static function removeGroupCheckboxProvider(): array
+    {
+        return [
+            'config on, checkbox on'   => [1, 1, 1],
+            'config on, checkbox off'  => [1, 0, 2],
+            'config off, checkbox on'  => [0, 1, 1],
+            'config off, checkbox off' => [0, 0, 2],
+        ];
+    }
+
+    /**
+     * The "remove old assign group" checkbox of the escalation form overrides
+     * the global setting for that single escalation.
+     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('removeGroupCheckboxProvider')]
+    public function testEscalationFormRemoveGroupCheckbox(int $config_remove_group, int $checkbox, int $expected_groups): void
+    {
+        $this->initConfig([
+            'remove_group' => $config_remove_group,
+        ]);
+
+        $group1 = $this->createGroup('checkbox_group_1_' . uniqid());
+        $group2 = $this->createGroup('checkbox_group_2_' . uniqid());
+
+        $ticket = $this->createItem(Ticket::class, [
+            'name' => 'Escalation form remove group checkbox',
+            'content' => '',
+            '_actors' => [
+                'assign' => [
+                    [
+                        'items_id' => $group1->getID(),
+                        'itemtype' => Group::class,
+                    ],
+                ],
+            ],
+        ]);
+
+        $this->escalateWithTimelineButton($ticket, $group2, [
+            'remove_group_checkbox' => $checkbox,
+            'comment' => 'Checkbox escalation',
+        ]);
+
+        $this->assertEquals($expected_groups, countElementsInTable(Group_Ticket::getTable(), [
+            'tickets_id' => $ticket->getID(),
+            'type' => CommonITILActor::ASSIGN,
+        ]));
+        $this->assertEquals($expected_groups === 2 ? 1 : 0, countElementsInTable(Group_Ticket::getTable(), [
+            'tickets_id' => $ticket->getID(),
+            'groups_id' => $group1->getID(),
+            'type' => CommonITILActor::ASSIGN,
+        ]));
+
+        // The override must not leak to later assignments.
+        $this->assertArrayNotHasKey('remove_group_override', $_SESSION['plugin_escalade'] ?? []);
+    }
+
     /**
      * A real Escalade reassignment must remove old groups while preserving
      * every previously assigned group in the visual assignment history.
