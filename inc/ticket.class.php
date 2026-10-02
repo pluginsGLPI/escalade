@@ -548,7 +548,14 @@ class PluginEscaladeTicket
         // getFromDB() is required first so isNewItem() returns false and deleted-actor
         // detection runs. _plugin_escalade_rules_only skips escalade logic in pre_item_update.
         // Safety net in case updateActors() above did not already remove old groups.
-        if ($_SESSION['glpi_plugins']['escalade']['config']['remove_group'] == true) {
+        // The escalation form can override the global "remove_group" setting for a single
+        // escalation (see timelineClimbAction()).
+        $remove_group = (bool) $_SESSION['glpi_plugins']['escalade']['config']['remove_group'];
+        if (isset($_SESSION['plugin_escalade']['remove_group_override'])) {
+            $remove_group = (bool) $_SESSION['plugin_escalade']['remove_group_override'];
+        }
+
+        if ($remove_group) {
             $all_actors = self::getTicketFieldsWithActors($tickets_id, $groups_id);
 
             // Keep only the new group in the assign list (drop old ones).
@@ -1338,6 +1345,7 @@ class PluginEscaladeTicket
             'action'                => plugin_escalade_geturl() . 'front/ticket.form.php',
             'ticket'                => $options['parent'],
             'assign_me_as_observer' => $config->fields['assign_me_as_observer'],
+            'remove_group'          => $config->fields['remove_group'],
             'assigned_groups'       => $assigned_groups,
             'condition'             => $condition,
         ]);
@@ -1347,6 +1355,7 @@ class PluginEscaladeTicket
     {
         $params = [
             'is_observer_checkbox' => false,
+            'remove_group_checkbox' => $_SESSION['glpi_plugins']['escalade']['config']['remove_group'],
             'ticket_details' => [],
         ];
         $options = array_merge($params, $options);
@@ -1374,17 +1383,25 @@ class PluginEscaladeTicket
             // The updated ticket must be the authorized one, never the one named by the submitted details
             unset($options['ticket_details']['id']);
 
-            $updates_ticket = new Ticket();
-            $updates_ticket->update(
-                [
-                    'id' => $tickets_id,
-                    '_actors' => PluginEscaladeTicket::getTicketFieldsWithActors($tickets_id, $group_id),
-                    '_plugin_escalade_no_history' => true,
-                    'actortype' => CommonITILActor::ASSIGN,
-                    'groups_id' => $group_id,
-                    '_form_object' => $_form_object,
-                ] + $options['ticket_details'],
-            );
+            // Per-escalation choice from the form: remove previously assigned groups or keep them.
+            // Read by processAfterAddGroup() while the ticket update below adds the new group.
+            $_SESSION['plugin_escalade']['remove_group_override'] = (bool) $options['remove_group_checkbox'];
+
+            try {
+                $updates_ticket = new Ticket();
+                $updates_ticket->update(
+                    [
+                        'id' => $tickets_id,
+                        '_actors' => PluginEscaladeTicket::getTicketFieldsWithActors($tickets_id, $group_id),
+                        '_plugin_escalade_no_history' => true,
+                        'actortype' => CommonITILActor::ASSIGN,
+                        'groups_id' => $group_id,
+                        '_form_object' => $_form_object,
+                    ] + $options['ticket_details'],
+                );
+            } finally {
+                unset($_SESSION['plugin_escalade']['remove_group_override']);
+            }
         }
     }
 }
