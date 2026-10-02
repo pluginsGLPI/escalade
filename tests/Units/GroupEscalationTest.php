@@ -30,6 +30,7 @@
 
 namespace GlpiPlugin\Escalade\Tests\Units;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Group;
 use CommonITILActor;
 use Glpi\DBAL\QueryExpression;
@@ -217,7 +218,7 @@ final class GroupEscalationTest extends EscaladeTestCase
      * The "remove old assign group" checkbox of the escalation form overrides
      * the global setting for that single escalation.
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('removeGroupCheckboxProvider')]
+    #[DataProvider('removeGroupCheckboxProvider')]
     public function testEscalationFormRemoveGroupCheckbox(int $config_remove_group, int $checkbox, int $expected_groups): void
     {
         $this->initConfig([
