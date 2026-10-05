@@ -38,13 +38,13 @@ if (!defined('GLPI_ROOT')) {
 class PluginEscaladeGroup_Group extends CommonDBRelation
 {
     // From CommonDBRelation
-    public static $itemtype_1   = 'Group';
+    public static ?string $itemtype_1   = 'Group';
 
-    public static $items_id_1   = 'groups_id_source';
+    public static ?string $items_id_1   = 'groups_id_source';
 
-    public static $itemtype_2   = 'Group';
+    public static ?string $itemtype_2   = 'Group';
 
-    public static $items_id_2   = 'groups_id_destination';
+    public static ?string $items_id_2   = 'groups_id_destination';
 
     public function getForbiddenStandardMassiveAction()
     {
@@ -96,7 +96,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation
         $gg_found = $this->find(['groups_id_source' => $groups_id]);
         $nb = count($gg_found);
 
-        if (Session::haveRight('group', UPDATE)) {
+        if (Session::haveRight(Group::$rightname, UPDATE)) {
             $groups_id_used = [];
             foreach ($gg_found as $gg) {
                 $groups_id_used[] = $gg['groups_id_destination'];
@@ -123,7 +123,7 @@ class PluginEscaladeGroup_Group extends CommonDBRelation
         }
 
         TemplateRenderer::getInstance()->display('@escalade/group_group.html.twig', [
-            'canedit'             => Session::haveRight('group', UPDATE),
+            'canedit'             => Session::haveRight(Group::$rightname, UPDATE),
             'group_id'              => $groups_id,
             'groups'                => $groups,
             'massiveactionparams'   => $massiveactionparams ?? [],
