@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Fix flaky escalation test on solve/reject-solution data sets
 - CI: fix Psalm cache directory, drop the stray `glpi-project/tools` composer dependency, declare a unique composer autoloader suffix
+- Fix form submission error when 'Use technician group on ticket creation' is enabled
 
 ## [2.10.8] 2026-09-11
 
