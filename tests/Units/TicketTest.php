@@ -1724,4 +1724,60 @@ final class TicketTest extends EscaladeTestCase
             'The keep-users flag must not survive past the request when the follow-up group add never happens',
         );
     }
+
+    /**
+     * When the technician is auto-assigned by the core from the ITIL category,
+     * `_users_id_assign` is a scalar ID (not an array): the technician group
+     * must still be assigned on ticket creation.
+     */
+    public function testAssignUserGroupOnCreationWithTechnicianFromCategory()
+    {
+        $this->initConfig([
+            'use_assign_user_group'          => 1,
+            'use_assign_user_group_creation' => 1,
+        ]);
+
+        $this->updateItem('Entity', 0, [
+            'auto_assign_mode' => Entity::AUTO_ASSIGN_CATEGORY_HARDWARE,
+        ]);
+
+        $tech = new User();
+        $tech->getFromDBbyName('tech');
+        $this->assertGreaterThan(0, $tech->getID());
+
+        $group = $this->createItem('Group', [
+            'name' => 'Technician group',
+            'entities_id' => 0,
+            'is_recursive' => 1,
+        ]);
+        $this->createItem('Group_User', [
+            'users_id' => $tech->getID(),
+            'groups_id' => $group->getID(),
+        ]);
+
+        $itil_cat = $this->createItem('ITILCategory', [
+            'name' => 'Cat with technician',
+            'users_id' => $tech->getID(),
+            'entities_id' => 0,
+        ]);
+
+        $ticket = $this->createItem('Ticket', [
+            'name' => 'Ticket without assigned technician',
+            'content' => 'Content',
+            'entities_id' => 0,
+            'itilcategories_id' => $itil_cat->getID(),
+        ]);
+        $ticket_id = $ticket->getID();
+
+        $this->assertEquals(
+            1,
+            countElementsInTable(Ticket_User::getTable(), ['tickets_id' => $ticket_id, 'type' => CommonITILActor::ASSIGN, 'users_id' => $tech->getID()]),
+            'Technician from the category should be assigned',
+        );
+        $this->assertEquals(
+            1,
+            countElementsInTable(Group_Ticket::getTable(), ['tickets_id' => $ticket_id, 'type' => CommonITILActor::ASSIGN, 'groups_id' => $group->getID()]),
+            'Technician group should be assigned',
+        );
+    }
 }
