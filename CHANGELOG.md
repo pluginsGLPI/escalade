@@ -5,13 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [2.11.0] - 2026-10-05
+
+### Added
+
+- GLPI 12 compatibility
 
 ### Fixed
 
 - Fix flaky escalation test on solve/reject-solution data sets
 - CI: fix Psalm cache directory, drop the stray `glpi-project/tools` composer dependency, declare a unique composer autoloader suffix
 - Fix form submission error when 'Use technician group on ticket creation' is enabled
+- Simplify group reassignment to a single actor diff, relying on GLPI core's status preservation on simultaneous actor removal/addition
 
 ## [2.10.8] 2026-09-11
 
