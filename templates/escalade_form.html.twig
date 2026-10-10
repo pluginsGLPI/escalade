@@ -79,6 +79,16 @@
                     ) }}
                 </div>
                 {{ fields.checkboxField(
+                    'remove_group_checkbox',
+                    remove_group,
+                    __('Remove old assign group on new group assign', 'escalade'),
+                    {
+                        'field_class': 'col-12',
+                        'label_class': 'col-auto',
+                        'input_class': 'col-auto',
+                    }
+                ) }}
+                {{ fields.checkboxField(
                     'is_observer_checkbox',
                     assign_me_as_observer,
                     __('Assign me as an observer', 'escalade'),
