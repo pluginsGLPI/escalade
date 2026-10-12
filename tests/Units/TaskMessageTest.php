@@ -34,6 +34,7 @@ use GlpiPlugin\Escalade\Tests\EscaladeTestCase;
 use Group_Ticket;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Plugin;
+use PluginEscaladeTicket;
 use Ticket;
 use Ticket_User;
 use TicketTask;
@@ -193,6 +194,8 @@ final class TaskMessageTest extends EscaladeTestCase
     #[DataProvider('taskGroupEscalationProvider')]
     public function testTaskGroupEscalation(array $conf)
     {
+        // Status must stay managed by core, otherwise the ticket status change interferes with the solve/reject flow
+        $conf['ticket_last_status'] = PluginEscaladeTicket::MANAGED_BY_CORE;
         $this->initConfig($conf);
 
         $ticket = $this->createItem('Ticket', [
