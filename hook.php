@@ -176,8 +176,14 @@ function plugin_escalade_install()
         $DB->doQuery($query);
     }
 
-    // Update for 0.84 status
-    if ($DB->tableExists('glpi_plugin_escalade_configs')) {
+    // Update for 0.84 status (only while `ticket_last_status` is still a VARCHAR, i.e. not yet migrated)
+    if (
+        $DB->tableExists('glpi_plugin_escalade_configs')
+        && !str_starts_with(
+            strtolower($DB->listFields('glpi_plugin_escalade_configs')['ticket_last_status']['Type'] ?? 'int'),
+            'int',
+        )
+    ) {
         foreach ($DB->request(['FROM' => "glpi_plugin_escalade_configs"]) as $data) {
             $status = match ($data['ticket_last_status']) {
                 'solved' => Ticket::SOLVED,
