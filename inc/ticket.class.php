@@ -438,6 +438,26 @@ class PluginEscaladeTicket
         }
     }
 
+    /**
+     * Check whether the current call stack originates from the creation of an ITIL
+     * object (Ticket, Change, Problem).
+     *
+     * @return bool
+     */
+    private static function isRunningDuringItilCreation(): bool
+    {
+        foreach (debug_backtrace() as $backtrace) {
+            if (
+                $backtrace['function'] == "add"
+                && ($backtrace['object'] instanceof CommonITILObject)
+            ) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
     /**
      *  remove old groups to a ticket when a new group assigned
@@ -503,14 +523,8 @@ class PluginEscaladeTicket
 
         // check if group assignment is made during ticket creation
         // in this case, skip following steps as it cannot be considered as a group escalation
-        $backtraces   = debug_backtrace();
-        foreach ($backtraces as $backtrace) {
-            if (
-                $backtrace['function'] == "add"
-                && ($backtrace['object'] instanceof CommonITILObject)
-            ) {
-                return null;
-            }
+        if (self::isRunningDuringItilCreation()) {
+            return null;
         }
 
         //add a task to inform the escalation (pass if solution)
@@ -587,8 +601,12 @@ class PluginEscaladeTicket
         unset($_SESSION['plugin_escalade']['keep_new_assign_users'][$tickets_id]);
         self::removeAssignUsers($item, $keep_users_id);
 
-
-        if ($_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != self::MANAGED_BY_CORE) {
+        // Assigning a group during ticket creation is not an escalation, so the
+        // "status after an escalation" option must not override the status in that case.
+        if (
+            !self::isRunningDuringItilCreation()
+            && $_SESSION['glpi_plugins']['escalade']['config']['ticket_last_status'] != self::MANAGED_BY_CORE
+        ) {
             $ticket = new Ticket();
             $ticket->update([
                 'id'     => $tickets_id,
