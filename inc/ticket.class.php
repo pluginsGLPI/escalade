@@ -441,8 +441,6 @@ class PluginEscaladeTicket
     /**
      * Check whether the current call stack originates from the creation of an ITIL
      * object (Ticket, Change, Problem).
-     *
-     * @return bool
      */
     private static function isRunningDuringItilCreation(): bool
     {
