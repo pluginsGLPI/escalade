@@ -36,6 +36,7 @@ use GlpiPlugin\Escalade\Tests\EscaladeTestCase;
 use Group_Ticket;
 use Notification;
 use NotificationTarget;
+use PluginEscaladeTicket;
 use QueuedNotification;
 use Ticket;
 use User;
@@ -50,6 +51,7 @@ final class ActorDiffReplacementTest extends EscaladeTestCase
         $this->initConfig([
             'remove_group' => 1,
             'show_history' => 1,
+            'ticket_last_status' => PluginEscaladeTicket::MANAGED_BY_CORE,
         ]);
 
         $CFG_GLPI['use_notifications'] = true;
