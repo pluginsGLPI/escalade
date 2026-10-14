@@ -32,9 +32,11 @@ namespace GlpiPlugin\Escalade\Tests\Units;
 
 use Group;
 use CommonITILActor;
+use CommonITILObject;
 use Glpi\DBAL\QueryExpression;
 use GlpiPlugin\Escalade\Tests\EscaladeTestCase;
 use Group_Ticket;
+use Log;
 use Notification;
 use NotificationTarget;
 use PluginEscaladeHistory;
@@ -947,6 +949,95 @@ final class GroupEscalationTest extends EscaladeTestCase
         $history = new PluginEscaladeHistory();
         $this->assertEquals(2, count($history->find(['tickets_id' => $ticket->getID()])));
         $this->assertEquals(1, count($history->find(['tickets_id' => $ticket->getID(), 'groups_id' => $group1->getID()])));
+    }
+
+    public function testStatusAfterEscalationIsNotAppliedOnTicketCreation(): void
+    {
+        $this->initConfig([
+            'ticket_last_status' => CommonITILObject::WAITING,
+        ]);
+
+        $group = $this->createGroup('creation_escalation_group_' . uniqid());
+
+        // Create a ticket that is assigned to a group right away.
+        $ticket = $this->createItem(Ticket::class, [
+            'name'    => 'Status after escalation on creation',
+            'content' => 'content',
+            '_actors' => [
+                'assign' => [
+                    [
+                        'items_id' => $group->getID(),
+                        'itemtype' => 'Group',
+                    ],
+                ],
+            ],
+        ]);
+
+        $this->assertTrue($ticket->getFromDB($ticket->getID()));
+
+        // A ticket created with an assigned group is simply "assigned".
+        $this->assertEquals(CommonITILObject::ASSIGNED, (int) $ticket->fields['status']);
+
+        // The core restores the "assigned" status at the end of the creation, so the final
+        // status alone does not reveal the issue: check that the ticket never went through
+        // the "status after an escalation" in its history.
+        $this->assertEquals(
+            0,
+            countElementsInTable(Log::getTable(), [
+                'itemtype'         => Ticket::class,
+                'items_id'         => $ticket->getID(),
+                'id_search_option' => 12, // status
+                'new_value'        => CommonITILObject::WAITING,
+            ]),
+            'The "status after an escalation" option must not be applied on ticket creation',
+        );
+    }
+
+    public function testStatusAfterEscalationIsAppliedOnRealEscalation(): void
+    {
+        $this->initConfig([
+            'ticket_last_status' => CommonITILObject::WAITING,
+        ]);
+
+        $group1 = $this->createGroup('real_escalation_group_1_' . uniqid());
+        $group2 = $this->createGroup('real_escalation_group_2_' . uniqid());
+
+        // Create a ticket assigned to the first group (creation, not an escalation).
+        $ticket = $this->createItem(Ticket::class, [
+            'name'    => 'Status after real escalation',
+            'content' => 'content',
+            '_actors' => [
+                'assign' => [
+                    [
+                        'items_id' => $group1->getID(),
+                        'itemtype' => 'Group',
+                    ],
+                ],
+            ],
+        ]);
+
+        $this->assertTrue($ticket->getFromDB($ticket->getID()));
+        $this->assertNotEquals(CommonITILObject::WAITING, (int) $ticket->fields['status']);
+
+        // Escalate the existing ticket to a second group: this IS an escalation,
+        // so the configured status must now be applied.
+        $this->updateItem(Ticket::class, $ticket->getID(), [
+            '_actors' => [
+                'assign' => [
+                    [
+                        'items_id' => $group2->getID(),
+                        'itemtype' => 'Group',
+                    ],
+                ],
+            ],
+        ]);
+
+        $this->assertTrue($ticket->getFromDB($ticket->getID()));
+        $this->assertEquals(
+            CommonITILObject::WAITING,
+            (int) $ticket->fields['status'],
+            'The "status after an escalation" option must be applied on a real escalation',
+        );
     }
 
     // The "Group in charge of the ticket" target only notifies the newly assigned group on escalation.
