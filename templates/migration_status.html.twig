@@ -1,0 +1,160 @@
+{#
+ # -------------------------------------------------------------------------
+ # Escalade plugin for GLPI
+ # -------------------------------------------------------------------------
+ #
+ # LICENSE
+ #
+ # This file is part of Escalade.
+ #
+ # Escalade is free software; you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation; either version 2 of the License, or
+ # (at your option) any later version.
+ #
+ # Escalade is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ # GNU General Public License for more details.
+ #
+ # You should have received a copy of the GNU General Public License
+ # along with Escalade. If not, see <http://www.gnu.org/licenses/>.
+ # -------------------------------------------------------------------------
+ # @copyright Copyright (C) 2015-2023 by Escalade plugin team.
+ # @license   GPLv2 https://www.gnu.org/licenses/gpl-2.0.html
+ # @link      https://github.com/pluginsGLPI/escalade
+ # -------------------------------------------------------------------------
+ #}
+
+<div class="d-flex align-items-center mb-4">
+    <div class="me-3">
+        <i class="ti ti-arrows-exchange fa-2x text-primary"></i>
+    </div>
+    <h1 class="mb-0">{{ __('Escalade migration status', 'escalade') }}</h1>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="alert alert-warning border-start border-warning border-2 mb-4">
+            <div class="d-flex align-items-center">
+                <i class="ti ti-alert-triangle text-warning me-3 fa-lg"></i>
+                <p class="mb-0">
+                    {{ __('Escalade v%s is End-of-Life: its features are now provided by the MoreOptions plugin.', 'escalade')|format(plugin_version) }}
+                </p>
+            </div>
+        </div>
+
+        {% if not moreoptions_active or not moreoptions_ready %}
+            <div class="alert alert-danger border-start border-danger border-2 mb-4">
+                <div class="d-flex align-items-center">
+                    <i class="ti ti-plug-x text-danger me-3 fa-lg"></i>
+                    <p class="mb-0">{{ __('Install and enable the MoreOptions plugin before running the migration.', 'escalade') }}</p>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-light">
+                <h3 class="card-title mb-0">
+                    <i class="ti ti-chart-line me-2"></i>
+                    {{ __('Migration Status', 'escalade') }}
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="row g-3 mb-4">
+                    <div class="col-md-4">
+                        <strong class="me-2">{{ __('Group filter', 'escalade') }}</strong>
+                        {% if filter_active %}
+                            <span class="badge bg-success-lt">{{ __('Active', 'escalade') }}</span>
+                        {% else %}
+                            <span class="badge bg-secondary-lt">{{ __('Inactive', 'escalade') }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-4">
+                        <strong class="me-2">{{ __('Migrated links', 'escalade') }}</strong>
+                        <span class="badge glpi-badge">
+                            {{ links|filter(link => link.migrated)|length }} / {{ links|length }}
+                        </span>
+                    </div>
+                    <div class="col-md-4">
+                        <strong class="me-2">{{ __('Users bypassing the filter', 'escalade') }}</strong>
+                        <span class="badge glpi-badge">{{ bypassing_users }}</span>
+                    </div>
+                </div>
+
+                {% if links|length > 0 %}
+                    <table class="table table-hover card-table">
+                        <thead>
+                            <tr>
+                                <th>{{ __('Source group', 'escalade') }}</th>
+                                <th>{{ __('Destination group', 'escalade') }}</th>
+                                <th>{{ __('Status', 'escalade') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for link in links %}
+                                <tr>
+                                    <td>{{ link.source }}</td>
+                                    <td>{{ link.destination }}</td>
+                                    <td>
+                                        {% if link.migrated %}
+                                            <span class="text-success fw-bold">
+                                                <i class="ti ti-check me-1"></i>{{ __('Migrated', 'escalade') }}
+                                            </span>
+                                        {% else %}
+                                            <span class="text-danger fw-bold">
+                                                <i class="ti ti-x me-1"></i>{{ __('Not Migrated', 'escalade') }}
+                                            </span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p class="text-muted mb-0">{{ __('No escalation link to migrate.', 'escalade') }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="card shadow-sm mb-4 border-primary">
+            <div class="card-header bg-primary text-white">
+                <h3 class="card-title mb-0">
+                    <i class="ti ti-terminal-2 me-2"></i>
+                    {{ __('How to Migrate', 'escalade') }}
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="bg-light border border-secondary rounded p-3">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <code id="escalade-migration-command" class="mb-0 flex-grow-1 bg-transparent">{{ migration_command }}</code>
+                        <button type="button" class="btn btn-sm btn-outline-secondary ms-3" id="escalade-copy-command" title="{{ __('Copy command', 'escalade') }}">
+                            <i class="ti ti-clipboard"></i>
+                            {{ __('Copy') }}
+                        </button>
+                    </div>
+                </div>
+                <small class="text-muted mt-2 d-block">
+                    {{ __('From the GLPI root directory. Add "--dry-run" to simulate.', 'escalade') }}
+                </small>
+
+                <ul class="mt-3 mb-0 ps-3">
+                    <li>{{ __('Links are migrated to the root entity and inherited by sub-entities', 'escalade') }}</li>
+                    <li>{{ __('Users bypassing the filter cannot be migrated: allow profiles in MoreOptions instead', 'escalade') }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#escalade-copy-command').on('click', function () {
+        const button = $(this);
+        navigator.clipboard.writeText($('#escalade-migration-command').text()).then(() => {
+            button.html('<i class="ti ti-check"></i> {{ __('Copied')|e('js') }}');
+            setTimeout(() => {
+                button.html('<i class="ti ti-clipboard"></i> {{ __('Copy')|e('js') }}');
+            }, 2000);
+        });
+    });
+</script>

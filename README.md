@@ -7,15 +7,27 @@
 [![GitHub release](https://img.shields.io/github/release/pluginsGLPI/escalade.svg)](https://github.com/pluginsGLPI/escalade/releases)
 [![GitHub build](https://travis-ci.org/pluginsGLPI/escalade.svg?)](https://travis-ci.org/pluginsGLPI/escalade/)
 
-![Screenshot](./screenshots/escalade_history.png)
+## ⚠️ IMPORTANT NOTICE - END OF LIFE
 
-This GLPI plugin aims to simplify the ticket escalation process in GLPI.  
-It also adds a graphical history for assigned groups.  
+**Escalade 3.0.0 is a migration-only plugin: its features are now provided by the [MoreOptions](https://github.com/pluginsGLPI/moreoptions) plugin.**
 
-A new dashboard on the user's home page is added, as well as a new criteria in ticket's search engine.   
-Also, there's also a clone ticket feature, accessible through an icon on the ticket form.   
+Plugin marking the end of life of `escalade`.
+It updates database tables and data to the final version, required before the migration of the group filter to MoreOptions.
+⚠️ This plugin must be installed in production only to perform the update, and then uninstalled once the operation is complete.
 
-* Download: https://github.com/PluginsGLPI/escalade/releases
+Usage Instructions:
+--------------------------
+1. Install this final version (3.0.0).
+2. Install and enable the MoreOptions plugin.
+3. Run the migration of the group filter using the following command:
+    - "`php bin/console plugins:moreoptions:migrate_escalade`".
+    - The groups a group can escalate to become links of the escalation tree of the root entity, replicated in all its sub-entities.
+    - An active group filter is activated in the root entity, which the sub-entities inherit.
+    - The users allowed to bypass the filter cannot be migrated: MoreOptions allows profiles to bypass it.
+4. Check the migration status from the configuration page of the plugin.
+5. Uninstall the `Escalade` plugin once all data has been migrated and verified.
+
+This version provides support for migration only. For escalation features, use the MoreOptions plugin.
 
 ## Documentation
 

@@ -1,55 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
-   <name>Escalade </name>
+   <name>Escalade (End Of Life)</name>
    <key>escalade</key>
    <state>stable</state>
    <logo>https://raw.githubusercontent.com/pluginsGLPI/escalade/main/escalade.png</logo>
    <description>
       <short>
-         <cs><![CDATA[Tento zásuvný modul zjednodušuje eskalaci požadavku na jiné skupiny]]></cs>
-         <en><![CDATA[This plugin simplifies the ticket escalation to different groups]]></en>
-         <fr><![CDATA[Cette extension permet de simplifier l'escalade de ticket vers des groupes différents]]></fr>
+         <fr>Plugin marquant la fin de vie du plugin Escalade, dont les fonctionnalités sont désormais fournies par le plugin MoreOptions.
+             Il met à jour les tables et les données de la base vers la version finale, prérequis avant la migration du filtre de groupes vers MoreOptions.
+             ⚠️ Ce plugin doit être installé uniquement en production pour effectuer la mise à jour, puis désinstallé une fois l'opération terminée.</fr>
+         <en>Plugin marking the end of life of the Escalade plugin, whose features are now provided by the MoreOptions plugin.
+             It updates database tables and data to the final version, prerequisite before the migration of the group filter to MoreOptions.
+             ⚠️ This plugin must be installed in production only to perform the update, and then uninstalled once the operation is complete.</en>
       </short>
       <long>
-         <cs>
-Tento zásuvný modul zjednodušuje eskalaci požadavku na jiné skupiny.
-Přidává následující funkce:
-
-* Zobrazení vizuální historie přiřazení požadavku skupinám.
-* Zrychlená eskalace na skupinu nacházející se v historii.
-* Přiřazení skupiny iniciátora když je poskytnuto řešení požadavku.
-* Poskytnutí automatického přiřazování požadavků při změně jeho kategorie.
-* Rychlé klonování požadavku.
-* Současné uzavření klonovaných požadavků.
-* Vzetí první nebo poslední skupiny technika (při změně požadavku).
-* Nové tlačítko pro zrychlené přiřazení požadavku sám sobě.
-         </cs>
-         <en>
-This plugin simplifies the ticket escalation to different groups.
-It adds the following features :
-
-* Display a visual history of the assignement groups on a ticket.
-* Rapid escalation to a group present in history.
-* Assign initiator group when ticket solution provided.
-* provide automatic assignment of tickets on ticket category change.
-* Fast cloning of ticket.
-* Closing cloned tickets simultaneously.
-* Take the first or last group of technician (on ticket modification).
-* New button for rapid self-assignment of a ticket.
-         </en>
          <fr>
-Cette extension permet de simplifier l'escalade de ticket vers des groupes différents.
-Elle ajoute les fonctionnalités suivantes :
+Escalade 3.0.0 - Plugin de migration uniquement (Fin de vie)
 
-* Affichage d'un historique visuel de l'assignation des groupes sur un ticket.
-* Escalade rapide à un groupe présent dans cette historique.
-* Assignation du groupe initiateur lors de l'apport d'une solution.
-* Attribution du responsable et groupe technique lors d'un changement de catégorie de ticket.
-* Clonage rapide de ticket.
-* Cloture des tickets clonés en même temps.
-* Prendre le premier ou dernier groupe du technicien (sur modification du ticket).
-* Bouton d'assignation rapide à soi-même d'un ticket.
+⚠️ Attention : la version finale 3.0.0 est une version EOL (fin de vie). Elle ne bénéficie plus de mises à jour fonctionnelles ni de correctifs de sécurité.
+Les fonctionnalités d'escalade sont désormais fournies par le plugin MoreOptions.
+
+Instructions d'utilisation :
+--------------------------
+1. Installez cette version finale (3.0.0).
+2. Installez et activez le plugin MoreOptions.
+3. Lancez la migration du filtre de groupes à l'aide de la commande suivante :
+    - « `php bin/console plugins:moreoptions:migrate_escalade` ».
+4. Vérifiez l'arbre d'escalade dans l'onglet « Escalade » de la configuration MoreOptions des entités, et choisissez les profils autorisés à contourner le filtre de groupes.
+5. Désinstallez le plugin Escalade une fois que toutes les données ont été migrées et vérifiées.
          </fr>
+         <en>
+Escalade 3.0.0 - Migration Plugin Only (End of Life)
+
+⚠️ Warning: the final version 3.0.0 is an EOL (End of Life) release. It no longer receives functional updates or security patches.
+Escalation features are now provided by the MoreOptions plugin.
+
+Usage Instructions:
+--------------------------
+1. Install this final version (3.0.0).
+2. Install and enable the MoreOptions plugin.
+3. Run the migration of the group filter using the following command:
+    - "`php bin/console plugins:moreoptions:migrate_escalade`".
+4. Review the escalation tree in the "Escalate" tab of the MoreOptions configuration of the entities, and choose the profiles allowed to bypass the group filter.
+5. Uninstall the Escalade plugin once all data has been migrated and verified.
+         </en>
       </long>
    </description>
    <homepage>https://github.com/pluginsGLPI/escalade</homepage>
@@ -61,6 +55,11 @@ Elle ajoute les fonctionnalités suivantes :
       <author>Teclib'</author>
    </authors>
    <versions>
+      <version>
+         <num>3.0.0</num>
+         <compatibility>~12.0.0</compatibility>
+         <download_url>https://github.com/pluginsGLPI/escalade/releases/download/3.0.0/glpi-escalade-3.0.0.tar.bz2</download_url>
+      </version>
       <version>
          <num>2.11.0</num>
          <compatibility>~12.0.0</compatibility>
