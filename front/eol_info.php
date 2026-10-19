@@ -28,9 +28,15 @@
  * -------------------------------------------------------------------------
  */
 
-require __DIR__ . '/../../../tests/bootstrap.php';
-require __DIR__ . '/../vendor/autoload.php';
+Session::checkRight('config', READ);
 
-if (!Plugin::isPluginActive('escalade')) {
-    throw new RuntimeException('Plugin escalade is not active in the test database');
-}
+Html::header(
+    __s('Escalade (End Of Life)', 'escalade'),
+    '',
+    'config',
+    'plugin',
+);
+
+(new PluginEscaladeEOLInfo())->showForm();
+
+Html::footer();

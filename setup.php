@@ -28,9 +28,7 @@
  * -------------------------------------------------------------------------
  */
 
-use Glpi\Plugin\Hooks;
-
-define('PLUGIN_ESCALADE_VERSION', '2.11.0');
+define('PLUGIN_ESCALADE_VERSION', '3.0.0');
 // Minimal GLPI version, inclusive
 define("PLUGIN_ESCALADE_MIN_GLPI", "12.0.0");
 // Maximum GLPI version, exclusive
@@ -48,118 +46,13 @@ if (!defined("PLUGIN_ESCALADE_DIR")) {
  */
 function plugin_init_escalade()
 {
-    /** @var DBmysql $DB */
     /** @var array $PLUGIN_HOOKS */
-    global $PLUGIN_HOOKS, $DB;
+    global $PLUGIN_HOOKS;
 
-    $PLUGIN_HOOKS['csrf_compliant']['escalade'] = true;
-    if (Plugin::isPluginActive('escalade')) {
-        if ($DB->tableExists("glpi_plugin_escalade_configs")) {
-            //load config in session
-            PluginEscaladeConfig::loadInSession();
-            // == Load js scripts ==
-            if ((isset($_SESSION['glpiID']) || isCommandLine()) && isset($_SESSION['glpi_plugins']['escalade']['config'])) {
-                $escalade_config = $_SESSION['glpi_plugins']['escalade']['config'];
-                $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/function.js';
-                // on central page
-                //history and climb feature
-                if (str_contains($_SERVER['REQUEST_URI'] ?? '', "central.php") && $escalade_config['show_history']) {
-                    $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/central.js.php';
-                }
 
-                // on ticket page (in edition)
-                if (
-                    (str_contains($_SERVER['REQUEST_URI'] ?? '', "ticket.form.php") || str_contains($_SERVER['REQUEST_URI'] ?? '', "problem.form.php") || str_contains($_SERVER['REQUEST_URI'] ?? '', "change.form.php")) && isset($_GET['id']) && (!$escalade_config['remove_delete_requester_user_btn'] || !$escalade_config['remove_delete_watcher_user_btn'] || !$escalade_config['remove_delete_assign_user_btn'] || !$escalade_config['remove_delete_requester_group_btn'] || !$escalade_config['remove_delete_watcher_group_btn'] || !$escalade_config['remove_delete_assign_group_btn'] || !$escalade_config['remove_delete_assign_supplier_btn'])
-                ) {
-                    //remove btn feature
-                    $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/remove_btn.js.php';
-                }
-
-                // on ticket page (in edition)
-                if (
-                    str_contains($_SERVER['REQUEST_URI'] ?? '', "ticket.form.php")
-                    && isset($_GET['id'])
-                ) {
-                    //history and climb feature
-                    if ($escalade_config['show_history']) {
-                        $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/escalade.js.php';
-                    }
-
-                    //clone ticket feature
-                    if ($escalade_config['cloneandlink_ticket']) {
-                        $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/cloneandlink_ticket.js.php';
-                    }
-                }
-
-                Plugin::registerClass('PluginEscaladeGroup_Group', ['addtabon' => 'Group']);
-                Plugin::registerClass('PluginEscaladeUser', ['addtabon' => ['User']]);
-            }
-        }
-
-        // Add css file
-        $PLUGIN_HOOKS['add_css']['escalade'][] = 'css/escalade.css';
-
-        // == Ticket modifications
-        $PLUGIN_HOOKS['pre_item_update']['escalade'] = [
-            'Ticket'       => 'plugin_escalade_pre_item_update',
-        ];
-        $PLUGIN_HOOKS['item_update']['escalade'] = [
-            'Ticket'       => 'plugin_escalade_item_update',
-        ];
-        $PLUGIN_HOOKS['item_add']['escalade'] = [
-            'Group_Ticket' => 'plugin_escalade_item_add_group_ticket',
-            'Ticket_User'  => 'plugin_escalade_item_add_user',
-            'Ticket'       => 'plugin_escalade_item_add_ticket',
-        ];
-        $PLUGIN_HOOKS['pre_item_add']['escalade'] = [
-            'Group_Ticket' => 'plugin_escalade_pre_item_add_group_ticket',
-            'Ticket'       => 'plugin_escalade_pre_item_add_ticket',
-            'Ticket_User'  => 'plugin_escalade_pre_item_add_ticket_user',
-        ];
-        $PLUGIN_HOOKS['post_prepareadd']['escalade'] = [
-            'Ticket'       => 'plugin_escalade_post_prepareadd_ticket',
-        ];
-
-        $PLUGIN_HOOKS['item_purge']['escalade'] = [
-            'User'         => 'plugin_escalade_item_purge',
-            'Ticket'       => 'plugin_escalade_item_purge',
-        ];
-        $PLUGIN_HOOKS['item_add']['escalade']['User'] = 'plugin_escalade_item_add_user';
-
-        //filter group feature
-        if ($escalade_config['use_filter_assign_group'] ?? false) {
-            $PLUGIN_HOOKS[Hooks::FILTER_ACTORS]['escalade'] = [
-                'PluginEscaladeTicket', 'filter_actors',
-            ];
-        }
-
-        // == Interface links ==
-        if (Session::haveRight(Config::$rightname, UPDATE)) {
-            $PLUGIN_HOOKS['config_page']['escalade'] = 'front/config.form.php';
-
-            $PLUGIN_HOOKS['menu_toadd']['escalade'] = [
-                'admin' => PluginEscaladeConfig::class,
-            ];
-        }
-
-        $PLUGIN_HOOKS['use_massive_action']['escalade'] = 1;
-
-        // add more target to some notifications
-        $PLUGIN_HOOKS['item_add_targets']['escalade']['NotificationTargetPlanningRecall']
-         = ['PluginEscaladeNotification', 'addTargets'];
-        $PLUGIN_HOOKS['item_action_targets']['escalade']['NotificationTargetPlanningRecall']
-         = ['PluginEscaladeNotification', 'getActionTargets'];
-
-        $PLUGIN_HOOKS['item_add_targets']['escalade']['NotificationTargetTicket']
-         = ['PluginEscaladeNotification', 'addTargets'];
-        $PLUGIN_HOOKS['item_action_targets']['escalade']['NotificationTargetTicket']
-         = ['PluginEscaladeNotification', 'getActionTargets'];
-
-        // Add additional events for Ticket notifications
-        $PLUGIN_HOOKS['item_get_events']['escalade'] = [
-            'NotificationTargetTicket' =>  ['PluginEscaladeNotification', 'getEvents'],
-        ];
-        $PLUGIN_HOOKS['timeline_answer_actions']['escalade'] = ['PluginEscaladeTicket', 'addToTimeline'];
+    // Config page
+    if (Plugin::isPluginActive('escalade') && isset($_SESSION['glpiactiveprofile']) && Session::haveRight('config', READ)) {
+        $PLUGIN_HOOKS['config_page']['escalade'] = 'front/eol_info.php';
     }
 }
 
@@ -172,7 +65,7 @@ function plugin_init_escalade()
 function plugin_version_escalade()
 {
     return [
-        'name'           => "Escalation",
+        'name'           => __s('Escalade (End Of Life)', 'escalade'),
         'version'        => PLUGIN_ESCALADE_VERSION,
         'author'         => "<a href='http://www.teclib.com'>Teclib'</a>",
         'homepage'       => "https://github.com/pluginsGLPI/escalade",
@@ -184,11 +77,4 @@ function plugin_version_escalade()
             ],
         ],
     ];
-}
-
-function plugin_escalade_geturl(): string
-{
-    /** @var array $CFG_GLPI */
-    global $CFG_GLPI;
-    return sprintf('%s/plugins/escalade/', $CFG_GLPI['url_base']);
 }
