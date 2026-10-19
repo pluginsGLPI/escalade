@@ -57,7 +57,7 @@ class PluginEscaladeEOLInfo extends CommonGLPI
 
     public static function canView(): bool
     {
-        return Session::haveRight('config', READ);
+        return Session::haveRight(Config::$rightname, READ);
     }
 
     /**

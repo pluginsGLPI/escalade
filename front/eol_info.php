@@ -28,7 +28,7 @@
  * -------------------------------------------------------------------------
  */
 
-Session::checkRight('config', READ);
+Session::checkRight(Config::$rightname, READ);
 
 Html::header(
     __s('Escalade (End Of Life)', 'escalade'),

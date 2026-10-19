@@ -51,7 +51,7 @@ function plugin_init_escalade()
 
 
     // Config page
-    if (Plugin::isPluginActive('escalade') && isset($_SESSION['glpiactiveprofile']) && Session::haveRight('config', READ)) {
+    if (Plugin::isPluginActive('escalade') && isset($_SESSION['glpiactiveprofile']) && Session::haveRight(Config::$rightname, READ)) {
         $PLUGIN_HOOKS['config_page']['escalade'] = 'front/eol_info.php';
     }
 }
