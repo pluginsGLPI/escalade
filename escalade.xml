@@ -15,14 +15,14 @@
       </short>
       <long>
          <fr>
-Escalade 3.0.0 - Plugin de migration uniquement (Fin de vie)
+Escalade - Plugin de migration uniquement (Fin de vie)
 
-⚠️ Attention : la version finale 3.0.0 est une version EOL (fin de vie). Elle ne bénéficie plus de mises à jour fonctionnelles ni de correctifs de sécurité.
+⚠️ Attention : cette version finale est une version EOL (fin de vie). Elle ne bénéficie plus de mises à jour fonctionnelles ni de correctifs de sécurité.
 Les fonctionnalités d'escalade sont désormais fournies par le plugin MoreOptions.
 
 Instructions d'utilisation :
 --------------------------
-1. Installez cette version finale (3.0.0).
+1. Installez cette version finale.
 2. Installez et activez le plugin MoreOptions.
 3. Lancez la migration du filtre de groupes à l'aide de la commande suivante :
     - « `php bin/console plugins:moreoptions:migrate_escalade` ».
@@ -30,14 +30,14 @@ Instructions d'utilisation :
 5. Désinstallez le plugin Escalade une fois que toutes les données ont été migrées et vérifiées.
          </fr>
          <en>
-Escalade 3.0.0 - Migration Plugin Only (End of Life)
+Escalade - Migration Plugin Only (End of Life)
 
-⚠️ Warning: the final version 3.0.0 is an EOL (End of Life) release. It no longer receives functional updates or security patches.
+⚠️ Warning: this final version is an EOL (End of Life) release. It no longer receives functional updates or security patches.
 Escalation features are now provided by the MoreOptions plugin.
 
 Usage Instructions:
 --------------------------
-1. Install this final version (3.0.0).
+1. Install this final version.
 2. Install and enable the MoreOptions plugin.
 3. Run the migration of the group filter using the following command:
     - "`php bin/console plugins:moreoptions:migrate_escalade`".
@@ -55,11 +55,6 @@ Usage Instructions:
       <author>Teclib'</author>
    </authors>
    <versions>
-      <version>
-         <num>3.0.0</num>
-         <compatibility>~12.0.0</compatibility>
-         <download_url>https://github.com/pluginsGLPI/escalade/releases/download/3.0.0/glpi-escalade-3.0.0.tar.bz2</download_url>
-      </version>
       <version>
          <num>2.11.0</num>
          <compatibility>~12.0.0</compatibility>

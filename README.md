@@ -9,7 +9,7 @@
 
 ## ⚠️ IMPORTANT NOTICE - END OF LIFE
 
-**Escalade 3.0.0 is a migration-only plugin: its features are now provided by the [MoreOptions](https://github.com/pluginsGLPI/moreoptions) plugin.**
+**This final version of Escalade is a migration-only plugin: its features are now provided by the [MoreOptions](https://github.com/pluginsGLPI/moreoptions) plugin.**
 
 Plugin marking the end of life of `escalade`.
 It updates database tables and data to the final version, required before the migration of the group filter to MoreOptions.
@@ -17,7 +17,7 @@ It updates database tables and data to the final version, required before the mi
 
 Usage Instructions:
 --------------------------
-1. Install this final version (3.0.0).
+1. Install this final version.
 2. Install and enable the MoreOptions plugin.
 3. Run the migration of the group filter using the following command:
     - "`php bin/console plugins:moreoptions:migrate_escalade`".
