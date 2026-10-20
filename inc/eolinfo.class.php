@@ -29,6 +29,8 @@
  */
 
 use Glpi\Application\View\TemplateRenderer;
+use Glpi\Message\MessageType;
+use Glpi\Migration\AbstractPluginMigration;
 
 /**
  * End of Life information of Escalade: its features are now provided by the MoreOptions plugin,
@@ -42,6 +44,11 @@ class PluginEscaladeEOLInfo extends CommonGLPI
     public const LINKS_TABLE = 'glpi_plugin_escalade_groups_groups';
 
     public const MOREOPTIONS_LINKS_TABLE = 'glpi_plugin_moreoptions_groups_links';
+
+    /**
+     * Migration provided by MoreOptions, referenced by name: MoreOptions may not be installed.
+     */
+    public const MIGRATION_CLASS = 'GlpiPlugin\\Moreoptions\\Migration\\EscaladePluginMigration';
 
     public static string $rightname = 'config';
 
@@ -88,10 +95,83 @@ class PluginEscaladeEOLInfo extends CommonGLPI
             'migration_command'   => self::MIGRATION_COMMAND,
             'moreoptions_active'  => Plugin::isPluginActive('moreoptions'),
             'moreoptions_ready'   => self::isMoreoptionsReady(),
+            'can_migrate'         => self::canMigrate(),
             'links'               => self::getLinksStatus(),
             'filter_active'       => self::isFilterActive(),
             'bypassing_users'     => self::countBypassingUsers(),
         ]);
+    }
+
+    /**
+     * Whether the migration can be run from the interface: MoreOptions is active and provides it.
+     */
+    public static function canMigrate(): bool
+    {
+        return Plugin::isPluginActive('moreoptions')
+            && self::isMoreoptionsReady()
+            && is_a(self::MIGRATION_CLASS, AbstractPluginMigration::class, true);
+    }
+
+    /**
+     * @return class-string<AbstractPluginMigration>
+     */
+    public static function getMigrationClass(): string
+    {
+        $class = self::MIGRATION_CLASS;
+        if (!is_a($class, AbstractPluginMigration::class, true)) {
+            throw new RuntimeException('The migration of MoreOptions is not available.');
+        }
+
+        return $class;
+    }
+
+    /**
+     * Run (or simulate) the migration of MoreOptions from the interface, its result being shown as
+     * session messages, like the `plugins:moreoptions:migrate_escalade` command shows it.
+     */
+    public static function runMigration(bool $simulate): void
+    {
+        /** @var DBmysql $DB */
+        global $DB;
+
+        if (!self::canMigrate()) {
+            Session::addMessageAfterRedirect(
+                __s('Install and enable the MoreOptions plugin before running the migration.', 'escalade'),
+                false,
+                ERROR,
+            );
+            return;
+        }
+
+        $class     = self::getMigrationClass();
+        $migration = new $class($DB);
+        $result    = $migration->execute($simulate);
+
+        foreach ($result->getMessages() as $message) {
+            $type = match ($message['type']) {
+                MessageType::Error   => ERROR,
+                MessageType::Warning => WARNING,
+                MessageType::Debug   => null,
+                default              => INFO,
+            };
+            if ($type !== null) {
+                Session::addMessageAfterRedirect(htmlescape($message['message']), false, $type);
+            }
+        }
+
+        $created = array_sum(array_map(count(...), $result->getCreatedItemsIds()));
+        $reused  = array_sum(array_map(count(...), $result->getReusedItemsIds()));
+        $success = $result->isFullyProcessed() && !$result->hasErrors();
+
+        if (!$success) {
+            $summary = __s('The migration failed, all changes have been reverted.', 'escalade');
+        } elseif ($simulate) {
+            $summary = sprintf(__s('Simulation: %1$d items would be created, %2$d reused. Nothing has been changed.', 'escalade'), $created, $reused);
+        } else {
+            $summary = sprintf(__s('Migration done: %1$d items created, %2$d reused.', 'escalade'), $created, $reused);
+        }
+
+        Session::addMessageAfterRedirect($summary, false, $success ? INFO : ERROR);
     }
 
     /**

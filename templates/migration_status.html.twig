@@ -125,6 +125,19 @@
                 </h3>
             </div>
             <div class="card-body">
+                <form method="post" action="" class="d-flex flex-wrap gap-2 mb-3">
+                    <button type="submit" name="simulate" value="1" class="btn btn-outline-primary" {{ can_migrate ? '' : 'disabled' }}>
+                        <i class="ti ti-player-play me-1"></i>
+                        {{ __('Simulate', 'escalade') }}
+                    </button>
+                    <button type="submit" name="migrate" value="1" class="btn btn-primary" {{ can_migrate ? '' : 'disabled' }}
+                            onclick="return confirm({{ __('Migrate the group filter to MoreOptions?', 'escalade')|json_encode }});">
+                        <i class="ti ti-arrows-exchange me-1"></i>
+                        {{ __('Migrate', 'escalade') }}
+                    </button>
+                </form>
+
+                <p class="text-muted mb-2">{{ __('Or from the command line:', 'escalade') }}</p>
                 <div class="bg-light border border-secondary rounded p-3">
                     <div class="d-flex align-items-center justify-content-between">
                         <code id="escalade-migration-command" class="mb-0 flex-grow-1 bg-transparent">{{ migration_command }}</code>

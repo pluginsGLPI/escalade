@@ -30,6 +30,11 @@
 
 Session::checkRight(Config::$rightname, UPDATE);
 
+if (isset($_POST['migrate']) || isset($_POST['simulate'])) {
+    PluginEscaladeEOLInfo::runMigration(isset($_POST['simulate']));
+    Html::back();
+}
+
 Html::header(
     __s('Escalade migration status', 'escalade'),
     '',
