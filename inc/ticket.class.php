@@ -630,14 +630,7 @@ class PluginEscaladeTicket
         }
 
         // `_users_id_assign` may be either a single ID or an array of IDs
-        $users_id_assign = 0;
-        if (isset($ticket->input['_users_id_assign'])) {
-            $assigned_users = array_filter(
-                array_map(intval(...), (array) $ticket->input['_users_id_assign']),
-                static fn(int $id) => $id > 0,
-            );
-            $users_id_assign = (int) reset($assigned_users);
-        }
+        $users_id_assign = (int) current(array_filter((array) ($ticket->input['_users_id_assign'] ?? [])));
 
         if (
             $users_id_assign > 0
