@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Fix ticket status config being reset to default after each plugin update
+
+### Changed
+
+- End-of-Life: escalation features are now provided by the MoreOptions plugin, this version only helps migrating the group filter to it
+
 ## [2.11.0] - 2026-10-05
 
 ### Added

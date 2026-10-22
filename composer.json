@@ -10,11 +10,6 @@
         "sort-packages": true,
         "autoloader-suffix": "PluginEscalade"
     },
-    "autoload": {
-        "psr-4": {
-            "GlpiPlugin\\Escalade\\Tests\\": "tests"
-        }
-    },
     "autoload-dev": {
         "psr-4": {
             "Glpi\\Tools\\": "../../tools/src/"

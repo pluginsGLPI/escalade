@@ -28,9 +28,20 @@
  * -------------------------------------------------------------------------
  */
 
-require __DIR__ . '/../../../tests/bootstrap.php';
-require __DIR__ . '/../vendor/autoload.php';
+Session::checkRight(Config::$rightname, UPDATE);
 
-if (!Plugin::isPluginActive('escalade')) {
-    throw new RuntimeException('Plugin escalade is not active in the test database');
+if (isset($_POST['migrate']) || isset($_POST['simulate'])) {
+    PluginEscaladeEOLInfo::runMigration(isset($_POST['simulate']));
+    Html::back();
 }
+
+Html::header(
+    __s('Escalade migration status', 'escalade'),
+    '',
+    'config',
+    'plugin',
+);
+
+PluginEscaladeEOLInfo::showMigrationStatus();
+
+Html::footer();
