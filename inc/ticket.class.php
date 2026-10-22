@@ -629,9 +629,11 @@ class PluginEscaladeTicket
             return false;
         }
 
+        // `_users_id_assign` may be either a single ID or an array of IDs
+        $users_id_assign = (int) current(array_filter((array) ($ticket->input['_users_id_assign'] ?? [])));
+
         if (
-            isset($ticket->input['_users_id_assign'])
-            && $ticket->input['_users_id_assign'] > 0
+            $users_id_assign > 0
             && (!isset($ticket->input['_groups_id_assign'])
                 || empty($ticket->input['_groups_id_assign']))
         ) {
@@ -640,7 +642,7 @@ class PluginEscaladeTicket
                 $ticket->input['_groups_id_assign']
                     = PluginEscaladeUser::getTechnicianGroup(
                         $ticket->input['entities_id'],
-                        current($ticket->input['_users_id_assign']),
+                        $users_id_assign,
                         true,
                     );
             } else {
@@ -648,7 +650,7 @@ class PluginEscaladeTicket
                 $ticket->input['_groups_id_assign']
                     = PluginEscaladeUser::getTechnicianGroup(
                         $ticket->input['entities_id'],
-                        current($ticket->input['_users_id_assign']),
+                        $users_id_assign,
                         false,
                     );
             }
