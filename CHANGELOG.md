@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [UNRELEASED]
 
+### Added
+
+- Add Transifex translations link to README
+
 ### Fixed
 
 - Fix ticket status config being reset to default after each plugin update
