@@ -1,0 +1,253 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# EpicIT33, 2026
+msgid ""
+msgstr ""
+"Project-Id-Version: GLPI Plugin - Escalade\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-28 02:52+0000\n"
+"PO-Revision-Date: 2015-09-18 09:48+0000\n"
+"Last-Translator: EpicIT33, 2026\n"
+"Language-Team: Swedish (Sweden) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/sv_SE/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv_SE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: templates/group_group.html.twig
+msgid "List of groups to escalate"
+msgstr "Lista över grupper att eskalera till"
+
+#: templates/user.html.twig hook.php:641 hook.php:660
+msgid "Bypass filtering on the groups assignment"
+msgstr "Förbigå filtrering vid grupptilldelning"
+
+#: templates/config.html.twig
+msgid "Group assignment"
+msgstr "Grupptilldelning"
+
+#: templates/config.html.twig
+msgid "Remove old assign group on new group assign"
+msgstr "Ta bort tidigare tilldelad grupp vid ny grupptilldelning"
+
+#: templates/config.html.twig
+msgid "Use the technician's group"
+msgstr "Använd teknikerns grupp"
+
+#: templates/config.html.twig
+msgid "Show group assign history visually"
+msgstr "Visa historik över grupptilldelningar visuellt"
+
+#: templates/config.html.twig
+msgid "Assign ticket to initial group on solve ticket"
+msgstr "Tilldela ärendet till den ursprungliga gruppen när ärendet löses"
+
+#: templates/config.html.twig
+msgid "at creation time"
+msgstr "Vid skapandet"
+
+#: templates/config.html.twig
+msgid "at modification time"
+msgstr "Vid ändring"
+
+#: templates/config.html.twig
+msgid "Assign the technical group on ticket category change"
+msgstr "Tilldela ärendet till teknikerns grupp vid kategoriändring av ärendet"
+
+#: templates/config.html.twig
+msgid "Enable filtering on the groups assignment"
+msgstr "Aktivera filtrering för grupptilldelningar"
+
+#: templates/config.html.twig
+msgid "User assignment"
+msgstr "Användartilldelning"
+
+#: templates/config.html.twig
+msgid "Remove technician(s) on escalation"
+msgstr "Ta bort tekniker(s) vid eskalering"
+
+#: templates/config.html.twig
+msgid "Assign the technical manager on ticket category change"
+msgstr "Tilldela teknisk chef vid ändring av ärendekategori"
+
+#: templates/config.html.twig
+msgid "Remove requester(s) on escalation"
+msgstr "Ta bort beställare(s) vid eskalering"
+
+#: templates/config.html.twig
+msgid "Assign me as observer by default"
+msgstr "Tilldela mig som observatör som standard"
+
+#: templates/config.html.twig
+msgid "Other"
+msgstr "Övrigt"
+
+#: templates/config.html.twig
+msgid "Escalation history in tasks"
+msgstr "Eskaleringshistorik i uppgifter"
+
+#: templates/config.html.twig
+msgid "Escalation task is private ?"
+msgstr "Är eskaleringsuppgiften privat?"
+
+#: templates/config.html.twig
+msgid "Ticket status after an escalation"
+msgstr "Ärendestatus efter en eskalering"
+
+#: templates/config.html.twig
+msgid "Clone tickets"
+msgstr "Kopiera ett ärende"
+
+#: templates/config.html.twig
+msgid "Close cloned tickets at the same time"
+msgstr "Stäng kopierade ärenden samtidigt"
+
+#: templates/config.html.twig
+msgid "Nota: This feature (clone tickets) is duplicate with the"
+msgstr "Notering: Denna funktion (klona ärenden) duplicerar funktionalitet som finns i pluginen."
+
+#: templates/config.html.twig
+msgid "plugin. This last has priority."
+msgstr "Pluginen har företräde."
+
+#: templates/config.html.twig
+msgid "Display delete button"
+msgstr "Visa knapp för borttagning"
+
+#: templates/escalade_form.html.twig
+msgid "Escalate ticket"
+msgstr "Eskalera Ärende"
+
+#: templates/escalade_form.html.twig
+msgid "Comment"
+msgstr "Kommentar"
+
+#: templates/escalade_form.html.twig
+msgid "Assign me as an observer"
+msgstr "Tilldela mig som observatör"
+
+#: public/js/cloneandlink_ticket.js.php:40
+msgid "Clone and link"
+msgstr "Klona och länka"
+
+#: inc/user.class.php:167 inc/group_group.class.php:61
+msgid "Escalation"
+msgstr "Eskalering"
+
+#: inc/ticket.class.php:350
+msgid "Solution provided, back to the group"
+msgstr "Lösning tillhandahållen, tillbaka till gruppen"
+
+#: inc/ticket.class.php:418
+msgid "Solution rejected, return to the group"
+msgstr "Lösning avvisad, återgå till gruppen"
+
+#: inc/ticket.class.php:594 inc/ticket.class.php:692
+#, php-format
+msgid "Escalation to the group %s."
+msgstr "Eskalering till gruppen %s ."
+
+#: inc/ticket.class.php:1050
+msgid "Error : get old ticket"
+msgstr "Fel: hämta gammalt ärende"
+
+#: inc/ticket.class.php:1065
+msgid "Error : adding new ticket"
+msgstr "Fel: Skapa nytt ärende"
+
+#: inc/ticket.class.php:1084
+msgid "Error : adding link between the two tickets"
+msgstr "Fel: skapa länk mellan 2 ärenden"
+
+#: inc/ticket.class.php:1095 inc/ticket.class.php:1129
+#: inc/ticket.class.php:1134
+msgid "This ticket has been cloned from the ticket num"
+msgstr "Detta ärende har klonats från ärende nr"
+
+#: inc/ticket.class.php:1101
+msgid "Error : adding followups"
+msgstr "Fel: lägger till uppföljningar"
+
+#: inc/ticket.class.php:1217 inc/ticket.class.php:1218
+msgid "Escalate"
+msgstr "Eskalering"
+
+#: inc/ticket.class.php:1344
+msgid "You must select a group."
+msgstr "Du måste välja en grupp."
+
+#: inc/notification.class.php:83
+msgid "Requester user of the ticket"
+msgstr "Ärendets beställare"
+
+#: inc/notification.class.php:125
+msgid "Group escalated in the ticket"
+msgstr "Grupp som ärendet har eskalerats till"
+
+#: inc/notification.class.php:129
+msgid "Manager of the group escalated in the ticket"
+msgstr "Chef för gruppen som ärendet har eskalerats till"
+
+#: inc/notification.class.php:135
+msgid "Requester user of the task/reminder"
+msgstr "Beställare/anmälare för uppgiften/påminnelsen"
+
+#: inc/notification.class.php:140
+msgid "Last group escalated in the ticket"
+msgstr "Senaste grupp som ärendet har eskalerats till"
+
+#: inc/notification.class.php:144
+msgid "Manager of last group escalated in the ticket"
+msgstr "Chef för den senaste grupp som ärendet har eskalerats till"
+
+#: inc/notification.class.php:362
+msgid "Solve date modification"
+msgstr "Ändring av lösningsdatum"
+
+#: inc/config.class.php:39
+msgid "Escalade"
+msgstr "Eskalering"
+
+#: inc/config.class.php:44
+msgid "Configuration Escalade plugin"
+msgstr "Konfiguration av Eskalerings-pluginen"
+
+#: inc/config.class.php:139
+msgid "Default (not managed by plugin)"
+msgstr "Standard (hanteras inte av pluginen)"
+
+#: inc/history.class.php:219
+msgid "Reassign the ticket to group"
+msgstr "Omtilldela ärendet till grupp"
+
+#: inc/history.class.php:263
+msgid "full assignation history"
+msgstr "Fullständig tilldelningshistorik"
+
+#: inc/history.class.php:266
+msgid "View full history"
+msgstr "Visa fullständig historik"
+
+#: inc/history.class.php:321
+msgid "Tickets to follow (escalated)"
+msgstr "Ärenden att följa upp (eskalerade)"
+
+#: inc/history.class.php:335
+msgid "Tickets to close (escalated)"
+msgstr "Ärenden att stänga (eskalerade)"
+
+#: hook.php:595
+msgid "Group concerned by the escalation"
+msgstr "Grupp som berörs av eskaleringen"
+
+#: hook.php:613
+msgid "Number of escalations"
+msgstr "Antal eskaleringar"
+
+#: hook.php:627
+msgid "Number of escalations between two groups"
+msgstr "Antal eskaleringar mellan två grupper"
