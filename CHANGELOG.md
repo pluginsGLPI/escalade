@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - CI: fix Psalm cache directory, drop the stray `glpi-project/tools` composer dependency, declare a unique composer autoloader suffix
 - Fix ticket status config being reset to default after each plugin update
 - Fix "Ticket status after an escalation" option being applied when a ticket is created with an assigned group
+- Fix poor contrast of the "Escalate" button label with some themes
 
 ## [2.10.8] 2026-09-11
 
