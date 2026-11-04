@@ -4,11 +4,8 @@
     cacheDirectory="var/psalm"
 >
     <projectFiles>
-        <directory name="ajax" />
         <directory name="front" />
         <directory name="inc" />
-        <directory name="public" />
-        <directory name="tests" />
         <file name="hook.php" />
         <file name="setup.php" />
     </projectFiles>

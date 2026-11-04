@@ -3,10 +3,8 @@ parameters:
         maximumNumberOfProcesses: 2
     level: 5
     paths:
-        - ajax
         - front
         - inc
-        - public
         - hook.php
         - setup.php
     scanDirectories:

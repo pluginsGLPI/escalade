@@ -1,0 +1,98 @@
+{#
+ # -------------------------------------------------------------------------
+ # Escalade plugin for GLPI
+ # -------------------------------------------------------------------------
+ #
+ # LICENSE
+ #
+ # This file is part of Escalade.
+ #
+ # Escalade is free software; you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation; either version 2 of the License, or
+ # (at your option) any later version.
+ #
+ # Escalade is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ # GNU General Public License for more details.
+ #
+ # You should have received a copy of the GNU General Public License
+ # along with Escalade. If not, see <http://www.gnu.org/licenses/>.
+ # -------------------------------------------------------------------------
+ # @copyright Copyright (C) 2015-2023 by Escalade plugin team.
+ # @license   GPLv2 https://www.gnu.org/licenses/gpl-2.0.html
+ # @link      https://github.com/pluginsGLPI/escalade
+ # -------------------------------------------------------------------------
+ #}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-xl-10 col-lg-11">
+            <div class="card shadow-sm">
+                <div class="card-header bg-warning text-dark border-0">
+                    <div class="d-flex align-items-center">
+                        <i class="ti ti-alert-triangle fa-2x me-3"></i>
+                        <p class="mb-0 h3">{{ __('Escalade (End Of Life)', 'escalade') }}</p>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="alert alert-info border-start border-info border-2 mb-4">
+                        <div class="d-flex align-items-center">
+                            <i class="ti ti-info-circle text-info me-2"></i>
+                            <p class="mb-0">
+                                {{ __('Escalade v%s is End-of-Life: its features are now provided by the MoreOptions plugin.', 'escalade')|format(plugin_version) }}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-6">
+                            <div class="card border-success h-100">
+                                <div class="card-header bg-light border-success">
+                                    <h5 class="card-title mb-0 text-success">
+                                        <i class="ti ti-arrow-up me-2"></i>
+                                        {{ __('What changed?', 'escalade') }}
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="mb-2"><i class="ti ti-check text-success me-2"></i>{{ __('Escalation is provided by MoreOptions', 'escalade') }}</li>
+                                        <li class="mb-2"><i class="ti ti-check text-success me-2"></i>{{ __('Escalation tree by entity', 'escalade') }}</li>
+                                        <li class="mb-0"><i class="ti ti-check text-success me-2"></i>{{ __('Filter bypass by profile', 'escalade') }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="card border-primary h-100">
+                                <div class="card-header bg-light border-primary">
+                                    <h5 class="card-title mb-0 text-primary">
+                                        <i class="ti ti-checklist me-2"></i>
+                                        {{ __('Next steps', 'escalade') }}
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="mb-2"><i class="ti ti-chevron-right text-primary me-2"></i>{{ __('Enable MoreOptions', 'escalade') }}</li>
+                                        <li class="mb-2"><i class="ti ti-chevron-right text-primary me-2"></i>{{ __('Run the migration', 'escalade') }}</li>
+                                        <li class="mb-0"><i class="ti ti-chevron-right text-primary me-2"></i>{{ __('Uninstall Escalade', 'escalade') }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border-top pt-4 d-flex justify-content-center">
+                        <a href="{{ plugin_web_dir }}/front/migration_status.php" class="btn btn-primary px-4">
+                            <i class="ti ti-arrows-exchange me-2"></i>
+                            {{ __('View Migration Status', 'escalade') }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
