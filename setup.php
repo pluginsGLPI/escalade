@@ -28,7 +28,7 @@
  * -------------------------------------------------------------------------
  */
 
-define('PLUGIN_ESCALADE_VERSION', '2.11.0');
+define('PLUGIN_ESCALADE_VERSION', '3.0.0');
 // Minimal GLPI version, inclusive
 define("PLUGIN_ESCALADE_MIN_GLPI", "12.0.0");
 // Maximum GLPI version, exclusive
@@ -65,7 +65,7 @@ function plugin_init_escalade()
 function plugin_version_escalade()
 {
     return [
-        'name'           => __s('Escalade (End Of Life)', 'escalade'),
+        'name'           => __s('Escalade End-Of-Life Updater', 'escalade'),
         'version'        => PLUGIN_ESCALADE_VERSION,
         'author'         => "<a href='http://www.teclib.com'>Teclib'</a>",
         'homepage'       => "https://github.com/pluginsGLPI/escalade",
