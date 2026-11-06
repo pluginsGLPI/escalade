@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-28 02:52+0000\n"
-"PO-Revision-Date: 2026-10-28 02:52+0000\n"
+"POT-Creation-Date: 2026-11-06 03:58+0000\n"
+"PO-Revision-Date: 2026-11-06 03:58+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en_GB\n"
@@ -17,236 +17,175 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: templates/group_group.html.twig
-msgid "List of groups to escalate"
-msgstr "List of groups to escalate"
+#: templates/eol_info.html.twig front/eol_info.php:34 inc/eolinfo.class.php:57
+msgid "Escalade (End Of Life)"
+msgstr "Escalade (End Of Life)"
 
-#: templates/user.html.twig hook.php:641 hook.php:660
-msgid "Bypass filtering on the groups assignment"
-msgstr "Bypass filtering on the groups assignment"
-
-#: templates/config.html.twig
-msgid "Group assignment"
-msgstr "Group assignment"
-
-#: templates/config.html.twig
-msgid "Remove old assign group on new group assign"
-msgstr "Remove old assign group on new group assign"
-
-#: templates/config.html.twig
-msgid "Use the technician's group"
-msgstr "Use the technician's group"
-
-#: templates/config.html.twig
-msgid "Show group assign history visually"
-msgstr "Show group assign history visually"
-
-#: templates/config.html.twig
-msgid "Assign ticket to initial group on solve ticket"
-msgstr "Assign ticket to initial group on solve ticket"
-
-#: templates/config.html.twig
-msgid "at creation time"
-msgstr "at creation time"
-
-#: templates/config.html.twig
-msgid "at modification time"
-msgstr "at modification time"
-
-#: templates/config.html.twig
-msgid "Assign the technical group on ticket category change"
-msgstr "Assign the technical group on ticket category change"
-
-#: templates/config.html.twig
-msgid "Enable filtering on the groups assignment"
-msgstr "Enable filtering on the groups assignment"
-
-#: templates/config.html.twig
-msgid "User assignment"
-msgstr "User assignment"
-
-#: templates/config.html.twig
-msgid "Remove technician(s) on escalation"
-msgstr "Remove technician(s) on escalation"
-
-#: templates/config.html.twig
-msgid "Assign the technical manager on ticket category change"
-msgstr "Assign the technical manager on ticket category change"
-
-#: templates/config.html.twig
-msgid "Remove requester(s) on escalation"
-msgstr "Remove requester(s) on escalation"
-
-#: templates/config.html.twig
-msgid "Assign me as observer by default"
-msgstr "Assign me as observer by default"
-
-#: templates/config.html.twig
-msgid "Other"
-msgstr "Other"
-
-#: templates/config.html.twig
-msgid "Escalation history in tasks"
-msgstr "Escalation history in tasks"
-
-#: templates/config.html.twig
-msgid "Escalation task is private ?"
-msgstr "Escalation task is private ?"
-
-#: templates/config.html.twig
-msgid "Ticket status after an escalation"
-msgstr "Ticket status after an escalation"
-
-#: templates/config.html.twig
-msgid "Clone tickets"
-msgstr "Clone tickets"
-
-#: templates/config.html.twig
-msgid "Close cloned tickets at the same time"
-msgstr "Close cloned tickets at the same time"
-
-#: templates/config.html.twig
-msgid "Nota: This feature (clone tickets) is duplicate with the"
-msgstr "Nota: This feature (clone tickets) is duplicate with the"
-
-#: templates/config.html.twig
-msgid "plugin. This last has priority."
-msgstr "plugin. This last has priority."
-
-#: templates/config.html.twig
-msgid "Display delete button"
-msgstr "Display delete button"
-
-#: templates/escalade_form.html.twig
-msgid "Escalate ticket"
-msgstr "Escalate ticket"
-
-#: templates/escalade_form.html.twig
-msgid "Comment"
-msgstr "Comment"
-
-#: templates/escalade_form.html.twig
-msgid "Assign me as an observer"
-msgstr "Assign me as an observer"
-
-#: public/js/cloneandlink_ticket.js.php:40
-msgid "Clone and link"
-msgstr "Clone and link"
-
-#: inc/user.class.php:167 inc/group_group.class.php:61
-msgid "Escalation"
-msgstr "Escalation"
-
-#: inc/ticket.class.php:350
-msgid "Solution provided, back to the group"
-msgstr "Solution provided, back to the group"
-
-#: inc/ticket.class.php:418
-msgid "Solution rejected, return to the group"
-msgstr "Solution rejected, return to the group"
-
-#: inc/ticket.class.php:594 inc/ticket.class.php:692
+#: templates/eol_info.html.twig templates/migration_status.html.twig
 #, php-format
-msgid "Escalation to the group %s."
-msgstr "Escalation to the group %s."
+msgid ""
+"Escalade v%s is End-of-Life: its features are now provided by the "
+"MoreOptions plugin."
+msgstr ""
+"Escalade v%s is End-of-Life: its features are now provided by the "
+"MoreOptions plugin."
 
-#: inc/ticket.class.php:1050
-msgid "Error : get old ticket"
-msgstr "Error : get old ticket"
+#: templates/eol_info.html.twig
+msgid "What changed?"
+msgstr "What changed?"
 
-#: inc/ticket.class.php:1065
-msgid "Error : adding new ticket"
-msgstr "Error : adding new ticket"
+#: templates/eol_info.html.twig
+msgid "Escalation is provided by MoreOptions"
+msgstr "Escalation is provided by MoreOptions"
 
-#: inc/ticket.class.php:1084
-msgid "Error : adding link between the two tickets"
-msgstr "Error : adding link between the two tickets"
+#: templates/eol_info.html.twig
+msgid "Escalation tree by entity"
+msgstr "Escalation tree by entity"
 
-#: inc/ticket.class.php:1095 inc/ticket.class.php:1129
-#: inc/ticket.class.php:1134
-msgid "This ticket has been cloned from the ticket num"
-msgstr "This ticket has been cloned from the ticket num"
+#: templates/eol_info.html.twig
+msgid "Filter bypass by profile"
+msgstr "Filter bypass by profile"
 
-#: inc/ticket.class.php:1101
-msgid "Error : adding followups"
-msgstr "Error : adding followups"
+#: templates/eol_info.html.twig
+msgid "Next steps"
+msgstr "Next steps"
 
-#: inc/ticket.class.php:1217 inc/ticket.class.php:1218
-msgid "Escalate"
-msgstr "Escalate"
+#: templates/eol_info.html.twig
+msgid "Enable MoreOptions"
+msgstr "Enable MoreOptions"
 
-#: inc/ticket.class.php:1344
-msgid "You must select a group."
-msgstr "You must select a group."
+#: templates/eol_info.html.twig
+msgid "Run the migration"
+msgstr "Run the migration"
 
-#: inc/notification.class.php:83
-msgid "Requester user of the ticket"
-msgstr "Requester user of the ticket"
+#: templates/eol_info.html.twig
+msgid "Uninstall Escalade"
+msgstr "Uninstall Escalade"
 
-#: inc/notification.class.php:125
-msgid "Group escalated in the ticket"
-msgstr "Group escalated in the ticket"
+#: templates/eol_info.html.twig
+msgid "View Migration Status"
+msgstr "View Migration Status"
 
-#: inc/notification.class.php:129
-msgid "Manager of the group escalated in the ticket"
-msgstr "Manager of the group escalated in the ticket"
+#: templates/migration_status.html.twig front/migration_status.php:39
+msgid "Escalade migration status"
+msgstr "Escalade migration status"
 
-#: inc/notification.class.php:135
-msgid "Requester user of the task/reminder"
-msgstr "Requester user of the task/reminder"
+#: templates/migration_status.html.twig inc/eolinfo.class.php:139
+msgid "Install and enable the MoreOptions plugin before running the migration."
+msgstr ""
+"Install and enable the MoreOptions plugin before running the migration."
 
-#: inc/notification.class.php:140
-msgid "Last group escalated in the ticket"
-msgstr "Last group escalated in the ticket"
+#: templates/migration_status.html.twig
+msgid "Migration Status"
+msgstr "Migration Status"
 
-#: inc/notification.class.php:144
-msgid "Manager of last group escalated in the ticket"
-msgstr "Manager of last group escalated in the ticket"
+#: templates/migration_status.html.twig
+msgid "Group filter"
+msgstr "Group filter"
 
-#: inc/notification.class.php:362
-msgid "Solve date modification"
-msgstr "Solve date modification"
+#: templates/migration_status.html.twig
+msgid "Active"
+msgstr "Active"
 
-#: inc/config.class.php:39
-msgid "Escalade"
-msgstr "Escalade"
+#: templates/migration_status.html.twig
+msgid "Inactive"
+msgstr "Inactive"
 
-#: inc/config.class.php:44
-msgid "Configuration Escalade plugin"
-msgstr "Configuration Escalade plugin"
+#: templates/migration_status.html.twig
+msgid "Migrated links"
+msgstr "Migrated links"
 
-#: inc/config.class.php:139
-msgid "Default (not managed by plugin)"
-msgstr "Default (not managed by plugin)"
+#: templates/migration_status.html.twig
+msgid "Users bypassing the filter"
+msgstr "Users bypassing the filter"
 
-#: inc/history.class.php:219
-msgid "Reassign the ticket to group"
-msgstr "Reassign the ticket to group"
+#: templates/migration_status.html.twig
+msgid "Source group"
+msgstr "Source group"
 
-#: inc/history.class.php:263
-msgid "full assignation history"
-msgstr "full assignation history"
+#: templates/migration_status.html.twig
+msgid "Destination group"
+msgstr "Destination group"
 
-#: inc/history.class.php:266
-msgid "View full history"
-msgstr "View full history"
+#: templates/migration_status.html.twig
+msgid "Status"
+msgstr "Status"
 
-#: inc/history.class.php:321
-msgid "Tickets to follow (escalated)"
-msgstr "Tickets to follow (escalated)"
+#: templates/migration_status.html.twig
+msgid "Migrated"
+msgstr "Migrated"
 
-#: inc/history.class.php:335
-msgid "Tickets to close (escalated)"
-msgstr "Tickets to close (escalated)"
+#: templates/migration_status.html.twig
+msgid "Not Migrated"
+msgstr "Not Migrated"
 
-#: hook.php:595
-msgid "Group concerned by the escalation"
-msgstr "Group concerned by the escalation"
+#: templates/migration_status.html.twig
+msgid "No escalation link to migrate."
+msgstr "No escalation link to migrate."
 
-#: hook.php:613
-msgid "Number of escalations"
-msgstr "Number of escalations"
+#: templates/migration_status.html.twig
+msgid "How to Migrate"
+msgstr "How to Migrate"
 
-#: hook.php:627
-msgid "Number of escalations between two groups"
-msgstr "Number of escalations between two groups"
+#: templates/migration_status.html.twig
+msgid "Simulate"
+msgstr "Simulate"
+
+#: templates/migration_status.html.twig
+msgid "Migrate the group filter to MoreOptions?"
+msgstr "Migrate the group filter to MoreOptions?"
+
+#: templates/migration_status.html.twig
+msgid "Migrate"
+msgstr "Migrate"
+
+#: templates/migration_status.html.twig
+msgid "Or from the command line:"
+msgstr "Or from the command line:"
+
+#: templates/migration_status.html.twig
+msgid "Copy command"
+msgstr "Copy command"
+
+#: templates/migration_status.html.twig
+msgid "From the GLPI root directory. Add \"--dry-run\" to simulate."
+msgstr "From the GLPI root directory. Add \"--dry-run\" to simulate."
+
+#: templates/migration_status.html.twig
+msgid "Links are migrated to the root entity and inherited by sub-entities"
+msgstr "Links are migrated to the root entity and inherited by sub-entities"
+
+#: templates/migration_status.html.twig
+msgid ""
+"Users bypassing the filter cannot be migrated: allow profiles in MoreOptions "
+"instead"
+msgstr ""
+"Users bypassing the filter cannot be migrated: allow profiles in MoreOptions "
+"instead"
+
+#: setup.php:68
+msgid "Escalade End-Of-Life Updater"
+msgstr "Escalade End-Of-Life Updater"
+
+#: inc/eolinfo.class.php:167
+msgid "The migration failed, all changes have been reverted."
+msgstr "The migration failed, all changes have been reverted."
+
+#: inc/eolinfo.class.php:169
+#, php-format
+msgid ""
+"Simulation: %1$d items would be created, %2$d reused. Nothing has been "
+"changed."
+msgstr ""
+"Simulation: %1$d items would be created, %2$d reused. Nothing has been "
+"changed."
+
+#: inc/eolinfo.class.php:171
+#, php-format
+msgid "Migration done: %1$d items created, %2$d reused."
+msgstr "Migration done: %1$d items created, %2$d reused."
+
+#: inc/eolinfo.class.php:236 inc/eolinfo.class.php:237
+#, php-format
+msgid "Deleted group #%d"
+msgstr "Deleted group #%d"

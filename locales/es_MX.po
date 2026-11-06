@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-28 02:52+0000\n"
+"POT-Creation-Date: 2026-11-06 03:58+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Edwin Elias Alvarez <elias986@yahoo.com>, 2026\n"
 "Language-Team: Spanish (Mexico) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/es_MX/)\n"
@@ -18,236 +18,169 @@ msgstr ""
 "Language: es_MX\n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
-#: templates/group_group.html.twig
-msgid "List of groups to escalate"
-msgstr "Lista de grupos a escalar"
+#: templates/eol_info.html.twig front/eol_info.php:34 inc/eolinfo.class.php:57
+msgid "Escalade (End Of Life)"
+msgstr "Escalade (fin de ciclo de vida)"
 
-#: templates/user.html.twig hook.php:641 hook.php:660
-msgid "Bypass filtering on the groups assignment"
-msgstr "Omitir filtrado en la asignación de grupos"
-
-#: templates/config.html.twig
-msgid "Group assignment"
-msgstr "Asignación de grupo"
-
-#: templates/config.html.twig
-msgid "Remove old assign group on new group assign"
-msgstr "Eliminar la asignación antigua del grupo en la nueva asignación"
-
-#: templates/config.html.twig
-msgid "Use the technician's group"
-msgstr "Usar el grupo del técnico"
-
-#: templates/config.html.twig
-msgid "Show group assign history visually"
-msgstr "Mostrar historial de asignación de grupo visualmente"
-
-#: templates/config.html.twig
-msgid "Assign ticket to initial group on solve ticket"
-msgstr "Asignar el ticket al grupo inicial al resolverlo"
-
-#: templates/config.html.twig
-msgid "at creation time"
-msgstr "al momento de la creación"
-
-#: templates/config.html.twig
-msgid "at modification time"
-msgstr "al momento de la modificación"
-
-#: templates/config.html.twig
-msgid "Assign the technical group on ticket category change"
-msgstr "Asignar al grupo técnico al cambiar la categoría del ticket"
-
-#: templates/config.html.twig
-msgid "Enable filtering on the groups assignment"
-msgstr "Habilitar filtrado en la asignación de grupos"
-
-#: templates/config.html.twig
-msgid "User assignment"
-msgstr "Asignación de usuario"
-
-#: templates/config.html.twig
-msgid "Remove technician(s) on escalation"
-msgstr "Quitar técnico(s) en el escalamiento"
-
-#: templates/config.html.twig
-msgid "Assign the technical manager on ticket category change"
-msgstr "Asignar al responsable técnico al cambiar la categoría del ticket"
-
-#: templates/config.html.twig
-msgid "Remove requester(s) on escalation"
-msgstr "Quitar solicitante(s) en el escalamiento"
-
-#: templates/config.html.twig
-msgid "Assign me as observer by default"
-msgstr "Asignarme como observador por defecto"
-
-#: templates/config.html.twig
-msgid "Other"
-msgstr "Otro"
-
-#: templates/config.html.twig
-msgid "Escalation history in tasks"
-msgstr "Historial de escalamiento en tareas"
-
-#: templates/config.html.twig
-msgid "Escalation task is private ?"
-msgstr "¿La tarea de escalamiento es privada?"
-
-#: templates/config.html.twig
-msgid "Ticket status after an escalation"
-msgstr "Estado del ticket después de un escalamiento"
-
-#: templates/config.html.twig
-msgid "Clone tickets"
-msgstr "Clonar tickets"
-
-#: templates/config.html.twig
-msgid "Close cloned tickets at the same time"
-msgstr "Cerrar tickets clonados al mismo tiempo"
-
-#: templates/config.html.twig
-msgid "Nota: This feature (clone tickets) is duplicate with the"
-msgstr "Nota: Esta funcionalidad (clonar tickets) está duplicada con el"
-
-#: templates/config.html.twig
-msgid "plugin. This last has priority."
-msgstr "complemento. Este último tiene prioridad."
-
-#: templates/config.html.twig
-msgid "Display delete button"
-msgstr "Mostrar botón de eliminar"
-
-#: templates/escalade_form.html.twig
-msgid "Escalate ticket"
-msgstr "Escalar ticket"
-
-#: templates/escalade_form.html.twig
-msgid "Comment"
-msgstr "Comentario"
-
-#: templates/escalade_form.html.twig
-msgid "Assign me as an observer"
-msgstr "Asignarme como observador"
-
-#: public/js/cloneandlink_ticket.js.php:40
-msgid "Clone and link"
-msgstr "Clonar y vincular"
-
-#: inc/user.class.php:167 inc/group_group.class.php:61
-msgid "Escalation"
-msgstr "Escalado"
-
-#: inc/ticket.class.php:350
-msgid "Solution provided, back to the group"
-msgstr "Solución proporcionada, volver al grupo"
-
-#: inc/ticket.class.php:418
-msgid "Solution rejected, return to the group"
-msgstr "Solución rechazada, volver al grupo"
-
-#: inc/ticket.class.php:594 inc/ticket.class.php:692
+#: templates/eol_info.html.twig templates/migration_status.html.twig
 #, php-format
-msgid "Escalation to the group %s."
-msgstr "Escalamiento al grupo %s."
+msgid ""
+"Escalade v%s is End-of-Life: its features are now provided by the "
+"MoreOptions plugin."
+msgstr "Escalade v%s llegó al final de su ciclo de vida: sus funciones ahora las ofrece el plugin MoreOptions."
 
-#: inc/ticket.class.php:1050
-msgid "Error : get old ticket"
-msgstr "Error : obtener ticket antiguo"
+#: templates/eol_info.html.twig
+msgid "What changed?"
+msgstr "¿Qué cambió?"
 
-#: inc/ticket.class.php:1065
-msgid "Error : adding new ticket"
-msgstr "Error : agregando un nuevo ticket"
+#: templates/eol_info.html.twig
+msgid "Escalation is provided by MoreOptions"
+msgstr "El escalamiento ahora lo proporciona MoreOptions"
 
-#: inc/ticket.class.php:1084
-msgid "Error : adding link between the two tickets"
-msgstr "Error : agregando vínculo entre los dos tickets"
+#: templates/eol_info.html.twig
+msgid "Escalation tree by entity"
+msgstr "Árbol de escalamiento por entidad"
 
-#: inc/ticket.class.php:1095 inc/ticket.class.php:1129
-#: inc/ticket.class.php:1134
-msgid "This ticket has been cloned from the ticket num"
-msgstr "Este ticket ha sido clonado desde el ticket número"
+#: templates/eol_info.html.twig
+msgid "Filter bypass by profile"
+msgstr "Omisión del filtro por perfil"
 
-#: inc/ticket.class.php:1101
-msgid "Error : adding followups"
-msgstr "Error : agregando seguimientos"
+#: templates/eol_info.html.twig
+msgid "Next steps"
+msgstr "Siguientes pasos"
 
-#: inc/ticket.class.php:1217 inc/ticket.class.php:1218
-msgid "Escalate"
-msgstr "Escalar"
+#: templates/eol_info.html.twig
+msgid "Enable MoreOptions"
+msgstr "Habilitar MoreOptions"
 
-#: inc/ticket.class.php:1344
-msgid "You must select a group."
-msgstr "Debés seleccionar un grupo."
+#: templates/eol_info.html.twig
+msgid "Run the migration"
+msgstr "Ejecutar la migración"
 
-#: inc/notification.class.php:83
-msgid "Requester user of the ticket"
-msgstr "Usuario solicitante del ticket"
+#: templates/eol_info.html.twig
+msgid "Uninstall Escalade"
+msgstr "Desinstalar Escalade"
 
-#: inc/notification.class.php:125
-msgid "Group escalated in the ticket"
-msgstr "Grupo escalado en el ticket"
+#: templates/eol_info.html.twig
+msgid "View Migration Status"
+msgstr "Ver estado de la migración"
 
-#: inc/notification.class.php:129
-msgid "Manager of the group escalated in the ticket"
-msgstr "Responsable del grupo al que se escaló el ticket"
+#: templates/migration_status.html.twig front/migration_status.php:39
+msgid "Escalade migration status"
+msgstr "Estado de la migración de Escalade"
 
-#: inc/notification.class.php:135
-msgid "Requester user of the task/reminder"
-msgstr "Usuario solicitante de la tarea/recordatorio"
+#: templates/migration_status.html.twig inc/eolinfo.class.php:139
+msgid ""
+"Install and enable the MoreOptions plugin before running the migration."
+msgstr "Instale y habilite el plugin MoreOptions antes de ejecutar la migración."
 
-#: inc/notification.class.php:140
-msgid "Last group escalated in the ticket"
-msgstr "Último grupo escalado en el ticket"
+#: templates/migration_status.html.twig
+msgid "Migration Status"
+msgstr "Estado de la migración"
 
-#: inc/notification.class.php:144
-msgid "Manager of last group escalated in the ticket"
-msgstr "Responsable del último grupo escalado en el ticket"
+#: templates/migration_status.html.twig
+msgid "Group filter"
+msgstr "Filtro de grupos"
 
-#: inc/notification.class.php:362
-msgid "Solve date modification"
-msgstr "Modificación de la fecha de solución"
+#: templates/migration_status.html.twig
+msgid "Active"
+msgstr "Activo"
 
-#: inc/config.class.php:39
-msgid "Escalade"
-msgstr "Escalado"
+#: templates/migration_status.html.twig
+msgid "Inactive"
+msgstr "Inactivo"
 
-#: inc/config.class.php:44
-msgid "Configuration Escalade plugin"
-msgstr "Configuración del complemento Escalado"
+#: templates/migration_status.html.twig
+msgid "Migrated links"
+msgstr "Enlaces migrados"
 
-#: inc/config.class.php:139
-msgid "Default (not managed by plugin)"
-msgstr "Por defecto (no administrado por el complemento)"
+#: templates/migration_status.html.twig
+msgid "Users bypassing the filter"
+msgstr "Usuarios que omiten el filtro"
 
-#: inc/history.class.php:219
-msgid "Reassign the ticket to group"
-msgstr "Reasignar el ticket al grupo"
+#: templates/migration_status.html.twig
+msgid "Source group"
+msgstr "Grupo de origen"
 
-#: inc/history.class.php:263
-msgid "full assignation history"
-msgstr "historial completo de asignaciones"
+#: templates/migration_status.html.twig
+msgid "Destination group"
+msgstr "Grupo de destino"
 
-#: inc/history.class.php:266
-msgid "View full history"
-msgstr "Ver historial completo"
+#: templates/migration_status.html.twig
+msgid "Status"
+msgstr "Estado"
 
-#: inc/history.class.php:321
-msgid "Tickets to follow (escalated)"
-msgstr "Tickets a seguir (escalados)"
+#: templates/migration_status.html.twig
+msgid "Migrated"
+msgstr "Migrado"
 
-#: inc/history.class.php:335
-msgid "Tickets to close (escalated)"
-msgstr "Tickets a cerrar (escalados)"
+#: templates/migration_status.html.twig
+msgid "Not Migrated"
+msgstr "No migrado"
 
-#: hook.php:595
-msgid "Group concerned by the escalation"
-msgstr "Grupo involucrado en el escalamiento"
+#: templates/migration_status.html.twig
+msgid "No escalation link to migrate."
+msgstr "No hay enlaces de escalamiento por migrar."
 
-#: hook.php:613
-msgid "Number of escalations"
-msgstr "Número de escalamientos"
+#: templates/migration_status.html.twig
+msgid "How to Migrate"
+msgstr "Cómo migrar"
 
-#: hook.php:627
-msgid "Number of escalations between two groups"
-msgstr "Número de escaladas entre dos grupos"
+#: templates/migration_status.html.twig
+msgid "Simulate"
+msgstr "Simular"
+
+#: templates/migration_status.html.twig
+msgid "Migrate the group filter to MoreOptions?"
+msgstr "¿Migrar el filtro de grupos a MoreOptions?"
+
+#: templates/migration_status.html.twig
+msgid "Migrate"
+msgstr "Migrar"
+
+#: templates/migration_status.html.twig
+msgid "Or from the command line:"
+msgstr "O desde la línea de comandos:"
+
+#: templates/migration_status.html.twig
+msgid "Copy command"
+msgstr "Copiar comando"
+
+#: templates/migration_status.html.twig
+msgid "From the GLPI root directory. Add \"--dry-run\" to simulate."
+msgstr "Desde el directorio raíz de GLPI. Agregue \"--dry-run\" para simular."
+
+#: templates/migration_status.html.twig
+msgid "Links are migrated to the root entity and inherited by sub-entities"
+msgstr "Los enlaces se migran a la entidad raíz y las subentidades los heredan"
+
+#: templates/migration_status.html.twig
+msgid ""
+"Users bypassing the filter cannot be migrated: allow profiles in MoreOptions"
+" instead"
+msgstr "Los usuarios que omiten el filtro no se pueden migrar: en su lugar, permita perfiles en MoreOptions"
+
+#: setup.php:68
+msgid "Escalade End-Of-Life Updater"
+msgstr "Actualizador de fin de ciclo de vida de Escalade"
+
+#: inc/eolinfo.class.php:167
+msgid "The migration failed, all changes have been reverted."
+msgstr "La migración falló; se revirtieron todos los cambios."
+
+#: inc/eolinfo.class.php:169
+#, php-format
+msgid ""
+"Simulation: %1$d items would be created, %2$d reused. Nothing has been "
+"changed."
+msgstr "Simulación: se crearían %1$d elementos y se reutilizarían %2$d. No se modificó nada."
+
+#: inc/eolinfo.class.php:171
+#, php-format
+msgid "Migration done: %1$d items created, %2$d reused."
+msgstr "Migración completada: %1$d elementos creados y %2$d reutilizados."
+
+#: inc/eolinfo.class.php:236 inc/eolinfo.class.php:237
+#, php-format
+msgid "Deleted group #%d"
+msgstr "Grupo #%d eliminado"
