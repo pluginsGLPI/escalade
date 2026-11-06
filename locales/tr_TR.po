@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-28 02:52+0000\n"
+"POT-Creation-Date: 2026-11-06 03:58+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2015-2016,2018-2021,2023-2026\n"
 "Language-Team: Turkish (Turkey) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/tr_TR/)\n"
@@ -19,236 +19,169 @@ msgstr ""
 "Language: tr_TR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: templates/group_group.html.twig
-msgid "List of groups to escalate"
-msgstr "Üste aktarılacak grupların listesi"
+#: templates/eol_info.html.twig front/eol_info.php:34 inc/eolinfo.class.php:57
+msgid "Escalade (End Of Life)"
+msgstr "Escalade (ömrü tamamlandı)"
 
-#: templates/user.html.twig hook.php:641 hook.php:660
-msgid "Bypass filtering on the groups assignment"
-msgstr "Grup atamalarında süzgeçler atlansın"
-
-#: templates/config.html.twig
-msgid "Group assignment"
-msgstr "Grup ataması"
-
-#: templates/config.html.twig
-msgid "Remove old assign group on new group assign"
-msgstr "Eski atanmış grubu yeni atanacak grup üzerine taşı"
-
-#: templates/config.html.twig
-msgid "Use the technician's group"
-msgstr "Teknisyenin grubu kullanılsın"
-
-#: templates/config.html.twig
-msgid "Show group assign history visually"
-msgstr "Grup atama geçmişini görsel olarak görüntüle"
-
-#: templates/config.html.twig
-msgid "Assign ticket to initial group on solve ticket"
-msgstr "Destek kaydının çözümlenmesi için başlangıçta atanacak grup"
-
-#: templates/config.html.twig
-msgid "at creation time"
-msgstr "oluşturulma zamanında"
-
-#: templates/config.html.twig
-msgid "at modification time"
-msgstr "değiştirilme zamanında"
-
-#: templates/config.html.twig
-msgid "Assign the technical group on ticket category change"
-msgstr "Destek kaydı kategorisi değiştiğinde atanacak teknik grup"
-
-#: templates/config.html.twig
-msgid "Enable filtering on the groups assignment"
-msgstr "Grup atamaları süzülebilsin"
-
-#: templates/config.html.twig
-msgid "User assignment"
-msgstr "Kullanıcı ataması"
-
-#: templates/config.html.twig
-msgid "Remove technician(s) on escalation"
-msgstr "Üste aktarmada teknisyenler kaldırılsın"
-
-#: templates/config.html.twig
-msgid "Assign the technical manager on ticket category change"
-msgstr "Destek kaydı kategorisi değiştiğinde atanacak teknik yönetici"
-
-#: templates/config.html.twig
-msgid "Remove requester(s) on escalation"
-msgstr "Üste aktarmada İstekte bulunanlar kaldırılsın"
-
-#: templates/config.html.twig
-msgid "Assign me as observer by default"
-msgstr "Varsayılan olarak beni gözlemci ata"
-
-#: templates/config.html.twig
-msgid "Other"
-msgstr "Diğer"
-
-#: templates/config.html.twig
-msgid "Escalation history in tasks"
-msgstr "Görevlerde üste aktarma geçmişi kaydedilsin"
-
-#: templates/config.html.twig
-msgid "Escalation task is private ?"
-msgstr "Üste aktarma görevi kişisel"
-
-#: templates/config.html.twig
-msgid "Ticket status after an escalation"
-msgstr "Üste aktarma sonrası destek kaydı durumu"
-
-#: templates/config.html.twig
-msgid "Clone tickets"
-msgstr "Destek kayıtlarını kopyala"
-
-#: templates/config.html.twig
-msgid "Close cloned tickets at the same time"
-msgstr "Kopyalanmış destek kayıtları aynı zamanda kapatılsın"
-
-#: templates/config.html.twig
-msgid "Nota: This feature (clone tickets) is duplicate with the"
-msgstr "Not: Bu özellik (destek kayıtlarını kopyalama) uygulama"
-
-#: templates/config.html.twig
-msgid "plugin. This last has priority."
-msgstr "eki ile aynıdır. Bunun önceliği vardır."
-
-#: templates/config.html.twig
-msgid "Display delete button"
-msgstr "Sil düğmesi görüntülensin"
-
-#: templates/escalade_form.html.twig
-msgid "Escalate ticket"
-msgstr "Destek kaydını üste aktar"
-
-#: templates/escalade_form.html.twig
-msgid "Comment"
-msgstr "Açıklama"
-
-#: templates/escalade_form.html.twig
-msgid "Assign me as an observer"
-msgstr "Beni gözlemci olarak ata"
-
-#: public/js/cloneandlink_ticket.js.php:40
-msgid "Clone and link"
-msgstr "Kopyala ve ilişkilendir"
-
-#: inc/user.class.php:167 inc/group_group.class.php:61
-msgid "Escalation"
-msgstr "Üste aktarma"
-
-#: inc/ticket.class.php:350
-msgid "Solution provided, back to the group"
-msgstr "Çözüm sağlandı, gruba geri git"
-
-#: inc/ticket.class.php:418
-msgid "Solution rejected, return to the group"
-msgstr "Çözüm reddedildi, gruba geri git"
-
-#: inc/ticket.class.php:594 inc/ticket.class.php:692
+#: templates/eol_info.html.twig templates/migration_status.html.twig
 #, php-format
-msgid "Escalation to the group %s."
-msgstr "%s grubuna üste aktarma."
+msgid ""
+"Escalade v%s is End-of-Life: its features are now provided by the "
+"MoreOptions plugin."
+msgstr "Escalade v%s ömrünün sonuna geldi: Onun özellikleri artık MoreOptions eklentisi tarafından sağlanıyor."
 
-#: inc/ticket.class.php:1050
-msgid "Error : get old ticket"
-msgstr "Hata : Eski destek kaydı alma"
+#: templates/eol_info.html.twig
+msgid "What changed?"
+msgstr "Neler değişti?"
 
-#: inc/ticket.class.php:1065
-msgid "Error : adding new ticket"
-msgstr "Hata : Yeni destek kaydı ekleme"
+#: templates/eol_info.html.twig
+msgid "Escalation is provided by MoreOptions"
+msgstr "Üste aktarma işlemleri MoreOptions tarafından sağlanıyor"
 
-#: inc/ticket.class.php:1084
-msgid "Error : adding link between the two tickets"
-msgstr "Hata : İki destek kaydı arasında ilişki ekleme"
+#: templates/eol_info.html.twig
+msgid "Escalation tree by entity"
+msgstr "Birime göre üste aktarma ağacı"
 
-#: inc/ticket.class.php:1095 inc/ticket.class.php:1129
-#: inc/ticket.class.php:1134
-msgid "This ticket has been cloned from the ticket num"
-msgstr "Bu destek, destek kaydı numarasından"
+#: templates/eol_info.html.twig
+msgid "Filter bypass by profile"
+msgstr "Profile göre süzgeçten geçme"
 
-#: inc/ticket.class.php:1101
-msgid "Error : adding followups"
-msgstr "Hata : İzleme ekleme"
+#: templates/eol_info.html.twig
+msgid "Next steps"
+msgstr "Sonraki adımlar"
 
-#: inc/ticket.class.php:1217 inc/ticket.class.php:1218
-msgid "Escalate"
-msgstr "Üste aktar"
+#: templates/eol_info.html.twig
+msgid "Enable MoreOptions"
+msgstr "MoreOptions eklentisini kullanıma alın"
 
-#: inc/ticket.class.php:1344
-msgid "You must select a group."
-msgstr "Bir grup seçmelisiniz."
+#: templates/eol_info.html.twig
+msgid "Run the migration"
+msgstr "Aktarımı çalıştırın"
 
-#: inc/notification.class.php:83
-msgid "Requester user of the ticket"
-msgstr "Destek kaydı isteğinde bulunan kullanıcı"
+#: templates/eol_info.html.twig
+msgid "Uninstall Escalade"
+msgstr "Escalade eklentisini kaldırın"
 
-#: inc/notification.class.php:125
-msgid "Group escalated in the ticket"
-msgstr "Destek kaydında üste aktarılmış grup"
+#: templates/eol_info.html.twig
+msgid "View Migration Status"
+msgstr "Aktarım durumunu görüntüle"
 
-#: inc/notification.class.php:129
-msgid "Manager of the group escalated in the ticket"
-msgstr "Destek kaydında üste aktarılmış grubun yöneticisi"
+#: templates/migration_status.html.twig front/migration_status.php:39
+msgid "Escalade migration status"
+msgstr "Escalade aktarım durumu"
 
-#: inc/notification.class.php:135
-msgid "Requester user of the task/reminder"
-msgstr "Görev/anımsatıcı isteğinde bulunan kullanıcı"
+#: templates/migration_status.html.twig inc/eolinfo.class.php:139
+msgid ""
+"Install and enable the MoreOptions plugin before running the migration."
+msgstr "Aktarıcıyı çalıştırmadan önce MoreOptions eklentisini kurun ve kullanıma alın."
 
-#: inc/notification.class.php:140
-msgid "Last group escalated in the ticket"
-msgstr "Destek kaydında üste aktarılmış son grup"
+#: templates/migration_status.html.twig
+msgid "Migration Status"
+msgstr "Aktarım durumu"
 
-#: inc/notification.class.php:144
-msgid "Manager of last group escalated in the ticket"
-msgstr "Destek kaydında üste aktarılmış son grubun yöneticisi"
+#: templates/migration_status.html.twig
+msgid "Group filter"
+msgstr "Grup süzgeci"
 
-#: inc/notification.class.php:362
-msgid "Solve date modification"
-msgstr "Tarih değişikliğini çöz"
+#: templates/migration_status.html.twig
+msgid "Active"
+msgstr "Etkin"
 
-#: inc/config.class.php:39
-msgid "Escalade"
-msgstr "Üste aktar"
+#: templates/migration_status.html.twig
+msgid "Inactive"
+msgstr "Etkisiz"
 
-#: inc/config.class.php:44
-msgid "Configuration Escalade plugin"
-msgstr "Üste aktarma eklentisi yapılandırması"
+#: templates/migration_status.html.twig
+msgid "Migrated links"
+msgstr "Aktarılan bağlantılar"
 
-#: inc/config.class.php:139
-msgid "Default (not managed by plugin)"
-msgstr "Varsayılan (eklenti tarafından yönetilmez)"
+#: templates/migration_status.html.twig
+msgid "Users bypassing the filter"
+msgstr "Süzgeçten geçen kullanıcılar"
 
-#: inc/history.class.php:219
-msgid "Reassign the ticket to group"
-msgstr "Destek kaydını bir gruba ata"
+#: templates/migration_status.html.twig
+msgid "Source group"
+msgstr "Kaynak grup"
 
-#: inc/history.class.php:263
-msgid "full assignation history"
-msgstr "Tam atama geçmişi"
+#: templates/migration_status.html.twig
+msgid "Destination group"
+msgstr "Hedef grup"
 
-#: inc/history.class.php:266
-msgid "View full history"
-msgstr "Tam geçmişi görüntüle"
+#: templates/migration_status.html.twig
+msgid "Status"
+msgstr "Duru"
 
-#: inc/history.class.php:321
-msgid "Tickets to follow (escalated)"
-msgstr "İzlenecek destek kayıtları (üste aktarılmış)"
+#: templates/migration_status.html.twig
+msgid "Migrated"
+msgstr "Aktarıldı"
 
-#: inc/history.class.php:335
-msgid "Tickets to close (escalated)"
-msgstr "Kapatılacak destek kayıtları (üste aktarılmış)"
+#: templates/migration_status.html.twig
+msgid "Not Migrated"
+msgstr "Aktarılmadı"
 
-#: hook.php:595
-msgid "Group concerned by the escalation"
-msgstr "Üste aktarma grubu"
+#: templates/migration_status.html.twig
+msgid "No escalation link to migrate."
+msgstr "Aktarılacak bir üste aktarma bağlantısı yok."
 
-#: hook.php:613
-msgid "Number of escalations"
-msgstr "Üste aktarma sayısı"
+#: templates/migration_status.html.twig
+msgid "How to Migrate"
+msgstr "Nasıl aktarılır"
 
-#: hook.php:627
-msgid "Number of escalations between two groups"
-msgstr "İki grup arasındaki üste aktarma sayısı"
+#: templates/migration_status.html.twig
+msgid "Simulate"
+msgstr "Benzetim"
+
+#: templates/migration_status.html.twig
+msgid "Migrate the group filter to MoreOptions?"
+msgstr "Grup süzgeci MoreOptions üzerine aktarılsın mı?"
+
+#: templates/migration_status.html.twig
+msgid "Migrate"
+msgstr "Aktar"
+
+#: templates/migration_status.html.twig
+msgid "Or from the command line:"
+msgstr "Ya da komut satırından:"
+
+#: templates/migration_status.html.twig
+msgid "Copy command"
+msgstr "Komutu kopyala"
+
+#: templates/migration_status.html.twig
+msgid "From the GLPI root directory. Add \"--dry-run\" to simulate."
+msgstr "GLPI kök klasöründen. Benzerim için \"--dry-run\" ekleyin."
+
+#: templates/migration_status.html.twig
+msgid "Links are migrated to the root entity and inherited by sub-entities"
+msgstr "Bağlantılar kök birime taşınır ve alt varlıklar tarafından devralınır"
+
+#: templates/migration_status.html.twig
+msgid ""
+"Users bypassing the filter cannot be migrated: allow profiles in MoreOptions"
+" instead"
+msgstr "Süzgeçten geçen kullanıcılar aktarılamaz: Bunun yerine MoreOptions üzerinde profillere izin verin"
+
+#: setup.php:68
+msgid "Escalade End-Of-Life Updater"
+msgstr "Ömrü tamamlanmış Escalade güncelleyici"
+
+#: inc/eolinfo.class.php:167
+msgid "The migration failed, all changes have been reverted."
+msgstr "Aktarım tamamlanamadı. Tüm değişiklikler geri alındı."
+
+#: inc/eolinfo.class.php:169
+#, php-format
+msgid ""
+"Simulation: %1$d items would be created, %2$d reused. Nothing has been "
+"changed."
+msgstr "Benzetim: %1$d öge oluşturulacak, %2$d öge yeniden kullanılacak. Hiçbir şey değiştirilmedi."
+
+#: inc/eolinfo.class.php:171
+#, php-format
+msgid "Migration done: %1$d items created, %2$d reused."
+msgstr "Aktarım tamamlandı: %1$d öge oluşturuldu, %2$d öge yeniden kullanıldı."
+
+#: inc/eolinfo.class.php:236 inc/eolinfo.class.php:237
+#, php-format
+msgid "Deleted group #%d"
+msgstr "%d numaralı grup silindi"
