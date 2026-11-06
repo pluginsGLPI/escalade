@@ -5,15 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.10.9] - 2026-11-05
-
-### Fixed
-
-- Fix flaky escalation test on solve/reject-solution data sets
-- CI: fix Psalm cache directory, drop the stray `glpi-project/tools` composer dependency, declare a unique composer autoloader suffix
-- Fix ticket status config being reset to default after each plugin update
-- Fix "Ticket status after an escalation" option being applied when a ticket is created with an assigned group
-- Fix poor contrast of the "Escalate" button label with some themes
+## [UNRELEASED]
 
 ## [3.0.0 End-Of-Life Updater] - 2026-11-05
 
