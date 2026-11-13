@@ -190,5 +190,5 @@ function plugin_escalade_geturl(): string
 {
     /** @var array $CFG_GLPI */
     global $CFG_GLPI;
-    return sprintf('%s/plugins/escalade/', $CFG_GLPI['url_base']);
+    return sprintf('%s/plugins/escalade/', $CFG_GLPI['root_doc']);
 }

@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [UNRELEASED]
+
+### Fixed
+
+- Fix escalation form and history links using the configured application URL instead of the current host
+
 ## [2.10.9] - 2026-11-05
 
 ### Fixed

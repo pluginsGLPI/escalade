@@ -1666,4 +1666,29 @@ final class TicketTest extends EscaladeTestCase
             'The keep-users flag must not survive past the request when the follow-up group add never happens',
         );
     }
+
+    public function testEscaladeFormDoesNotUseConfiguredApplicationUrl()
+    {
+        global $CFG_GLPI;
+
+        $this->initConfig();
+
+        $ticket = $this->createItem('Ticket', [
+            'name' => 'Test ticket for escalade form URL',
+            'content' => 'Content',
+            'entities_id' => 0,
+        ]);
+
+        $CFG_GLPI['url_base'] = 'https://test.example.org';
+
+        ob_start();
+        (new PluginEscaladeTicket())->showForm(0, ['parent' => $ticket]);
+        $output = ob_get_clean();
+
+        $this->assertStringNotContainsString('test.example.org', $output);
+        $this->assertStringContainsString(
+            'action="' . $CFG_GLPI['root_doc'] . '/plugins/escalade/front/ticket.form.php"',
+            $output,
+        );
+    }
 }
