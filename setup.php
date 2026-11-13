@@ -53,7 +53,9 @@ function plugin_init_escalade()
     global $PLUGIN_HOOKS, $DB;
 
     $PLUGIN_HOOKS['csrf_compliant']['escalade'] = true;
-    if (Plugin::isPluginActive('escalade')) {
+    // Plugin::isPluginActive() queries the database while plugins are being initialized:
+    // use the list of activated plugins built by core at boot instead.
+    if (in_array('escalade', Plugin::getPlugins(), true)) {
         if ($DB->tableExists("glpi_plugin_escalade_configs")) {
             //load config in session
             PluginEscaladeConfig::loadInSession();
@@ -61,34 +63,84 @@ function plugin_init_escalade()
             if ((isset($_SESSION['glpiID']) || isCommandLine()) && isset($_SESSION['glpi_plugins']['escalade']['config'])) {
                 $escalade_config = $_SESSION['glpi_plugins']['escalade']['config'];
                 $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/function.js';
+
+                // Scripts below are static files: rights and configuration are checked here, once.
+                $needs_js_locales = false;
+                // Only core pages need these scripts: the plugin own endpoints (ajax/central.php,
+                // front/ticket.form.php) also contain the page names but return no HTML page.
+                $request_uri = (string) parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH);
+                if (str_contains($request_uri, '/plugins/') || str_contains($request_uri, '/marketplace/')) {
+                    $request_uri = '';
+                }
+
+                $is_central = Session::getCurrentInterface() === 'central';
+                $can_create_ticket = Session::haveRight('ticket', CREATE);
+                $can_update_ticket = Session::haveRight('ticket', UPDATE);
+
                 // on central page
                 //history and climb feature
-                if (str_contains($_SERVER['REQUEST_URI'] ?? '', "central.php") && $escalade_config['show_history']) {
-                    $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/central.js.php';
+                if (
+                    str_contains($request_uri, "central.php")
+                    && $escalade_config['show_history']
+                    && $is_central
+                    && ($can_create_ticket || $can_update_ticket)
+                ) {
+                    $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/central.js';
+                    $needs_js_locales = true;
                 }
 
                 // on ticket page (in edition)
+                $remove_btn_options = [
+                    'remove_delete_requester_user_btn',
+                    'remove_delete_watcher_user_btn',
+                    'remove_delete_assign_user_btn',
+                    'remove_delete_requester_group_btn',
+                    'remove_delete_watcher_group_btn',
+                    'remove_delete_assign_group_btn',
+                    'remove_delete_assign_supplier_btn',
+                ];
+                $remove_btn_config = [];
+                foreach ($remove_btn_options as $option) {
+                    $remove_btn_config[$option] = (bool) ($escalade_config[$option] ?? false);
+                }
+
                 if (
-                    (str_contains($_SERVER['REQUEST_URI'] ?? '', "ticket.form.php") || str_contains($_SERVER['REQUEST_URI'] ?? '', "problem.form.php") || str_contains($_SERVER['REQUEST_URI'] ?? '', "change.form.php")) && isset($_GET['id']) && (!$escalade_config['remove_delete_requester_user_btn'] || !$escalade_config['remove_delete_watcher_user_btn'] || !$escalade_config['remove_delete_assign_user_btn'] || !$escalade_config['remove_delete_requester_group_btn'] || !$escalade_config['remove_delete_watcher_group_btn'] || !$escalade_config['remove_delete_assign_group_btn'] || !$escalade_config['remove_delete_assign_supplier_btn'])
+                    (str_contains($request_uri, "ticket.form.php") || str_contains($request_uri, "problem.form.php") || str_contains($request_uri, "change.form.php"))
+                    && isset($_GET['id'])
+                    && $is_central
+                    && in_array(false, $remove_btn_config, true)
                 ) {
                     //remove btn feature
-                    $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/remove_btn.js.php';
+                    $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/remove_btn.js';
+                    $PLUGIN_HOOKS[Hooks::ADD_HEADER_TAG]['escalade'][] = [
+                        'tag'        => 'meta',
+                        'properties' => [
+                            'name'    => 'glpi:escalade:remove_btn',
+                            'content' => json_encode($remove_btn_config),
+                        ],
+                    ];
                 }
 
                 // on ticket page (in edition)
                 if (
-                    str_contains($_SERVER['REQUEST_URI'] ?? '', "ticket.form.php")
+                    str_contains($request_uri, "ticket.form.php")
                     && isset($_GET['id'])
+                    && $is_central
                 ) {
                     //history and climb feature
-                    if ($escalade_config['show_history']) {
-                        $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/escalade.js.php';
+                    if ($escalade_config['show_history'] && ($can_create_ticket || $can_update_ticket)) {
+                        $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/escalade.js';
                     }
 
                     //clone ticket feature
-                    if ($escalade_config['cloneandlink_ticket']) {
-                        $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/cloneandlink_ticket.js.php';
+                    if ($escalade_config['cloneandlink_ticket'] && $can_create_ticket && $can_update_ticket) {
+                        $PLUGIN_HOOKS['add_javascript']['escalade'][] = 'js/cloneandlink_ticket.js';
+                        $needs_js_locales = true;
                     }
+                }
+
+                if ($needs_js_locales) {
+                    plugin_escalade_add_js_locales();
                 }
 
                 Plugin::registerClass('PluginEscaladeGroup_Group', ['addtabon' => 'Group']);
@@ -182,6 +234,35 @@ function plugin_version_escalade()
                 'min' => PLUGIN_ESCALADE_MIN_GLPI,
                 'max' => PLUGIN_ESCALADE_MAX_GLPI,
             ],
+        ],
+    ];
+}
+
+/**
+ * Expose the labels used by the static scripts, translated server-side:
+ * core loads the JS locales asynchronously, so the scripts may run before they are available.
+ *
+ * Called from plugin_init_escalade(), where core has loaded its own locale but not yet the plugin one
+ * (Plugin::load() loads it right after the init function). A post_init hook would avoid loading it here,
+ * but core checks the plugin state in database for each post_init hook (2 queries per request).
+ *
+ * @return void
+ */
+function plugin_escalade_add_js_locales()
+{
+    /** @var array $PLUGIN_HOOKS */
+    global $PLUGIN_HOOKS;
+
+    Plugin::loadLang('escalade');
+
+    $PLUGIN_HOOKS[Hooks::ADD_HEADER_TAG]['escalade'][] = [
+        'tag'        => 'meta',
+        'properties' => [
+            'name'    => 'glpi:escalade:i18n',
+            'content' => json_encode([
+                'group_view'     => __('Group View'),
+                'clone_and_link' => __('Clone and link', 'escalade'),
+            ]),
         ],
     ];
 }

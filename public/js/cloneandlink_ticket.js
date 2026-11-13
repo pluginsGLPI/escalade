@@ -1,5 +1,3 @@
-<?php
-
 /**
  * -------------------------------------------------------------------------
  * Escalade plugin for GLPI
@@ -28,20 +26,7 @@
  * -------------------------------------------------------------------------
  */
 
-//change mimetype
-header("Content-type: application/javascript");
-
-//not executed in self-service interface & right verification
-if (
-    $_SESSION['glpiactiveprofile']['interface'] == "central"
-    && Session::haveRight("ticket", CREATE)
-    && Session::haveRight("ticket", UPDATE)
-) {
-    $locale_cloneandlink  = __s("Clone and link", "escalade");
-    $locale_clone  = __s("Clone");
-    $locale_linkedtickets = _sn('Linked ticket', 'Linked tickets', 2);
-
-    $JS = <<<JAVASCRIPT
+/* global __, getUrlParameter */
    var plugin_url = CFG_GLPI.root_doc + '/plugins/escalade';
 
    addCloneLink = function() {
@@ -54,9 +39,16 @@ if (
       //delay the execution (ajax requestcomplete event fired before dom loading)
       setTimeout( function () {
          if ($("#cloneandlink_ticket").length > 0) { return; }
-         var duplicate_html = "<button id='cloneandlink_ticket' class='btn btn-sm btn-ghost-secondary ms-auto'" +
-                "title='{$locale_cloneandlink}'><i class='ti ti-copy me-1'></i>" + '{$locale_cloneandlink}' +
-            "</button>";
+         // Translated server-side (glpi:escalade:i18n meta tag): JS locales load asynchronously.
+         var locales = $('meta[name="glpi:escalade:i18n"]').attr('content');
+         var locale_cloneandlink = (locales ? JSON.parse(locales).clone_and_link : null) || __('Clone and link', 'escalade');
+         var duplicate_html = $('<button>', {
+            id: 'cloneandlink_ticket',
+            'class': 'btn btn-sm btn-ghost-secondary ms-auto',
+            title: locale_cloneandlink
+         })
+            .append($('<i>', {'class': 'ti ti-copy me-1'}))
+            .append(document.createTextNode(locale_cloneandlink));
 
          $("#linked_tickets-heading .accordion-button")
             .append(duplicate_html);
@@ -92,7 +84,3 @@ if (
    $(document).on('glpi.tab.loaded', function() {
       addCloneLink();
    });
-
-JAVASCRIPT;
-    echo $JS;
-}
