@@ -33,4 +33,7 @@ Html::header_nocache();
 
 Session::checkLoginUser();
 
+// Read-only endpoint: release the session lock so that other requests are not serialized behind it.
+Session::writeClose();
+
 PluginEscaladeHistory::showCentralList();

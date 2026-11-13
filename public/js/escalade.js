@@ -1,5 +1,3 @@
-<?php
-
 /**
  * -------------------------------------------------------------------------
  * Escalade plugin for GLPI
@@ -28,18 +26,7 @@
  * -------------------------------------------------------------------------
  */
 
-//change mimetype
-header("Content-type: application/javascript");
-
-//not executed in self-service interface & right verification
-if (
-    $_SESSION['glpiactiveprofile']['interface'] == "central"
-    && (Session::haveRight("ticket", CREATE)
-        || Session::haveRight("ticket", UPDATE))
-) {
-    $locale_actor = __s('Actor');
-
-    $JS = <<<JAVASCRIPT
+/* global getUrlParameter */
 
     var plugin_url = CFG_GLPI.root_doc+'/plugins/escalade';
 
@@ -74,7 +61,3 @@ if (
             });
         }
     });
-
-JAVASCRIPT;
-    echo $JS;
-}

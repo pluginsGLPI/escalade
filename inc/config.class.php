@@ -27,7 +27,7 @@
  * @link      https://github.com/pluginsGLPI/escalade
  * -------------------------------------------------------------------------
  */
-
+use Psr\SimpleCache\CacheInterface;
 use Glpi\Application\View\TemplateRenderer;
 
 class PluginEscaladeConfig extends CommonDBTM
@@ -99,11 +99,62 @@ class PluginEscaladeConfig extends CommonDBTM
         return true;
     }
 
+    public const CACHE_KEY = 'plugin_escalade_config';
+
+    public function post_addItem()
+    {
+        self::clearCache();
+    }
+
+    public function post_updateItem($history = true)
+    {
+        self::clearCache();
+    }
+
+    public function post_purgeItem()
+    {
+        self::clearCache();
+    }
+
+    /**
+     * Drop the cached configuration and, unless told otherwise, reload it in the current session.
+     *
+     * @param bool $reload_session false when the configuration table may not exist (uninstall)
+     */
+    public static function clearCache(bool $reload_session = true): void
+    {
+        /** @var CacheInterface $GLPI_CACHE */
+        global $GLPI_CACHE;
+
+        $GLPI_CACHE->delete(self::CACHE_KEY);
+        if (!$reload_session) {
+            unset($_SESSION['glpi_plugins']['escalade']['config']);
+        } elseif (isset($_SESSION['glpi_plugins']['escalade']['config'])) {
+            self::loadInSession();
+        }
+    }
+
     public static function loadInSession()
     {
+        /** @var CacheInterface $GLPI_CACHE */
+        global $GLPI_CACHE;
+
+        // The configuration row is read on every request: keep it in the GLPI cache,
+        // invalidated when the configuration is saved.
+        $fields = $GLPI_CACHE->get(self::CACHE_KEY);
+        if (!is_array($fields)) {
+            $config = new self();
+            if ($config->getFromDB(1)) {
+                $fields = $config->fields;
+                unset($fields['id']);
+                $GLPI_CACHE->set(self::CACHE_KEY, $fields);
+            } else {
+                $fields = [];
+            }
+        }
+
         $config = new self();
-        $config->getFromDB(1);
-        unset($config->fields['id']);
+        $config->fields = $fields;
 
         if (
             isset($_SESSION['glpiID'])
