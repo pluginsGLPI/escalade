@@ -409,6 +409,19 @@ function plugin_escalade_install()
         $migration->migrationOneTable('glpi_plugin_escalade_configs');
     }
 
+    // History widget reads the latest lines of a ticket: index matching its ORDER BY.
+    if (!isIndex('glpi_plugin_escalade_histories', 'tickets_id_date_mod')) {
+        $migration->addKey(
+            'glpi_plugin_escalade_histories',
+            ['tickets_id', 'date_mod', 'id'],
+            'tickets_id_date_mod',
+        );
+        $migration->migrationOneTable('glpi_plugin_escalade_histories');
+    }
+
+    include_once(Plugin::getPhpDir('escalade') . "/inc/config.class.php");
+    PluginEscaladeConfig::clearCache();
+
     return true;
 }
 
@@ -432,6 +445,10 @@ function plugin_escalade_uninstall()
     foreach ($tables as $table) {
         $DB->doQuery(sprintf('DROP TABLE IF EXISTS `%s`', $table));
     }
+
+    // Tables are gone: drop the cached configuration without reloading it.
+    include_once(Plugin::getPhpDir('escalade') . "/inc/config.class.php");
+    PluginEscaladeConfig::clearCache(false);
 
     return true;
 }

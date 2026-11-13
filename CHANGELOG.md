@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Fix escalation form and history links using the configured application URL instead of the current host
+- Fix one SQL query and one JavaScript error per line in the full escalation history popup
+- Fix the escalated ticket lists of the central page failing on MySQL 8 (`ORDER BY` column not in the `DISTINCT` select list)
+- Improve performance: no plugin SQL query on pages that do not use it, static JavaScript files instead of PHP-generated scripts, bounded escalation history queries, new index on `glpi_plugin_escalade_histories`
+- Load the central "escalated" ticket lists asynchronously
 
 ## [2.10.9] - 2026-11-05
 

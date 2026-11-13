@@ -156,106 +156,124 @@ class PluginEscaladeHistory extends CommonDBTM
 
         $plugin_dir = plugin_escalade_geturl();
 
-        //get all line for this ticket
-        $group = new Group();
-
         $history = new self();
-        $found = $history->find(
-            ['tickets_id' => $tickets_id],
-            ['date_mod DESC', 'id DESC'],
-        );
-
-        //remove first line (current assign)
-        $first_group = array_shift($found);
-
-        if (!$full_history) {
-            // Hide still-assigned groups from the compact widget only: the full popup stays a complete audit trail.
-            $group_ticket = new Group_Ticket();
-            $currently_assigned = $group_ticket->find([
-                'tickets_id' => $tickets_id,
-                'type'       => CommonITILActor::ASSIGN,
-            ]);
-
-            $currently_assigned_ids = array_map(
-                static fn(array $actor): int => (int) $actor['groups_id'],
-                $currently_assigned,
-            );
-
-            $found = array_filter(
-                $found,
-                static fn(array $history_entry): bool => !in_array(
-                    (int) $history_entry['groups_id'],
-                    $currently_assigned_ids,
-                    true,
-                ),
-            );
-        }
-
-        $nb_histories = count($found) + 1;
+        $order = ['date_mod DESC', 'id DESC'];
 
         if ($full_history) {
+            // The popup is a complete audit trail: all lines.
+            $found = $history->find(['tickets_id' => $tickets_id], $order);
+
+            //remove first line (current assign)
+            $first_group = array_shift($found);
+            $has_more = false;
+        } else {
+            // The widget displays HISTORY_LIMIT lines: only read those, plus one to know if there are more.
+            $first_group = $history->find(['tickets_id' => $tickets_id], $order, 1);
+            $first_group = reset($first_group);
+
+            $found = [];
+            if ($first_group !== false) {
+                // Hide still-assigned groups from the compact widget only: the full popup stays a complete audit trail.
+                $group_ticket = new Group_Ticket();
+                $currently_assigned_ids = array_map(
+                    static fn(array $actor): int => (int) $actor['groups_id'],
+                    $group_ticket->find([
+                        'tickets_id' => $tickets_id,
+                        'type'       => CommonITILActor::ASSIGN,
+                    ]),
+                );
+
+                $criteria = [
+                    'tickets_id' => $tickets_id,
+                    'NOT'        => ['id' => $first_group['id']],
+                ];
+                if ($currently_assigned_ids !== []) {
+                    $criteria[] = ['NOT' => ['groups_id' => $currently_assigned_ids]];
+                }
+
+                $found = $history->find($criteria, $order, self::HISTORY_LIMIT + 1);
+            }
+
+            $has_more = count($found) > self::HISTORY_LIMIT;
+            $found = array_slice($found, 0, self::HISTORY_LIMIT);
+        }
+
+        // One Group load per distinct group, not per history line.
+        $groups = [];
+        $get_group = static function (int $groups_id) use (&$groups): ?Group {
+            if (!array_key_exists($groups_id, $groups)) {
+                $group = new Group();
+                $groups[$groups_id] = $group->getFromDB($groups_id) ? $group : null;
+            }
+
+            return $groups[$groups_id];
+        };
+
+        if ($full_history && $first_group) {
             //show 1st group
             echo "<div class='escalade_active'>";
             echo "&nbsp;<i class='fas fa-users'></i>&nbsp;";
-            if ($group->getFromDB($first_group['groups_id'])) {
+            $group = $get_group((int) $first_group['groups_id']);
+            if ($group instanceof Group) {
                 echo $group->getLink();
             }
 
             echo "</div>";
         }
 
-        echo "<div class='escalade'>";
+        $rand = mt_rand();
+        echo sprintf("<div class='escalade' id='escalade-history-%d'>", $rand);
         //parse all lines
-        $i = 0;
         foreach ($found as $hline) {
             echo "<div class='escalade_history'>";
 
             if (! $use_filter_assign_group || isset($filter_groups_id[$hline['groups_id']])) {
-                $rand = mt_rand();
                 // Remplacement du lien par un formulaire
-                echo sprintf("<form action='%sfront/climb_group.php' method='GET' id='history-form-%d'>", $plugin_dir, $rand);
+                echo sprintf("<form action='%sfront/climb_group.php' method='GET' class='escalade-history-form'>", $plugin_dir);
                 echo "<input type='hidden' name='tickets_id' value='" . (int) $tickets_id . "'>";
-                echo "<input type='hidden' name='groups_id' value='" . $hline['groups_id'] . "'>";
+                echo "<input type='hidden' name='groups_id' value='" . (int) $hline['groups_id'] . "'>";
                 echo "<button type='submit' title='" . __s("Reassign the ticket to group", "escalade") . "' class='btn btn-icon btn-sm btn-ghost-secondary'>
                     <i class='ti ti-arrow-up'></i>
                 </button>";
                 echo "</form>";
-
-                echo "<script>
-                    $(document).ready(function () {
-                        var form = $('#itil-form');
-                        var inputs = form.serializeArray();
-                        var asset_form = $('#history-form-{$rand}');
-
-                        if (asset_form.length > 0) {
-                            $.each(inputs, function(i, input) {
-                                if (input.name != '_actors') {
-                                    asset_form.append('<input type=\"hidden\" name=\"ticket_details[' + input.name + ']\" value=\"' + input.value + '\">');
-                                }
-                            });
-                        }
-                    });
-                </script>";
             } else {
                 echo "&nbsp;&nbsp;&nbsp;";
             }
 
             //group link
             echo "&nbsp;<i class='ti ti-users'></i>&nbsp;";
-            if ($group->getFromDB($hline['groups_id'])) {
+            $group = $get_group((int) $hline['groups_id']);
+            if ($group instanceof Group) {
                 echo self::showGroupLink($group, $full_history);
             }
 
             echo "</div>";
+        }
 
-            $i++;
-            if ($i === self::HISTORY_LIMIT && !$full_history) {
-                break;
-            }
+        if (!$full_history && $found !== []) {
+            // Copy the ticket form values into every climb form, once for the whole widget.
+            // Not in the popup: it has neither jQuery nor the ticket form.
+            echo "<script>
+                $(function () {
+                    var inputs = $('#itil-form').serializeArray();
+                    $('#escalade-history-{$rand} form.escalade-history-form').each(function () {
+                        var asset_form = $(this);
+                        $.each(inputs, function(i, input) {
+                            if (input.name != '_actors') {
+                                asset_form.append($('<input>', {
+                                    type: 'hidden',
+                                    name: 'ticket_details[' + input.name + ']',
+                                    value: input.value
+                                }));
+                            }
+                        });
+                    });
+                });
+            </script>";
         }
 
         //In case there are more than 10 group changes, a popup can display historical
-        if ($nb_histories - 1 > self::HISTORY_LIMIT && !$full_history) {
+        if ($has_more) {
             echo Ajax::createModalWindow(
                 'full_history',
                 $plugin_dir . "/front/popup_histories.php?tickets_id=" . $tickets_id,
@@ -313,57 +331,84 @@ class PluginEscaladeHistory extends CommonDBTM
             return false;
         }
 
-        $groups     = implode("','", $_SESSION['glpigroups']);
-        $numrows    = 0;
-        $is_deleted = " `glpi_tickets`.`is_deleted` = 0 ";
+        $groups = $_SESSION['glpigroups'] ?? [];
+        if ($groups === []) {
+            // Both lists only show tickets related to the user groups.
+            return null;
+        }
+
+        $assigned_groups_join = [
+            'glpi_groups_tickets' => [
+                'ON' => [
+                    'glpi_groups_tickets' => 'tickets_id',
+                    'glpi_tickets'        => 'id',
+                    [
+                        'AND' => ['glpi_groups_tickets.type' => CommonITILActor::ASSIGN],
+                    ],
+                ],
+            ],
+        ];
 
         if ($type == "notold") {
             $title = __s("Tickets to follow (escalated)", "escalade");
-            $status = CommonITILObject::INCOMING . ", " . CommonITILObject::PLANNED . ", "
-                   . CommonITILObject::ASSIGNED . ", " . CommonITILObject::WAITING;
-
-            $search_assign = " `glpi_plugin_escalade_histories`.`groups_id` IN ('{$groups}')
-            AND (`glpi_groups_tickets`.`groups_id` NOT IN ('{$groups}')
-            OR `glpi_groups_tickets`.`groups_id` IS NULL)";
-
-            $query_join = "LEFT JOIN `glpi_plugin_escalade_histories`
-            ON (`glpi_tickets`.`id` = `glpi_plugin_escalade_histories`.`tickets_id`)
-         LEFT JOIN `glpi_groups_tickets`
-            ON (`glpi_tickets`.`id` = `glpi_groups_tickets`.`tickets_id`
-               AND `glpi_groups_tickets`.`type`=2)";
+            $joins = [
+                'glpi_plugin_escalade_histories' => [
+                    'ON' => [
+                        'glpi_plugin_escalade_histories' => 'tickets_id',
+                        'glpi_tickets'                   => 'id',
+                    ],
+                ],
+            ] + $assigned_groups_join;
+            $where = [
+                'glpi_plugin_escalade_histories.groups_id' => $groups,
+                [
+                    'OR' => [
+                        ['NOT' => ['glpi_groups_tickets.groups_id' => $groups]],
+                        ['glpi_groups_tickets.groups_id' => null],
+                    ],
+                ],
+                'glpi_tickets.status' => [
+                    CommonITILObject::INCOMING,
+                    CommonITILObject::PLANNED,
+                    CommonITILObject::ASSIGNED,
+                    CommonITILObject::WAITING,
+                ],
+            ];
         } else {
             $title = __s("Tickets to close (escalated)", "escalade");
-            $status = CommonITILObject::SOLVED;
-
-            $search_assign = sprintf(" (`glpi_groups_tickets`.`groups_id` IN ('%s'))", $groups);
-
-            $query_join = "LEFT JOIN `glpi_groups_tickets`
-            ON (`glpi_tickets`.`id` = `glpi_groups_tickets`.`tickets_id`
-               AND `glpi_groups_tickets`.`type`=2)";
+            $joins = $assigned_groups_join;
+            $where = [
+                'glpi_groups_tickets.groups_id' => $groups,
+                'glpi_tickets.status'           => CommonITILObject::SOLVED,
+            ];
         }
 
-        $query = "SELECT DISTINCT `glpi_tickets`.`id`
-                FROM `glpi_tickets`
-                LEFT JOIN `glpi_tickets_users`
-                  ON (`glpi_tickets`.`id` = `glpi_tickets_users`.`tickets_id`)";
+        $criteria = [
+            'FROM'      => 'glpi_tickets',
+            'LEFT JOIN' => $joins,
+            'WHERE'     => [
+                'glpi_tickets.is_deleted' => 0,
+            ] + $where,
+        ];
+        // Added as its own element: merging it could collide with the numeric keys of $where.
+        $criteria['WHERE'][] = getEntitiesRestrictCriteria('glpi_tickets');
 
-        $query .= $query_join;
-
-        $query .= "WHERE {$is_deleted} AND ( {$search_assign} )
-                  AND (`status` IN ({$status}))"
-                  . getEntitiesRestrictRequest("AND", "glpi_tickets");
-
-        $query  .= " ORDER BY glpi_tickets.date_mod DESC";
-
-        $result  = $DB->doQuery($query);
-        $numrows = $DB->numrows($result);
+        // Count the tickets, then fetch only the displayed ones.
+        $numrows = (int) $DB->request($criteria + [
+            'SELECT' => ['COUNT DISTINCT' => 'glpi_tickets.id AS cpt'],
+        ])->current()['cpt'];
         if (!$numrows) {
             return null;
         }
 
-        $query .= " LIMIT 0, 5";
-        $result = $DB->doQuery($query);
-        $number = $DB->numrows($result);
+        // date_mod is selected because DISTINCT requires the ORDER BY columns in the select list (MySQL 8).
+        $tickets = $DB->request($criteria + [
+            'SELECT'   => ['glpi_tickets.id', 'glpi_tickets.date_mod'],
+            'DISTINCT' => true,
+            'ORDER'    => 'glpi_tickets.date_mod DESC',
+            'LIMIT'    => 5,
+        ]);
+        $number = count($tickets);
 
         //show central list
         if ($numrows > 0) {
@@ -412,9 +457,8 @@ class PluginEscaladeHistory extends CommonDBTM
                 echo "<th>" . __s('Requester') . "</th>";
                 echo "<th>" . __s('Associated element') . "</th>";
                 echo "<th>" . __s('Description') . "</th></tr></thead>";
-                for ($i = 0; $i < $number; $i++) {
-                    $ID = $DB->result($result, $i, "id");
-                    Ticket::showVeryShort($ID, 'Ticket$2');
+                foreach ($tickets as $ticket) {
+                    Ticket::showVeryShort($ticket['id'], 'Ticket$2');
                 }
             }
 
