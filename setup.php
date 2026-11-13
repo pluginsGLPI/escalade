@@ -72,6 +72,7 @@ function plugin_init_escalade()
                 if (str_contains($request_uri, '/plugins/') || str_contains($request_uri, '/marketplace/')) {
                     $request_uri = '';
                 }
+
                 $is_central = Session::getCurrentInterface() === 'central';
                 $can_create_ticket = Session::haveRight('ticket', CREATE);
                 $can_update_ticket = Session::haveRight('ticket', UPDATE);
