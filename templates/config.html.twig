@@ -56,7 +56,7 @@
                     config["use_assign_user_group"],
                     nofirstlast,
                     __("Use the technician's group", "escalade"),
-                    {on_change: 'hide_technician_group(this.value)'}|merge(field_options)
+                    {add_data_attributes: {'escalade-hide-technician-group': ''}}|merge(field_options)
                 ) }}
 
                 {% set display_remove_group_options = not config["remove_group"] ? 'd-none' : '' %}
@@ -341,6 +341,9 @@
 
 <script>
     $(document).ready(function() {
+        $(document).off('change.escaladeTechGroup').on('change.escaladeTechGroup', '[data-escalade-hide-technician-group]', function() {
+            hide_technician_group(this.value);
+        });
         const remove_group_checkbox = document.querySelector('[name="remove_group"][type="checkbox"]');
         const remove_group_elements = document.querySelectorAll('[for*="show-history"], [for*="solve-return-group"]');
         remove_group_checkbox.addEventListener('click', function() {
