@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [UNRELEASED]
 
+### Changed
+
+- Make the plugin compatible with the Content Security Policy
+
 ### Fixed
 
 - Fix escalation form and history links using the configured application URL instead of the current host

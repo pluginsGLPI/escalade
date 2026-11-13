@@ -221,7 +221,7 @@ class PluginEscaladeHistory extends CommonDBTM
                 </button>";
                 echo "</form>";
 
-                echo "<script>
+                echo Html::scriptBlock("
                     $(document).ready(function () {
                         var form = $('#itil-form');
                         var inputs = form.serializeArray();
@@ -235,7 +235,7 @@ class PluginEscaladeHistory extends CommonDBTM
                             });
                         }
                     });
-                </script>";
+                ");
             } else {
                 echo "&nbsp;&nbsp;&nbsp;";
             }
@@ -263,7 +263,9 @@ class PluginEscaladeHistory extends CommonDBTM
                     'title' => __s("full assignation history", "escalade"),
                 ],
             );
-            echo "<a href='#' onclick='full_history.show();' title='" . __s("View full history", "escalade") . "'>...</a>";
+            $full_history_link_rand = mt_rand();
+            echo sprintf("<a href='#' id='escalade-full-history-%d' title='", $full_history_link_rand) . __s("View full history", "escalade") . "'>...</a>";
+            echo Html::scriptBlock(sprintf("\$('#escalade-full-history-%d').on('click', function () { full_history.show(); });", $full_history_link_rand));
         }
 
         echo "</div>";
@@ -282,12 +284,13 @@ class PluginEscaladeHistory extends CommonDBTM
         $link .= (strpos((string) $link, '?') ? '&amp;' : '?') . 'id=' . $group->fields['id'];
         $link .= ($group->isTemplate() ? "&amp;withtemplate=1" : "");
 
-        echo sprintf("<a href='%s'", $link);
+        $link_id = 'escalade-group-link-' . mt_rand();
+        echo sprintf("<a href='%s' id='%s'", $link, $link_id);
+        echo ">" . $group->getNameID(true) . "</a>";
         if ($full_history) {
-            echo sprintf(" onclick='self.opener.location.href=\"%s\"; self.close();'", $link);
+            echo Html::scriptBlock(sprintf("\$('#%s').on('click', function () { self.opener.location.href = this.href; self.close(); });", $link_id));
         }
 
-        echo ">" . $group->getNameID(true) . "</a>";
         return null;
     }
 
