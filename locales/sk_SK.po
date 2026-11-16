@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-28 02:52+0000\n"
+"POT-Creation-Date: 2026-11-16 03:34+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: feonsu <feonsu@gmail.com>, 2019,2023-2026\n"
 "Language-Team: Slovak (Slovakia) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/sk_SK/)\n"
@@ -18,236 +18,169 @@ msgstr ""
 "Language: sk_SK\n"
 "Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);\n"
 
-#: templates/group_group.html.twig
-msgid "List of groups to escalate"
-msgstr "Zoznam skupín na eskaláciu"
+#: templates/eol_info.html.twig front/eol_info.php:34 inc/eolinfo.class.php:57
+msgid "Escalade (End Of Life)"
+msgstr "Eskalácie (koniec životnosti)"
 
-#: templates/user.html.twig hook.php:641 hook.php:660
-msgid "Bypass filtering on the groups assignment"
-msgstr "Vynechať filtrovanie pri priraďovaní skupín"
-
-#: templates/config.html.twig
-msgid "Group assignment"
-msgstr "Priradenie skupiny"
-
-#: templates/config.html.twig
-msgid "Remove old assign group on new group assign"
-msgstr "Vymazať starú priradenú skupinu pri priradení novej skupiny"
-
-#: templates/config.html.twig
-msgid "Use the technician's group"
-msgstr "Použiť skupinu technika"
-
-#: templates/config.html.twig
-msgid "Show group assign history visually"
-msgstr "Vizuálne zobraziť históriu priradenia skupín"
-
-#: templates/config.html.twig
-msgid "Assign ticket to initial group on solve ticket"
-msgstr "Priradiť požiadavku počiatočnej skupine pri riešení požiadavky"
-
-#: templates/config.html.twig
-msgid "at creation time"
-msgstr "v čase vytvorenia"
-
-#: templates/config.html.twig
-msgid "at modification time"
-msgstr "v čase úpravy"
-
-#: templates/config.html.twig
-msgid "Assign the technical group on ticket category change"
-msgstr "Priradiť skupinu technikov pri zmene kategórie požiadavky"
-
-#: templates/config.html.twig
-msgid "Enable filtering on the groups assignment"
-msgstr "Povoliť filtrovanie pri priraďovaní skupín"
-
-#: templates/config.html.twig
-msgid "User assignment"
-msgstr "Priradenie používateľa"
-
-#: templates/config.html.twig
-msgid "Remove technician(s) on escalation"
-msgstr "Odstrániť technikov pri eskalácii"
-
-#: templates/config.html.twig
-msgid "Assign the technical manager on ticket category change"
-msgstr "Priradiť manažéra technikov pri zmene kategórie požiadavky"
-
-#: templates/config.html.twig
-msgid "Remove requester(s) on escalation"
-msgstr "Odstrániť žiadateľov pri eskalácii"
-
-#: templates/config.html.twig
-msgid "Assign me as observer by default"
-msgstr "Priradiť mňa ako pozorovateľa predvolene"
-
-#: templates/config.html.twig
-msgid "Other"
-msgstr "Iné"
-
-#: templates/config.html.twig
-msgid "Escalation history in tasks"
-msgstr "História eskalácií v úlohách"
-
-#: templates/config.html.twig
-msgid "Escalation task is private ?"
-msgstr ""
-
-#: templates/config.html.twig
-msgid "Ticket status after an escalation"
-msgstr "Stav požiadavky po eskalácii"
-
-#: templates/config.html.twig
-msgid "Clone tickets"
-msgstr "Klonovať požiadavky"
-
-#: templates/config.html.twig
-msgid "Close cloned tickets at the same time"
-msgstr "Súčasne uzavrieť aj klonované požiadavky"
-
-#: templates/config.html.twig
-msgid "Nota: This feature (clone tickets) is duplicate with the"
-msgstr "Poznámka: Táto funkcia (klonovanie tiketov) sa duplikuje s pluginom"
-
-#: templates/config.html.twig
-msgid "plugin. This last has priority."
-msgstr "Posledný menovaný má prednosť."
-
-#: templates/config.html.twig
-msgid "Display delete button"
-msgstr "Zobraziť tlačidlo mazania"
-
-#: templates/escalade_form.html.twig
-msgid "Escalate ticket"
-msgstr "Eskalovať požiadavku"
-
-#: templates/escalade_form.html.twig
-msgid "Comment"
-msgstr "Komentár"
-
-#: templates/escalade_form.html.twig
-msgid "Assign me as an observer"
-msgstr "Priradiť mňa ako pozorovateľa"
-
-#: public/js/cloneandlink_ticket.js.php:40
-msgid "Clone and link"
-msgstr "Klonovať a prepojiť"
-
-#: inc/user.class.php:167 inc/group_group.class.php:61
-msgid "Escalation"
-msgstr "Eskalácie"
-
-#: inc/ticket.class.php:350
-msgid "Solution provided, back to the group"
-msgstr "Riešenie poskytnuté, späť k skupine"
-
-#: inc/ticket.class.php:418
-msgid "Solution rejected, return to the group"
-msgstr "Riešenie odmietnuté, návrat k skupine"
-
-#: inc/ticket.class.php:594 inc/ticket.class.php:692
+#: templates/eol_info.html.twig templates/migration_status.html.twig
 #, php-format
-msgid "Escalation to the group %s."
-msgstr "Eskalácia na skupinu %s."
+msgid ""
+"Escalade v%s is End-of-Life: its features are now provided by the "
+"MoreOptions plugin."
+msgstr "Escalade v%s je na konci životnosti: jeho funkcie teraz poskytuje plugin MoreOptions."
 
-#: inc/ticket.class.php:1050
-msgid "Error : get old ticket"
-msgstr "Chyba: získavanie starej požiadavky"
+#: templates/eol_info.html.twig
+msgid "What changed?"
+msgstr "Čo sa zmenilo?"
 
-#: inc/ticket.class.php:1065
-msgid "Error : adding new ticket"
-msgstr "Chyba: pridávanie novej požiadavky"
+#: templates/eol_info.html.twig
+msgid "Escalation is provided by MoreOptions"
+msgstr "Eskaláciu teraz poskytuje plugin MoreOptions."
 
-#: inc/ticket.class.php:1084
-msgid "Error : adding link between the two tickets"
-msgstr "Chyba: pridávanie prepojení medzi dvoma požiadavkami"
+#: templates/eol_info.html.twig
+msgid "Escalation tree by entity"
+msgstr "Strom eskalácií podľa entity"
 
-#: inc/ticket.class.php:1095 inc/ticket.class.php:1129
-#: inc/ticket.class.php:1134
-msgid "This ticket has been cloned from the ticket num"
-msgstr "Táto požiadavka bola klonovaná z požiadavky č."
+#: templates/eol_info.html.twig
+msgid "Filter bypass by profile"
+msgstr "Obídenie filtra podľa profilu"
 
-#: inc/ticket.class.php:1101
-msgid "Error : adding followups"
-msgstr "Chyba: pridávanie reakcií"
+#: templates/eol_info.html.twig
+msgid "Next steps"
+msgstr "Ďalšie kroky"
 
-#: inc/ticket.class.php:1217 inc/ticket.class.php:1218
-msgid "Escalate"
-msgstr "Eskalovať"
+#: templates/eol_info.html.twig
+msgid "Enable MoreOptions"
+msgstr "Povoliť MoreOptions"
 
-#: inc/ticket.class.php:1344
-msgid "You must select a group."
-msgstr "Musíte vybrať skupinu."
+#: templates/eol_info.html.twig
+msgid "Run the migration"
+msgstr "Spustiť migráciu"
 
-#: inc/notification.class.php:83
-msgid "Requester user of the ticket"
-msgstr "Používateľ-žiadateľ požiadavky"
+#: templates/eol_info.html.twig
+msgid "Uninstall Escalade"
+msgstr "Odinštalovať Escalade"
 
-#: inc/notification.class.php:125
-msgid "Group escalated in the ticket"
-msgstr "Skupina eskalovaná v požiadavke"
+#: templates/eol_info.html.twig
+msgid "View Migration Status"
+msgstr "Zobraziť stav migrácie"
 
-#: inc/notification.class.php:129
-msgid "Manager of the group escalated in the ticket"
-msgstr "Manažér skupiny eskalovanej v požiadavke"
+#: templates/migration_status.html.twig front/migration_status.php:39
+msgid "Escalade migration status"
+msgstr "Stav migrácie Escalade"
 
-#: inc/notification.class.php:135
-msgid "Requester user of the task/reminder"
-msgstr "Používateľ-žiadateľ úlohy/pripomienky"
+#: templates/migration_status.html.twig inc/eolinfo.class.php:139
+msgid ""
+"Install and enable the MoreOptions plugin before running the migration."
+msgstr "Pred spustením migrácie nainštalujte a povoľte plugin MoreOptions."
 
-#: inc/notification.class.php:140
-msgid "Last group escalated in the ticket"
-msgstr "Posledná skupina eskalovaná v požiadavke"
+#: templates/migration_status.html.twig
+msgid "Migration Status"
+msgstr "Stav migrácie"
 
-#: inc/notification.class.php:144
-msgid "Manager of last group escalated in the ticket"
-msgstr "Manažér poslednej skupiny eskalovanej v požiadavke"
+#: templates/migration_status.html.twig
+msgid "Group filter"
+msgstr "Filter skupín"
 
-#: inc/notification.class.php:362
-msgid "Solve date modification"
-msgstr "Zmena dátumu vyriešenia"
+#: templates/migration_status.html.twig
+msgid "Active"
+msgstr "Aktívne"
 
-#: inc/config.class.php:39
-msgid "Escalade"
-msgstr "Eskalácia"
+#: templates/migration_status.html.twig
+msgid "Inactive"
+msgstr "Neaktívne"
 
-#: inc/config.class.php:44
-msgid "Configuration Escalade plugin"
-msgstr "Konfigurácia pluginu Eskalácie"
+#: templates/migration_status.html.twig
+msgid "Migrated links"
+msgstr "Migrované odkazy"
 
-#: inc/config.class.php:139
-msgid "Default (not managed by plugin)"
-msgstr "Predvolené (nespravované pluginom)"
+#: templates/migration_status.html.twig
+msgid "Users bypassing the filter"
+msgstr "Používatelia obchádzajúci filter"
 
-#: inc/history.class.php:219
-msgid "Reassign the ticket to group"
-msgstr "Znovu priradiť požiadavku skupine"
+#: templates/migration_status.html.twig
+msgid "Source group"
+msgstr "Zdrojová skupina"
 
-#: inc/history.class.php:263
-msgid "full assignation history"
-msgstr "úplná história priradenia"
+#: templates/migration_status.html.twig
+msgid "Destination group"
+msgstr "Cieľová skupina"
 
-#: inc/history.class.php:266
-msgid "View full history"
-msgstr "Zobraziť úplnú históriu"
+#: templates/migration_status.html.twig
+msgid "Status"
+msgstr "Stav"
 
-#: inc/history.class.php:321
-msgid "Tickets to follow (escalated)"
-msgstr "Požiadavky na sledovanie (eskalované)"
+#: templates/migration_status.html.twig
+msgid "Migrated"
+msgstr "Migrované"
 
-#: inc/history.class.php:335
-msgid "Tickets to close (escalated)"
-msgstr "Požiadavky na uzavretie (eskalované)"
+#: templates/migration_status.html.twig
+msgid "Not Migrated"
+msgstr "Nemigrované"
 
-#: hook.php:595
-msgid "Group concerned by the escalation"
-msgstr "Skupina, ktorej sa týkajú eskalácie"
+#: templates/migration_status.html.twig
+msgid "No escalation link to migrate."
+msgstr "Žiadne prepojenie na eskaláciu na migráciu."
 
-#: hook.php:613
-msgid "Number of escalations"
-msgstr "Počet eskalácií"
+#: templates/migration_status.html.twig
+msgid "How to Migrate"
+msgstr "Ako migrovať"
 
-#: hook.php:627
-msgid "Number of escalations between two groups"
-msgstr "Počet eskalácií medzi dvoma skupinami"
+#: templates/migration_status.html.twig
+msgid "Simulate"
+msgstr "Simulovať"
+
+#: templates/migration_status.html.twig
+msgid "Migrate the group filter to MoreOptions?"
+msgstr "Migrovať filter skupiny do pluginu MoreOptions?"
+
+#: templates/migration_status.html.twig
+msgid "Migrate"
+msgstr "Migrovať"
+
+#: templates/migration_status.html.twig
+msgid "Or from the command line:"
+msgstr "Alebo z príkazového riadka:"
+
+#: templates/migration_status.html.twig
+msgid "Copy command"
+msgstr "Skopírovať príkaz"
+
+#: templates/migration_status.html.twig
+msgid "From the GLPI root directory. Add \"--dry-run\" to simulate."
+msgstr "Spustite z koreňového adresára GLPI. Na simuláciu pridajte parameter --dry-run."
+
+#: templates/migration_status.html.twig
+msgid "Links are migrated to the root entity and inherited by sub-entities"
+msgstr "Prepojenia sa migrujú do koreňovej entity a dedia sa do podradených entít"
+
+#: templates/migration_status.html.twig
+msgid ""
+"Users bypassing the filter cannot be migrated: allow profiles in MoreOptions"
+" instead"
+msgstr "Používatelia, ktorí obchádzajú filter, sa nedajú migrovať: namiesto toho povoľte profily v MoreOptions."
+
+#: setup.php:68
+msgid "Escalade End-Of-Life Updater"
+msgstr "Aktualizátor koniec životnosti Escalade"
+
+#: inc/eolinfo.class.php:167
+msgid "The migration failed, all changes have been reverted."
+msgstr "Migrácia zlyhala, všetky zmeny boli vrátené späť."
+
+#: inc/eolinfo.class.php:169
+#, php-format
+msgid ""
+"Simulation: %1$d items would be created, %2$d reused. Nothing has been "
+"changed."
+msgstr "Simulácia: boli by vytvorené položky: %1$d, znovu použité: %2$d. Nič sa nezmenilo."
+
+#: inc/eolinfo.class.php:171
+#, php-format
+msgid "Migration done: %1$d items created, %2$d reused."
+msgstr "Migrácia dokončená: položky vytvorené: %1$d, znovu použité: %2$d."
+
+#: inc/eolinfo.class.php:236 inc/eolinfo.class.php:237
+#, php-format
+msgid "Deleted group #%d"
+msgstr "Odstránená skupina č. %d"
