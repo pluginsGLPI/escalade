@@ -70,6 +70,7 @@ function plugin_version_escalade()
         'author'         => "<a href='http://www.teclib.com'>Teclib'</a>",
         'homepage'       => "https://github.com/pluginsGLPI/escalade",
         'license'        => 'GPLv2+',
+        'csp_compliant'  => true,
         'requirements'   => [
             'glpi' => [
                 'min' => PLUGIN_ESCALADE_MIN_GLPI,
