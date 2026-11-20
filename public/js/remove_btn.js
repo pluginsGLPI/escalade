@@ -1,5 +1,3 @@
-<?php
-
 /**
  * -------------------------------------------------------------------------
  * Escalade plugin for GLPI
@@ -28,71 +26,6 @@
  * -------------------------------------------------------------------------
  */
 
-//change mimetype
-header("Content-type: application/javascript");
-
-//not executed in self-service interface & right verification
-if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
-    $locale_actor = __s('Actor');
-    $esc_config = $_SESSION['glpi_plugins']['escalade']['config'];
-
-    $remove_delete_requester_user_btn = "true";
-    if (
-        isset($esc_config['remove_delete_requester_user_btn'])
-        && $esc_config['remove_delete_requester_user_btn']
-    ) {
-        $remove_delete_requester_user_btn = "false";
-    }
-
-    $remove_delete_requester_group_btn = "true";
-    if (
-        isset($esc_config['remove_delete_requester_group_btn'])
-        && $esc_config['remove_delete_requester_group_btn']
-    ) {
-        $remove_delete_requester_group_btn = "false";
-    }
-
-    $remove_delete_watcher_user_btn = "true";
-    if (
-        isset($esc_config['remove_delete_watcher_user_btn'])
-        && $esc_config['remove_delete_watcher_user_btn']
-    ) {
-        $remove_delete_watcher_user_btn = "false";
-    }
-
-    $remove_delete_watcher_group_btn = "true";
-    if (
-        isset($esc_config['remove_delete_watcher_group_btn'])
-        && $esc_config['remove_delete_watcher_group_btn']
-    ) {
-        $remove_delete_watcher_group_btn = "false";
-    }
-
-    $remove_delete_assign_user_btn = "true";
-    if (
-        isset($esc_config['remove_delete_assign_user_btn'])
-        && $esc_config['remove_delete_assign_user_btn']
-    ) {
-        $remove_delete_assign_user_btn = "false";
-    }
-
-    $remove_delete_assign_group_btn = "true";
-    if (
-        isset($esc_config['remove_delete_assign_group_btn'])
-        && $esc_config['remove_delete_assign_group_btn']
-    ) {
-        $remove_delete_assign_group_btn = "false";
-    }
-
-    $remove_delete_assign_supplier_btn = "true";
-    if (
-        isset($esc_config['remove_delete_assign_supplier_btn'])
-        && $esc_config['remove_delete_assign_supplier_btn']
-    ) {
-        $remove_delete_assign_supplier_btn = "false";
-    }
-
-    $JS = <<<JAVASCRIPT
    var removeDeleteButtons = function(itemtype, actortype,) {
       if (!$("#actors .actor_entry").length) {
          // Not yet loaded
@@ -203,19 +136,23 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
          || location.pathname.indexOf('problem.form.php') > 0
          || location.pathname.indexOf('change.form.php') > 0) {
          $(document).on('glpi.tab.loaded', function() {
+            // Plugin configuration, rendered by setup.php in a meta tag:
+            // a delete button is removed when its option is disabled.
+            var esc_config = $('meta[name="glpi:escalade:remove_btn"]').attr('content');
+            esc_config = esc_config ? JSON.parse(esc_config) : {};
             let buttons_to_delete = {
                Group: {
-                  requester: {$remove_delete_requester_group_btn},
-                  observer: {$remove_delete_watcher_group_btn},
-                  assign: {$remove_delete_assign_group_btn},
+                  requester: !esc_config.remove_delete_requester_group_btn,
+                  observer: !esc_config.remove_delete_watcher_group_btn,
+                  assign: !esc_config.remove_delete_assign_group_btn,
                },
                User: {
-                  requester: {$remove_delete_requester_user_btn},
-                  observer: {$remove_delete_watcher_user_btn},
-                  assign: {$remove_delete_assign_user_btn},
+                  requester: !esc_config.remove_delete_requester_user_btn,
+                  observer: !esc_config.remove_delete_watcher_user_btn,
+                  assign: !esc_config.remove_delete_assign_user_btn,
                },
                Supplier: {
-                  assign: {$remove_delete_assign_supplier_btn},
+                  assign: !esc_config.remove_delete_assign_supplier_btn,
                }
             };
 
@@ -258,6 +195,3 @@ if ($_SESSION['glpiactiveprofile']['interface'] == "central") {
          });
       }
    });
-JAVASCRIPT;
-    echo $JS;
-}

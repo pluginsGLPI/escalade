@@ -39,5 +39,8 @@ if (isset($_REQUEST['tickets_id'])) {
     $ticket = new Ticket();
     $ticket->check($tickets_id, READ);
 
+    // Read-only endpoint: release the session lock so that other requests are not serialized behind it.
+    Session::writeClose();
+
     PluginEscaladeHistory::getHistory($tickets_id);
 }

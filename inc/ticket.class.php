@@ -1333,27 +1333,27 @@ class PluginEscaladeTicket
             $assigned_groups[$grp['groups_id']] = $grp['groups_id'];
         }
 
-        $config = new PluginEscaladeConfig();
-        $config->getFromDB(1);
+        // Session config already accounts for the user bypass of the group filter.
+        // Reload it when missing, so that the group filter is never silently skipped.
+        if (!isset($_SESSION['glpi_plugins']['escalade']['config'])) {
+            PluginEscaladeConfig::loadInSession();
+        }
 
-        $PluginEscaladeGroup_Group = new PluginEscaladeGroup_Group();
-        $groups_id_filtered = array_keys($PluginEscaladeGroup_Group->getGroups($tickets_id));
-        $groups_id_filtered = $groups_id_filtered === [] ? [-1] : $groups_id_filtered;
-
-        $user_config = new PluginEscaladeUser();
-        $user_config->getFromDBByCrit(['users_id' => Session::getLoginUserID()]);
+        $config = $_SESSION['glpi_plugins']['escalade']['config'];
 
         $condition = [
             'is_assign' => 1,
         ];
-        if (($config->fields['use_filter_assign_group'] ?? false) && !($user_config->fields['bypass_filter_assign_group'] ?? false)) {
-            $condition['id'] = $groups_id_filtered;
+        if ($config['use_filter_assign_group'] ?? false) {
+            $PluginEscaladeGroup_Group = new PluginEscaladeGroup_Group();
+            $groups_id_filtered = array_keys($PluginEscaladeGroup_Group->getGroups($tickets_id));
+            $condition['id'] = $groups_id_filtered === [] ? [-1] : $groups_id_filtered;
         }
 
         TemplateRenderer::getInstance()->display('@escalade/escalade_form.html.twig', [
             'action'                => plugin_escalade_geturl() . 'front/ticket.form.php',
             'ticket'                => $options['parent'],
-            'assign_me_as_observer' => $config->fields['assign_me_as_observer'],
+            'assign_me_as_observer' => $config['assign_me_as_observer'] ?? 0,
             'assigned_groups'       => $assigned_groups,
             'condition'             => $condition,
         ]);
