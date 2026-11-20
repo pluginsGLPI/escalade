@@ -100,7 +100,7 @@
             </div>
         </form>
     </div>
-    <script>
+    {% set escalade_form_js %}
         $(document).ready(function () {
             var form = $('#itil-form');
             var inputs = form.serializeArray();
@@ -114,5 +114,6 @@
                 });
             }
         });
-    </script>
+    {% endset %}
+    {{ call('Html::scriptBlock', [escalade_form_js])|raw }}
 {% endblock %}

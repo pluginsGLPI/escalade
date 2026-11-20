@@ -339,7 +339,7 @@
     </div>
 </div>
 
-<script>
+{% set escalade_config_js %}
     $(document).ready(function() {
         $(document).off('change.escaladeTechGroup').on('change.escaladeTechGroup', '[data-escalade-hide-technician-group]', function() {
             hide_technician_group(this.value);
@@ -406,4 +406,5 @@
             });
         }
     }
-</script>
+{% endset %}
+{{ call('Html::scriptBlock', [escalade_config_js])|raw }}
