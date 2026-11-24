@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 - Make the plugin compatible with the Content Security Policy
+- Move inline scripts to JavaScript files for the Content Security Policy
 
 ### Fixed
 
