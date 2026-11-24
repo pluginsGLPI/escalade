@@ -339,4 +339,4 @@
     </div>
 </div>
 
-{{ call('Html::script', ['/plugins/escalade/js/config.js', {}, false])|raw }}
+{{ call('Html::script', ['/plugins/escalade/js/config.js', {'version': constant('PLUGIN_ESCALADE_VERSION')}, false])|raw }}

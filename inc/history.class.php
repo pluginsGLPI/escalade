@@ -251,7 +251,7 @@ class PluginEscaladeHistory extends CommonDBTM
         }
 
         echo "</div>";
-        echo Html::script('/plugins/escalade/js/climb.js', [], false);
+        echo Html::script('/plugins/escalade/js/climb.js', ['version' => PLUGIN_ESCALADE_VERSION], false);
     }
 
     public static function showGroupLink($group, $full_history = false)

@@ -100,5 +100,5 @@
             </div>
         </form>
     </div>
-    {{ call('Html::script', ['/plugins/escalade/js/climb.js', {}, false])|raw }}
+    {{ call('Html::script', ['/plugins/escalade/js/climb.js', {'version': constant('PLUGIN_ESCALADE_VERSION')}, false])|raw }}
 {% endblock %}
