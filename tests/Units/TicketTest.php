@@ -1690,6 +1690,6 @@ final class TicketTest extends EscaladeTestCase
             'action="' . $CFG_GLPI['root_doc'] . '/plugins/escalade/front/ticket.form.php"',
             $output,
         );
-        $this->assertMatchesRegularExpression('/<script[^>]*>.*asset_form/s', $output);
+        $this->assertStringContainsString('data-escalade-climb-form', $output);
     }
 }
