@@ -130,8 +130,7 @@
                         <i class="ti ti-player-play me-1"></i>
                         {{ __('Simulate', 'escalade') }}
                     </button>
-                    <button type="submit" name="migrate" value="1" class="btn btn-primary" {{ can_migrate ? '' : 'disabled' }}
-                            onclick="return confirm({{ __('Migrate the group filter to MoreOptions?', 'escalade')|json_encode }});">
+                    <button type="submit" name="migrate" value="1" class="btn btn-primary" id="escalade-migrate" {{ can_migrate ? '' : 'disabled' }}>
                         <i class="ti ti-arrows-exchange me-1"></i>
                         {{ __('Migrate', 'escalade') }}
                     </button>
@@ -160,7 +159,13 @@
     </div>
 </div>
 
-<script>
+{% set escalade_migration_js %}
+    $('#escalade-migrate').on('click', function (event) {
+        if (!confirm({{ __('Migrate the group filter to MoreOptions?', 'escalade')|json_encode|raw }})) {
+            event.preventDefault();
+        }
+    });
+
     $('#escalade-copy-command').on('click', function () {
         const button = $(this);
         navigator.clipboard.writeText($('#escalade-migration-command').text()).then(() => {
@@ -170,4 +175,5 @@
             }, 2000);
         });
     });
-</script>
+{% endset %}
+{{ call('Html::scriptBlock', [escalade_migration_js])|raw }}

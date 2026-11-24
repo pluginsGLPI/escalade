@@ -7,17 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [UNRELEASED]
 
-<<<<<<< HEAD
+### Changed
+
+- Make the plugin compatible with the Content Security Policy
+
 ## [3.0.0 End-Of-Life Updater] - 2026-11-05
 
 ### Added
 
 - Add Transifex translations link to README
-=======
-### Changed
-
-- Make the plugin compatible with the Content Security Policy
->>>>>>> f1afb9b (feat: make plugin CSP compliant (#532))
 
 ### Fixed
 
