@@ -31,7 +31,7 @@
 
 {% block timeline_card %}
     <div class="escalation card mt-4 ">
-        <form name="asset_form" id="asset_form" class="d-flex flex-column escalation-form bg-white" method="post"
+        <form name="asset_form" id="asset_form" data-escalade-climb-form class="d-flex flex-column escalation-form bg-white" method="post"
               action="{{ action }}"
               enctype="multipart/form-data"
               data-track-changes="true" data-submit-once>
@@ -100,20 +100,5 @@
             </div>
         </form>
     </div>
-    {% set escalade_form_js %}
-        $(document).ready(function () {
-            var form = $('#itil-form');
-            var inputs = form.serializeArray();
-            var asset_form = $('#asset_form');
-
-            if (asset_form.length > 0) {
-                $.each(inputs, function(i, input) {
-                    if (input.name != '_actors') {
-                        asset_form.append('<input type="hidden" name="ticket_details[' + input.name + ']" value="' + input.value + '">');
-                    }
-                });
-            }
-        });
-    {% endset %}
-    {{ call('Html::scriptBlock', [escalade_form_js])|raw }}
+    {{ call('Html::script', ['/plugins/escalade/js/climb.js', {'version': constant('PLUGIN_ESCALADE_VERSION')}, false])|raw }}
 {% endblock %}
