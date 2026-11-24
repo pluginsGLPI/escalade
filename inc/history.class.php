@@ -213,29 +213,13 @@ class PluginEscaladeHistory extends CommonDBTM
             if (! $use_filter_assign_group || isset($filter_groups_id[$hline['groups_id']])) {
                 $rand = mt_rand();
                 // Remplacement du lien par un formulaire
-                echo sprintf("<form action='%sfront/climb_group.php' method='GET' id='history-form-%d'>", $plugin_dir, $rand);
+                echo sprintf("<form action='%sfront/climb_group.php' method='GET' id='history-form-%d' data-escalade-climb-form>", $plugin_dir, $rand);
                 echo "<input type='hidden' name='tickets_id' value='" . (int) $tickets_id . "'>";
                 echo "<input type='hidden' name='groups_id' value='" . $hline['groups_id'] . "'>";
                 echo "<button type='submit' title='" . __s("Reassign the ticket to group", "escalade") . "' class='btn btn-icon btn-sm btn-ghost-secondary'>
                     <i class='ti ti-arrow-up'></i>
                 </button>";
                 echo "</form>";
-
-                echo Html::scriptBlock("
-                    $(document).ready(function () {
-                        var form = $('#itil-form');
-                        var inputs = form.serializeArray();
-                        var asset_form = $('#history-form-{$rand}');
-
-                        if (asset_form.length > 0) {
-                            $.each(inputs, function(i, input) {
-                                if (input.name != '_actors') {
-                                    asset_form.append('<input type=\"hidden\" name=\"ticket_details[' + input.name + ']\" value=\"' + input.value + '\">');
-                                }
-                            });
-                        }
-                    });
-                ");
             } else {
                 echo "&nbsp;&nbsp;&nbsp;";
             }
@@ -263,12 +247,11 @@ class PluginEscaladeHistory extends CommonDBTM
                     'title' => __s("full assignation history", "escalade"),
                 ],
             );
-            $full_history_link_rand = mt_rand();
-            echo sprintf("<a href='#' id='escalade-full-history-%d' title='", $full_history_link_rand) . __s("View full history", "escalade") . "'>...</a>";
-            echo Html::scriptBlock(sprintf("\$('#escalade-full-history-%d').on('click', function () { full_history.show(); });", $full_history_link_rand));
+            echo "<a href='#' data-escalade-full-history title='" . __s("View full history", "escalade") . "'>...</a>";
         }
 
         echo "</div>";
+        echo Html::script('/plugins/escalade/js/climb.js', [], false);
     }
 
     public static function showGroupLink($group, $full_history = false)
@@ -284,12 +267,12 @@ class PluginEscaladeHistory extends CommonDBTM
         $link .= (strpos((string) $link, '?') ? '&amp;' : '?') . 'id=' . $group->fields['id'];
         $link .= ($group->isTemplate() ? "&amp;withtemplate=1" : "");
 
-        $link_id = 'escalade-group-link-' . mt_rand();
-        echo sprintf("<a href='%s' id='%s'", $link, $link_id);
-        echo ">" . $group->getNameID(true) . "</a>";
+        echo sprintf("<a href='%s'", $link);
         if ($full_history) {
-            echo Html::scriptBlock(sprintf("\$('#%s').on('click', function () { self.opener.location.href = this.href; self.close(); });", $link_id));
+            echo " data-escalade-opener-link";
         }
+
+        echo ">" . $group->getNameID(true) . "</a>";
 
         return null;
     }
