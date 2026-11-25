@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [UNRELEASED]
 
+### Changed
+
+- Make the plugin compatible with the Content Security Policy
+
 ## [3.0.0 End-Of-Life Updater] - 2026-11-05
 
 ### Added
