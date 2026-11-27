@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-16 03:34+0000\n"
+"POT-Creation-Date: 2026-11-27 05:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: templates/eol_info.html.twig front/eol_info.php:34 inc/eolinfo.class.php:57
+#: templates/eol_info.html.twig inc/eolinfo.class.php:57 front/eol_info.php:34
 msgid "Escalade (End Of Life)"
 msgstr ""
 
@@ -129,10 +129,6 @@ msgid "Simulate"
 msgstr ""
 
 #: templates/migration_status.html.twig
-msgid "Migrate the group filter to MoreOptions?"
-msgstr ""
-
-#: templates/migration_status.html.twig
 msgid "Migrate"
 msgstr ""
 
@@ -158,8 +154,8 @@ msgid ""
 "instead"
 msgstr ""
 
-#: setup.php:68
-msgid "Escalade End-Of-Life Updater"
+#: templates/migration_status.html.twig
+msgid "Migrate the group filter to MoreOptions?"
 msgstr ""
 
 #: inc/eolinfo.class.php:167
@@ -181,4 +177,8 @@ msgstr ""
 #: inc/eolinfo.class.php:236 inc/eolinfo.class.php:237
 #, php-format
 msgid "Deleted group #%d"
+msgstr ""
+
+#: setup.php:68
+msgid "Escalade End-Of-Life Updater"
 msgstr ""

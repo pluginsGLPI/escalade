@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-16 03:34+0000\n"
-"PO-Revision-Date: 2026-11-16 03:34+0000\n"
+"POT-Creation-Date: 2026-11-27 05:41+0000\n"
+"PO-Revision-Date: 2026-11-27 05:41+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en_GB\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: templates/eol_info.html.twig front/eol_info.php:34 inc/eolinfo.class.php:57
+#: templates/eol_info.html.twig inc/eolinfo.class.php:57 front/eol_info.php:34
 msgid "Escalade (End Of Life)"
 msgstr "Escalade (End Of Life)"
 
@@ -132,10 +132,6 @@ msgid "Simulate"
 msgstr "Simulate"
 
 #: templates/migration_status.html.twig
-msgid "Migrate the group filter to MoreOptions?"
-msgstr "Migrate the group filter to MoreOptions?"
-
-#: templates/migration_status.html.twig
 msgid "Migrate"
 msgstr "Migrate"
 
@@ -163,9 +159,9 @@ msgstr ""
 "Users bypassing the filter cannot be migrated: allow profiles in MoreOptions "
 "instead"
 
-#: setup.php:68
-msgid "Escalade End-Of-Life Updater"
-msgstr "Escalade End-Of-Life Updater"
+#: templates/migration_status.html.twig
+msgid "Migrate the group filter to MoreOptions?"
+msgstr "Migrate the group filter to MoreOptions?"
 
 #: inc/eolinfo.class.php:167
 msgid "The migration failed, all changes have been reverted."
@@ -189,3 +185,7 @@ msgstr "Migration done: %1$d items created, %2$d reused."
 #, php-format
 msgid "Deleted group #%d"
 msgstr "Deleted group #%d"
+
+#: setup.php:68
+msgid "Escalade End-Of-Life Updater"
+msgstr "Escalade End-Of-Life Updater"

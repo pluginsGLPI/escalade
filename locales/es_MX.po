@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-06 03:58+0000\n"
+"POT-Creation-Date: 2026-11-26 05:46+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Edwin Elias Alvarez <elias986@yahoo.com>, 2026\n"
 "Language-Team: Spanish (Mexico) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/es_MX/)\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Language: es_MX\n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
-#: templates/eol_info.html.twig front/eol_info.php:34 inc/eolinfo.class.php:57
+#: templates/eol_info.html.twig inc/eolinfo.class.php:57 front/eol_info.php:34
 msgid "Escalade (End Of Life)"
 msgstr "Escalade (fin de ciclo de vida)"
 
@@ -131,10 +131,6 @@ msgid "Simulate"
 msgstr "Simular"
 
 #: templates/migration_status.html.twig
-msgid "Migrate the group filter to MoreOptions?"
-msgstr "¿Migrar el filtro de grupos a MoreOptions?"
-
-#: templates/migration_status.html.twig
 msgid "Migrate"
 msgstr "Migrar"
 
@@ -160,9 +156,9 @@ msgid ""
 " instead"
 msgstr "Los usuarios que omiten el filtro no se pueden migrar: en su lugar, permita perfiles en MoreOptions"
 
-#: setup.php:68
-msgid "Escalade End-Of-Life Updater"
-msgstr "Actualizador de fin de ciclo de vida de Escalade"
+#: templates/migration_status.html.twig
+msgid "Migrate the group filter to MoreOptions?"
+msgstr "¿Migrar el filtro de grupos a MoreOptions?"
 
 #: inc/eolinfo.class.php:167
 msgid "The migration failed, all changes have been reverted."
@@ -184,3 +180,7 @@ msgstr "Migración completada: %1$d elementos creados y %2$d reutilizados."
 #, php-format
 msgid "Deleted group #%d"
 msgstr "Grupo #%d eliminado"
+
+#: setup.php:68
+msgid "Escalade End-Of-Life Updater"
+msgstr "Actualizador de fin de ciclo de vida de Escalade"
