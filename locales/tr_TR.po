@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - Escalade\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-06 03:58+0000\n"
+"POT-Creation-Date: 2026-11-26 05:46+0000\n"
 "PO-Revision-Date: 2015-09-18 09:48+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2015-2016,2018-2021,2023-2026\n"
 "Language-Team: Turkish (Turkey) (http://app.transifex.com/teclib/glpi-project-plugin-escalade/language/tr_TR/)\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Language: tr_TR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: templates/eol_info.html.twig front/eol_info.php:34 inc/eolinfo.class.php:57
+#: templates/eol_info.html.twig inc/eolinfo.class.php:57 front/eol_info.php:34
 msgid "Escalade (End Of Life)"
 msgstr "Escalade (ömrü tamamlandı)"
 
@@ -132,10 +132,6 @@ msgid "Simulate"
 msgstr "Benzetim"
 
 #: templates/migration_status.html.twig
-msgid "Migrate the group filter to MoreOptions?"
-msgstr "Grup süzgeci MoreOptions üzerine aktarılsın mı?"
-
-#: templates/migration_status.html.twig
 msgid "Migrate"
 msgstr "Aktar"
 
@@ -161,9 +157,9 @@ msgid ""
 " instead"
 msgstr "Süzgeçten geçen kullanıcılar aktarılamaz: Bunun yerine MoreOptions üzerinde profillere izin verin"
 
-#: setup.php:68
-msgid "Escalade End-Of-Life Updater"
-msgstr "Ömrü tamamlanmış Escalade güncelleyici"
+#: templates/migration_status.html.twig
+msgid "Migrate the group filter to MoreOptions?"
+msgstr "Grup süzgeci MoreOptions üzerine aktarılsın mı?"
 
 #: inc/eolinfo.class.php:167
 msgid "The migration failed, all changes have been reverted."
@@ -185,3 +181,7 @@ msgstr "Aktarım tamamlandı: %1$d öge oluşturuldu, %2$d öge yeniden kullanı
 #, php-format
 msgid "Deleted group #%d"
 msgstr "%d numaralı grup silindi"
+
+#: setup.php:68
+msgid "Escalade End-Of-Life Updater"
+msgstr "Ömrü tamamlanmış Escalade güncelleyici"
